@@ -1,0 +1,238 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://canvas.instructure.com/api",
+  "resourcePath": "/enrollment_terms",
+  "produces": [
+    "application/json"
+  ],
+  "apis": [
+    {
+      "path": "/v1/accounts/{account_id}/terms",
+      "description": "Create a new enrollment term for the specified account.",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create enrollment term",
+          "notes": "Create a new enrollment term for the specified account.",
+          "nickname": "create_enrollment_term",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[name]",
+              "description": "The name of the term.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[start_at]",
+              "description": "The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "timestamp",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[end_at]",
+              "description": "The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "timestamp",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[sis_term_id]",
+              "description": "The unique SIS identifier for the term.",
+              "type": "string",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "EnrollmentTerm"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/terms/{id}",
+      "description": "Update an existing enrollment term for the specified account.",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Update enrollment term",
+          "notes": "Update an existing enrollment term for the specified account.",
+          "nickname": "update_enrollment_term",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[name]",
+              "description": "The name of the term.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[start_at]",
+              "description": "The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "timestamp",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[end_at]",
+              "description": "The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "timestamp",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enrollment_term[sis_term_id]",
+              "description": "The unique SIS identifier for the term.",
+              "type": "string",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "EnrollmentTerm"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/terms/{id}",
+      "description": "Delete the specified enrollment term.",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Delete enrollment term",
+          "notes": "Delete the specified enrollment term.",
+          "nickname": "delete_enrollment_term",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "EnrollmentTerm"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/terms",
+      "description": "Return all of the terms in the account.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List enrollment terms",
+          "notes": "Return all of the terms in the account.",
+          "nickname": "list_enrollment_terms",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "workflow_state",
+              "description": "no description",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "EnrollmentTerm"
+          }
+        }
+      ]
+    }
+  ],
+  "models": {
+    "EnrollmentTerm": {
+      "id": "EnrollmentTerm",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "id": {
+          "description": "The unique identifier for the enrollment term.",
+          "example": "1",
+          "type": "integer"
+        },
+        "sis_term_id": {
+          "description": "The SIS id of the term. Only included if the user has permission to view SIS information.",
+          "example": "Sp2014",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the term.",
+          "example": "Spring 2014",
+          "type": "string"
+        },
+        "start_at": {
+          "description": "The datetime of the start of the term.",
+          "example": "2014-01-06T08:00:00-05:00",
+          "type": "datetime"
+        },
+        "end_at": {
+          "description": "The datetime of the end of the term.",
+          "example": "2014-05-16T05:00:00-04:00",
+          "type": "datetime"
+        },
+        "workflow_state": {
+          "description": "The state of the term. Can be 'active' or 'deleted'.",
+          "example": "active",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://canvas.instructure.com/api",
+  "resourcePath": "/quiz_reports",
+  "produces": [
+    "application/json"
+  ],
+  "apis": [
+    {
+      "path": "/v1/courses/{course_id}/quizzes/{quiz_id}/reports",
+      "description": "Returns a list of all available reports.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Retrieve all quiz reports",
+          "notes": "Returns a list of all available reports.",
+          "nickname": "retrieve_all_quiz_reports",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "quiz_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "includes_all_versions",
+              "description": "Whether to retrieve reports that consider all the submissions or only the most recent. Defaults to false, ignored for item_analysis reports.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": " QuizReport "
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/quizzes/{quiz_id}/reports",
+      "description": "Create and return a new report for this quiz. If a previously\ngenerated report matches the arguments and is still current (i.e.\nthere have been no new submissions), it will be returned.\n\n*Responses*\n\n* <code>400 Bad Request</code> if the specified report type is invalid\n* <code>409 Conflict</code> if a quiz report of the specified type is already being\n  generated",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create a quiz report",
+          "notes": "Create and return a new report for this quiz. If a previously\ngenerated report matches the arguments and is still current (i.e.\nthere have been no new submissions), it will be returned.\n\n*Responses*\n\n* <code>400 Bad Request</code> if the specified report type is invalid\n* <code>409 Conflict</code> if a quiz report of the specified type is already being\n  generated",
+          "nickname": "create_quiz_report",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "quiz_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "quiz_report[report_type]",
+              "description": "The type of report to be generated.",
+              "type": "string",
+              "format": null,
+              "required": true,
+              "enum": [
+                "student_analysis",
+                "item_analysis"
+              ]
+            },
+            {
+              "paramType": "form",
+              "name": "quiz_report[includes_all_versions]",
+              "description": "Whether the report should consider all submissions or only the most recent. Defaults to false, ignored for item_analysis.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "include",
+              "description": "Whether the output should include documents for the file and/or progress objects associated with this report. (Note: JSON-API only)",
+              "type": "string[]",
+              "format": null,
+              "required": false,
+              "enum": [
+                "file",
+                "progress"
+              ]
+            }
+          ],
+          "type": "QuizReport"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}",
+      "description": "Returns the data for a single quiz report.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get a quiz report",
+          "notes": "Returns the data for a single quiz report.",
+          "nickname": "get_quiz_report",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "quiz_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Whether the output should include documents for the file and/or progress objects associated with this report. (Note: JSON-API only)",
+              "type": "string[]",
+              "format": null,
+              "required": false,
+              "enum": [
+                "file",
+                "progress"
+              ]
+            }
+          ],
+          "type": "QuizReport"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}",
+      "description": "This API allows you to cancel a previous request you issued for a report to\nbe generated. Or in the case of an already generated report, you'd like to\nremove it, perhaps to generate it another time with an updated version that\nprovides new features.\n\nYou must check the report's generation status before attempting to use this\ninterface. See the \"workflow_state\" property of the QuizReport's Progress\nobject for more information. Only when the progress reports itself in a\n\"queued\" state can the generation be aborted.\n\n*Responses*\n\n- <code>204 No Content</code> if your request was accepted\n- <code>422 Unprocessable Entity</code> if the report is not being generated\n  or can not be aborted at this stage",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Abort the generation of a report, or remove a previously generated one",
+          "notes": "This API allows you to cancel a previous request you issued for a report to\nbe generated. Or in the case of an already generated report, you'd like to\nremove it, perhaps to generate it another time with an updated version that\nprovides new features.\n\nYou must check the report's generation status before attempting to use this\ninterface. See the \"workflow_state\" property of the QuizReport's Progress\nobject for more information. Only when the progress reports itself in a\n\"queued\" state can the generation be aborted.\n\n*Responses*\n\n- <code>204 No Content</code> if your request was accepted\n- <code>422 Unprocessable Entity</code> if the report is not being generated\n  or can not be aborted at this stage",
+          "nickname": "abort_generation_of_report_or_remove_previously_generated_one",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "quiz_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    }
+  ],
+  "models": {
+    "QuizReport": {
+      "id": "QuizReport",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "id": {
+          "description": "the ID of the quiz report",
+          "example": 5,
+          "type": "integer"
+        },
+        "quiz_id": {
+          "description": "the ID of the quiz",
+          "example": 4,
+          "type": "integer"
+        },
+        "report_type": {
+          "description": "which type of report this is possible values: 'student_analysis', 'item_analysis'",
+          "example": "student_analysis",
+          "type": "string",
+          "allowableValues": {
+            "values": [
+              "student_analysis",
+              "item_analysis"
+            ]
+          }
+        },
+        "readable_type": {
+          "description": "a human-readable (and localized) version of the report_type",
+          "example": "Student Analysis",
+          "type": "string"
+        },
+        "includes_all_versions": {
+          "description": "boolean indicating whether the report represents all submissions or only the most recent ones for each student",
+          "example": true,
+          "type": "boolean"
+        },
+        "anonymous": {
+          "description": "boolean indicating whether the report is for an anonymous survey. if true, no student names will be included in the csv",
+          "example": false,
+          "type": "boolean"
+        },
+        "generatable": {
+          "description": "boolean indicating whether the report can be generated, which is true unless the quiz is a survey one",
+          "example": true,
+          "type": "boolean"
+        },
+        "created_at": {
+          "description": "when the report was created",
+          "example": "2013-05-01T12:34:56-07:00",
+          "type": "datetime"
+        },
+        "updated_at": {
+          "description": "when the report was last updated",
+          "example": "2013-05-01T12:34:56-07:00",
+          "type": "datetime"
+        },
+        "url": {
+          "description": "the API endpoint for this report",
+          "example": "http://canvas.example.com/api/v1/courses/1/quizzes/1/reports/1",
+          "type": "string"
+        },
+        "file": {
+          "description": "if the report has finished generating, a File object that represents it. refer to the Files API for more information about the format",
+          "$ref": "File"
+        },
+        "progress_url": {
+          "description": "if the report has not yet finished generating, a URL where information about its progress can be retrieved. refer to the Progress API for more information (Note: not available in JSON-API format)",
+          "type": "string"
+        },
+        "progress": {
+          "description": "if the report is being generated, a Progress object that represents the operation. Refer to the Progress API for more information about the format. (Note: available only in JSON-API format)",
+          "$ref": "Progress"
+        }
+      }
+    }
+  }
+}

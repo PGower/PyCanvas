@@ -1,0 +1,2219 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://canvas.instructure.com/api",
+  "resourcePath": "/files",
+  "produces": [
+    "application/json"
+  ],
+  "apis": [
+    {
+      "path": "/v1/courses/{course_id}/files/quota",
+      "description": "Returns the total and used storage quota for the course, group, or user.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get quota information",
+          "notes": "Returns the total and used storage quota for the course, group, or user.",
+          "nickname": "get_quota_information_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/files/quota",
+      "description": "Returns the total and used storage quota for the course, group, or user.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get quota information",
+          "notes": "Returns the total and used storage quota for the course, group, or user.",
+          "nickname": "get_quota_information_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/files/quota",
+      "description": "Returns the total and used storage quota for the course, group, or user.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get quota information",
+          "notes": "Returns the total and used storage quota for the course, group, or user.",
+          "nickname": "get_quota_information_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/files",
+      "description": "Returns the paginated list of files for the folder or course.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List files",
+          "notes": "Returns the paginated list of files for the folder or course.",
+          "nickname": "list_files_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "content_types",
+              "description": "Filter results by content-type. You can specify type/subtype pairs (e.g., 'image/jpeg'), or simply types (e.g., 'image', which will match 'image/gif', 'image/jpeg', etc.).",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "search_term",
+              "description": "The partial name of the files to match and return.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"user\":: the user who uploaded the file or last edited its content \"usage_rights\":: copyright and license information for the file (see UsageRights)",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "user"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "sort",
+              "description": "Sort results by this field. Defaults to 'name'. Note that `sort=user` implies `include[]=user`.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "name",
+                "size",
+                "created_at",
+                "updated_at",
+                "content_type",
+                "user"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order",
+              "description": "The sorting order. Defaults to 'asc'.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "File"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/files",
+      "description": "Returns the paginated list of files for the folder or course.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List files",
+          "notes": "Returns the paginated list of files for the folder or course.",
+          "nickname": "list_files_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "content_types",
+              "description": "Filter results by content-type. You can specify type/subtype pairs (e.g., 'image/jpeg'), or simply types (e.g., 'image', which will match 'image/gif', 'image/jpeg', etc.).",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "search_term",
+              "description": "The partial name of the files to match and return.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"user\":: the user who uploaded the file or last edited its content \"usage_rights\":: copyright and license information for the file (see UsageRights)",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "user"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "sort",
+              "description": "Sort results by this field. Defaults to 'name'. Note that `sort=user` implies `include[]=user`.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "name",
+                "size",
+                "created_at",
+                "updated_at",
+                "content_type",
+                "user"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order",
+              "description": "The sorting order. Defaults to 'asc'.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "File"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/files",
+      "description": "Returns the paginated list of files for the folder or course.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List files",
+          "notes": "Returns the paginated list of files for the folder or course.",
+          "nickname": "list_files_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "content_types",
+              "description": "Filter results by content-type. You can specify type/subtype pairs (e.g., 'image/jpeg'), or simply types (e.g., 'image', which will match 'image/gif', 'image/jpeg', etc.).",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "search_term",
+              "description": "The partial name of the files to match and return.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"user\":: the user who uploaded the file or last edited its content \"usage_rights\":: copyright and license information for the file (see UsageRights)",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "user"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "sort",
+              "description": "Sort results by this field. Defaults to 'name'. Note that `sort=user` implies `include[]=user`.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "name",
+                "size",
+                "created_at",
+                "updated_at",
+                "content_type",
+                "user"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order",
+              "description": "The sorting order. Defaults to 'asc'.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "File"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{id}/files",
+      "description": "Returns the paginated list of files for the folder or course.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List files",
+          "notes": "Returns the paginated list of files for the folder or course.",
+          "nickname": "list_files_folders",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "content_types",
+              "description": "Filter results by content-type. You can specify type/subtype pairs (e.g., 'image/jpeg'), or simply types (e.g., 'image', which will match 'image/gif', 'image/jpeg', etc.).",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "search_term",
+              "description": "The partial name of the files to match and return.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"user\":: the user who uploaded the file or last edited its content \"usage_rights\":: copyright and license information for the file (see UsageRights)",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "user"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "sort",
+              "description": "Sort results by this field. Defaults to 'name'. Note that `sort=user` implies `include[]=user`.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "name",
+                "size",
+                "created_at",
+                "updated_at",
+                "content_type",
+                "user"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order",
+              "description": "The sorting order. Defaults to 'asc'.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "File"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/files/{id}/public_url",
+      "description": "Determine the URL that should be used for inline preview of the file.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get quota information",
+          "notes": "Determine the URL that should be used for inline preview of the file.",
+          "nickname": "get_quota_information",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/files/{id}",
+      "description": "Returns the standard attachment json object",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get file",
+          "notes": "Returns the standard attachment json object",
+          "nickname": "get_file",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"user\":: the user who uploaded the file or last edited its content \"usage_rights\":: copyright and license information for the file (see UsageRights)",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "user"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "File"
+        }
+      ]
+    },
+    {
+      "path": "/v1/files/{id}",
+      "description": "Update some settings on the specified file",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Update file",
+          "notes": "Update some settings on the specified file",
+          "nickname": "update_file",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The new display name of the file",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to move this file into. The new folder must be in the same context as the original parent folder. If the file is in a context without folders this does not apply.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "on_duplicate",
+              "description": "If the file is moved to a folder containing a file with the same name, or renamed to a name matching an existing file, the API call will fail unless this parameter is supplied. \"overwrite\":: Replace the existing file with the same name \"rename\":: Add a qualifier to make the new filename unique",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "overwrite",
+                "rename"
+              ]
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the file at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the file at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the file as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the file as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "File"
+        }
+      ]
+    },
+    {
+      "path": "/v1/files/{id}",
+      "description": "Remove the specified file\n\n  curl -XDELETE 'https://<canvas>/api/v1/files/<file_id>' \\\n       -H 'Authorization: Bearer <token>'",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Delete file",
+          "notes": "Remove the specified file\n\n  curl -XDELETE 'https://<canvas>/api/v1/files/<file_id>' \\\n       -H 'Authorization: Bearer <token>'",
+          "nickname": "delete_file",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{id}/folders",
+      "description": "Returns the paginated list of folders in the folder.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List folders",
+          "notes": "Returns the paginated list of folders in the folder.",
+          "nickname": "list_folders",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/folders",
+      "description": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List all folders",
+          "notes": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+          "nickname": "list_all_folders_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/folders",
+      "description": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List all folders",
+          "notes": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+          "nickname": "list_all_folders_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/folders",
+      "description": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List all folders",
+          "notes": "Returns the paginated list of all folders for the given context. This will\nbe returned as a flat list containing all subfolders as well.",
+          "nickname": "list_all_folders_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/folders/by_path/*full_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_courses_full_path",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/folders/by_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/folders/by_path/*full_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_users_full_path",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/folders/by_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/folders/by_path/*full_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_groups_full_path",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/folders/by_path",
+      "description": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Resolve path",
+          "notes": "Given the full path to a folder, returns a list of all Folders in the path hierarchy,\nstarting at the root folder, and ending at the requested folder. The given path is\nrelative to the context's root folder and does not include the root folder's name\n(e.g., \"course files\"). If an empty path is given, the context's root folder alone\nis returned. Otherwise, if no folder exists with the given full path, a Not Found\nerror is returned.",
+          "nickname": "resolve_path_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Folder"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/folders/{id}",
+      "description": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get folder",
+          "notes": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+          "nickname": "get_folder_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/folders/{id}",
+      "description": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get folder",
+          "notes": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+          "nickname": "get_folder_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/folders/{id}",
+      "description": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get folder",
+          "notes": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+          "nickname": "get_folder_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{id}",
+      "description": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get folder",
+          "notes": "Returns the details for a folder\n\nYou can get the root folder from a context by using 'root' as the :id.\nFor example, you could get the root folder for a course like:",
+          "nickname": "get_folder_folders",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{id}",
+      "description": "Updates a folder",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Update folder",
+          "notes": "Updates a folder",
+          "nickname": "update_folder",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The new name of the folder",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to move this folder into. The new folder must be in the same context as the original parent folder.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the folder as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the folder as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "position",
+              "description": "Set an explicit sort position for the folder",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/folders",
+      "description": "Creates a folder in the specified context",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create folder",
+          "notes": "Creates a folder in the specified context",
+          "nickname": "create_folder_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The name of the folder",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to store the file in. If this and parent_folder_path are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_path",
+              "description": "The path of the folder to store the new folder in. The path separator is the forward slash `/`, never a back slash. The parent folder will be created if it does not already exist. This parameter only applies to new folders in a context that has folders, such as a user, a course, or a group. If this and parent_folder_id are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the folder as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the folder as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "position",
+              "description": "Set an explicit sort position for the folder",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/folders",
+      "description": "Creates a folder in the specified context",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create folder",
+          "notes": "Creates a folder in the specified context",
+          "nickname": "create_folder_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The name of the folder",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to store the file in. If this and parent_folder_path are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_path",
+              "description": "The path of the folder to store the new folder in. The path separator is the forward slash `/`, never a back slash. The parent folder will be created if it does not already exist. This parameter only applies to new folders in a context that has folders, such as a user, a course, or a group. If this and parent_folder_id are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the folder as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the folder as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "position",
+              "description": "Set an explicit sort position for the folder",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/folders",
+      "description": "Creates a folder in the specified context",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create folder",
+          "notes": "Creates a folder in the specified context",
+          "nickname": "create_folder_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The name of the folder",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to store the file in. If this and parent_folder_path are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_path",
+              "description": "The path of the folder to store the new folder in. The path separator is the forward slash `/`, never a back slash. The parent folder will be created if it does not already exist. This parameter only applies to new folders in a context that has folders, such as a user, a course, or a group. If this and parent_folder_id are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the folder as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the folder as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "position",
+              "description": "Set an explicit sort position for the folder",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{folder_id}/folders",
+      "description": "Creates a folder in the specified context",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create folder",
+          "notes": "Creates a folder in the specified context",
+          "nickname": "create_folder_folders",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "folder_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "description": "The name of the folder",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_id",
+              "description": "The id of the folder to store the file in. If this and parent_folder_path are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "parent_folder_path",
+              "description": "The path of the folder to store the new folder in. The path separator is the forward slash `/`, never a back slash. The parent folder will be created if it does not already exist. This parameter only applies to new folders in a context that has folders, such as a user, a course, or a group. If this and parent_folder_id are sent an error will be returned. If neither is given, a default folder will be used.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lock_at",
+              "description": "The datetime to lock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "unlock_at",
+              "description": "The datetime to unlock the folder at",
+              "type": "datetime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "locked",
+              "description": "Flag the folder as locked",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "hidden",
+              "description": "Flag the folder as hidden",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "position",
+              "description": "Set an explicit sort position for the folder",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{id}",
+      "description": "Remove the specified folder. You can only delete empty folders unless you\nset the 'force' flag",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Delete folder",
+          "notes": "Remove the specified folder. You can only delete empty folders unless you\nset the 'force' flag",
+          "nickname": "delete_folder",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "force",
+              "description": "Set to 'true' to allow deleting a non-empty folder",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{folder_id}/files",
+      "description": "Upload a file to a folder.\n\nThis API endpoint is the first step in uploading a file.\nSee the {file:file_uploads.html File Upload Documentation} for details on\nthe file upload workflow.\n\nOnly those with the \"Manage Files\" permission on a course or group can\nupload files to a folder in that course or group.",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Upload a file",
+          "notes": "Upload a file to a folder.\n\nThis API endpoint is the first step in uploading a file.\nSee the {file:file_uploads.html File Upload Documentation} for details on\nthe file upload workflow.\n\nOnly those with the \"Manage Files\" permission on a course or group can\nupload files to a folder in that course or group.",
+          "nickname": "upload_file",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "folder_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{dest_folder_id}/copy_file",
+      "description": "Copy a file from elsewhere in Canvas into a folder.\n\nCopying a file across contexts (between courses and users) is permitted,\nbut the source and destination must belong to the same institution.",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Copy a file",
+          "notes": "Copy a file from elsewhere in Canvas into a folder.\n\nCopying a file across contexts (between courses and users) is permitted,\nbut the source and destination must belong to the same institution.",
+          "nickname": "copy_file",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "dest_folder_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "source_file_id",
+              "description": "The id of the source file",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "on_duplicate",
+              "description": "What to do if a file with the same name already exists at the destination. If such a file exists and this parameter is not given, the call will fail. \"overwrite\":: Replace an existing file with the same name \"rename\":: Add a qualifier to make the new filename unique",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "overwrite",
+                "rename"
+              ]
+            }
+          ],
+          "type": "File"
+        }
+      ]
+    },
+    {
+      "path": "/v1/folders/{dest_folder_id}/copy_folder",
+      "description": "Copy a folder (and its contents) from elsewhere in Canvas into a folder.\n\nCopying a folder across contexts (between courses and users) is permitted,\nbut the source and destination must belong to the same institution.\nIf the source and destination folders are in the same context, the\nsource folder may not contain the destination folder. A folder will be\nrenamed at its destination if another folder with the same name already\nexists.",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Copy a folder",
+          "notes": "Copy a folder (and its contents) from elsewhere in Canvas into a folder.\n\nCopying a folder across contexts (between courses and users) is permitted,\nbut the source and destination must belong to the same institution.\nIf the source and destination folders are in the same context, the\nsource folder may not contain the destination folder. A folder will be\nrenamed at its destination if another folder with the same name already\nexists.",
+          "nickname": "copy_folder",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "dest_folder_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "source_folder_id",
+              "description": "The id of the source folder",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Folder"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/usage_rights",
+      "description": "Sets copyright and license information for one or more files",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Set usage rights",
+          "notes": "Sets copyright and license information for one or more files",
+          "nickname": "set_usage_rights_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "file_ids",
+              "description": "List of ids of files to set usage rights for.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "folder_ids",
+              "description": "List of ids of folders to search for files to set usage rights for. Note that new files uploaded to these folders do not automatically inherit these rights.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "publish",
+              "description": "Whether the file(s) or folder(s) should be published on save, provided that usage rights have been specified (set to `true` to publish on save).",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[use_justification]",
+              "description": "The intellectual property justification for using the files in Canvas",
+              "type": "string",
+              "format": null,
+              "required": true,
+              "enum": [
+                "own_copyright",
+                "used_by_permission",
+                "fair_use",
+                "public_domain",
+                "creative_commons"
+              ]
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[legal_copyright]",
+              "description": "The legal copyright line for the files",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[license]",
+              "description": "The license that applies to the files. See the {api:UsageRightsController#licenses List licenses endpoint} for the supported license types.",
+              "type": "string",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "UsageRights"
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/usage_rights",
+      "description": "Sets copyright and license information for one or more files",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Set usage rights",
+          "notes": "Sets copyright and license information for one or more files",
+          "nickname": "set_usage_rights_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "file_ids",
+              "description": "List of ids of files to set usage rights for.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "folder_ids",
+              "description": "List of ids of folders to search for files to set usage rights for. Note that new files uploaded to these folders do not automatically inherit these rights.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "publish",
+              "description": "Whether the file(s) or folder(s) should be published on save, provided that usage rights have been specified (set to `true` to publish on save).",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[use_justification]",
+              "description": "The intellectual property justification for using the files in Canvas",
+              "type": "string",
+              "format": null,
+              "required": true,
+              "enum": [
+                "own_copyright",
+                "used_by_permission",
+                "fair_use",
+                "public_domain",
+                "creative_commons"
+              ]
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[legal_copyright]",
+              "description": "The legal copyright line for the files",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[license]",
+              "description": "The license that applies to the files. See the {api:UsageRightsController#licenses List licenses endpoint} for the supported license types.",
+              "type": "string",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "UsageRights"
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/usage_rights",
+      "description": "Sets copyright and license information for one or more files",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Set usage rights",
+          "notes": "Sets copyright and license information for one or more files",
+          "nickname": "set_usage_rights_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "file_ids",
+              "description": "List of ids of files to set usage rights for.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "folder_ids",
+              "description": "List of ids of folders to search for files to set usage rights for. Note that new files uploaded to these folders do not automatically inherit these rights.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "publish",
+              "description": "Whether the file(s) or folder(s) should be published on save, provided that usage rights have been specified (set to `true` to publish on save).",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[use_justification]",
+              "description": "The intellectual property justification for using the files in Canvas",
+              "type": "string",
+              "format": null,
+              "required": true,
+              "enum": [
+                "own_copyright",
+                "used_by_permission",
+                "fair_use",
+                "public_domain",
+                "creative_commons"
+              ]
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[legal_copyright]",
+              "description": "The legal copyright line for the files",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "usage_rights[license]",
+              "description": "The license that applies to the files. See the {api:UsageRightsController#licenses List licenses endpoint} for the supported license types.",
+              "type": "string",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "UsageRights"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/usage_rights",
+      "description": "Removes copyright and license information associated with one or more files",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Remove usage rights",
+          "notes": "Removes copyright and license information associated with one or more files",
+          "nickname": "remove_usage_rights_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file_ids",
+              "description": "List of ids of files to remove associated usage rights from.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "folder_ids",
+              "description": "List of ids of folders. Usage rights will be removed from all files in these folders.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/usage_rights",
+      "description": "Removes copyright and license information associated with one or more files",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Remove usage rights",
+          "notes": "Removes copyright and license information associated with one or more files",
+          "nickname": "remove_usage_rights_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file_ids",
+              "description": "List of ids of files to remove associated usage rights from.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "folder_ids",
+              "description": "List of ids of folders. Usage rights will be removed from all files in these folders.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/usage_rights",
+      "description": "Removes copyright and license information associated with one or more files",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Remove usage rights",
+          "notes": "Removes copyright and license information associated with one or more files",
+          "nickname": "remove_usage_rights_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file_ids",
+              "description": "List of ids of files to remove associated usage rights from.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "folder_ids",
+              "description": "List of ids of folders. Usage rights will be removed from all files in these folders.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/content_licenses",
+      "description": "Lists licenses that can be applied",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List licenses",
+          "notes": "Lists licenses that can be applied",
+          "nickname": "list_licenses_courses",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "License"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/groups/{group_id}/content_licenses",
+      "description": "Lists licenses that can be applied",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List licenses",
+          "notes": "Lists licenses that can be applied",
+          "nickname": "list_licenses_groups",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "group_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "License"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/users/{user_id}/content_licenses",
+      "description": "Lists licenses that can be applied",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List licenses",
+          "notes": "Lists licenses that can be applied",
+          "nickname": "list_licenses_users",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "License"
+          }
+        }
+      ]
+    }
+  ],
+  "models": {
+    "File": {
+      "id": "File",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "size": {
+          "example": 4,
+          "type": "integer"
+        },
+        "content-type": {
+          "example": "text/plain",
+          "type": "string"
+        },
+        "url": {
+          "example": "http://www.example.com/files/569/download?download_frd=1&verifier=c6HdZmxOZa0Fiin2cbvZeI8I5ry7yqD7RChQzb6P",
+          "type": "string"
+        },
+        "id": {
+          "example": 569,
+          "type": "integer"
+        },
+        "display_name": {
+          "example": "file.txt",
+          "type": "string"
+        },
+        "created_at": {
+          "example": "2012-07-06T14:58:50Z",
+          "type": "datetime"
+        },
+        "updated_at": {
+          "example": "2012-07-06T14:58:50Z",
+          "type": "datetime"
+        },
+        "unlock_at": {
+          "type": "datetime"
+        },
+        "locked": {
+          "example": false,
+          "type": "boolean"
+        },
+        "hidden": {
+          "example": false,
+          "type": "boolean"
+        },
+        "lock_at": {
+          "type": "datetime"
+        },
+        "locked_for_user": {
+          "example": false,
+          "type": "boolean"
+        },
+        "lock_info": {
+          "$ref": "LockInfo"
+        },
+        "lock_explanation": {
+          "example": "This assignment is locked until September 1 at 12:00am",
+          "type": "string"
+        },
+        "hidden_for_user": {
+          "example": false,
+          "type": "boolean"
+        },
+        "thumbnail_url": {
+          "type": "string"
+        },
+        "preview_url": {
+          "type": "string",
+          "description": "optional: url to the document preview (only included in submission endpoints)"
+        }
+      }
+    },
+    "Folder": {
+      "id": "Folder",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "context_type": {
+          "example": "Course",
+          "type": "string"
+        },
+        "context_id": {
+          "example": 1401,
+          "type": "integer"
+        },
+        "files_count": {
+          "example": 0,
+          "type": "integer"
+        },
+        "position": {
+          "example": 3,
+          "type": "integer"
+        },
+        "updated_at": {
+          "example": "2012-07-06T14:58:50Z",
+          "type": "datetime"
+        },
+        "folders_url": {
+          "example": "https://www.example.com/api/v1/folders/2937/folders",
+          "type": "string"
+        },
+        "files_url": {
+          "example": "https://www.example.com/api/v1/folders/2937/files",
+          "type": "string"
+        },
+        "full_name": {
+          "example": "course files/11folder",
+          "type": "string"
+        },
+        "lock_at": {
+          "example": "2012-07-06T14:58:50Z",
+          "type": "datetime"
+        },
+        "id": {
+          "example": 2937,
+          "type": "integer"
+        },
+        "folders_count": {
+          "example": 0,
+          "type": "integer"
+        },
+        "name": {
+          "example": "11folder",
+          "type": "string"
+        },
+        "parent_folder_id": {
+          "example": 2934,
+          "type": "integer"
+        },
+        "created_at": {
+          "example": "2012-07-06T14:58:50Z",
+          "type": "datetime"
+        },
+        "unlock_at": {
+          "type": "datetime"
+        },
+        "hidden": {
+          "example": false,
+          "type": "boolean"
+        },
+        "hidden_for_user": {
+          "example": false,
+          "type": "boolean"
+        },
+        "locked": {
+          "example": true,
+          "type": "boolean"
+        },
+        "locked_for_user": {
+          "example": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "UsageRights": {
+      "id": "UsageRights",
+      "description": "Describes the copyright and license information for a File",
+      "required": [
+
+      ],
+      "properties": {
+        "legal_copyright": {
+          "type": "string",
+          "description": "Copyright line for the file",
+          "example": "(C) 2014 Incom Corporation Ltd"
+        },
+        "use_justification": {
+          "type": "string",
+          "description": "Justification for using the file in a Canvas course. Valid values are 'own_copyright', 'public_domain', 'used_by_permission', 'fair_use', 'creative_commons'",
+          "example": "creative_commons"
+        },
+        "license": {
+          "type": "string",
+          "description": "License identifier for the file.",
+          "example": "cc_by_sa"
+        },
+        "license_name": {
+          "type": "string",
+          "description": "Readable license name",
+          "example": "CC Attribution Share-Alike"
+        },
+        "message": {
+          "type": "string",
+          "description": "Explanation of the action performed",
+          "example": "4 files updated"
+        },
+        "file_ids": {
+          "description": "List of ids of files that were updated",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "example": [
+            1,
+            2,
+            3
+          ]
+        }
+      }
+    },
+    "License": {
+      "id": "License",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "a short string identifying the license",
+          "example": "cc_by_sa"
+        },
+        "name": {
+          "type": "string",
+          "description": "the name of the license",
+          "example": "CC Attribution ShareAlike"
+        },
+        "url": {
+          "type": "string",
+          "description": "a link to the license text",
+          "example": "http://creativecommons.org/licenses/by-sa/4.0"
+        }
+      }
+    }
+  }
+}
