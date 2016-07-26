@@ -169,7 +169,41 @@ class ApiClient(object):
         elif _return_http_data_only:
             return ( deserialized_data );
         else:
-            return (deserialized_data, response_data.status, response_data.getheaders())
+            headers = response_data.getheaders()
+            pages = {}
+
+            if 'Link' in headers:
+                re_page = r'.*(\?|\&)page=(\d+)'
+                re_per_page = r'.*(\?|\&)per_page=(\d+)'
+
+                links = headers['Link']
+                links = links.split(',')
+                links = [l.split(';') for l in links]
+                links = dict([(l[1], l[0]) for l in links])
+
+                if ' rel="last"' in links:
+                    r = re.search(re_page, links[' rel="last"'])
+                    try:
+                        pages['last'] = int(r.group(2))
+                    except ValueError:
+                        # looks like whatever was captured was not a number, so not useful
+                        pass
+                    except AttributeError:
+                        pass
+
+                if ' rel="current"' in links:
+                    r = re.search(re_page, links[' rel="current"'])
+                    try:
+                        pages['current'] = int(r.group(2))
+                    except ValueError:
+                        pass
+                    except AttributeError:
+                        pass
+
+            return {'data': deserialized_data,
+                    'status': response_data.status,
+                    'headers': headers,
+                    'pagination': pages}
         
 
     def to_path_value(self, obj):
