@@ -110,8 +110,6 @@ def main():
 
     for spec in os.listdir(p('specs')):
         name = spec[:spec.find('.json')]
-        if name != 'users':
-            continue
         # setup logging
         os.mkdir(os.path.join(BASE_PATH, 'logs/{}'.format(name)))
         output_path = os.path.join(BASE_PATH, './logs/{name}/{name}.log'.format(name=name))
