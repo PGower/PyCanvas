@@ -113,7 +113,7 @@ def main():
         # setup logging
         os.mkdir(os.path.join(BASE_PATH, 'logs/{}'.format(name)))
         output_path = os.path.join(BASE_PATH, './logs/{name}/{name}.log'.format(name=name))
-        subprocess_args = ['java', '-jar', 'swagger-codegen-cli.jar', 'generate', '-i', p('specs/{}'.format(spec)), '-l', 'python', '-o', 'apis/{}'.format(name)]
+        subprocess_args = ['java', '-jar', 'swagger-codegen-cli.jar', 'generate', '-i', p('specs/{}'.format(spec)), '-l', 'python', '-o', 'apis/{}'.format(name), '-t', p('templates')]
         data.append((subprocess_args, output_path))
 
     it = pool.map(process_swagger_def, data)
@@ -132,6 +132,12 @@ def main():
         shutil.copytree(source, temporary)
         shutil.rmtree(destination)
         os.rename(temporary, destination)
+        if not os.path.exists(p('apis/configuration.py')):
+            shutil.copyfile(os.path.join(destination, 'configuration.py'), p('apis/configuration.py'))
+        if not os.path.exists(p('apis/rest.py')):
+            shutil.copyfile(os.path.join(destination, 'rest.py'), p('apis/rest.py'))
+        os.remove(os.path.join(destination, 'configuration.py'))
+        os.remove(os.path.join(destination, 'rest.py'))
 
 
 if __name__ == '__main__':
