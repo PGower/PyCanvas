@@ -62,7 +62,6 @@ target/
 .ipynb_checkpoints
 
 env/
-apis/
 logs/
 
 
