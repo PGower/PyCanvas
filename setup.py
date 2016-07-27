@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os
+
 try:
     from setuptools import setup
 except ImportError:
@@ -12,6 +14,11 @@ long_description = 'A client library for accessing the Instructure Canvas rest l
 packages = [
     'pycanvas',
 ]
+
+a = os.walk(os.path.join(os.path.dirname(os.path.abspath(__file__)), './pycanvas'))
+root, dirs, files = a.next()
+for d in dirs:
+    packages.append('pycanvas.{}'.format(d))
 
 package_data = {
     '': ['LICENSE', 'README.md'],
@@ -27,9 +34,9 @@ setup(
     long_description=long_description,
     author='Paul Gower',
     author_email='p.gower@gmail.com',
-    url='https://github.com/PGower/django-ldap3-sync',
-    download_url='https://github.com/PGower/django-ldap3-sync/releases',
-    package_dir={'ldap3-sync': 'ldap3-sync'},
+    url='https://github.com/PGower/PyCanvas',
+    download_url='https://github.com/PGower/PyCanvas/releases',
+    package_dir={'pycanvas': 'pycanvas'},
     packages=packages,
     package_data=package_data,
     license='BSD',
@@ -37,13 +44,11 @@ setup(
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Programming Language :: Python',
-        'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Topic :: System :: Systems Administration :: Authentication/Directory',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    keywords=['django', 'ldap', 'active directory', 'synchronize', 'sync'],
-    install_requires=['ldap3 >= 0.9.7.4', 'petname >= 1.12'],
+    keywords=['canvas', 'instructure'],
+    install_requires=['urllib3 >= 1.15.1', 'certifi >= 14.05.14', 'six == 1.8.0', 'python_dateutil >= 2.5.3'],
 )
