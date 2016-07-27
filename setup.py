@@ -19,6 +19,8 @@ a = os.walk(os.path.join(os.path.dirname(os.path.abspath(__file__)), './pycanvas
 root, dirs, files = a.next()
 for d in dirs:
     packages.append('pycanvas.{}'.format(d))
+    packages.append('pycanvas.{}.models'.format(d))
+    packages.append('pycanvas.{}.apis'.format(d))
 
 package_data = {
     '': ['LICENSE', 'README.md'],
