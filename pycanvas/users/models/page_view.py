@@ -49,7 +49,7 @@ class PageView(BaseModel):
             'action': 'str',
             'contributed': 'bool',
             'interaction_seconds': 'float',
-            'created_at': 'Datetime',
+            'created_at': 'datetime',
             'user_request': 'bool',
             'render_time': 'float',
             'user_agent': 'str',

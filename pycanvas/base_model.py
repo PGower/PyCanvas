@@ -1,4 +1,2 @@
-
-
 class BaseModel(object):
     pass
