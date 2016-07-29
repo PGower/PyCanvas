@@ -44,8 +44,8 @@ class EnrollmentTerm(BaseModel):
             'id': 'int',
             'sis_term_id': 'str',
             'name': 'str',
-            'start_at': 'Datetime',
-            'end_at': 'Datetime',
+            'start_at': 'datetime',
+            'end_at': 'datetime',
             'workflow_state': 'str'
         }
 
