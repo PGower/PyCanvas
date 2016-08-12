@@ -1,2 +1,0 @@
-class BaseApi(object):
-    pass

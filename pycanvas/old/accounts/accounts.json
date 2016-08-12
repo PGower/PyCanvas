@@ -1,0 +1,484 @@
+{
+  "swagger": "1.2",
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://canvas.instructure.com/api",
+  "resourcePath": "/accounts",
+  "produces": [
+    "application/json"
+  ],
+  "apis": [
+    {
+      "path": "/v1/accounts",
+      "description": "List accounts that the current user can view or manage.  Typically,\nstudents and even teachers will get an empty list in response, only\naccount admins can view the accounts that they are in.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List accounts",
+          "notes": "List accounts that the current user can view or manage.  Typically,\nstudents and even teachers will get an empty list in response, only\naccount admins can view the accounts that they are in.",
+          "nickname": "list_accounts",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "Array of additional information to include. \"lti_guid\":: the 'tool_consumer_instance_guid' that will be sent for this account on LTI launches \"registration_settings\":: returns info about the privacy policy and terms of use",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "lti_guid",
+                "registration_settings"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Account"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/course_accounts",
+      "description": "List accounts that the current user can view through their admin course enrollments.\n(Teacher, TA, or designer enrollments).\nOnly returns \"id\", \"name\", \"workflow_state\", \"root_account_id\" and \"parent_account_id\"",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List accounts for course admins",
+          "notes": "List accounts that the current user can view through their admin course enrollments.\n(Teacher, TA, or designer enrollments).\nOnly returns \"id\", \"name\", \"workflow_state\", \"root_account_id\" and \"parent_account_id\"",
+          "nickname": "list_accounts_for_course_admins",
+          "parameters": [
+
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Account"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{id}",
+      "description": "Retrieve information on an individual account, given by id or sis\nsis_account_id.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get a single account",
+          "notes": "Retrieve information on an individual account, given by id or sis\nsis_account_id.",
+          "nickname": "get_single_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "Account"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/sub_accounts",
+      "description": "List accounts that are sub-accounts of the given account.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get the sub-accounts of an account",
+          "notes": "List accounts that are sub-accounts of the given account.",
+          "nickname": "get_sub_accounts_of_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "recursive",
+              "description": "If true, the entire account tree underneath this account will be returned (though still paginated). If false, only direct sub-accounts of this account will be returned. Defaults to false.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Account"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/courses",
+      "description": "Retrieve the list of courses in this account.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List active courses in an account",
+          "notes": "Retrieve the list of courses in this account.",
+          "nickname": "list_active_courses_in_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "with_enrollments",
+              "description": "If true, include only courses with at least one enrollment. If false, include only courses with no enrollments. If not present, do not filter on course enrollment status.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "published",
+              "description": "If true, include only published courses. If false, exclude published courses. If not present, do not filter on published status.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "completed",
+              "description": "If true, include only completed courses (these may be in state 'completed', or their enrollment term may have ended). If false, exclude completed courses. If not present, do not filter on completed status.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "by_teachers",
+              "description": "List of User IDs of teachers; if supplied, include only courses taught by one of the referenced users.",
+              "type": "array",
+              "format": "int64",
+              "required": false,
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "by_subaccounts",
+              "description": "List of Account IDs; if supplied, include only courses associated with one of the referenced subaccounts.",
+              "type": "array",
+              "format": "int64",
+              "required": false,
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "hide_enrollmentless_courses",
+              "description": "If present, only return courses that have at least one enrollment. Equivalent to 'with_enrollments=true'; retained for compatibility.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "state",
+              "description": "If set, only return courses that are in the given state(s). By default, all states but \"deleted\" are returned.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "created",
+                "claimed",
+                "available",
+                "completed",
+                "deleted",
+                "all"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "enrollment_term_id",
+              "description": "If set, only includes courses from the specified term.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "search_term",
+              "description": "The partial course name, code, or full ID to match and return in the results list. Must be at least 3 characters.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "- All explanations can be seen in the {api:CoursesController#index Course API index documentation}",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "needs_grading_count",
+                "syllabus_body",
+                "total_scores",
+                "term",
+                "course_progress",
+                "sections",
+                "storage_quota_used_mb"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Course"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{id}",
+      "description": "Update an existing account.",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Update an account",
+          "notes": "Update an existing account.",
+          "nickname": "update_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "account[name]",
+              "description": "Updates the account name",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_time_zone]",
+              "description": "The default time zone of the account. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_storage_quota_mb]",
+              "description": "The default course storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_user_storage_quota_mb]",
+              "description": "The default user storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_group_storage_quota_mb]",
+              "description": "The default group storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "Account"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/users/{user_id}",
+      "description": "Delete a user record from a Canvas root account. If a user is associated\nwith multiple root accounts (in a multi-tenant instance of Canvas), this\naction will NOT remove them from the other accounts.\n\nWARNING: This API will allow a user to remove themselves from the account.\nIf they do this, they won't be able to make API calls or log into Canvas at\nthat account.",
+      "operations": [
+        {
+          "method": "DELETE",
+          "summary": "Delete a user from the root account",
+          "notes": "Delete a user record from a Canvas root account. If a user is associated\nwith multiple root accounts (in a multi-tenant instance of Canvas), this\naction will NOT remove them from the other accounts.\n\nWARNING: This API will allow a user to remove themselves from the account.\nIf they do this, they won't be able to make API calls or log into Canvas at\nthat account.",
+          "nickname": "delete_user_from_root_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "User"
+        }
+      ]
+    },
+    {
+      "path": "/v1/accounts/{account_id}/sub_accounts",
+      "description": "Add a new sub-account to a given account.",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Create a new sub-account",
+          "notes": "Add a new sub-account to a given account.",
+          "nickname": "create_new_sub_account",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "account_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "account[name]",
+              "description": "The name of the new sub-account.",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_storage_quota_mb]",
+              "description": "The default course storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_user_storage_quota_mb]",
+              "description": "The default user storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "account[default_group_storage_quota_mb]",
+              "description": "The default group storage quota to be used, if not otherwise specified.",
+              "type": "integer",
+              "format": "int64",
+              "required": false
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "Account"
+          }
+        }
+      ]
+    }
+  ],
+  "models": {
+    "Account": {
+      "id": "Account",
+      "description": "",
+      "required": [
+
+      ],
+      "properties": {
+        "id": {
+          "description": "the ID of the Account object",
+          "example": 2,
+          "type": "integer"
+        },
+        "name": {
+          "description": "The display name of the account",
+          "example": "Canvas Account",
+          "type": "string"
+        },
+        "parent_account_id": {
+          "description": "The account's parent ID, or null if this is the root account",
+          "example": 1,
+          "type": "integer"
+        },
+        "root_account_id": {
+          "description": "The ID of the root account, or null if this is the root account",
+          "example": 1,
+          "type": "integer"
+        },
+        "default_storage_quota_mb": {
+          "description": "The storage quota for the account in megabytes, if not otherwise specified",
+          "example": 500,
+          "type": "integer"
+        },
+        "default_user_storage_quota_mb": {
+          "description": "The storage quota for a user in the account in megabytes, if not otherwise specified",
+          "example": 50,
+          "type": "integer"
+        },
+        "default_group_storage_quota_mb": {
+          "description": "The storage quota for a group in the account in megabytes, if not otherwise specified",
+          "example": 50,
+          "type": "integer"
+        },
+        "default_time_zone": {
+          "description": "The default time zone of the account. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.",
+          "example": "America/Denver",
+          "type": "string"
+        },
+        "sis_account_id": {
+          "description": "The account's identifier in the Student Information System. Only included if the user has permission to view SIS information.",
+          "example": "123xyz",
+          "type": "string"
+        },
+        "integration_id": {
+          "description": "The account's identifier in the Student Information System. Only included if the user has permission to view SIS information.",
+          "example": "123xyz",
+          "type": "string"
+        },
+        "sis_import_id": {
+          "description": "The id of the SIS import if created through SIS. Only included if the user has permission to manage SIS information.",
+          "example": "12",
+          "type": "integer"
+        },
+        "lti_guid": {
+          "description": "The account's identifier that is sent as context_id in LTI launches.",
+          "example": "123xyz",
+          "type": "string"
+        },
+        "workflow_state": {
+          "description": "The state of the account. Can be 'active' or 'deleted'.",
+          "example": "active",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
