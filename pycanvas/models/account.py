@@ -21,6 +21,22 @@ class Account(BaseModel):
         'workflow_state': 'str'
     }
 
+    attribute_map = {
+        'id': 'id',
+        'name': 'name',
+        'parent_account_id': 'parent_account_id',
+        'root_account_id': 'root_account_id',
+        'default_storage_quota_mb': 'default_storage_quota_mb',
+        'default_user_storage_quota_mb': 'default_user_storage_quota_mb',
+        'default_group_storage_quota_mb': 'default_group_storage_quota_mb',
+        'default_time_zone': 'default_time_zone',
+        'sis_account_id': 'sis_account_id',
+        'integration_id': 'integration_id',
+        'sis_import_id': 'sis_import_id',
+        'lti_guid': 'lti_guid',
+        'workflow_state': 'workflow_state'
+    }
+
     def __init__(self,
                  id=None,
                  name=None,

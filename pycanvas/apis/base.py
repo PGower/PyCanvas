@@ -34,12 +34,11 @@ class BaseApi(object):
         self.session.cert = cert
 
     def api_precall(self,
-                    url,
-                    method,
-                    attributes={},
-                    attribute_map={},
+                    api_meta,
+                    params,
                     returns='JSON',
                     callback=None):
+        import pdb;pdb.set_trace()
 
         path_attributes = self.build_attrs('path', attributes, attribute_map)
         query_attributes = self.build_attrs('query', attributes, attribute_map)

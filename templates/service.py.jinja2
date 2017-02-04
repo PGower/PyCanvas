@@ -1,0 +1,17 @@
+from datetime import date, datetime
+from base import BaseApi
+
+from ..meta.{{service_md.name|lower}} import {{service_md.__name__}}
+
+
+class {{service_md.name}}Service(BaseApi):
+    """Canvas {{service_md.name}} REST API."""
+
+    {% for api_name in service_md.apis %}
+    {% set api = getattr(service_md, api_name) %}
+    def {{api_name}}(self, {{api.params|service_param_string}}):
+        """{{api.help}}"""
+        api_meta = {{service_md.__name__}}.{{api_name}}
+        return self.api_precall(api_meta, locals())
+
+    {% endfor %}

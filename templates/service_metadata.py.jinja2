@@ -1,0 +1,41 @@
+class {{spec.name|capitalize}}ServiceMetadata(BaseServiceMetadata):
+    name = '{{spec.name|capitalize}}'
+    apis = [{% for api in spec.apis %}{% for operation in api.operations%}'{{operation.nickname}}', {% endfor %}{% endfor %}]
+    {% for api in spec.apis %}
+
+    {% set path = api.path %}
+    {% for operation in api.operations %}
+    {{operation.nickname}} = {
+        'method': '{{operation.method}}',
+        'path': '{{path}}',
+        'help': '{{operation.notes|replace("\n", "")|replace("'","\"")}}',
+        'params': {
+            {% for parameter in operation.parameters %}
+            '{{parameter.name}}': {
+                'param_type': '{{parameter.paramType}}',
+                'type': '{{parameter|extract_type}}',
+                'help': '{{parameter.description|replace("\n", "")|replace("'","\"")}}',
+                'required': {{parameter.required}},
+                {% if parameter.enum %}
+                'enum': [{% for enum in parameter.enum %}'{{enum}}', {% endfor %}],
+                {% endif %}
+                {% if parameter.minimum %}
+                'minimum': {{parameter.minimum}},
+                {% endif %}
+                {% if parameter.maximum %}
+                'maximum': {{parameter.maximum}},
+                {% endif %}
+                {% if parameter.defaultValue %}
+                'default': '{{parameter.defaultValue}}',
+                {% endif %}
+            },
+            {% endfor %}
+            {% if operation|extract_type|startswith('[') %}
+            {% macro pagination() %}{% include 'pagination_metadata.py.jinja2' %}{% endmacro %}
+            {{ pagination()|indent(12) }}
+            {% endif %}
+        },
+        'returns': '{{operation|extract_type}}',
+    }
+    {% endfor -%}
+    {% endfor -%}

@@ -46,7 +46,6 @@ class Configuration(object):
 
     def __init__(self,
                  host='https://canvas.instructure.com/api',
-                 api_client=None,
                  temp_folder_path=None,
                  logger_format='%(asctime)s %(levelname)s %(message)s',
                  logger_stream_handler=None,
@@ -69,8 +68,6 @@ class Configuration(object):
             # In a lot of areas the templates create new instances of Configuration with no args.
             # Default Base url
             self.host = host
-            # Default api client
-            self.api_client = api_client
             # Temp file folder for downloading files
             self.temp_folder_path = temp_folder_path
 

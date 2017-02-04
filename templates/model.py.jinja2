@@ -1,0 +1,19 @@
+import datetime.date
+import datetime.datetime
+import dateutil.parser
+
+from base import BaseModel
+
+{% set metadata_class = model_md.name|capitalize + 'ModelMetadata' %}
+from ..meta.{{model_md.name|lower}} import {{metadata_class}}
+
+class {{model_md.name|capitalize}}(BaseModel):
+    metadata = {{metadata_class}}
+
+    attributes = {{metadata_class}}.attributes
+
+    def __init__(self, {{model_md.attributes|service_param_string}}):
+        """{{model_md.help}}"""
+        {% for name in model_md.attributes.keys() %}
+        self.{{name}} = {{name}}
+        {% endfor %}

@@ -6,8 +6,7 @@ from six import iteritems
 class BaseModel(object):
     """Base Model Class for all PyCanvas Models."""
 
-    attribute_types = {}
-    attribute_map = {}
+    attributes = {}
 
     def to_json(self, recursive=False, levels=0):
         """Return a JSON representation of the model data.
@@ -19,32 +18,40 @@ class BaseModel(object):
         return json.dumps(r)
     to_JSON = to_json
 
-    def from_json(self, json):
+    @classmethod
+    def from_json(cls, json_text):
+        """Return a model equivalent of the passed JSON data."""
+        d = json.loads(json_text)
+        a = []
 
+        for name, defn in cls.attributes.items():
+            
 
-    def to_dict(self):
+        
+        
+
+    def to_dict(self, filter_none=True):
         """Return the model properties as a dict."""
-        result = {}
-
-        for attr, _ in iteritems(self.attribute_types):
-            value = getattr(self, attr)
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+        r = {}
+        # Get required params first
+        for name, defn in self.attributes.items():
+            if defn.get('required', False):
+                r[name] = getattr(self, name)
             else:
-                result[attr] = value
+                v = getattr(self, name)
+                if filter_none and v is None:
+                    continue
+                r[name] = v
+        return r
 
-        return result
+
+
+
+    def __validate_assignment(self, name, value, meta):
+        """Validate the value for attribute name."""
+        if 
+
+
 
     def __unicode__(self):
         """String description of the model."""
@@ -67,3 +74,11 @@ class BaseModel(object):
             value = getattr(self, name, None)
             a.append(name, kind, value)
         return u'{}({})'.format(_class, ','.join(['{}={}({})'.format(n, k, v) for n, k, v in a]))
+
+
+class MissingRequiredAttributeError(Exception):
+    def __init__(self, missing_attribute):
+        self.ma = missing_attribute
+
+    def __unicode__(self):
+        return u'Missing required attribute: {}'.format(self.ma)

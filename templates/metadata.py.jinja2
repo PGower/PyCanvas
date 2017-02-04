@@ -1,0 +1,14 @@
+from datetime import date, datetime
+from base import BaseModelMetadata, BaseServiceMetadata, ValidationError
+import dateutil.parser
+
+{% include 'service_metadata.py.jinja2' %}
+
+service = {{spec.name|capitalize}}ServiceMetadata
+
+{% for name, model in spec.models.items() %}
+{% include 'model_metadata.py.jinja2' %}
+
+{% endfor %}
+
+models = [{% for name in spec.models.keys() %}{{name}}ModelMetadata, {% endfor %}]

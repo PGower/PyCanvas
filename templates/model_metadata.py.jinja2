@@ -1,0 +1,19 @@
+class {{name}}ModelMetadata(BaseModelMetadata):
+    help = '{{model.description|replace("'","\"")}}'
+    name = '{{model.id}}'
+
+    attributes = {
+        {% for name, data in model.properties.items() %}
+        '{{name}}': {
+            'kind': '{{data|extract_type}}',
+            'required': {% if name in model|required_attributes %}True{% else %}False{% endif %},
+            {% if data.allowableValues %}
+            'enum': [{% for v in data.allowableValues['values'] %}'{{v}}', {% endfor %}],
+            {% endif %}
+            {% if data.default %}
+            'default': {{data.default}},
+            {% endif %}
+        },
+        {% endfor %}
+    }
+
