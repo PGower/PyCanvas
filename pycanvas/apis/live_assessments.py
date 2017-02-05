@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,15 +23,16 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         Creates live assessment results and adds them to a live assessment
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - assessment_id - ID
         path["assessment_id"] = assessment_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments/{assessment_id}/results with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/live_assessments/{assessment_id}/results".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments/{assessment_id}/results with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/live_assessments/{assessment_id}/results".format(**path), data=data, params=params, no_data=True)
 
     def list_live_assessment_results(self, course_id, assessment_id, user_id=None):
         """
@@ -39,7 +41,8 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         Returns a list of live assessment results
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -47,10 +50,10 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         path["assessment_id"] = assessment_id
         # OPTIONAL - user_id - If set, restrict results to those for this user
         if user_id is not None:
-            payload["user_id"] = user_id
+            params["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/live_assessments/{assessment_id}/results with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/live_assessments/{assessment_id}/results".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/live_assessments/{assessment_id}/results with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/live_assessments/{assessment_id}/results".format(**path), data=data, params=params, no_data=True)
 
     def create_or_find_live_assessment(self, course_id):
         """
@@ -60,13 +63,14 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         the linked outcome
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/live_assessments".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/live_assessments".format(**path), data=data, params=params, no_data=True)
 
     def list_live_assessments(self, course_id):
         """
@@ -75,13 +79,14 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         Returns a list of live assessments.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/live_assessments with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/live_assessments".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/live_assessments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/live_assessments".format(**path), data=data, params=params, no_data=True)
 
 
 class Assessment(BaseModel):

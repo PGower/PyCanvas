@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
@@ -28,7 +29,8 @@ class SubmissionCommentsAPI(BaseCanvasAPI):
         submission API to attach it to a comment
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -37,6 +39,6 @@ class SubmissionCommentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files".format(**path), data=data, params=params, no_data=True)
 

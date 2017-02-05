@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,7 +23,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         Returns the list of QuizQuestions in this quiz.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -30,13 +32,13 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - quiz_submission_id - If specified, the endpoint will return the questions that were presented for that submission. This is useful if the quiz has been modified after the submission was created and the latest quiz version's set of questions does not match the submission's. NOTE: you must specify quiz_submission_attempt as well if you specify this parameter.
         if quiz_submission_id is not None:
-            payload["quiz_submission_id"] = quiz_submission_id
+            params["quiz_submission_id"] = quiz_submission_id
         # OPTIONAL - quiz_submission_attempt - The attempt of the submission you want the questions for.
         if quiz_submission_attempt is not None:
-            payload["quiz_submission_attempt"] = quiz_submission_attempt
+            params["quiz_submission_attempt"] = quiz_submission_attempt
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions".format(**path), data=data, params=params, all_pages=True)
 
     def get_single_quiz_question(self, id, quiz_id, course_id):
         """
@@ -45,7 +47,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         Returns the quiz question with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -54,8 +57,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - The quiz question unique identifier.
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), data=data, params=params, single_item=True)
 
     def create_single_quiz_question(self, quiz_id, course_id, question_answers=None, question_correct_comments=None, question_incorrect_comments=None, question_neutral_comments=None, question_points_possible=None, question_position=None, question_question_name=None, question_question_text=None, question_question_type=None, question_quiz_group_id=None, question_text_after_answers=None):
         """
@@ -64,7 +67,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         Create a new quiz question for this quiz
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -72,42 +76,41 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - question[question_name] - The name of the question.
         if question_question_name is not None:
-            payload["question[question_name]"] = question_question_name
+            data["question[question_name]"] = question_question_name
         # OPTIONAL - question[question_text] - The text of the question.
         if question_question_text is not None:
-            payload["question[question_text]"] = question_question_text
+            data["question[question_text]"] = question_question_text
         # OPTIONAL - question[quiz_group_id] - The id of the quiz group to assign the question to.
         if question_quiz_group_id is not None:
-            payload["question[quiz_group_id]"] = question_quiz_group_id
+            data["question[quiz_group_id]"] = question_quiz_group_id
         # OPTIONAL - question[question_type] - The type of question. Multiple optional fields depend upon the type of question to be used.
         if question_question_type is not None:
             self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question"])
-        if question_question_type is not None:
-            payload["question[question_type]"] = question_question_type
+            data["question[question_type]"] = question_question_type
         # OPTIONAL - question[position] - The order in which the question will be displayed in the quiz in relation to other questions.
         if question_position is not None:
-            payload["question[position]"] = question_position
+            data["question[position]"] = question_position
         # OPTIONAL - question[points_possible] - The maximum amount of points received for answering this question correctly.
         if question_points_possible is not None:
-            payload["question[points_possible]"] = question_points_possible
+            data["question[points_possible]"] = question_points_possible
         # OPTIONAL - question[correct_comments] - The comment to display if the student answers the question correctly.
         if question_correct_comments is not None:
-            payload["question[correct_comments]"] = question_correct_comments
+            data["question[correct_comments]"] = question_correct_comments
         # OPTIONAL - question[incorrect_comments] - The comment to display if the student answers incorrectly.
         if question_incorrect_comments is not None:
-            payload["question[incorrect_comments]"] = question_incorrect_comments
+            data["question[incorrect_comments]"] = question_incorrect_comments
         # OPTIONAL - question[neutral_comments] - The comment to display regardless of how the student answered.
         if question_neutral_comments is not None:
-            payload["question[neutral_comments]"] = question_neutral_comments
+            data["question[neutral_comments]"] = question_neutral_comments
         # OPTIONAL - question[text_after_answers] - no description
         if question_text_after_answers is not None:
-            payload["question[text_after_answers]"] = question_text_after_answers
+            data["question[text_after_answers]"] = question_text_after_answers
         # OPTIONAL - question[answers] - no description
         if question_answers is not None:
-            payload["question[answers]"] = question_answers
+            data["question[answers]"] = question_answers
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions".format(**path), data=data, params=params, single_item=True)
 
     def update_existing_quiz_question(self, id, quiz_id, course_id, question_answers=None, question_correct_comments=None, question_incorrect_comments=None, question_neutral_comments=None, question_points_possible=None, question_position=None, question_question_name=None, question_question_text=None, question_question_type=None, question_quiz_group_id=None, question_text_after_answers=None):
         """
@@ -116,7 +119,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         Updates an existing quiz question for this quiz
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -126,42 +130,41 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - question[question_name] - The name of the question.
         if question_question_name is not None:
-            payload["question[question_name]"] = question_question_name
+            data["question[question_name]"] = question_question_name
         # OPTIONAL - question[question_text] - The text of the question.
         if question_question_text is not None:
-            payload["question[question_text]"] = question_question_text
+            data["question[question_text]"] = question_question_text
         # OPTIONAL - question[quiz_group_id] - The id of the quiz group to assign the question to.
         if question_quiz_group_id is not None:
-            payload["question[quiz_group_id]"] = question_quiz_group_id
+            data["question[quiz_group_id]"] = question_quiz_group_id
         # OPTIONAL - question[question_type] - The type of question. Multiple optional fields depend upon the type of question to be used.
         if question_question_type is not None:
             self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question"])
-        if question_question_type is not None:
-            payload["question[question_type]"] = question_question_type
+            data["question[question_type]"] = question_question_type
         # OPTIONAL - question[position] - The order in which the question will be displayed in the quiz in relation to other questions.
         if question_position is not None:
-            payload["question[position]"] = question_position
+            data["question[position]"] = question_position
         # OPTIONAL - question[points_possible] - The maximum amount of points received for answering this question correctly.
         if question_points_possible is not None:
-            payload["question[points_possible]"] = question_points_possible
+            data["question[points_possible]"] = question_points_possible
         # OPTIONAL - question[correct_comments] - The comment to display if the student answers the question correctly.
         if question_correct_comments is not None:
-            payload["question[correct_comments]"] = question_correct_comments
+            data["question[correct_comments]"] = question_correct_comments
         # OPTIONAL - question[incorrect_comments] - The comment to display if the student answers incorrectly.
         if question_incorrect_comments is not None:
-            payload["question[incorrect_comments]"] = question_incorrect_comments
+            data["question[incorrect_comments]"] = question_incorrect_comments
         # OPTIONAL - question[neutral_comments] - The comment to display regardless of how the student answered.
         if question_neutral_comments is not None:
-            payload["question[neutral_comments]"] = question_neutral_comments
+            data["question[neutral_comments]"] = question_neutral_comments
         # OPTIONAL - question[text_after_answers] - no description
         if question_text_after_answers is not None:
-            payload["question[text_after_answers]"] = question_text_after_answers
+            data["question[text_after_answers]"] = question_text_after_answers
         # OPTIONAL - question[answers] - no description
         if question_answers is not None:
-            payload["question[answers]"] = question_answers
+            data["question[answers]"] = question_answers
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_quiz_question(self, id, quiz_id, course_id):
         """
@@ -170,7 +173,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -179,8 +183,8 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - The quiz question's unique identifier
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Answer(BaseModel):

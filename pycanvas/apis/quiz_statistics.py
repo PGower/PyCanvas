@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -26,7 +27,8 @@ class QuizStatisticsAPI(BaseCanvasAPI):
         <b>200 OK</b> response code is returned if the request was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -34,10 +36,10 @@ class QuizStatisticsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - all_versions - Whether the statistics report should include all submissions attempts.
         if all_versions is not None:
-            payload["all_versions"] = all_versions
+            params["all_versions"] = all_versions
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/statistics with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/statistics".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/statistics with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/statistics".format(**path), data=data, params=params, no_data=True)
 
 
 class Quizstatisticsquestionstatistics(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class PollChoicesAPI(BaseCanvasAPI):
         Returns the list of PollChoices in this poll.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_choices".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_choices".format(**path), data=data, params=params, no_data=True)
 
     def get_single_poll_choice(self, id, poll_id):
         """
@@ -37,15 +39,16 @@ class PollChoicesAPI(BaseCanvasAPI):
         Returns the poll choice with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_single_poll_choice(self, poll_id, poll_choices_text, poll_choices_is_correct=None, poll_choices_position=None):
         """
@@ -54,21 +57,22 @@ class PollChoicesAPI(BaseCanvasAPI):
         Create a new poll choice for this poll
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - poll_choices[text] - The descriptive text of the poll choice.
-        payload["poll_choices[text]"] = poll_choices_text
+        data["poll_choices[text]"] = poll_choices_text
         # OPTIONAL - poll_choices[is_correct] - Whether this poll choice is considered correct or not. Defaults to false.
         if poll_choices_is_correct is not None:
-            payload["poll_choices[is_correct]"] = poll_choices_is_correct
+            data["poll_choices[is_correct]"] = poll_choices_is_correct
         # OPTIONAL - poll_choices[position] - The order this poll choice should be returned in the context it's sibling poll choices.
         if poll_choices_position is not None:
-            payload["poll_choices[position]"] = poll_choices_position
+            data["poll_choices[position]"] = poll_choices_position
 
-        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_choices with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_choices".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_choices with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_choices".format(**path), data=data, params=params, no_data=True)
 
     def update_single_poll_choice(self, id, poll_id, poll_choices_text, poll_choices_is_correct=None, poll_choices_position=None):
         """
@@ -77,23 +81,24 @@ class PollChoicesAPI(BaseCanvasAPI):
         Update an existing poll choice for this poll
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - poll_choices[text] - The descriptive text of the poll choice.
-        payload["poll_choices[text]"] = poll_choices_text
+        data["poll_choices[text]"] = poll_choices_text
         # OPTIONAL - poll_choices[is_correct] - Whether this poll choice is considered correct or not. Defaults to false.
         if poll_choices_is_correct is not None:
-            payload["poll_choices[is_correct]"] = poll_choices_is_correct
+            data["poll_choices[is_correct]"] = poll_choices_is_correct
         # OPTIONAL - poll_choices[position] - The order this poll choice should be returned in the context it's sibling poll choices.
         if poll_choices_position is not None:
-            payload["poll_choices[position]"] = poll_choices_position
+            data["poll_choices[position]"] = poll_choices_position
 
-        self.logger.debug("PUT /api/v1/polls/{poll_id}/poll_choices/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/polls/{poll_id}/poll_choices/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_poll_choice(self, id, poll_id):
         """
@@ -102,15 +107,16 @@ class PollChoicesAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_choices/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_choices/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/polls/{poll_id}/poll_choices/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Pollchoice(BaseModel):

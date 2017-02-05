@@ -5,6 +5,8 @@ import logging
 
 logger = logging.getLogger('pycanvas.BaseCanvasAPI')
 
+ISO8601_REGEX = r'(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})'
+
 class BaseCanvasAPI(object):
     def __init__(self, instance_address, access_token, **kwargs):
         self.instance_address = instance_address
@@ -105,7 +107,8 @@ class BaseCanvasAPI(object):
                         no_data=False,
                         do_not_process=False,
                         force_urlencode_data=False,
-                        data=None, params=None,
+                        data=None, 
+                        params=None,
                         single_item=False):
         """Generic Canvas Request Method."""
         if not uri.startswith('http'):
@@ -158,6 +161,14 @@ class BaseCanvasAPI(object):
                 if v not in acceptable_values:
                     raise ValueError('{} not in {}'.format(value, str(acceptable_values)))
         return value
+
+    def _validate_datetime(self, value):
+        """Return the value or raise a ValueError if it is not a string in ISO8601 format."""
+        if re.match(ISO8601_REGEX, value):
+            return value
+        else:
+            raise ValueError('{} must be in ISO8601 format.'.format(value))
+
 
 
 

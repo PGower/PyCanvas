@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -23,13 +24,14 @@ class ContentExportsAPI(BaseCanvasAPI):
         Exports are returned newest first.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_exports".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_exports".format(**path), data=data, params=params, all_pages=True)
 
     def list_content_exports_groups(self, group_id):
         """
@@ -39,13 +41,14 @@ class ContentExportsAPI(BaseCanvasAPI):
         Exports are returned newest first.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_exports".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_exports".format(**path), data=data, params=params, all_pages=True)
 
     def list_content_exports_users(self, user_id):
         """
@@ -55,13 +58,14 @@ class ContentExportsAPI(BaseCanvasAPI):
         Exports are returned newest first.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_exports".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_exports".format(**path), data=data, params=params, all_pages=True)
 
     def show_content_export_courses(self, id, course_id):
         """
@@ -70,15 +74,16 @@ class ContentExportsAPI(BaseCanvasAPI):
         Get information about a single content export.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_exports/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_exports/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_exports/{id}".format(**path), data=data, params=params, single_item=True)
 
     def show_content_export_groups(self, id, group_id):
         """
@@ -87,15 +92,16 @@ class ContentExportsAPI(BaseCanvasAPI):
         Get information about a single content export.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_exports/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_exports/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_exports/{id}".format(**path), data=data, params=params, single_item=True)
 
     def show_content_export_users(self, id, user_id):
         """
@@ -104,15 +110,16 @@ class ContentExportsAPI(BaseCanvasAPI):
         Get information about a single content export.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_exports/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_exports/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_exports/{id}".format(**path), data=data, params=params, single_item=True)
 
     def export_content_courses(self, course_id, export_type, skip_notifications=None):
         """
@@ -128,20 +135,20 @@ class ContentExportsAPI(BaseCanvasAPI):
         to retrieve a download URL for the exported content.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
-        if export_type is not None:
-            self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
-        payload["export_type"] = export_type
+        self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
+        data["export_type"] = export_type
         # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
         if skip_notifications is not None:
-            payload["skip_notifications"] = skip_notifications
+            data["skip_notifications"] = skip_notifications
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/content_exports".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/content_exports".format(**path), data=data, params=params, single_item=True)
 
     def export_content_groups(self, group_id, export_type, skip_notifications=None):
         """
@@ -157,20 +164,20 @@ class ContentExportsAPI(BaseCanvasAPI):
         to retrieve a download URL for the exported content.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
-        if export_type is not None:
-            self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
-        payload["export_type"] = export_type
+        self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
+        data["export_type"] = export_type
         # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
         if skip_notifications is not None:
-            payload["skip_notifications"] = skip_notifications
+            data["skip_notifications"] = skip_notifications
 
-        self.logger.debug("POST /api/v1/groups/{group_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/groups/{group_id}/content_exports".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/groups/{group_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/groups/{group_id}/content_exports".format(**path), data=data, params=params, single_item=True)
 
     def export_content_users(self, user_id, export_type, skip_notifications=None):
         """
@@ -186,20 +193,20 @@ class ContentExportsAPI(BaseCanvasAPI):
         to retrieve a download URL for the exported content.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
-        if export_type is not None:
-            self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
-        payload["export_type"] = export_type
+        self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
+        data["export_type"] = export_type
         # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
         if skip_notifications is not None:
-            payload["skip_notifications"] = skip_notifications
+            data["skip_notifications"] = skip_notifications
 
-        self.logger.debug("POST /api/v1/users/{user_id}/content_exports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/{user_id}/content_exports".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/users/{user_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{user_id}/content_exports".format(**path), data=data, params=params, single_item=True)
 
 
 class Contentexport(BaseModel):

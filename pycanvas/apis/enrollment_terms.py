@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,25 +23,26 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
         Create a new enrollment term for the specified account.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - enrollment_term[name] - The name of the term.
         if enrollment_term_name is not None:
-            payload["enrollment_term[name]"] = enrollment_term_name
+            data["enrollment_term[name]"] = enrollment_term_name
         # OPTIONAL - enrollment_term[start_at] - The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.
         if enrollment_term_start_at is not None:
-            payload["enrollment_term[start_at]"] = enrollment_term_start_at
+            data["enrollment_term[start_at]"] = enrollment_term_start_at
         # OPTIONAL - enrollment_term[end_at] - The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.
         if enrollment_term_end_at is not None:
-            payload["enrollment_term[end_at]"] = enrollment_term_end_at
+            data["enrollment_term[end_at]"] = enrollment_term_end_at
         # OPTIONAL - enrollment_term[sis_term_id] - The unique SIS identifier for the term.
         if enrollment_term_sis_term_id is not None:
-            payload["enrollment_term[sis_term_id]"] = enrollment_term_sis_term_id
+            data["enrollment_term[sis_term_id]"] = enrollment_term_sis_term_id
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/terms with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/terms".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/terms with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/terms".format(**path), data=data, params=params, single_item=True)
 
     def update_enrollment_term(self, id, account_id, enrollment_term_end_at=None, enrollment_term_name=None, enrollment_term_sis_term_id=None, enrollment_term_start_at=None):
         """
@@ -49,7 +51,8 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
         Update an existing enrollment term for the specified account.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -57,19 +60,19 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - enrollment_term[name] - The name of the term.
         if enrollment_term_name is not None:
-            payload["enrollment_term[name]"] = enrollment_term_name
+            data["enrollment_term[name]"] = enrollment_term_name
         # OPTIONAL - enrollment_term[start_at] - The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.
         if enrollment_term_start_at is not None:
-            payload["enrollment_term[start_at]"] = enrollment_term_start_at
+            data["enrollment_term[start_at]"] = enrollment_term_start_at
         # OPTIONAL - enrollment_term[end_at] - The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.
         if enrollment_term_end_at is not None:
-            payload["enrollment_term[end_at]"] = enrollment_term_end_at
+            data["enrollment_term[end_at]"] = enrollment_term_end_at
         # OPTIONAL - enrollment_term[sis_term_id] - The unique SIS identifier for the term.
         if enrollment_term_sis_term_id is not None:
-            payload["enrollment_term[sis_term_id]"] = enrollment_term_sis_term_id
+            data["enrollment_term[sis_term_id]"] = enrollment_term_sis_term_id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/terms/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/terms/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/terms/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/terms/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_enrollment_term(self, id, account_id):
         """
@@ -78,15 +81,16 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
         Delete the specified enrollment term.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/terms/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/terms/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/terms/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/terms/{id}".format(**path), data=data, params=params, single_item=True)
 
     def list_enrollment_terms(self, account_id, workflow_state=None):
         """
@@ -95,16 +99,17 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
         Return all of the terms in the account.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - workflow_state - no description
         if workflow_state is not None:
-            payload["workflow_state"] = workflow_state
+            params["workflow_state"] = workflow_state
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/terms with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/terms".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/terms with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/terms".format(**path), data=data, params=params, all_pages=True)
 
 
 class Enrollmentterm(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Returns a list of group categories in a context
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/group_categories with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/group_categories".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/group_categories".format(**path), data=data, params=params, all_pages=True)
 
     def list_group_categories_for_context_courses(self, course_id):
         """
@@ -37,13 +39,14 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Returns a list of group categories in a context
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/group_categories with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/group_categories".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/group_categories".format(**path), data=data, params=params, all_pages=True)
 
     def get_single_group_category(self, group_category_id):
         """
@@ -53,13 +56,14 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         the rights to see it.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
 
-        self.logger.debug("GET /api/v1/group_categories/{group_category_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/group_categories/{group_category_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}".format(**path), data=data, params=params, single_item=True)
 
     def create_group_category_accounts(self, name, account_id, auto_leader=None, create_group_count=None, group_limit=None, self_signup=None, split_group_count=None):
         """
@@ -68,34 +72,33 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Create a new group category
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - name - Name of the group category
-        payload["name"] = name
+        data["name"] = name
         # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
-        if self_signup is not None:
-            payload["self_signup"] = self_signup
+            data["self_signup"] = self_signup
         # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
-        if auto_leader is not None:
-            payload["auto_leader"] = auto_leader
+            data["auto_leader"] = auto_leader
         # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
         if group_limit is not None:
-            payload["group_limit"] = group_limit
+            data["group_limit"] = group_limit
         # OPTIONAL - create_group_count - Create this number of groups (Course Only).
         if create_group_count is not None:
-            payload["create_group_count"] = create_group_count
+            data["create_group_count"] = create_group_count
         # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
         if split_group_count is not None:
-            payload["split_group_count"] = split_group_count
+            data["split_group_count"] = split_group_count
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/group_categories with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/group_categories".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/group_categories".format(**path), data=data, params=params, single_item=True)
 
     def create_group_category_courses(self, name, course_id, auto_leader=None, create_group_count=None, group_limit=None, self_signup=None, split_group_count=None):
         """
@@ -104,34 +107,33 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Create a new group category
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - name - Name of the group category
-        payload["name"] = name
+        data["name"] = name
         # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
-        if self_signup is not None:
-            payload["self_signup"] = self_signup
+            data["self_signup"] = self_signup
         # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
-        if auto_leader is not None:
-            payload["auto_leader"] = auto_leader
+            data["auto_leader"] = auto_leader
         # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
         if group_limit is not None:
-            payload["group_limit"] = group_limit
+            data["group_limit"] = group_limit
         # OPTIONAL - create_group_count - Create this number of groups (Course Only).
         if create_group_count is not None:
-            payload["create_group_count"] = create_group_count
+            data["create_group_count"] = create_group_count
         # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
         if split_group_count is not None:
-            payload["split_group_count"] = split_group_count
+            data["split_group_count"] = split_group_count
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/group_categories with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/group_categories".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/group_categories".format(**path), data=data, params=params, single_item=True)
 
     def update_group_category(self, group_category_id, auto_leader=None, create_group_count=None, group_limit=None, name=None, self_signup=None, split_group_count=None):
         """
@@ -140,35 +142,34 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Modifies an existing group category.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
         # OPTIONAL - name - Name of the group category
         if name is not None:
-            payload["name"] = name
+            data["name"] = name
         # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). Valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
-        if self_signup is not None:
-            payload["self_signup"] = self_signup
+            data["self_signup"] = self_signup
         # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
-        if auto_leader is not None:
-            payload["auto_leader"] = auto_leader
+            data["auto_leader"] = auto_leader
         # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
         if group_limit is not None:
-            payload["group_limit"] = group_limit
+            data["group_limit"] = group_limit
         # OPTIONAL - create_group_count - Create this number of groups (Course Only).
         if create_group_count is not None:
-            payload["create_group_count"] = create_group_count
+            data["create_group_count"] = create_group_count
         # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
         if split_group_count is not None:
-            payload["split_group_count"] = split_group_count
+            data["split_group_count"] = split_group_count
 
-        self.logger.debug("PUT /api/v1/group_categories/{group_category_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/group_categories/{group_category_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/group_categories/{group_category_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/group_categories/{group_category_id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_group_category(self, group_category_id):
         """
@@ -178,13 +179,14 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         categories can not be deleted, i.e. "communities" and "student_organized".
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
 
-        self.logger.debug("DELETE /api/v1/group_categories/{group_category_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/group_categories/{group_category_id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/group_categories/{group_category_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/group_categories/{group_category_id}".format(**path), data=data, params=params, no_data=True)
 
     def list_groups_in_group_category(self, group_category_id):
         """
@@ -193,13 +195,14 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Returns a list of groups in a group category
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
 
-        self.logger.debug("GET /api/v1/group_categories/{group_category_id}/groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}/groups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/group_categories/{group_category_id}/groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}/groups".format(**path), data=data, params=params, all_pages=True)
 
     def list_users_in_group_category(self, group_category_id, search_term=None, unassigned=None):
         """
@@ -208,19 +211,20 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         Returns a list of users in the group category.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
         # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list. Must be at least 3 characters.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - unassigned - Set this value to true if you wish only to search unassigned users in the group category.
         if unassigned is not None:
-            payload["unassigned"] = unassigned
+            params["unassigned"] = unassigned
 
-        self.logger.debug("GET /api/v1/group_categories/{group_category_id}/users with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}/users".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/group_categories/{group_category_id}/users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/group_categories/{group_category_id}/users".format(**path), data=data, params=params, all_pages=True)
 
     def assign_unassigned_members(self, group_category_id, sync=None):
         """
@@ -230,16 +234,17 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         student groups.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_category_id - ID
         path["group_category_id"] = group_category_id
         # OPTIONAL - sync - The assigning is done asynchronously by default. If you would like to override this and have the assigning done synchronously, set this value to true.
         if sync is not None:
-            payload["sync"] = sync
+            data["sync"] = sync
 
-        self.logger.debug("POST /api/v1/group_categories/{group_category_id}/assign_unassigned_members with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/group_categories/{group_category_id}/assign_unassigned_members".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/group_categories/{group_category_id}/assign_unassigned_members with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/group_categories/{group_category_id}/assign_unassigned_members".format(**path), data=data, params=params, single_item=True)
 
 
 class Groupcategory(BaseModel):

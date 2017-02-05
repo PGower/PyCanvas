@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -30,7 +31,8 @@ class SubmissionsAPI(BaseCanvasAPI):
         * Integration with Google Docs is not yet supported.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -38,7 +40,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         path["assignment_id"] = assignment_id
         # OPTIONAL - comment[text_comment] - Include a textual comment with the submission.
         if comment_text_comment is not None:
-            payload["comment[text_comment]"] = comment_text_comment
+            data["comment[text_comment]"] = comment_text_comment
         # REQUIRED - submission[submission_type] - The type of submission being made. The assignment submission_types must
 include this submission type as an allowed option, or the submission will be rejected with a 400 error.
 
@@ -46,21 +48,20 @@ The submission_type given determines which of the following parameters is
 used. For instance, to submit a URL, submission [submission_type] must be
 set to "online_url", otherwise the submission [url] parameter will be
 ignored.
-        if submission_submission_type is not None:
-            self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
-        payload["submission[submission_type]"] = submission_submission_type
+        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
+        data["submission[submission_type]"] = submission_submission_type
         # OPTIONAL - submission[body] - Submit the assignment as an HTML document snippet. Note this HTML snippet
 will be sanitized using the same ruleset as a submission made from the
 Canvas web UI. The sanitized HTML will be returned in the response as the
 submission body. Requires a submission_type of "online_text_entry".
         if submission_body is not None:
-            payload["submission[body]"] = submission_body
+            data["submission[body]"] = submission_body
         # OPTIONAL - submission[url] - Submit the assignment as a URL. The URL scheme must be "http" or "https",
 no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
 "www.example.com") then "http" will be assumed. Requires a submission_type
 of "online_url".
         if submission_url is not None:
-            payload["submission[url]"] = submission_url
+            data["submission[url]"] = submission_url
         # OPTIONAL - submission[file_ids] - Submit the assignment as a set of one or more previously uploaded files
 residing in the submitting user's files section (or the group's files
 section, for group assignments).
@@ -69,22 +70,21 @@ To upload a new file to submit, see the submissions {api:SubmissionsApiControlle
 
 Requires a submission_type of "online_upload".
         if submission_file_ids is not None:
-            payload["submission[file_ids]"] = submission_file_ids
+            data["submission[file_ids]"] = submission_file_ids
         # OPTIONAL - submission[media_comment_id] - The media comment id to submit. Media comment ids can be submitted via
 this API, however, note that there is not yet an API to generate or list
 existing media comments, so this functionality is currently of limited use.
 
 Requires a submission_type of "media_recording".
         if submission_media_comment_id is not None:
-            payload["submission[media_comment_id]"] = submission_media_comment_id
+            data["submission[media_comment_id]"] = submission_media_comment_id
         # OPTIONAL - submission[media_comment_type] - The type of media comment being submitted.
         if submission_media_comment_type is not None:
             self._validate_enum(submission_media_comment_type, ["audio", "video"])
-        if submission_media_comment_type is not None:
-            payload["submission[media_comment_type]"] = submission_media_comment_type
+            data["submission[media_comment_type]"] = submission_media_comment_type
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions".format(**path), data=data, params=params, no_data=True)
 
     def submit_assignment_sections(self, section_id, assignment_id, submission_submission_type, comment_text_comment=None, submission_body=None, submission_file_ids=None, submission_media_comment_id=None, submission_media_comment_type=None, submission_url=None):
         """
@@ -101,7 +101,8 @@ Requires a submission_type of "media_recording".
         * Integration with Google Docs is not yet supported.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -109,7 +110,7 @@ Requires a submission_type of "media_recording".
         path["assignment_id"] = assignment_id
         # OPTIONAL - comment[text_comment] - Include a textual comment with the submission.
         if comment_text_comment is not None:
-            payload["comment[text_comment]"] = comment_text_comment
+            data["comment[text_comment]"] = comment_text_comment
         # REQUIRED - submission[submission_type] - The type of submission being made. The assignment submission_types must
 include this submission type as an allowed option, or the submission will be rejected with a 400 error.
 
@@ -117,21 +118,20 @@ The submission_type given determines which of the following parameters is
 used. For instance, to submit a URL, submission [submission_type] must be
 set to "online_url", otherwise the submission [url] parameter will be
 ignored.
-        if submission_submission_type is not None:
-            self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
-        payload["submission[submission_type]"] = submission_submission_type
+        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
+        data["submission[submission_type]"] = submission_submission_type
         # OPTIONAL - submission[body] - Submit the assignment as an HTML document snippet. Note this HTML snippet
 will be sanitized using the same ruleset as a submission made from the
 Canvas web UI. The sanitized HTML will be returned in the response as the
 submission body. Requires a submission_type of "online_text_entry".
         if submission_body is not None:
-            payload["submission[body]"] = submission_body
+            data["submission[body]"] = submission_body
         # OPTIONAL - submission[url] - Submit the assignment as a URL. The URL scheme must be "http" or "https",
 no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
 "www.example.com") then "http" will be assumed. Requires a submission_type
 of "online_url".
         if submission_url is not None:
-            payload["submission[url]"] = submission_url
+            data["submission[url]"] = submission_url
         # OPTIONAL - submission[file_ids] - Submit the assignment as a set of one or more previously uploaded files
 residing in the submitting user's files section (or the group's files
 section, for group assignments).
@@ -140,22 +140,21 @@ To upload a new file to submit, see the submissions {api:SubmissionsApiControlle
 
 Requires a submission_type of "online_upload".
         if submission_file_ids is not None:
-            payload["submission[file_ids]"] = submission_file_ids
+            data["submission[file_ids]"] = submission_file_ids
         # OPTIONAL - submission[media_comment_id] - The media comment id to submit. Media comment ids can be submitted via
 this API, however, note that there is not yet an API to generate or list
 existing media comments, so this functionality is currently of limited use.
 
 Requires a submission_type of "media_recording".
         if submission_media_comment_id is not None:
-            payload["submission[media_comment_id]"] = submission_media_comment_id
+            data["submission[media_comment_id]"] = submission_media_comment_id
         # OPTIONAL - submission[media_comment_type] - The type of media comment being submitted.
         if submission_media_comment_type is not None:
             self._validate_enum(submission_media_comment_type, ["audio", "video"])
-        if submission_media_comment_type is not None:
-            payload["submission[media_comment_type]"] = submission_media_comment_type
+            data["submission[media_comment_type]"] = submission_media_comment_type
 
-        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions".format(**path), data=data, params=params, no_data=True)
 
     def list_assignment_submissions_courses(self, course_id, assignment_id, grouped=None, include=None):
         """
@@ -164,7 +163,8 @@ Requires a submission_type of "media_recording".
         Get all existing submissions for an assignment.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -173,14 +173,13 @@ Requires a submission_type of "media_recording".
         # OPTIONAL - include - Associations to include with the group.  "group" will add group_id and group_name.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - grouped - If this argument is true, the response will be grouped by student groups.
         if grouped is not None:
-            payload["grouped"] = grouped
+            params["grouped"] = grouped
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions".format(**path), data=data, params=params, all_pages=True)
 
     def list_assignment_submissions_sections(self, section_id, assignment_id, grouped=None, include=None):
         """
@@ -189,7 +188,8 @@ Requires a submission_type of "media_recording".
         Get all existing submissions for an assignment.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -198,14 +198,13 @@ Requires a submission_type of "media_recording".
         # OPTIONAL - include - Associations to include with the group.  "group" will add group_id and group_name.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - grouped - If this argument is true, the response will be grouped by student groups.
         if grouped is not None:
-            payload["grouped"] = grouped
+            params["grouped"] = grouped
 
-        self.logger.debug("GET /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions".format(**path), data=data, params=params, all_pages=True)
 
     def list_submissions_for_multiple_assignments_courses(self, course_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None):
         """
@@ -214,7 +213,8 @@ Requires a submission_type of "media_recording".
         Get all existing submissions for a given set of students and assignments.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -224,28 +224,27 @@ their own submissions. Observers may only list those of associated
 students. The special id "all" will return submissions for all students
 in the course/section as appropriate.
         if student_ids is not None:
-            payload["student_ids"] = student_ids
+            params["student_ids"] = student_ids
         # OPTIONAL - assignment_ids - List of assignments to return submissions for. If none are given,
 submissions for all assignments are returned.
         if assignment_ids is not None:
-            payload["assignment_ids"] = assignment_ids
+            params["assignment_ids"] = assignment_ids
         # OPTIONAL - grouped - If this argument is present, the response will be grouped by student,
 rather than a flat array of submissions.
         if grouped is not None:
-            payload["grouped"] = grouped
+            params["grouped"] = grouped
         # OPTIONAL - grading_period_id - The id of the grading period in which submissions are being requested
 (Requires the Multiple Grading Periods account feature turned on)
         if grading_period_id is not None:
-            payload["grading_period_id"] = grading_period_id
+            params["grading_period_id"] = grading_period_id
         # OPTIONAL - include - Associations to include with the group. `total_scores` requires the
 `grouped` argument.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "total_scores", "visibility", "course", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/students/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/students/submissions".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/students/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/students/submissions".format(**path), data=data, params=params, no_data=True)
 
     def list_submissions_for_multiple_assignments_sections(self, section_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None):
         """
@@ -254,7 +253,8 @@ rather than a flat array of submissions.
         Get all existing submissions for a given set of students and assignments.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -264,28 +264,27 @@ their own submissions. Observers may only list those of associated
 students. The special id "all" will return submissions for all students
 in the course/section as appropriate.
         if student_ids is not None:
-            payload["student_ids"] = student_ids
+            params["student_ids"] = student_ids
         # OPTIONAL - assignment_ids - List of assignments to return submissions for. If none are given,
 submissions for all assignments are returned.
         if assignment_ids is not None:
-            payload["assignment_ids"] = assignment_ids
+            params["assignment_ids"] = assignment_ids
         # OPTIONAL - grouped - If this argument is present, the response will be grouped by student,
 rather than a flat array of submissions.
         if grouped is not None:
-            payload["grouped"] = grouped
+            params["grouped"] = grouped
         # OPTIONAL - grading_period_id - The id of the grading period in which submissions are being requested
 (Requires the Multiple Grading Periods account feature turned on)
         if grading_period_id is not None:
-            payload["grading_period_id"] = grading_period_id
+            params["grading_period_id"] = grading_period_id
         # OPTIONAL - include - Associations to include with the group. `total_scores` requires the
 `grouped` argument.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "total_scores", "visibility", "course", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/sections/{section_id}/students/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/sections/{section_id}/students/submissions".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/sections/{section_id}/students/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/sections/{section_id}/students/submissions".format(**path), data=data, params=params, no_data=True)
 
     def get_single_submission_courses(self, user_id, course_id, assignment_id, include=None):
         """
@@ -294,7 +293,8 @@ rather than a flat array of submissions.
         Get a single submission, based on user id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -305,11 +305,10 @@ rather than a flat array of submissions.
         # OPTIONAL - include - Associations to include with the group.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "visibility", "course", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=data, params=params, no_data=True)
 
     def get_single_submission_sections(self, user_id, section_id, assignment_id, include=None):
         """
@@ -318,7 +317,8 @@ rather than a flat array of submissions.
         Get a single submission, based on user id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -329,11 +329,10 @@ rather than a flat array of submissions.
         # OPTIONAL - include - Associations to include with the group.
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "visibility", "course", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=data, params=params, no_data=True)
 
     def upload_file_courses(self, user_id, course_id, assignment_id):
         """
@@ -349,7 +348,8 @@ rather than a flat array of submissions.
         +online_upload+ assignment with these file ids.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -358,8 +358,8 @@ rather than a flat array of submissions.
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/files".format(**path), data=data, params=params, no_data=True)
 
     def upload_file_sections(self, user_id, section_id, assignment_id):
         """
@@ -375,7 +375,8 @@ rather than a flat array of submissions.
         +online_upload+ assignment with these file ids.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -384,8 +385,8 @@ rather than a flat array of submissions.
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/files".format(**path), data=data, params=params, no_data=True)
 
     def grade_or_comment_on_submission_courses(self, user_id, course_id, assignment_id, comment_file_ids=None, comment_group_comment=None, comment_media_comment_id=None, comment_media_comment_type=None, comment_text_comment=None, include_visibility=None, rubric_assessment=None, submission_excuse=None, submission_posted_grade=None):
         """
@@ -397,7 +398,8 @@ rather than a flat array of submissions.
         section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -407,30 +409,29 @@ rather than a flat array of submissions.
         path["user_id"] = user_id
         # OPTIONAL - comment[text_comment] - Add a textual comment to the submission.
         if comment_text_comment is not None:
-            payload["comment[text_comment]"] = comment_text_comment
+            data["comment[text_comment]"] = comment_text_comment
         # OPTIONAL - comment[group_comment] - Whether or not this comment should be sent to the entire group (defaults
 to false). Ignored if this is not a group assignment or if no text_comment
 is provided.
         if comment_group_comment is not None:
-            payload["comment[group_comment]"] = comment_group_comment
+            data["comment[group_comment]"] = comment_group_comment
         # OPTIONAL - comment[media_comment_id] - Add an audio/video comment to the submission. Media comments can be added
 via this API, however, note that there is not yet an API to generate or
 list existing media comments, so this functionality is currently of
 limited use.
         if comment_media_comment_id is not None:
-            payload["comment[media_comment_id]"] = comment_media_comment_id
+            data["comment[media_comment_id]"] = comment_media_comment_id
         # OPTIONAL - comment[media_comment_type] - The type of media comment being added.
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
-        if comment_media_comment_type is not None:
-            payload["comment[media_comment_type]"] = comment_media_comment_type
+            data["comment[media_comment_type]"] = comment_media_comment_type
         # OPTIONAL - comment[file_ids] - Attach files to this comment that were previously uploaded using the
 Submission Comment API's files action
         if comment_file_ids is not None:
-            payload["comment[file_ids]"] = comment_file_ids
+            data["comment[file_ids]"] = comment_file_ids
         # OPTIONAL - include[visibility] - Whether this assignment is visible to the owner of the submission
         if include_visibility is not None:
-            payload["include[visibility]"] = include_visibility
+            data["include[visibility]"] = include_visibility
         # OPTIONAL - submission[posted_grade] - Assign a score to the submission, updating both the "score" and "grade"
 fields on the submission record. This parameter can be passed in a few
 different formats:
@@ -459,10 +460,10 @@ assigned a score of 0 or assignment.points_possible, nothing inbetween. If
 a posted_grade in the "points" or "percentage" format is sent, the grade
 will only be accepted if the grade equals one of those two values.
         if submission_posted_grade is not None:
-            payload["submission[posted_grade]"] = submission_posted_grade
+            data["submission[posted_grade]"] = submission_posted_grade
         # OPTIONAL - submission[excuse] - Sets the "excused" status of an assignment.
         if submission_excuse is not None:
-            payload["submission[excuse]"] = submission_excuse
+            data["submission[excuse]"] = submission_excuse
         # OPTIONAL - rubric_assessment - Assign a rubric assessment to this assignment submission. The
 sub-parameters here depend on the rubric for the assignment. The general
 format is, for each row in the rubric:
@@ -501,10 +502,10 @@ For example, if the assignment rubric is (in JSON format):
 Then a possible set of values for rubric_assessment would be:
     rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done.
         if rubric_assessment is not None:
-            payload["rubric_assessment"] = rubric_assessment
+            data["rubric_assessment"] = rubric_assessment
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=data, params=params, no_data=True)
 
     def grade_or_comment_on_submission_sections(self, user_id, section_id, assignment_id, comment_file_ids=None, comment_group_comment=None, comment_media_comment_id=None, comment_media_comment_type=None, comment_text_comment=None, include_visibility=None, rubric_assessment=None, submission_excuse=None, submission_posted_grade=None):
         """
@@ -516,7 +517,8 @@ Then a possible set of values for rubric_assessment would be:
         section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -526,30 +528,29 @@ Then a possible set of values for rubric_assessment would be:
         path["user_id"] = user_id
         # OPTIONAL - comment[text_comment] - Add a textual comment to the submission.
         if comment_text_comment is not None:
-            payload["comment[text_comment]"] = comment_text_comment
+            data["comment[text_comment]"] = comment_text_comment
         # OPTIONAL - comment[group_comment] - Whether or not this comment should be sent to the entire group (defaults
 to false). Ignored if this is not a group assignment or if no text_comment
 is provided.
         if comment_group_comment is not None:
-            payload["comment[group_comment]"] = comment_group_comment
+            data["comment[group_comment]"] = comment_group_comment
         # OPTIONAL - comment[media_comment_id] - Add an audio/video comment to the submission. Media comments can be added
 via this API, however, note that there is not yet an API to generate or
 list existing media comments, so this functionality is currently of
 limited use.
         if comment_media_comment_id is not None:
-            payload["comment[media_comment_id]"] = comment_media_comment_id
+            data["comment[media_comment_id]"] = comment_media_comment_id
         # OPTIONAL - comment[media_comment_type] - The type of media comment being added.
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
-        if comment_media_comment_type is not None:
-            payload["comment[media_comment_type]"] = comment_media_comment_type
+            data["comment[media_comment_type]"] = comment_media_comment_type
         # OPTIONAL - comment[file_ids] - Attach files to this comment that were previously uploaded using the
 Submission Comment API's files action
         if comment_file_ids is not None:
-            payload["comment[file_ids]"] = comment_file_ids
+            data["comment[file_ids]"] = comment_file_ids
         # OPTIONAL - include[visibility] - Whether this assignment is visible to the owner of the submission
         if include_visibility is not None:
-            payload["include[visibility]"] = include_visibility
+            data["include[visibility]"] = include_visibility
         # OPTIONAL - submission[posted_grade] - Assign a score to the submission, updating both the "score" and "grade"
 fields on the submission record. This parameter can be passed in a few
 different formats:
@@ -578,10 +579,10 @@ assigned a score of 0 or assignment.points_possible, nothing inbetween. If
 a posted_grade in the "points" or "percentage" format is sent, the grade
 will only be accepted if the grade equals one of those two values.
         if submission_posted_grade is not None:
-            payload["submission[posted_grade]"] = submission_posted_grade
+            data["submission[posted_grade]"] = submission_posted_grade
         # OPTIONAL - submission[excuse] - Sets the "excused" status of an assignment.
         if submission_excuse is not None:
-            payload["submission[excuse]"] = submission_excuse
+            data["submission[excuse]"] = submission_excuse
         # OPTIONAL - rubric_assessment - Assign a rubric assessment to this assignment submission. The
 sub-parameters here depend on the rubric for the assignment. The general
 format is, for each row in the rubric:
@@ -620,10 +621,10 @@ For example, if the assignment rubric is (in JSON format):
 Then a possible set of values for rubric_assessment would be:
     rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done.
         if rubric_assessment is not None:
-            payload["rubric_assessment"] = rubric_assessment
+            data["rubric_assessment"] = rubric_assessment
 
-        self.logger.debug("PUT /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}".format(**path), data=data, params=params, no_data=True)
 
     def list_gradeable_students(self, course_id, assignment_id):
         """
@@ -636,15 +637,16 @@ Then a possible set of values for rubric_assessment would be:
         returns [UserDisplay]
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - assignment_id - ID
         path["assignment_id"] = assignment_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students".format(**path), data=data, params=params, no_data=True)
 
     def grade_or_comment_on_multiple_submissions_courses_submissions(self, course_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
@@ -657,39 +659,39 @@ Then a possible set of values for rubric_assessment would be:
         (course or section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_posted_grade is not None:
-            payload["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+            data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
         # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_rubric_assessment is not None:
-            payload["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+            data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
         # OPTIONAL - grade_data[<student_id>][text_comment] - no description
         if grade_data_<student_id>_text_comment is not None:
-            payload["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+            data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
         # OPTIONAL - grade_data[<student_id>][group_comment] - no description
         if grade_data_<student_id>_group_comment is not None:
-            payload["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+            data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
         # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
         if grade_data_<student_id>_media_comment_id is not None:
-            payload["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+            data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
         # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
-        if grade_data_<student_id>_media_comment_type is not None:
-            payload["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+            data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
         # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_file_ids is not None:
-            payload["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
+            data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/submissions/update_grades with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/submissions/update_grades".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
     def grade_or_comment_on_multiple_submissions_courses_assignments(self, course_id, assignment_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
@@ -702,7 +704,8 @@ Then a possible set of values for rubric_assessment would be:
         (course or section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -711,32 +714,31 @@ Then a possible set of values for rubric_assessment would be:
         # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_posted_grade is not None:
-            payload["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+            data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
         # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_rubric_assessment is not None:
-            payload["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+            data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
         # OPTIONAL - grade_data[<student_id>][text_comment] - no description
         if grade_data_<student_id>_text_comment is not None:
-            payload["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+            data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
         # OPTIONAL - grade_data[<student_id>][group_comment] - no description
         if grade_data_<student_id>_group_comment is not None:
-            payload["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+            data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
         # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
         if grade_data_<student_id>_media_comment_id is not None:
-            payload["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+            data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
         # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
-        if grade_data_<student_id>_media_comment_type is not None:
-            payload["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+            data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
         # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_file_ids is not None:
-            payload["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
+            data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
     def grade_or_comment_on_multiple_submissions_sections_submissions(self, section_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
@@ -749,39 +751,39 @@ Then a possible set of values for rubric_assessment would be:
         (course or section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
         # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_posted_grade is not None:
-            payload["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+            data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
         # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_rubric_assessment is not None:
-            payload["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+            data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
         # OPTIONAL - grade_data[<student_id>][text_comment] - no description
         if grade_data_<student_id>_text_comment is not None:
-            payload["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+            data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
         # OPTIONAL - grade_data[<student_id>][group_comment] - no description
         if grade_data_<student_id>_group_comment is not None:
-            payload["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+            data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
         # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
         if grade_data_<student_id>_media_comment_id is not None:
-            payload["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+            data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
         # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
-        if grade_data_<student_id>_media_comment_type is not None:
-            payload["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+            data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
         # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_file_ids is not None:
-            payload["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
+            data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
-        self.logger.debug("POST /api/v1/sections/{section_id}/submissions/update_grades with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/sections/{section_id}/submissions/update_grades".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/sections/{section_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/sections/{section_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
     def grade_or_comment_on_multiple_submissions_sections_assignments(self, section_id, assignment_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
@@ -794,7 +796,8 @@ Then a possible set of values for rubric_assessment would be:
         (course or section).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -803,32 +806,31 @@ Then a possible set of values for rubric_assessment would be:
         # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_posted_grade is not None:
-            payload["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+            data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
         # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_rubric_assessment is not None:
-            payload["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+            data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
         # OPTIONAL - grade_data[<student_id>][text_comment] - no description
         if grade_data_<student_id>_text_comment is not None:
-            payload["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+            data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
         # OPTIONAL - grade_data[<student_id>][group_comment] - no description
         if grade_data_<student_id>_group_comment is not None:
-            payload["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+            data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
         # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
         if grade_data_<student_id>_media_comment_id is not None:
-            payload["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+            data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
         # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
-        if grade_data_<student_id>_media_comment_type is not None:
-            payload["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+            data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
         # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
 {api:SubmissionsApiController#update Submissions Update} documentation
         if grade_data_<student_id>_file_ids is not None:
-            payload["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
+            data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
-        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/update_grades with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/update_grades".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
     def mark_submission_as_read_courses(self, user_id, course_id, assignment_id):
         """
@@ -839,7 +841,8 @@ Then a possible set of values for rubric_assessment would be:
         On success, the response will be 204 No Content with an empty body.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -848,8 +851,8 @@ Then a possible set of values for rubric_assessment would be:
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=data, params=params, no_data=True)
 
     def mark_submission_as_read_sections(self, user_id, section_id, assignment_id):
         """
@@ -860,7 +863,8 @@ Then a possible set of values for rubric_assessment would be:
         On success, the response will be 204 No Content with an empty body.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -869,8 +873,8 @@ Then a possible set of values for rubric_assessment would be:
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("PUT /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=data, params=params, no_data=True)
 
     def mark_submission_as_unread_courses(self, user_id, course_id, assignment_id):
         """
@@ -881,7 +885,8 @@ Then a possible set of values for rubric_assessment would be:
         On success, the response will be 204 No Content with an empty body.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -890,8 +895,8 @@ Then a possible set of values for rubric_assessment would be:
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=data, params=params, no_data=True)
 
     def mark_submission_as_unread_sections(self, user_id, section_id, assignment_id):
         """
@@ -902,7 +907,8 @@ Then a possible set of values for rubric_assessment would be:
         On success, the response will be 204 No Content with an empty body.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - section_id - ID
         path["section_id"] = section_id
@@ -911,8 +917,8 @@ Then a possible set of values for rubric_assessment would be:
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("DELETE /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read".format(**path), data=data, params=params, no_data=True)
 
 
 class Submissioncomment(BaseModel):

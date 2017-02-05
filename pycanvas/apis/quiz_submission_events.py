@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -24,7 +25,8 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         On success, the response will be 204 No Content with an empty body.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -33,10 +35,10 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - quiz_submission_events - The submission events to be recorded
-        payload["quiz_submission_events"] = quiz_submission_events
+        data["quiz_submission_events"] = quiz_submission_events
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events".format(**path), data=data, params=params, no_data=True)
 
     def retrieve_captured_events(self, id, quiz_id, course_id, attempt=None):
         """
@@ -45,7 +47,8 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         Retrieve the set of events captured during a specific submission attempt.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -55,10 +58,10 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - attempt - The specific submission attempt to look up the events for. If unspecified, the latest attempt will be used.
         if attempt is not None:
-            payload["attempt"] = attempt
+            params["attempt"] = attempt
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events".format(**path), data=data, params=params, no_data=True)
 
 
 class Quizsubmissionevent(BaseModel):

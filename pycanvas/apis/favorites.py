@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -25,10 +26,11 @@ class FavoritesAPI(BaseCanvasAPI):
         See the {api:CoursesController#index List courses API} for details on accepted include[] parameters.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/self/favorites/courses with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/self/favorites/courses".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/self/favorites/courses with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/favorites/courses".format(**path), data=data, params=params, all_pages=True)
 
     def add_course_to_favorites(self, id):
         """
@@ -38,13 +40,14 @@ class FavoritesAPI(BaseCanvasAPI):
         in the user's favorites, nothing happens.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - The ID or SIS ID of the course to add. The current user must be registered in the course.
         path["id"] = id
 
-        self.logger.debug("POST /api/v1/users/self/favorites/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/self/favorites/courses/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/users/self/favorites/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/self/favorites/courses/{id}".format(**path), data=data, params=params, single_item=True)
 
     def remove_course_from_favorites(self, id):
         """
@@ -53,13 +56,14 @@ class FavoritesAPI(BaseCanvasAPI):
         Remove a course from the current user's favorites.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - the ID or SIS ID of the course to remove
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/users/self/favorites/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/self/favorites/courses/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/users/self/favorites/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/favorites/courses/{id}".format(**path), data=data, params=params, single_item=True)
 
     def reset_course_favorites(self):
         """
@@ -69,10 +73,11 @@ class FavoritesAPI(BaseCanvasAPI):
         automatically generated list of enrolled courses
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("DELETE /api/v1/users/self/favorites/courses with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/self/favorites/courses".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/users/self/favorites/courses with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/favorites/courses".format(**path), data=data, params=params, no_data=True)
 
 
 class Favorite(BaseModel):

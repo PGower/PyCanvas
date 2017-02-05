@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class AccountReportsAPI(BaseCanvasAPI):
         Returns the list of reports for the current context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/reports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/reports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports".format(**path), data=data, params=params, no_data=True)
 
     def start_report(self, report, account_id, _parameters=None):
         """
@@ -37,7 +39,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         Generates a report instance for the account.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -45,10 +48,10 @@ class AccountReportsAPI(BaseCanvasAPI):
         path["report"] = report
         # OPTIONAL - [parameters] - The parameters will vary for each report
         if _parameters is not None:
-            payload["[parameters]"] = _parameters
+            data["[parameters]"] = _parameters
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/reports/{report} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/reports/{report}".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/reports/{report} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/reports/{report}".format(**path), data=data, params=params, single_item=True)
 
     def index_of_reports(self, report, account_id):
         """
@@ -57,15 +60,16 @@ class AccountReportsAPI(BaseCanvasAPI):
         Shows all reports that have been run for the account of a specific type.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - report - ID
         path["report"] = report
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports/{report}".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports/{report}".format(**path), data=data, params=params, all_pages=True)
 
     def status_of_report(self, id, report, account_id):
         """
@@ -74,7 +78,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         Returns the status of a report.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -83,8 +88,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report}/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports/{report}/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report}/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/reports/{report}/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_report(self, id, report, account_id):
         """
@@ -93,7 +98,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         Deletes a generated report instance.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -102,8 +108,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/reports/{report}/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/reports/{report}/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/reports/{report}/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/reports/{report}/{id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Report(BaseModel):

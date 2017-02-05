@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class PollSessionsAPI(BaseCanvasAPI):
         Returns the list of PollSessions in this poll.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions".format(**path), data=data, params=params, no_data=True)
 
     def get_results_for_single_poll_session(self, id, poll_id):
         """
@@ -37,15 +39,16 @@ class PollSessionsAPI(BaseCanvasAPI):
         Returns the poll session with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_single_poll_session(self, poll_id, poll_sessions_course_id, poll_sessions_course_section_id=None, poll_sessions_has_public_results=None):
         """
@@ -54,21 +57,22 @@ class PollSessionsAPI(BaseCanvasAPI):
         Create a new poll session for this poll
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - poll_sessions[course_id] - The id of the course this session is associated with.
-        payload["poll_sessions[course_id]"] = poll_sessions_course_id
+        data["poll_sessions[course_id]"] = poll_sessions_course_id
         # OPTIONAL - poll_sessions[course_section_id] - The id of the course section this session is associated with.
         if poll_sessions_course_section_id is not None:
-            payload["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
+            data["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
         # OPTIONAL - poll_sessions[has_public_results] - Whether or not results are viewable by students.
         if poll_sessions_has_public_results is not None:
-            payload["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
+            data["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
 
-        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_sessions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_sessions".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_sessions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_sessions".format(**path), data=data, params=params, no_data=True)
 
     def update_single_poll_session(self, id, poll_id, poll_sessions_course_id=None, poll_sessions_course_section_id=None, poll_sessions_has_public_results=None):
         """
@@ -77,7 +81,8 @@ class PollSessionsAPI(BaseCanvasAPI):
         Update an existing poll session for this poll
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
@@ -85,16 +90,16 @@ class PollSessionsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - poll_sessions[course_id] - The id of the course this session is associated with.
         if poll_sessions_course_id is not None:
-            payload["poll_sessions[course_id]"] = poll_sessions_course_id
+            data["poll_sessions[course_id]"] = poll_sessions_course_id
         # OPTIONAL - poll_sessions[course_section_id] - The id of the course section this session is associated with.
         if poll_sessions_course_section_id is not None:
-            payload["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
+            data["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
         # OPTIONAL - poll_sessions[has_public_results] - Whether or not results are viewable by students.
         if poll_sessions_has_public_results is not None:
-            payload["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
+            data["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
 
-        self.logger.debug("PUT /api/v1/polls/{poll_id}/poll_sessions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/polls/{poll_id}/poll_sessions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_poll_session(self, id, poll_id):
         """
@@ -103,15 +108,16 @@ class PollSessionsAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_sessions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_sessions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/polls/{poll_id}/poll_sessions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def open_poll_session(self, id, poll_id):
         """
@@ -120,15 +126,16 @@ class PollSessionsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/open with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}/open".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/open with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}/open".format(**path), data=data, params=params, no_data=True)
 
     def close_opened_poll_session(self, id, poll_id):
         """
@@ -137,15 +144,16 @@ class PollSessionsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/close with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}/close".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/close with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{id}/close".format(**path), data=data, params=params, no_data=True)
 
     def list_opened_poll_sessions(self):
         """
@@ -154,10 +162,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         Lists all opened poll sessions available to the current user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/poll_sessions/opened with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/poll_sessions/opened".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/poll_sessions/opened with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/poll_sessions/opened".format(**path), data=data, params=params, no_data=True)
 
     def list_closed_poll_sessions(self):
         """
@@ -166,10 +175,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         Lists all closed poll sessions available to the current user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/poll_sessions/closed with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/poll_sessions/closed".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/poll_sessions/closed with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/poll_sessions/closed".format(**path), data=data, params=params, no_data=True)
 
 
 class Pollsession(BaseModel):

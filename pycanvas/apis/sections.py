@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,18 +23,18 @@ class SectionsAPI(BaseCanvasAPI):
         Returns the list of sections for this course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - include - - "students": Associations to include with the group. Note: this is only available if you have permission to view users or grades in the course - "avatar_url": Include the avatar URLs for students returned. - "enrollments": If 'students' is also included, return the section enrollment for each student - "total_students": Returns the total amount of active and invited students for the course section - "passback_status": Include the grade passback status.
         if include is not None:
             self._validate_enum(include, ["students", "avatar_url", "enrollments", "total_students", "passback_status"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/sections with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/sections".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/sections with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/sections".format(**path), data=data, params=params, all_pages=True)
 
     def create_course_section(self, course_id, course_section_end_at=None, course_section_name=None, course_section_restrict_enrollments_to_section_dates=None, course_section_sis_section_id=None, course_section_start_at=None):
         """
@@ -42,28 +43,37 @@ class SectionsAPI(BaseCanvasAPI):
         Creates a new section for this course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - course_section[name] - The name of the section
         if course_section_name is not None:
-            payload["course_section[name]"] = course_section_name
+            data["course_section[name]"] = course_section_name
         # OPTIONAL - course_section[sis_section_id] - The sis ID of the section
         if course_section_sis_section_id is not None:
-            payload["course_section[sis_section_id]"] = course_section_sis_section_id
+            data["course_section[sis_section_id]"] = course_section_sis_section_id
         # OPTIONAL - course_section[start_at] - Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z
         if course_section_start_at is not None:
-            payload["course_section[start_at]"] = course_section_start_at
+            if issubclass(course_section_start_at.__class__, date) or issubclass(course_section_start_at.__class__, datetime):
+                course_section_start_at = course_section_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_section_start_at.__class__, basestring):
+                course_section_start_at = self._validate_iso8601_string(course_section_start_at)
+            data["course_section[start_at]"] = course_section_start_at
         # OPTIONAL - course_section[end_at] - Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z
         if course_section_end_at is not None:
-            payload["course_section[end_at]"] = course_section_end_at
+            if issubclass(course_section_end_at.__class__, date) or issubclass(course_section_end_at.__class__, datetime):
+                course_section_end_at = course_section_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_section_end_at.__class__, basestring):
+                course_section_end_at = self._validate_iso8601_string(course_section_end_at)
+            data["course_section[end_at]"] = course_section_end_at
         # OPTIONAL - course_section[restrict_enrollments_to_section_dates] - Set to true to restrict user enrollments to the start and end dates of the section.
         if course_section_restrict_enrollments_to_section_dates is not None:
-            payload["course_section[restrict_enrollments_to_section_dates]"] = course_section_restrict_enrollments_to_section_dates
+            data["course_section[restrict_enrollments_to_section_dates]"] = course_section_restrict_enrollments_to_section_dates
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/sections with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/sections".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/sections with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/sections".format(**path), data=data, params=params, single_item=True)
 
     def cross_list_section(self, id, new_course_id):
         """
@@ -73,15 +83,16 @@ class SectionsAPI(BaseCanvasAPI):
         but must belong to the same root account (institution).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - PATH - new_course_id - ID
         path["new_course_id"] = new_course_id
 
-        self.logger.debug("POST /api/v1/sections/{id}/crosslist/{new_course_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/sections/{id}/crosslist/{new_course_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/sections/{id}/crosslist/{new_course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/sections/{id}/crosslist/{new_course_id}".format(**path), data=data, params=params, single_item=True)
 
     def de_cross_list_section(self, id):
         """
@@ -90,13 +101,14 @@ class SectionsAPI(BaseCanvasAPI):
         Undo cross-listing of a Section, returning it to its original course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/sections/{id}/crosslist with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/sections/{id}/crosslist".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/sections/{id}/crosslist with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/sections/{id}/crosslist".format(**path), data=data, params=params, single_item=True)
 
     def edit_section(self, id):
         """
@@ -105,13 +117,14 @@ class SectionsAPI(BaseCanvasAPI):
         Modify an existing section.  See the documentation for {api:SectionsController#create create API action}.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/sections/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/sections/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_section_information_courses(self, id, course_id):
         """
@@ -120,15 +133,16 @@ class SectionsAPI(BaseCanvasAPI):
         Gets details about a specific section
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/sections/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/sections/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_section_information_sections(self, id):
         """
@@ -137,13 +151,14 @@ class SectionsAPI(BaseCanvasAPI):
         Gets details about a specific section
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/sections/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/sections/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_section(self, id):
         """
@@ -152,13 +167,14 @@ class SectionsAPI(BaseCanvasAPI):
         Delete an existing section.  Returns the former Section.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/sections/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/sections/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Section(BaseModel):

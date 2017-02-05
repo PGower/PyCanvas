@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class PagesAPI(BaseCanvasAPI):
         Retrieve the content of the front page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/front_page with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/front_page".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/front_page with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/front_page".format(**path), data=data, params=params, single_item=True)
 
     def show_front_page_groups(self, group_id):
         """
@@ -37,13 +39,14 @@ class PagesAPI(BaseCanvasAPI):
         Retrieve the content of the front page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/front_page with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/front_page".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/front_page with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/front_page".format(**path), data=data, params=params, single_item=True)
 
     def update_create_front_page_courses(self, course_id, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_notify_of_update=None, wiki_page_published=None, wiki_page_title=None):
         """
@@ -52,30 +55,30 @@ class PagesAPI(BaseCanvasAPI):
         Update the title or contents of the front page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - wiki_page[title] - The title for the new page. NOTE: changing a page's title will change its url. The updated url will be returned in the result.
         if wiki_page_title is not None:
-            payload["wiki_page[title]"] = wiki_page_title
+            data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/front_page with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/front_page".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/front_page with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/front_page".format(**path), data=data, params=params, single_item=True)
 
     def update_create_front_page_groups(self, group_id, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_notify_of_update=None, wiki_page_published=None, wiki_page_title=None):
         """
@@ -84,30 +87,30 @@ class PagesAPI(BaseCanvasAPI):
         Update the title or contents of the front page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # OPTIONAL - wiki_page[title] - The title for the new page. NOTE: changing a page's title will change its url. The updated url will be returned in the result.
         if wiki_page_title is not None:
-            payload["wiki_page[title]"] = wiki_page_title
+            data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
 
-        self.logger.debug("PUT /api/v1/groups/{group_id}/front_page with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/groups/{group_id}/front_page".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/groups/{group_id}/front_page with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/groups/{group_id}/front_page".format(**path), data=data, params=params, single_item=True)
 
     def list_pages_courses(self, course_id, order=None, published=None, search_term=None, sort=None):
         """
@@ -116,29 +119,28 @@ class PagesAPI(BaseCanvasAPI):
         List the wiki pages associated with a course or group
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - sort - Sort results by this field.
         if sort is not None:
             self._validate_enum(sort, ["title", "created_at", "updated_at"])
-        if sort is not None:
-            payload["sort"] = sort
+            params["sort"] = sort
         # OPTIONAL - order - The sorting order. Defaults to 'asc'.
         if order is not None:
             self._validate_enum(order, ["asc", "desc"])
-        if order is not None:
-            payload["order"] = order
+            params["order"] = order
         # OPTIONAL - search_term - The partial title of the pages to match and return.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - published - If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.
         if published is not None:
-            payload["published"] = published
+            params["published"] = published
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/pages with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/pages with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages".format(**path), data=data, params=params, all_pages=True)
 
     def list_pages_groups(self, group_id, order=None, published=None, search_term=None, sort=None):
         """
@@ -147,29 +149,28 @@ class PagesAPI(BaseCanvasAPI):
         List the wiki pages associated with a course or group
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # OPTIONAL - sort - Sort results by this field.
         if sort is not None:
             self._validate_enum(sort, ["title", "created_at", "updated_at"])
-        if sort is not None:
-            payload["sort"] = sort
+            params["sort"] = sort
         # OPTIONAL - order - The sorting order. Defaults to 'asc'.
         if order is not None:
             self._validate_enum(order, ["asc", "desc"])
-        if order is not None:
-            payload["order"] = order
+            params["order"] = order
         # OPTIONAL - search_term - The partial title of the pages to match and return.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - published - If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.
         if published is not None:
-            payload["published"] = published
+            params["published"] = published
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/pages with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/pages with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages".format(**path), data=data, params=params, all_pages=True)
 
     def create_page_courses(self, course_id, wiki_page_title, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_front_page=None, wiki_page_notify_of_update=None, wiki_page_published=None):
         """
@@ -178,32 +179,32 @@ class PagesAPI(BaseCanvasAPI):
         Create a new wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - wiki_page[title] - The title for the new page.
-        payload["wiki_page[title]"] = wiki_page_title
+        data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
         # OPTIONAL - wiki_page[front_page] - Set an unhidden page as the front page (if true)
         if wiki_page_front_page is not None:
-            payload["wiki_page[front_page]"] = wiki_page_front_page
+            data["wiki_page[front_page]"] = wiki_page_front_page
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/pages with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/pages".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/pages with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/pages".format(**path), data=data, params=params, single_item=True)
 
     def create_page_groups(self, group_id, wiki_page_title, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_front_page=None, wiki_page_notify_of_update=None, wiki_page_published=None):
         """
@@ -212,32 +213,32 @@ class PagesAPI(BaseCanvasAPI):
         Create a new wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - wiki_page[title] - The title for the new page.
-        payload["wiki_page[title]"] = wiki_page_title
+        data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
         # OPTIONAL - wiki_page[front_page] - Set an unhidden page as the front page (if true)
         if wiki_page_front_page is not None:
-            payload["wiki_page[front_page]"] = wiki_page_front_page
+            data["wiki_page[front_page]"] = wiki_page_front_page
 
-        self.logger.debug("POST /api/v1/groups/{group_id}/pages with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/groups/{group_id}/pages".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/groups/{group_id}/pages with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/groups/{group_id}/pages".format(**path), data=data, params=params, single_item=True)
 
     def show_page_courses(self, url, course_id):
         """
@@ -246,15 +247,16 @@ class PagesAPI(BaseCanvasAPI):
         Retrieve the content of a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def show_page_groups(self, url, group_id):
         """
@@ -263,15 +265,16 @@ class PagesAPI(BaseCanvasAPI):
         Retrieve the content of a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def update_create_page_courses(self, url, course_id, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_front_page=None, wiki_page_notify_of_update=None, wiki_page_published=None, wiki_page_title=None):
         """
@@ -280,7 +283,8 @@ class PagesAPI(BaseCanvasAPI):
         Update the title or contents of a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -288,27 +292,26 @@ class PagesAPI(BaseCanvasAPI):
         path["url"] = url
         # OPTIONAL - wiki_page[title] - The title for the new page. NOTE: changing a page's title will change its url. The updated url will be returned in the result.
         if wiki_page_title is not None:
-            payload["wiki_page[title]"] = wiki_page_title
+            data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
         # OPTIONAL - wiki_page[front_page] - Set an unhidden page as the front page (if true)
         if wiki_page_front_page is not None:
-            payload["wiki_page[front_page]"] = wiki_page_front_page
+            data["wiki_page[front_page]"] = wiki_page_front_page
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/pages/{url}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def update_create_page_groups(self, url, group_id, wiki_page_body=None, wiki_page_editing_roles=None, wiki_page_front_page=None, wiki_page_notify_of_update=None, wiki_page_published=None, wiki_page_title=None):
         """
@@ -317,7 +320,8 @@ class PagesAPI(BaseCanvasAPI):
         Update the title or contents of a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -325,27 +329,26 @@ class PagesAPI(BaseCanvasAPI):
         path["url"] = url
         # OPTIONAL - wiki_page[title] - The title for the new page. NOTE: changing a page's title will change its url. The updated url will be returned in the result.
         if wiki_page_title is not None:
-            payload["wiki_page[title]"] = wiki_page_title
+            data["wiki_page[title]"] = wiki_page_title
         # OPTIONAL - wiki_page[body] - The content for the new page.
         if wiki_page_body is not None:
-            payload["wiki_page[body]"] = wiki_page_body
+            data["wiki_page[body]"] = wiki_page_body
         # OPTIONAL - wiki_page[editing_roles] - Which user roles are allowed to edit this page. Any combination of these roles is allowed (separated by commas). "teachers":: Allows editing by teachers in the course. "students":: Allows editing by students in the course. "members":: For group wikis, allows editing by members of the group. "public":: Allows editing by any user.
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
-        if wiki_page_editing_roles is not None:
-            payload["wiki_page[editing_roles]"] = wiki_page_editing_roles
+            data["wiki_page[editing_roles]"] = wiki_page_editing_roles
         # OPTIONAL - wiki_page[notify_of_update] - Whether participants should be notified when this page changes.
         if wiki_page_notify_of_update is not None:
-            payload["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+            data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
         # OPTIONAL - wiki_page[published] - Whether the page is published (true) or draft state (false).
         if wiki_page_published is not None:
-            payload["wiki_page[published]"] = wiki_page_published
+            data["wiki_page[published]"] = wiki_page_published
         # OPTIONAL - wiki_page[front_page] - Set an unhidden page as the front page (if true)
         if wiki_page_front_page is not None:
-            payload["wiki_page[front_page]"] = wiki_page_front_page
+            data["wiki_page[front_page]"] = wiki_page_front_page
 
-        self.logger.debug("PUT /api/v1/groups/{group_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/groups/{group_id}/pages/{url}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/groups/{group_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/groups/{group_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def delete_page_courses(self, url, course_id):
         """
@@ -354,15 +357,16 @@ class PagesAPI(BaseCanvasAPI):
         Delete a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/pages/{url}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def delete_page_groups(self, url, group_id):
         """
@@ -371,15 +375,16 @@ class PagesAPI(BaseCanvasAPI):
         Delete a wiki page
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("DELETE /api/v1/groups/{group_id}/pages/{url} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/groups/{group_id}/pages/{url}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/groups/{group_id}/pages/{url} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/groups/{group_id}/pages/{url}".format(**path), data=data, params=params, single_item=True)
 
     def list_revisions_courses(self, url, course_id):
         """
@@ -388,15 +393,16 @@ class PagesAPI(BaseCanvasAPI):
         List the revisions of a page. Callers must have update rights on the page in order to see page history.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions".format(**path), data=data, params=params, all_pages=True)
 
     def list_revisions_groups(self, url, group_id):
         """
@@ -405,15 +411,16 @@ class PagesAPI(BaseCanvasAPI):
         List the revisions of a page. Callers must have update rights on the page in order to see page history.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - url - ID
         path["url"] = url
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions".format(**path), data=data, params=params, all_pages=True)
 
     def show_revision_courses_latest(self, url, course_id, summary=None):
         """
@@ -423,7 +430,8 @@ class PagesAPI(BaseCanvasAPI):
         Note that retrieving historic versions of pages requires edit rights.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -431,10 +439,10 @@ class PagesAPI(BaseCanvasAPI):
         path["url"] = url
         # OPTIONAL - summary - If set, exclude page content from results
         if summary is not None:
-            payload["summary"] = summary
+            params["summary"] = summary
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions/latest with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions/latest".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions/latest with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions/latest".format(**path), data=data, params=params, single_item=True)
 
     def show_revision_groups_latest(self, url, group_id, summary=None):
         """
@@ -444,7 +452,8 @@ class PagesAPI(BaseCanvasAPI):
         Note that retrieving historic versions of pages requires edit rights.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -452,10 +461,10 @@ class PagesAPI(BaseCanvasAPI):
         path["url"] = url
         # OPTIONAL - summary - If set, exclude page content from results
         if summary is not None:
-            payload["summary"] = summary
+            params["summary"] = summary
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions/latest with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions/latest".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions/latest with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions/latest".format(**path), data=data, params=params, single_item=True)
 
     def show_revision_courses_revision_id(self, url, course_id, revision_id, summary=None):
         """
@@ -465,7 +474,8 @@ class PagesAPI(BaseCanvasAPI):
         Note that retrieving historic versions of pages requires edit rights.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -475,10 +485,10 @@ class PagesAPI(BaseCanvasAPI):
         path["revision_id"] = revision_id
         # OPTIONAL - summary - If set, exclude page content from results
         if summary is not None:
-            payload["summary"] = summary
+            params["summary"] = summary
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id}".format(**path), data=data, params=params, single_item=True)
 
     def show_revision_groups_revision_id(self, url, group_id, revision_id, summary=None):
         """
@@ -488,7 +498,8 @@ class PagesAPI(BaseCanvasAPI):
         Note that retrieving historic versions of pages requires edit rights.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -498,10 +509,10 @@ class PagesAPI(BaseCanvasAPI):
         path["revision_id"] = revision_id
         # OPTIONAL - summary - If set, exclude page content from results
         if summary is not None:
-            payload["summary"] = summary
+            params["summary"] = summary
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id}".format(**path), data=data, params=params, single_item=True)
 
     def revert_to_revision_courses(self, url, course_id, revision_id):
         """
@@ -510,7 +521,8 @@ class PagesAPI(BaseCanvasAPI):
         Revert a page to a prior revision.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -519,8 +531,8 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - revision_id - The revision to revert to (use the {api:WikiPagesApiController#revisions List Revisions API} to see available revisions)
         path["revision_id"] = revision_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/pages/{url}/revisions/{revision_id}".format(**path), data=data, params=params, single_item=True)
 
     def revert_to_revision_groups(self, url, group_id, revision_id):
         """
@@ -529,7 +541,8 @@ class PagesAPI(BaseCanvasAPI):
         Revert a page to a prior revision.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -538,8 +551,8 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - revision_id - The revision to revert to (use the {api:WikiPagesApiController#revisions List Revisions API} to see available revisions)
         path["revision_id"] = revision_id
 
-        self.logger.debug("POST /api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/groups/{group_id}/pages/{url}/revisions/{revision_id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Pagerevision(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,32 +23,30 @@ class CoursesAPI(BaseCanvasAPI):
         Returns the list of active courses for the current user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # OPTIONAL - enrollment_type - When set, only return courses where the user is enrolled as this type. For example, set to "teacher" to return only courses where the user is enrolled as a Teacher. This argument is ignored if enrollment_role is given.
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "ta", "observer", "designer"])
-        if enrollment_type is not None:
-            payload["enrollment_type"] = enrollment_type
+            params["enrollment_type"] = enrollment_type
         # OPTIONAL - enrollment_role - Deprecated When set, only return courses where the user is enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a base role type of 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role is not None:
-            payload["enrollment_role"] = enrollment_role
+            params["enrollment_role"] = enrollment_role
         # OPTIONAL - enrollment_role_id - When set, only return courses where the user is enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a built_in role type of 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role_id is not None:
-            payload["enrollment_role_id"] = enrollment_role_id
+            params["enrollment_role_id"] = enrollment_role_id
         # OPTIONAL - include - - "needs_grading_count": Optional information to include with each Course. When needs_grading_count is given, and the current user has grading rights, the total number of submissions needing grading for all assignments is returned. - "syllabus_body": Optional information to include with each Course. When syllabus_body is given the user-generated html for the course syllabus is returned. - "total_scores": Optional information to include with each Course. When total_scores is given, any enrollments with type 'student' will also include the fields 'calculated_current_score', 'calculated_final_score', 'calculated_current_grade', and 'calculated_final_grade'. calculated_current_score is the student's score in the course, ignoring ungraded assignments. calculated_final_score is the student's score in the course including ungraded assignments with a score of 0. calculated_current_grade is the letter grade equivalent of calculated_current_score (if available). calculated_final_grade is the letter grade equivalent of calculated_final_score (if available). This argument is ignored if the course is configured to hide final grades. - "term": Optional information to include with each Course. When term is given, the information for the enrollment term for each course is returned. - "course_progress": Optional information to include with each Course. When course_progress is given, each course will include a 'course_progress' object with the fields: 'requirement_count', an integer specifying the total number of requirements in the course, 'requirement_completed_count', an integer specifying the total number of requirements in this course that have been completed, and 'next_requirement_url', a string url to the next requirement item, and 'completed_at', the date the course was completed (null if incomplete). 'next_requirement_url' will be null if all requirements have been completed or the current module does not require sequential progress. "course_progress" will return an error message if the course is not module based or the user is not enrolled as a student in the course. - "sections": Section enrollment information to include with each Course. Returns an array of hashes containing the section ID (id), section name (name), start and end dates (start_at, end_at), as well as the enrollment type (enrollment_role, e.g. 'StudentEnrollment'). - "storage_quota_used_mb": The amount of storage space used by the files in this course - "total_students": Optional information to include with each Course. Returns an integer for the total amount of active and invited students. - "passback_status": Include the grade passback_status
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "total_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - state - If set, only return courses that are in the given state(s). By default, "available" is returned for students and observers, and anything except "deleted", for all other enrollment types
         if state is not None:
             self._validate_enum(state, ["unpublished", "available", "completed", "deleted"])
-        if state is not None:
-            payload["state"] = state
+            params["state"] = state
 
-        self.logger.debug("GET /api/v1/courses with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses".format(**path), data=data, params=params, all_pages=True)
 
     def create_new_course(self, account_id, course_allow_student_forum_attachments=None, course_allow_student_wiki_edits=None, course_allow_wiki_comments=None, course_apply_assignment_group_weights=None, course_course_code=None, course_course_format=None, course_end_at=None, course_grading_standard_id=None, course_hide_final_grades=None, course_integration_id=None, course_is_public=None, course_is_public_to_auth_users=None, course_license=None, course_name=None, course_open_enrollment=None, course_public_description=None, course_public_syllabus=None, course_restrict_enrollments_to_course_dates=None, course_self_enrollment=None, course_sis_course_id=None, course_start_at=None, course_syllabus_body=None, course_term_id=None, enroll_me=None, offer=None):
         """
@@ -56,88 +55,97 @@ class CoursesAPI(BaseCanvasAPI):
         Create a new course
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - The unique ID of the account to create to course under.
         path["account_id"] = account_id
         # OPTIONAL - course[name] - The name of the course. If omitted, the course will be named "Unnamed Course."
         if course_name is not None:
-            payload["course[name]"] = course_name
+            data["course[name]"] = course_name
         # OPTIONAL - course[course_code] - The course code for the course.
         if course_course_code is not None:
-            payload["course[course_code]"] = course_course_code
+            data["course[course_code]"] = course_course_code
         # OPTIONAL - course[start_at] - Course start date in ISO8601 format, e.g. 2011-01-01T01:00Z
         if course_start_at is not None:
-            payload["course[start_at]"] = course_start_at
+            if issubclass(course_start_at.__class__, date) or issubclass(course_start_at.__class__, datetime):
+                course_start_at = course_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_start_at.__class__, basestring):
+                course_start_at = self._validate_iso8601_string(course_start_at)
+            data["course[start_at]"] = course_start_at
         # OPTIONAL - course[end_at] - Course end date in ISO8601 format. e.g. 2011-01-01T01:00Z
         if course_end_at is not None:
-            payload["course[end_at]"] = course_end_at
+            if issubclass(course_end_at.__class__, date) or issubclass(course_end_at.__class__, datetime):
+                course_end_at = course_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_end_at.__class__, basestring):
+                course_end_at = self._validate_iso8601_string(course_end_at)
+            data["course[end_at]"] = course_end_at
         # OPTIONAL - course[license] - The name of the licensing. Should be one of the following abbreviations (a descriptive name is included in parenthesis for reference): - 'private' (Private Copyrighted) - 'cc_by_nc_nd' (CC Attribution Non-Commercial No Derivatives) - 'cc_by_nc_sa' (CC Attribution Non-Commercial Share Alike) - 'cc_by_nc' (CC Attribution Non-Commercial) - 'cc_by_nd' (CC Attribution No Derivatives) - 'cc_by_sa' (CC Attribution Share Alike) - 'cc_by' (CC Attribution) - 'public_domain' (Public Domain).
         if course_license is not None:
-            payload["course[license]"] = course_license
+            data["course[license]"] = course_license
         # OPTIONAL - course[is_public] - Set to true if course if public.
         if course_is_public is not None:
-            payload["course[is_public]"] = course_is_public
+            data["course[is_public]"] = course_is_public
         # OPTIONAL - course[is_public_to_auth_users] - Set to true if course if public to authenticated users.
         if course_is_public_to_auth_users is not None:
-            payload["course[is_public_to_auth_users]"] = course_is_public_to_auth_users
+            data["course[is_public_to_auth_users]"] = course_is_public_to_auth_users
         # OPTIONAL - course[public_syllabus] - Set to true to make the course syllabus public.
         if course_public_syllabus is not None:
-            payload["course[public_syllabus]"] = course_public_syllabus
+            data["course[public_syllabus]"] = course_public_syllabus
         # OPTIONAL - course[public_description] - A publicly visible description of the course.
         if course_public_description is not None:
-            payload["course[public_description]"] = course_public_description
+            data["course[public_description]"] = course_public_description
         # OPTIONAL - course[allow_student_wiki_edits] - If true, students will be able to modify the course wiki.
         if course_allow_student_wiki_edits is not None:
-            payload["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
+            data["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
         # OPTIONAL - course[allow_wiki_comments] - If true, course members will be able to comment on wiki pages.
         if course_allow_wiki_comments is not None:
-            payload["course[allow_wiki_comments]"] = course_allow_wiki_comments
+            data["course[allow_wiki_comments]"] = course_allow_wiki_comments
         # OPTIONAL - course[allow_student_forum_attachments] - If true, students can attach files to forum posts.
         if course_allow_student_forum_attachments is not None:
-            payload["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
+            data["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
         # OPTIONAL - course[open_enrollment] - Set to true if the course is open enrollment.
         if course_open_enrollment is not None:
-            payload["course[open_enrollment]"] = course_open_enrollment
+            data["course[open_enrollment]"] = course_open_enrollment
         # OPTIONAL - course[self_enrollment] - Set to true if the course is self enrollment.
         if course_self_enrollment is not None:
-            payload["course[self_enrollment]"] = course_self_enrollment
+            data["course[self_enrollment]"] = course_self_enrollment
         # OPTIONAL - course[restrict_enrollments_to_course_dates] - Set to true to restrict user enrollments to the start and end dates of the course.
         if course_restrict_enrollments_to_course_dates is not None:
-            payload["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
+            data["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
         # OPTIONAL - course[term_id] - The unique ID of the term to create to course in.
         if course_term_id is not None:
-            payload["course[term_id]"] = course_term_id
+            data["course[term_id]"] = course_term_id
         # OPTIONAL - course[sis_course_id] - The unique SIS identifier.
         if course_sis_course_id is not None:
-            payload["course[sis_course_id]"] = course_sis_course_id
+            data["course[sis_course_id]"] = course_sis_course_id
         # OPTIONAL - course[integration_id] - The unique Integration identifier.
         if course_integration_id is not None:
-            payload["course[integration_id]"] = course_integration_id
+            data["course[integration_id]"] = course_integration_id
         # OPTIONAL - course[hide_final_grades] - If this option is set to true, the totals in student grades summary will be hidden.
         if course_hide_final_grades is not None:
-            payload["course[hide_final_grades]"] = course_hide_final_grades
+            data["course[hide_final_grades]"] = course_hide_final_grades
         # OPTIONAL - course[apply_assignment_group_weights] - Set to true to weight final grade based on assignment groups percentages.
         if course_apply_assignment_group_weights is not None:
-            payload["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
+            data["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
         # OPTIONAL - offer - If this option is set to true, the course will be available to students immediately.
         if offer is not None:
-            payload["offer"] = offer
+            data["offer"] = offer
         # OPTIONAL - enroll_me - Set to true to enroll the current user as the teacher.
         if enroll_me is not None:
-            payload["enroll_me"] = enroll_me
+            data["enroll_me"] = enroll_me
         # OPTIONAL - course[syllabus_body] - The syllabus body for the course
         if course_syllabus_body is not None:
-            payload["course[syllabus_body]"] = course_syllabus_body
+            data["course[syllabus_body]"] = course_syllabus_body
         # OPTIONAL - course[grading_standard_id] - The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course.
         if course_grading_standard_id is not None:
-            payload["course[grading_standard_id]"] = course_grading_standard_id
+            data["course[grading_standard_id]"] = course_grading_standard_id
         # OPTIONAL - course[course_format] - Optional. Specifies the format of the course. (Should be either 'on_campus' or 'online')
         if course_course_format is not None:
-            payload["course[course_format]"] = course_course_format
+            data["course[course_format]"] = course_course_format
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/courses with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/courses".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/courses with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/courses".format(**path), data=data, params=params, single_item=True)
 
     def upload_file(self, course_id):
         """
@@ -153,13 +161,14 @@ class CoursesAPI(BaseCanvasAPI):
         to the course. By default, this is Teachers, TAs and Designers.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/files".format(**path), data=data, params=params, no_data=True)
 
     def list_students(self, course_id):
         """
@@ -171,13 +180,14 @@ class CoursesAPI(BaseCanvasAPI):
         and pass "student" as the enrollment_type.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/students with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/students".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/students with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/students".format(**path), data=data, params=params, all_pages=True)
 
     def list_users_in_course_users(self, course_id, enrollment_role=None, enrollment_role_id=None, enrollment_state=None, enrollment_type=None, include=None, search_term=None, user_id=None):
         """
@@ -186,40 +196,38 @@ class CoursesAPI(BaseCanvasAPI):
         Returns the list of users in this course. And optionally the user's enrollments in the course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - enrollment_type - When set, only return users where the user is enrolled as this type. This argument is ignored if enrollment_role is given.
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "ta", "observer", "designer"])
-        if enrollment_type is not None:
-            payload["enrollment_type"] = enrollment_type
+            params["enrollment_type"] = enrollment_type
         # OPTIONAL - enrollment_role - Deprecated When set, only return users enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a base role type of 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role is not None:
-            payload["enrollment_role"] = enrollment_role
+            params["enrollment_role"] = enrollment_role
         # OPTIONAL - enrollment_role_id - When set, only return courses where the user is enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a built_in role id with type 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role_id is not None:
-            payload["enrollment_role_id"] = enrollment_role_id
+            params["enrollment_role_id"] = enrollment_role_id
         # OPTIONAL - include - - "email": Optional user email. - "enrollments": Optionally include with each Course the user's current and invited enrollments. If the user is enrolled as a student, and the account has permission to manage or view all grades, each enrollment will include a 'grades' key with 'current_score', 'final_score', 'current_grade' and 'final_grade' values. - "locked": Optionally include whether an enrollment is locked. - "avatar_url": Optionally include avatar_url. - "bio": Optionally include each user's bio. - "test_student": Optionally include the course's Test Student, if present. Default is to not include Test Student.
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - user_id - If included, the user will be queried and if the user is part of the users set, the page parameter will be modified so that the page containing user_id will be returned.
         if user_id is not None:
-            payload["user_id"] = user_id
+            params["user_id"] = user_id
         # OPTIONAL - enrollment_state - When set, only return users where the enrollment workflow state is of one of the given types. "active" and "invited" enrollments are returned by default.
         if enrollment_state is not None:
             self._validate_enum(enrollment_state, ["active", "invited", "rejected", "completed", "inactive"])
-        if enrollment_state is not None:
-            payload["enrollment_state"] = enrollment_state
+            params["enrollment_state"] = enrollment_state
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/users with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/users".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/users".format(**path), data=data, params=params, all_pages=True)
 
     def list_users_in_course_search_users(self, course_id, enrollment_role=None, enrollment_role_id=None, enrollment_state=None, enrollment_type=None, include=None, search_term=None, user_id=None):
         """
@@ -228,40 +236,38 @@ class CoursesAPI(BaseCanvasAPI):
         Returns the list of users in this course. And optionally the user's enrollments in the course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - enrollment_type - When set, only return users where the user is enrolled as this type. This argument is ignored if enrollment_role is given.
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "ta", "observer", "designer"])
-        if enrollment_type is not None:
-            payload["enrollment_type"] = enrollment_type
+            params["enrollment_type"] = enrollment_type
         # OPTIONAL - enrollment_role - Deprecated When set, only return users enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a base role type of 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role is not None:
-            payload["enrollment_role"] = enrollment_role
+            params["enrollment_role"] = enrollment_role
         # OPTIONAL - enrollment_role_id - When set, only return courses where the user is enrolled with the specified course-level role. This can be a role created with the {api:RoleOverridesController#add_role Add Role API} or a built_in role id with type 'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', or 'DesignerEnrollment'.
         if enrollment_role_id is not None:
-            payload["enrollment_role_id"] = enrollment_role_id
+            params["enrollment_role_id"] = enrollment_role_id
         # OPTIONAL - include - - "email": Optional user email. - "enrollments": Optionally include with each Course the user's current and invited enrollments. If the user is enrolled as a student, and the account has permission to manage or view all grades, each enrollment will include a 'grades' key with 'current_score', 'final_score', 'current_grade' and 'final_grade' values. - "locked": Optionally include whether an enrollment is locked. - "avatar_url": Optionally include avatar_url. - "bio": Optionally include each user's bio. - "test_student": Optionally include the course's Test Student, if present. Default is to not include Test Student.
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - user_id - If included, the user will be queried and if the user is part of the users set, the page parameter will be modified so that the page containing user_id will be returned.
         if user_id is not None:
-            payload["user_id"] = user_id
+            params["user_id"] = user_id
         # OPTIONAL - enrollment_state - When set, only return users where the enrollment workflow state is of one of the given types. "active" and "invited" enrollments are returned by default.
         if enrollment_state is not None:
             self._validate_enum(enrollment_state, ["active", "invited", "rejected", "completed", "inactive"])
-        if enrollment_state is not None:
-            payload["enrollment_state"] = enrollment_state
+            params["enrollment_state"] = enrollment_state
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/search_users with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/search_users".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/search_users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/search_users".format(**path), data=data, params=params, all_pages=True)
 
     def list_recently_logged_in_students(self, course_id):
         """
@@ -273,13 +279,14 @@ class CoursesAPI(BaseCanvasAPI):
         user must have the 'View usage reports' permission.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/recent_students with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/recent_students".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/recent_students with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/recent_students".format(**path), data=data, params=params, all_pages=True)
 
     def get_single_user(self, id, course_id):
         """
@@ -291,15 +298,16 @@ class CoursesAPI(BaseCanvasAPI):
         single user with the same fields as that action.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/users/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/users/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/users/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/users/{id}".format(**path), data=data, params=params, single_item=True)
 
     def preview_processed_html(self, course_id, html=None):
         """
@@ -308,16 +316,17 @@ class CoursesAPI(BaseCanvasAPI):
         Preview html content processed for this course
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - html - The html content to process
         if html is not None:
-            payload["html"] = html
+            data["html"] = html
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/preview_html with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/preview_html".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/preview_html with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/preview_html".format(**path), data=data, params=params, no_data=True)
 
     def course_activity_stream(self, course_id):
         """
@@ -329,13 +338,14 @@ class CoursesAPI(BaseCanvasAPI):
         stream, in the user api.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/activity_stream with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/activity_stream".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/activity_stream with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/activity_stream".format(**path), data=data, params=params, no_data=True)
 
     def course_activity_stream_summary(self, course_id):
         """
@@ -347,13 +357,14 @@ class CoursesAPI(BaseCanvasAPI):
         stream summary, in the user api.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/activity_stream/summary with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/activity_stream/summary".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/activity_stream/summary with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/activity_stream/summary".format(**path), data=data, params=params, no_data=True)
 
     def course_todo_items(self, course_id):
         """
@@ -364,13 +375,14 @@ class CoursesAPI(BaseCanvasAPI):
         For full documentation, see the API documentation for the user todo items, in the user api.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/todo with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/todo".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/todo with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/todo".format(**path), data=data, params=params, no_data=True)
 
     def conclude_course(self, id, event):
         """
@@ -379,17 +391,17 @@ class CoursesAPI(BaseCanvasAPI):
         Delete or conclude an existing course
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - event - The action to take on the course.
-        if event is not None:
-            self._validate_enum(event, ["delete", "conclude"])
-        payload["event"] = event
+        self._validate_enum(event, ["delete", "conclude"])
+        params["event"] = event
 
-        self.logger.debug("DELETE /api/v1/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{id}".format(**path), data=data, params=params, no_data=True)
 
     def get_course_settings(self, course_id):
         """
@@ -398,13 +410,14 @@ class CoursesAPI(BaseCanvasAPI):
         Returns some of a course's settings.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/settings with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/settings".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/settings with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/settings".format(**path), data=data, params=params, no_data=True)
 
     def update_course_settings(self, course_id, allow_student_discussion_editing=None, allow_student_discussion_topics=None, allow_student_forum_attachments=None, allow_student_organized_groups=None, hide_distribution_graphs=None, hide_final_grades=None, lock_all_announcements=None, restrict_student_future_view=None, restrict_student_past_view=None):
         """
@@ -413,40 +426,41 @@ class CoursesAPI(BaseCanvasAPI):
         Can update the following course settings:
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - allow_student_discussion_topics - Let students create discussion topics
         if allow_student_discussion_topics is not None:
-            payload["allow_student_discussion_topics"] = allow_student_discussion_topics
+            data["allow_student_discussion_topics"] = allow_student_discussion_topics
         # OPTIONAL - allow_student_forum_attachments - Let students attach files to discussions
         if allow_student_forum_attachments is not None:
-            payload["allow_student_forum_attachments"] = allow_student_forum_attachments
+            data["allow_student_forum_attachments"] = allow_student_forum_attachments
         # OPTIONAL - allow_student_discussion_editing - Let students edit or delete their own discussion posts
         if allow_student_discussion_editing is not None:
-            payload["allow_student_discussion_editing"] = allow_student_discussion_editing
+            data["allow_student_discussion_editing"] = allow_student_discussion_editing
         # OPTIONAL - allow_student_organized_groups - Let students organize their own groups
         if allow_student_organized_groups is not None:
-            payload["allow_student_organized_groups"] = allow_student_organized_groups
+            data["allow_student_organized_groups"] = allow_student_organized_groups
         # OPTIONAL - hide_final_grades - Hide totals in student grades summary
         if hide_final_grades is not None:
-            payload["hide_final_grades"] = hide_final_grades
+            data["hide_final_grades"] = hide_final_grades
         # OPTIONAL - hide_distribution_graphs - Hide grade distribution graphs from students
         if hide_distribution_graphs is not None:
-            payload["hide_distribution_graphs"] = hide_distribution_graphs
+            data["hide_distribution_graphs"] = hide_distribution_graphs
         # OPTIONAL - lock_all_announcements - Disable comments on announcements
         if lock_all_announcements is not None:
-            payload["lock_all_announcements"] = lock_all_announcements
+            data["lock_all_announcements"] = lock_all_announcements
         # OPTIONAL - restrict_student_past_view - Restrict students from viewing courses after end date
         if restrict_student_past_view is not None:
-            payload["restrict_student_past_view"] = restrict_student_past_view
+            data["restrict_student_past_view"] = restrict_student_past_view
         # OPTIONAL - restrict_student_future_view - Restrict students from viewing courses before start date
         if restrict_student_future_view is not None:
-            payload["restrict_student_future_view"] = restrict_student_future_view
+            data["restrict_student_future_view"] = restrict_student_future_view
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/settings with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/settings".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/settings with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/settings".format(**path), data=data, params=params, no_data=True)
 
     def get_single_course_courses(self, id, include=None):
         """
@@ -457,18 +471,18 @@ class CoursesAPI(BaseCanvasAPI):
         Accepts the same include[] parameters as the list action plus:
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - include - - "all_courses": Also search recently deleted courses. - "permissions": Include permissions the current user has for the course.
         if include is not None:
             self._validate_enum(include, ["all_courses", "permissions"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_single_course_accounts(self, id, account_id, include=None):
         """
@@ -479,7 +493,8 @@ class CoursesAPI(BaseCanvasAPI):
         Accepts the same include[] parameters as the list action plus:
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -488,11 +503,10 @@ class CoursesAPI(BaseCanvasAPI):
         # OPTIONAL - include - - "all_courses": Also search recently deleted courses. - "permissions": Include permissions the current user has for the course.
         if include is not None:
             self._validate_enum(include, ["all_courses", "permissions"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/courses/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/courses/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_course(self, id, course_account_id, course_allow_student_forum_attachments=None, course_allow_student_wiki_edits=None, course_allow_wiki_comments=None, course_apply_assignment_group_weights=None, course_course_code=None, course_course_format=None, course_end_at=None, course_grading_standard_id=None, course_hide_final_grades=None, course_integration_id=None, course_is_public=None, course_license=None, course_name=None, course_open_enrollment=None, course_public_description=None, course_public_syllabus=None, course_restrict_enrollments_to_course_dates=None, course_self_enrollment=None, course_sis_course_id=None, course_start_at=None, course_syllabus_body=None, course_term_id=None, offer=None):
         """
@@ -503,84 +517,93 @@ class CoursesAPI(BaseCanvasAPI):
         Arguments are the same as Courses#create, with a few exceptions (enroll_me).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - course[account_id] - The unique ID of the account to create to course under.
-        payload["course[account_id]"] = course_account_id
+        data["course[account_id]"] = course_account_id
         # OPTIONAL - course[name] - The name of the course. If omitted, the course will be named "Unnamed Course."
         if course_name is not None:
-            payload["course[name]"] = course_name
+            data["course[name]"] = course_name
         # OPTIONAL - course[course_code] - The course code for the course.
         if course_course_code is not None:
-            payload["course[course_code]"] = course_course_code
+            data["course[course_code]"] = course_course_code
         # OPTIONAL - course[start_at] - Course start date in ISO8601 format, e.g. 2011-01-01T01:00Z
         if course_start_at is not None:
-            payload["course[start_at]"] = course_start_at
+            if issubclass(course_start_at.__class__, date) or issubclass(course_start_at.__class__, datetime):
+                course_start_at = course_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_start_at.__class__, basestring):
+                course_start_at = self._validate_iso8601_string(course_start_at)
+            data["course[start_at]"] = course_start_at
         # OPTIONAL - course[end_at] - Course end date in ISO8601 format. e.g. 2011-01-01T01:00Z
         if course_end_at is not None:
-            payload["course[end_at]"] = course_end_at
+            if issubclass(course_end_at.__class__, date) or issubclass(course_end_at.__class__, datetime):
+                course_end_at = course_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(course_end_at.__class__, basestring):
+                course_end_at = self._validate_iso8601_string(course_end_at)
+            data["course[end_at]"] = course_end_at
         # OPTIONAL - course[license] - The name of the licensing. Should be one of the following abbreviations (a descriptive name is included in parenthesis for reference): - 'private' (Private Copyrighted) - 'cc_by_nc_nd' (CC Attribution Non-Commercial No Derivatives) - 'cc_by_nc_sa' (CC Attribution Non-Commercial Share Alike) - 'cc_by_nc' (CC Attribution Non-Commercial) - 'cc_by_nd' (CC Attribution No Derivatives) - 'cc_by_sa' (CC Attribution Share Alike) - 'cc_by' (CC Attribution) - 'public_domain' (Public Domain).
         if course_license is not None:
-            payload["course[license]"] = course_license
+            data["course[license]"] = course_license
         # OPTIONAL - course[is_public] - Set to true if course if public.
         if course_is_public is not None:
-            payload["course[is_public]"] = course_is_public
+            data["course[is_public]"] = course_is_public
         # OPTIONAL - course[public_syllabus] - Set to true to make the course syllabus public.
         if course_public_syllabus is not None:
-            payload["course[public_syllabus]"] = course_public_syllabus
+            data["course[public_syllabus]"] = course_public_syllabus
         # OPTIONAL - course[public_description] - A publicly visible description of the course.
         if course_public_description is not None:
-            payload["course[public_description]"] = course_public_description
+            data["course[public_description]"] = course_public_description
         # OPTIONAL - course[allow_student_wiki_edits] - If true, students will be able to modify the course wiki.
         if course_allow_student_wiki_edits is not None:
-            payload["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
+            data["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
         # OPTIONAL - course[allow_wiki_comments] - If true, course members will be able to comment on wiki pages.
         if course_allow_wiki_comments is not None:
-            payload["course[allow_wiki_comments]"] = course_allow_wiki_comments
+            data["course[allow_wiki_comments]"] = course_allow_wiki_comments
         # OPTIONAL - course[allow_student_forum_attachments] - If true, students can attach files to forum posts.
         if course_allow_student_forum_attachments is not None:
-            payload["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
+            data["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
         # OPTIONAL - course[open_enrollment] - Set to true if the course is open enrollment.
         if course_open_enrollment is not None:
-            payload["course[open_enrollment]"] = course_open_enrollment
+            data["course[open_enrollment]"] = course_open_enrollment
         # OPTIONAL - course[self_enrollment] - Set to true if the course is self enrollment.
         if course_self_enrollment is not None:
-            payload["course[self_enrollment]"] = course_self_enrollment
+            data["course[self_enrollment]"] = course_self_enrollment
         # OPTIONAL - course[restrict_enrollments_to_course_dates] - Set to true to restrict user enrollments to the start and end dates of the course.
         if course_restrict_enrollments_to_course_dates is not None:
-            payload["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
+            data["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
         # OPTIONAL - course[term_id] - The unique ID of the term to create to course in.
         if course_term_id is not None:
-            payload["course[term_id]"] = course_term_id
+            data["course[term_id]"] = course_term_id
         # OPTIONAL - course[sis_course_id] - The unique SIS identifier.
         if course_sis_course_id is not None:
-            payload["course[sis_course_id]"] = course_sis_course_id
+            data["course[sis_course_id]"] = course_sis_course_id
         # OPTIONAL - course[integration_id] - The unique Integration identifier.
         if course_integration_id is not None:
-            payload["course[integration_id]"] = course_integration_id
+            data["course[integration_id]"] = course_integration_id
         # OPTIONAL - course[hide_final_grades] - If this option is set to true, the totals in student grades summary will be hidden.
         if course_hide_final_grades is not None:
-            payload["course[hide_final_grades]"] = course_hide_final_grades
+            data["course[hide_final_grades]"] = course_hide_final_grades
         # OPTIONAL - course[apply_assignment_group_weights] - Set to true to weight final grade based on assignment groups percentages.
         if course_apply_assignment_group_weights is not None:
-            payload["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
+            data["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
         # OPTIONAL - offer - If this option is set to true, the course will be available to students immediately.
         if offer is not None:
-            payload["offer"] = offer
+            data["offer"] = offer
         # OPTIONAL - course[syllabus_body] - The syllabus body for the course
         if course_syllabus_body is not None:
-            payload["course[syllabus_body]"] = course_syllabus_body
+            data["course[syllabus_body]"] = course_syllabus_body
         # OPTIONAL - course[grading_standard_id] - The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course.
         if course_grading_standard_id is not None:
-            payload["course[grading_standard_id]"] = course_grading_standard_id
+            data["course[grading_standard_id]"] = course_grading_standard_id
         # OPTIONAL - course[course_format] - Optional. Specifies the format of the course. (Should be either 'on_campus' or 'online')
         if course_course_format is not None:
-            payload["course[course_format]"] = course_course_format
+            data["course[course_format]"] = course_course_format
 
-        self.logger.debug("PUT /api/v1/courses/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{id}".format(**path), data=data, params=params, no_data=True)
 
     def update_courses(self, event, account_id, course_ids):
         """
@@ -600,19 +623,19 @@ class CoursesAPI(BaseCanvasAPI):
             will be unpublished. Deleted enrollments will not be recovered.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - course_ids - List of ids of courses to update. At most 500 courses may be updated in one call.
-        payload["course_ids"] = course_ids
+        data["course_ids"] = course_ids
         # REQUIRED - event - no description
-        if event is not None:
-            self._validate_enum(event, ["offer", "conclude", "delete", "undelete"])
-        payload["event"] = event
+        self._validate_enum(event, ["offer", "conclude", "delete", "undelete"])
+        data["event"] = event
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/courses with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/courses".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/courses with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/courses".format(**path), data=data, params=params, single_item=True)
 
     def reset_course(self, course_id):
         """
@@ -622,13 +645,14 @@ class CoursesAPI(BaseCanvasAPI):
         no content, but all sections and users moved over.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/reset_content with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/reset_content".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/reset_content with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/reset_content".format(**path), data=data, params=params, single_item=True)
 
     def get_course_copy_status(self, id, course_id):
         """
@@ -639,15 +663,16 @@ class CoursesAPI(BaseCanvasAPI):
         Retrieve the status of a course copy
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/course_copy/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/course_copy/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/course_copy/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/course_copy/{id}".format(**path), data=data, params=params, no_data=True)
 
     def copy_course_content(self, course_id, except=None, only=None, source_course=None):
         """
@@ -662,26 +687,25 @@ class CoursesAPI(BaseCanvasAPI):
         The response is the same as the course copy status endpoint
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - source_course - ID or SIS-ID of the course to copy the content from
         if source_course is not None:
-            payload["source_course"] = source_course
+            data["source_course"] = source_course
         # OPTIONAL - except - A list of the course content types to exclude, all areas not listed will be copied.
         if except is not None:
             self._validate_enum(except, ["course_settings", "assignments", "external_tools", "files", "topics", "calendar_events", "quizzes", "wiki_pages", "modules", "outcomes"])
-        if except is not None:
-            payload["except"] = except
+            data["except"] = except
         # OPTIONAL - only - A list of the course content types to copy, all areas not listed will not be copied.
         if only is not None:
             self._validate_enum(only, ["course_settings", "assignments", "external_tools", "files", "topics", "calendar_events", "quizzes", "wiki_pages", "modules", "outcomes"])
-        if only is not None:
-            payload["only"] = only
+            data["only"] = only
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/course_copy with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/course_copy".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/course_copy with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/course_copy".format(**path), data=data, params=params, no_data=True)
 
 
 class Course(BaseModel):

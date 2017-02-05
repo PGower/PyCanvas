@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,7 +23,8 @@ class QuizReportsAPI(BaseCanvasAPI):
         Returns a list of all available reports.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -30,10 +32,10 @@ class QuizReportsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - includes_all_versions - Whether to retrieve reports that consider all the submissions or only the most recent. Defaults to false, ignored for item_analysis reports.
         if includes_all_versions is not None:
-            payload["includes_all_versions"] = includes_all_versions
+            params["includes_all_versions"] = includes_all_versions
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports".format(**path), data=data, params=params, all_pages=True)
 
     def create_quiz_report(self, quiz_id, course_id, quiz_report_report_type, include=None, quiz_report_includes_all_versions=None):
         """
@@ -50,27 +52,26 @@ class QuizReportsAPI(BaseCanvasAPI):
           generated
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - quiz_id - ID
         path["quiz_id"] = quiz_id
         # REQUIRED - quiz_report[report_type] - The type of report to be generated.
-        if quiz_report_report_type is not None:
-            self._validate_enum(quiz_report_report_type, ["student_analysis", "item_analysis"])
-        payload["quiz_report[report_type]"] = quiz_report_report_type
+        self._validate_enum(quiz_report_report_type, ["student_analysis", "item_analysis"])
+        data["quiz_report[report_type]"] = quiz_report_report_type
         # OPTIONAL - quiz_report[includes_all_versions] - Whether the report should consider all submissions or only the most recent. Defaults to false, ignored for item_analysis.
         if quiz_report_includes_all_versions is not None:
-            payload["quiz_report[includes_all_versions]"] = quiz_report_includes_all_versions
+            data["quiz_report[includes_all_versions]"] = quiz_report_includes_all_versions
         # OPTIONAL - include - Whether the output should include documents for the file and/or progress objects associated with this report. (Note: JSON-API only)
         if include is not None:
             self._validate_enum(include, ["file", "progress"])
-        if include is not None:
-            payload["include"] = include
+            data["include"] = include
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports".format(**path), data=data, params=params, single_item=True)
 
     def get_quiz_report(self, id, quiz_id, course_id, include=None):
         """
@@ -79,7 +80,8 @@ class QuizReportsAPI(BaseCanvasAPI):
         Returns the data for a single quiz report.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -90,11 +92,10 @@ class QuizReportsAPI(BaseCanvasAPI):
         # OPTIONAL - include - Whether the output should include documents for the file and/or progress objects associated with this report. (Note: JSON-API only)
         if include is not None:
             self._validate_enum(include, ["file", "progress"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}".format(**path), data=data, params=params, single_item=True)
 
     def abort_generation_of_report_or_remove_previously_generated_one(self, id, quiz_id, course_id):
         """
@@ -117,7 +118,8 @@ class QuizReportsAPI(BaseCanvasAPI):
           or can not be aborted at this stage
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -126,8 +128,8 @@ class QuizReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/reports/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Quizreport(BaseModel):

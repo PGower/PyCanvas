@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Returns the list of External Feeds this course or group.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/external_feeds with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/external_feeds".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/external_feeds".format(**path), data=data, params=params, all_pages=True)
 
     def list_external_feeds_groups(self, group_id):
         """
@@ -37,13 +39,14 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Returns the list of External Feeds this course or group.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/external_feeds with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/external_feeds".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/external_feeds".format(**path), data=data, params=params, all_pages=True)
 
     def create_external_feed_courses(self, url, course_id, header_match=None, verbosity=None):
         """
@@ -52,23 +55,23 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Create a new external feed for the course or group.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - url - The url to the external rss or atom feed
-        payload["url"] = url
+        data["url"] = url
         # OPTIONAL - header_match - If given, only feed entries that contain this string in their title will be imported
         if header_match is not None:
-            payload["header_match"] = header_match
+            data["header_match"] = header_match
         # OPTIONAL - verbosity - Defaults to "full"
         if verbosity is not None:
             self._validate_enum(verbosity, ["full", "truncate", "link_only"])
-        if verbosity is not None:
-            payload["verbosity"] = verbosity
+            data["verbosity"] = verbosity
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/external_feeds with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/external_feeds".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/external_feeds".format(**path), data=data, params=params, single_item=True)
 
     def create_external_feed_groups(self, url, group_id, header_match=None, verbosity=None):
         """
@@ -77,23 +80,23 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Create a new external feed for the course or group.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - url - The url to the external rss or atom feed
-        payload["url"] = url
+        data["url"] = url
         # OPTIONAL - header_match - If given, only feed entries that contain this string in their title will be imported
         if header_match is not None:
-            payload["header_match"] = header_match
+            data["header_match"] = header_match
         # OPTIONAL - verbosity - Defaults to "full"
         if verbosity is not None:
             self._validate_enum(verbosity, ["full", "truncate", "link_only"])
-        if verbosity is not None:
-            payload["verbosity"] = verbosity
+            data["verbosity"] = verbosity
 
-        self.logger.debug("POST /api/v1/groups/{group_id}/external_feeds with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/groups/{group_id}/external_feeds".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/groups/{group_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/groups/{group_id}/external_feeds".format(**path), data=data, params=params, single_item=True)
 
     def delete_external_feed_courses(self, course_id, external_feed_id):
         """
@@ -102,15 +105,16 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Deletes the external feed.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - external_feed_id - ID
         path["external_feed_id"] = external_feed_id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/external_feeds/{external_feed_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/external_feeds/{external_feed_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/external_feeds/{external_feed_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/external_feeds/{external_feed_id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_external_feed_groups(self, group_id, external_feed_id):
         """
@@ -119,15 +123,16 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         Deletes the external feed.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - external_feed_id - ID
         path["external_feed_id"] = external_feed_id
 
-        self.logger.debug("DELETE /api/v1/groups/{group_id}/external_feeds/{external_feed_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/groups/{group_id}/external_feeds/{external_feed_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/groups/{group_id}/external_feeds/{external_feed_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/groups/{group_id}/external_feeds/{external_feed_id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Externalfeed(BaseModel):

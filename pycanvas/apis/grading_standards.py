@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -37,19 +38,20 @@ class GradingStandardsAPI(BaseCanvasAPI):
              "F" : 0,
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - title - The title for the Grading Standard.
-        payload["title"] = title
+        data["title"] = title
         # REQUIRED - grading_scheme_entry[name] - The name for an entry value within a GradingStandard that describes the range of the value e.g. A-
-        payload["grading_scheme_entry[name]"] = grading_scheme_entry_name
+        data["grading_scheme_entry[name]"] = grading_scheme_entry_name
         # REQUIRED - grading_scheme_entry[value] - The value for the name of the entry within a GradingStandard. The entry represents the lower bound of the range for the entry. This range includes the value up to the next entry in the GradingStandard, or 100 if there is no upper bound. The lowest value will have a lower bound range of 0. e.g. 93
-        payload["grading_scheme_entry[value]"] = grading_scheme_entry_value
+        data["grading_scheme_entry[value]"] = grading_scheme_entry_value
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/grading_standards with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/grading_standards".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/grading_standards".format(**path), data=data, params=params, single_item=True)
 
     def create_new_grading_standard_courses(self, title, course_id, grading_scheme_entry_name, grading_scheme_entry_value):
         """
@@ -73,19 +75,20 @@ class GradingStandardsAPI(BaseCanvasAPI):
              "F" : 0,
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - title - The title for the Grading Standard.
-        payload["title"] = title
+        data["title"] = title
         # REQUIRED - grading_scheme_entry[name] - The name for an entry value within a GradingStandard that describes the range of the value e.g. A-
-        payload["grading_scheme_entry[name]"] = grading_scheme_entry_name
+        data["grading_scheme_entry[name]"] = grading_scheme_entry_name
         # REQUIRED - grading_scheme_entry[value] - The value for the name of the entry within a GradingStandard. The entry represents the lower bound of the range for the entry. This range includes the value up to the next entry in the GradingStandard, or 100 if there is no upper bound. The lowest value will have a lower bound range of 0. e.g. 93
-        payload["grading_scheme_entry[value]"] = grading_scheme_entry_value
+        data["grading_scheme_entry[value]"] = grading_scheme_entry_value
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/grading_standards with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/grading_standards".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/grading_standards".format(**path), data=data, params=params, single_item=True)
 
 
 class Gradingstandard(BaseModel):

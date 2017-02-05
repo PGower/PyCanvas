@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
@@ -22,10 +23,11 @@ class ServicesAPI(BaseCanvasAPI):
         Return the config information for the Kaltura plugin in json format.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/services/kaltura with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/services/kaltura".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/services/kaltura with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/services/kaltura".format(**path), data=data, params=params, no_data=True)
 
     def start_kaltura_session(self):
         """
@@ -35,8 +37,9 @@ class ServicesAPI(BaseCanvasAPI):
         to this Canvas instance's Kaltura instance.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("POST /api/v1/services/kaltura_session with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/services/kaltura_session".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/services/kaltura_session with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/services/kaltura_session".format(**path), data=data, params=params, no_data=True)
 

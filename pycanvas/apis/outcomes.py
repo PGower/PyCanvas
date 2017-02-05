@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class OutcomesAPI(BaseCanvasAPI):
         Returns the details of the outcome with the given id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/outcomes/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/outcomes/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/outcomes/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/outcomes/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_outcome(self, id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -48,42 +50,42 @@ class OutcomesAPI(BaseCanvasAPI):
         0.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - title - The new outcome title.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The new outcome description.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The new mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a new rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a new rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method.
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("PUT /api/v1/outcomes/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/outcomes/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/outcomes/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/outcomes/{id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Outcome(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -27,16 +28,17 @@ class UsersAPI(BaseCanvasAPI):
               -H 'Authorization: Bearer <token>'
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list. Must be at least 3 characters.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/users with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/users".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/users".format(**path), data=data, params=params, all_pages=True)
 
     def list_activity_stream_self(self):
         """
@@ -143,10 +145,11 @@ class UsersAPI(BaseCanvasAPI):
           }
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/self/activity_stream with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/self/activity_stream".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/self/activity_stream with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/activity_stream".format(**path), data=data, params=params, no_data=True)
 
     def list_activity_stream_activity_stream(self):
         """
@@ -253,10 +256,11 @@ class UsersAPI(BaseCanvasAPI):
           }
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/activity_stream with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/activity_stream".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/activity_stream with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/activity_stream".format(**path), data=data, params=params, no_data=True)
 
     def activity_stream_summary(self):
         """
@@ -265,10 +269,11 @@ class UsersAPI(BaseCanvasAPI):
         Returns a summary of the current user's global activity stream.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/self/activity_stream/summary with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/self/activity_stream/summary".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/self/activity_stream/summary with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/activity_stream/summary".format(**path), data=data, params=params, no_data=True)
 
     def list_todo_items(self):
         """
@@ -286,10 +291,11 @@ class UsersAPI(BaseCanvasAPI):
         that item forever.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/self/todo with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/self/todo".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/self/todo with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/todo".format(**path), data=data, params=params, no_data=True)
 
     def list_upcoming_assignments_calendar_events(self):
         """
@@ -299,10 +305,11 @@ class UsersAPI(BaseCanvasAPI):
         in the dashboard 'Coming Up' sidebar.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/users/self/upcoming_events with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/self/upcoming_events".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/self/upcoming_events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/upcoming_events".format(**path), data=data, params=params, no_data=True)
 
     def hide_stream_item(self, id):
         """
@@ -311,13 +318,14 @@ class UsersAPI(BaseCanvasAPI):
         Hide the given stream item.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/users/self/activity_stream/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/self/activity_stream/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/users/self/activity_stream/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/activity_stream/{id}".format(**path), data=data, params=params, no_data=True)
 
     def hide_all_stream_items(self):
         """
@@ -326,10 +334,11 @@ class UsersAPI(BaseCanvasAPI):
         Hide all stream items for the user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("DELETE /api/v1/users/self/activity_stream with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/self/activity_stream".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/users/self/activity_stream with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/activity_stream".format(**path), data=data, params=params, no_data=True)
 
     def upload_file(self, user_id):
         """
@@ -346,13 +355,14 @@ class UsersAPI(BaseCanvasAPI):
         to specify the current user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("POST /api/v1/users/{user_id}/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/{user_id}/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/users/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{user_id}/files".format(**path), data=data, params=params, no_data=True)
 
     def show_user_details(self, id):
         """
@@ -369,13 +379,14 @@ class UsersAPI(BaseCanvasAPI):
           }
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/users/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{id}".format(**path), data=data, params=params, single_item=True)
 
     def create_user(self, account_id, pseudonym_unique_id, communication_channel_address=None, communication_channel_confirmation_url=None, communication_channel_skip_confirmation=None, communication_channel_type=None, force_validations=None, pseudonym_password=None, pseudonym_send_confirmation=None, pseudonym_sis_user_id=None, user_birthdate=None, user_locale=None, user_name=None, user_short_name=None, user_sortable_name=None, user_terms_of_use=None, user_time_zone=None):
         """
@@ -389,60 +400,61 @@ class UsersAPI(BaseCanvasAPI):
         others will be ignored (see below).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - user[name] - The full name of the user. This name will be used by teacher for grading. Required if this is a self-registration.
         if user_name is not None:
-            payload["user[name]"] = user_name
+            data["user[name]"] = user_name
         # OPTIONAL - user[short_name] - User's name as it will be displayed in discussions, messages, and comments.
         if user_short_name is not None:
-            payload["user[short_name]"] = user_short_name
+            data["user[short_name]"] = user_short_name
         # OPTIONAL - user[sortable_name] - User's name as used to sort alphabetically in lists.
         if user_sortable_name is not None:
-            payload["user[sortable_name]"] = user_sortable_name
+            data["user[sortable_name]"] = user_sortable_name
         # OPTIONAL - user[time_zone] - The time zone for the user. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
         if user_time_zone is not None:
-            payload["user[time_zone]"] = user_time_zone
+            data["user[time_zone]"] = user_time_zone
         # OPTIONAL - user[locale] - The user's preferred language as a two-letter ISO 639-1 code.
         if user_locale is not None:
-            payload["user[locale]"] = user_locale
+            data["user[locale]"] = user_locale
         # OPTIONAL - user[birthdate] - The user's birth date.
         if user_birthdate is not None:
-            payload["user[birthdate]"] = user_birthdate
+            data["user[birthdate]"] = user_birthdate
         # OPTIONAL - user[terms_of_use] - Whether the user accepts the terms of use. Required if this is a self-registration and this canvas instance requires users to accept the terms (on by default).
         if user_terms_of_use is not None:
-            payload["user[terms_of_use]"] = user_terms_of_use
+            data["user[terms_of_use]"] = user_terms_of_use
         # REQUIRED - pseudonym[unique_id] - User's login ID. If this is a self-registration, it must be a valid email address.
-        payload["pseudonym[unique_id]"] = pseudonym_unique_id
+        data["pseudonym[unique_id]"] = pseudonym_unique_id
         # OPTIONAL - pseudonym[password] - User's password. Cannot be set during self-registration.
         if pseudonym_password is not None:
-            payload["pseudonym[password]"] = pseudonym_password
+            data["pseudonym[password]"] = pseudonym_password
         # OPTIONAL - pseudonym[sis_user_id] - SIS ID for the user's account. To set this parameter, the caller must be able to manage SIS permissions.
         if pseudonym_sis_user_id is not None:
-            payload["pseudonym[sis_user_id]"] = pseudonym_sis_user_id
+            data["pseudonym[sis_user_id]"] = pseudonym_sis_user_id
         # OPTIONAL - pseudonym[send_confirmation] - Send user notification of account creation if true. Automatically set to true during self-registration.
         if pseudonym_send_confirmation is not None:
-            payload["pseudonym[send_confirmation]"] = pseudonym_send_confirmation
+            data["pseudonym[send_confirmation]"] = pseudonym_send_confirmation
         # OPTIONAL - communication_channel[type] - The communication channel type, e.g. 'email' or 'sms'.
         if communication_channel_type is not None:
-            payload["communication_channel[type]"] = communication_channel_type
+            data["communication_channel[type]"] = communication_channel_type
         # OPTIONAL - communication_channel[address] - The communication channel address, e.g. the user's email address.
         if communication_channel_address is not None:
-            payload["communication_channel[address]"] = communication_channel_address
+            data["communication_channel[address]"] = communication_channel_address
         # OPTIONAL - communication_channel[confirmation_url] - Only valid for account admins. If true, returns the new user account confirmation URL in the response.
         if communication_channel_confirmation_url is not None:
-            payload["communication_channel[confirmation_url]"] = communication_channel_confirmation_url
+            data["communication_channel[confirmation_url]"] = communication_channel_confirmation_url
         # OPTIONAL - communication_channel[skip_confirmation] - Only valid for site admins and account admins making requests; If true, the channel is automatically validated and no confirmation email or SMS is sent. Otherwise, the user must respond to a confirmation message to confirm the channel.
         if communication_channel_skip_confirmation is not None:
-            payload["communication_channel[skip_confirmation]"] = communication_channel_skip_confirmation
+            data["communication_channel[skip_confirmation]"] = communication_channel_skip_confirmation
         # OPTIONAL - force_validations - If true, validations are performed on the newly created user (and their associated pseudonym) even if the request is made by a privileged user like an admin. When set to false, or not included in the request parameters, any newly created users are subject to validations unless the request is made by a user with a 'manage_user_logins' right. In which case, certain validations such as 'require_acceptance_of_terms' and 'require_presence_of_name' are not enforced. Use this parameter to return helpful json errors while building users with an admin request.
         if force_validations is not None:
-            payload["force_validations"] = force_validations
+            data["force_validations"] = force_validations
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/users with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/users".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/users".format(**path), data=data, params=params, single_item=True)
 
     def update_user_settings(self, id, manual_mark_as_read=None):
         """
@@ -451,16 +463,17 @@ class UsersAPI(BaseCanvasAPI):
         Update an existing user's settings.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - manual_mark_as_read - If true, require user to manually mark discussion posts as read (don't auto-mark as read).
         if manual_mark_as_read is not None:
-            payload["manual_mark_as_read"] = manual_mark_as_read
+            params["manual_mark_as_read"] = manual_mark_as_read
 
-        self.logger.debug("GET /api/v1/users/{id}/settings with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{id}/settings".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/{id}/settings with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{id}/settings".format(**path), data=data, params=params, no_data=True)
 
     def edit_user(self, id, user_avatar_token=None, user_avatar_url=None, user_locale=None, user_name=None, user_short_name=None, user_sortable_name=None, user_time_zone=None):
         """
@@ -469,34 +482,35 @@ class UsersAPI(BaseCanvasAPI):
         Modify an existing user. To modify a user's login, see the documentation for logins.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - user[name] - The full name of the user. This name will be used by teacher for grading.
         if user_name is not None:
-            payload["user[name]"] = user_name
+            data["user[name]"] = user_name
         # OPTIONAL - user[short_name] - User's name as it will be displayed in discussions, messages, and comments.
         if user_short_name is not None:
-            payload["user[short_name]"] = user_short_name
+            data["user[short_name]"] = user_short_name
         # OPTIONAL - user[sortable_name] - User's name as used to sort alphabetically in lists.
         if user_sortable_name is not None:
-            payload["user[sortable_name]"] = user_sortable_name
+            data["user[sortable_name]"] = user_sortable_name
         # OPTIONAL - user[time_zone] - The time zone for the user. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
         if user_time_zone is not None:
-            payload["user[time_zone]"] = user_time_zone
+            data["user[time_zone]"] = user_time_zone
         # OPTIONAL - user[locale] - The user's preferred language as a two-letter ISO 639-1 code.
         if user_locale is not None:
-            payload["user[locale]"] = user_locale
+            data["user[locale]"] = user_locale
         # OPTIONAL - user[avatar][token] - A unique representation of the avatar record to assign as the user's current avatar. This token can be obtained from the user avatars endpoint. This supersedes the user [avatar] [url] argument, and if both are included the url will be ignored. Note: this is an internal representation and is subject to change without notice. It should be consumed with this api endpoint and used in the user update endpoint, and should not be constructed by the client.
         if user_avatar_token is not None:
-            payload["user[avatar][token]"] = user_avatar_token
+            data["user[avatar][token]"] = user_avatar_token
         # OPTIONAL - user[avatar][url] - To set the user's avatar to point to an external url, do not include a token and instead pass the url here. Warning: For maximum compatibility, please use 128 px square images.
         if user_avatar_url is not None:
-            payload["user[avatar][url]"] = user_avatar_url
+            data["user[avatar][url]"] = user_avatar_url
 
-        self.logger.debug("PUT /api/v1/users/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{id}".format(**path), data=data, params=params, single_item=True)
 
     def merge_user_into_another_user_destination_user_id(self, id, destination_user_id):
         """
@@ -511,15 +525,16 @@ class UsersAPI(BaseCanvasAPI):
         The account can also be identified by passing the domain in destination_account_id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - PATH - destination_user_id - ID
         path["destination_user_id"] = destination_user_id
 
-        self.logger.debug("PUT /api/v1/users/{id}/merge_into/{destination_user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{id}/merge_into/{destination_user_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{id}/merge_into/{destination_user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{id}/merge_into/{destination_user_id}".format(**path), data=data, params=params, single_item=True)
 
     def merge_user_into_another_user_accounts(self, id, destination_user_id, destination_account_id):
         """
@@ -534,7 +549,8 @@ class UsersAPI(BaseCanvasAPI):
         The account can also be identified by passing the domain in destination_account_id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
@@ -543,8 +559,8 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - destination_user_id - ID
         path["destination_user_id"] = destination_user_id
 
-        self.logger.debug("PUT /api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id}".format(**path), data=data, params=params, single_item=True)
 
     def get_user_profile(self, user_id):
         """
@@ -556,13 +572,14 @@ class UsersAPI(BaseCanvasAPI):
         calendar feed URL will be returned as well.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/profile with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/profile".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/profile with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/profile".format(**path), data=data, params=params, single_item=True)
 
     def list_avatar_options(self, user_id):
         """
@@ -579,13 +596,14 @@ class UsersAPI(BaseCanvasAPI):
         size:: ['attachment' type only] the size of the attachment
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/avatars with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/avatars".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/avatars with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/avatars".format(**path), data=data, params=params, all_pages=True)
 
     def list_user_page_views(self, user_id, end_time=None, start_time=None):
         """
@@ -596,19 +614,28 @@ class UsersAPI(BaseCanvasAPI):
         section. Page views are returned in descending order, newest to oldest.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # OPTIONAL - start_time - The beginning of the time range from which you want page views.
         if start_time is not None:
-            payload["start_time"] = start_time
+            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
+                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(start_time.__class__, basestring):
+                start_time = self._validate_iso8601_string(start_time)
+            params["start_time"] = start_time
         # OPTIONAL - end_time - The end of the time range from which you want page views.
         if end_time is not None:
-            payload["end_time"] = end_time
+            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
+                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(end_time.__class__, basestring):
+                end_time = self._validate_iso8601_string(end_time)
+            params["end_time"] = end_time
 
-        self.logger.debug("GET /api/v1/users/{user_id}/page_views with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/page_views".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/page_views with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/page_views".format(**path), data=data, params=params, all_pages=True)
 
     def store_custom_data(self, ns, data, user_id):
         """
@@ -757,17 +784,18 @@ class UsersAPI(BaseCanvasAPI):
           }
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - ns - The namespace under which to store the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
-        payload["ns"] = ns
+        data["ns"] = ns
         # REQUIRED - data - The data you want to store for the user, at the specified scope. If the data is composed of (possibly nested) JSON objects, scopes will be generated for the (nested) keys (see examples).
-        payload["data"] = data
+        data["data"] = data
 
-        self.logger.debug("PUT /api/v1/users/{user_id}/custom_data with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{user_id}/custom_data".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{user_id}/custom_data".format(**path), data=data, params=params, no_data=True)
 
     def load_custom_data(self, ns, user_id):
         """
@@ -786,15 +814,16 @@ class UsersAPI(BaseCanvasAPI):
         or if the specified scope does not contain any data.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - ns - The namespace from which to retrieve the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
-        payload["ns"] = ns
+        params["ns"] = ns
 
-        self.logger.debug("GET /api/v1/users/{user_id}/custom_data with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/custom_data".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/custom_data".format(**path), data=data, params=params, no_data=True)
 
     def delete_custom_data(self, ns, user_id):
         """
@@ -905,15 +934,16 @@ class UsersAPI(BaseCanvasAPI):
         or if the specified scope does not contain any data.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - ns - The namespace from which to delete the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
-        payload["ns"] = ns
+        params["ns"] = ns
 
-        self.logger.debug("DELETE /api/v1/users/{user_id}/custom_data with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/{user_id}/custom_data".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/{user_id}/custom_data".format(**path), data=data, params=params, no_data=True)
 
 
 class Profile(BaseModel):

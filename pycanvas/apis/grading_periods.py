@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Returns the list of grading periods for the current course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/grading_periods with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/grading_periods".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/grading_periods with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/grading_periods".format(**path), data=data, params=params, no_data=True)
 
     def list_grading_periods_accounts(self, account_id):
         """
@@ -37,13 +39,14 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Returns the list of grading periods for the current course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/grading_periods with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/grading_periods".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/grading_periods with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/grading_periods".format(**path), data=data, params=params, no_data=True)
 
     def get_single_grading_period_courses(self, id, course_id):
         """
@@ -52,15 +55,16 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Returns the grading period with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
     def get_single_grading_period_accounts(self, id, account_id):
         """
@@ -69,15 +73,16 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Returns the grading period with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_single_grading_period_courses(self, course_id, grading_periods_end_date, grading_periods_start_date, grading_periods_weight=None):
         """
@@ -86,20 +91,21 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Create a new grading period for the current user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - grading_periods[start_date] - The date the grading period starts.
-        payload["grading_periods[start_date]"] = grading_periods_start_date
+        data["grading_periods[start_date]"] = grading_periods_start_date
         # REQUIRED - grading_periods[end_date] - no description
-        payload["grading_periods[end_date]"] = grading_periods_end_date
+        data["grading_periods[end_date]"] = grading_periods_end_date
         # OPTIONAL - grading_periods[weight] - The percentage weight of how much the period should count toward the course grade.
         if grading_periods_weight is not None:
-            payload["grading_periods[weight]"] = grading_periods_weight
+            data["grading_periods[weight]"] = grading_periods_weight
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/grading_periods with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/grading_periods".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/grading_periods with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/grading_periods".format(**path), data=data, params=params, no_data=True)
 
     def create_single_grading_period_accounts(self, account_id, grading_periods_end_date, grading_periods_start_date, grading_periods_weight=None):
         """
@@ -108,20 +114,21 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Create a new grading period for the current user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - grading_periods[start_date] - The date the grading period starts.
-        payload["grading_periods[start_date]"] = grading_periods_start_date
+        data["grading_periods[start_date]"] = grading_periods_start_date
         # REQUIRED - grading_periods[end_date] - no description
-        payload["grading_periods[end_date]"] = grading_periods_end_date
+        data["grading_periods[end_date]"] = grading_periods_end_date
         # OPTIONAL - grading_periods[weight] - The percentage weight of how much the period should count toward the course grade.
         if grading_periods_weight is not None:
-            payload["grading_periods[weight]"] = grading_periods_weight
+            data["grading_periods[weight]"] = grading_periods_weight
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/grading_periods with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/grading_periods".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/grading_periods with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/grading_periods".format(**path), data=data, params=params, no_data=True)
 
     def update_single_grading_period_courses(self, id, course_id, grading_periods_end_date, grading_periods_start_date, grading_periods_weight=None):
         """
@@ -130,22 +137,23 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Update an existing grading period.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - grading_periods[start_date] - The date the grading period starts.
-        payload["grading_periods[start_date]"] = grading_periods_start_date
+        data["grading_periods[start_date]"] = grading_periods_start_date
         # REQUIRED - grading_periods[end_date] - no description
-        payload["grading_periods[end_date]"] = grading_periods_end_date
+        data["grading_periods[end_date]"] = grading_periods_end_date
         # OPTIONAL - grading_periods[weight] - The percentage weight of how much the period should count toward the course grade.
         if grading_periods_weight is not None:
-            payload["grading_periods[weight]"] = grading_periods_weight
+            data["grading_periods[weight]"] = grading_periods_weight
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
     def update_single_grading_period_accounts(self, id, account_id, grading_periods_end_date, grading_periods_start_date, grading_periods_weight=None):
         """
@@ -154,22 +162,23 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         Update an existing grading period.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - grading_periods[start_date] - The date the grading period starts.
-        payload["grading_periods[start_date]"] = grading_periods_start_date
+        data["grading_periods[start_date]"] = grading_periods_start_date
         # REQUIRED - grading_periods[end_date] - no description
-        payload["grading_periods[end_date]"] = grading_periods_end_date
+        data["grading_periods[end_date]"] = grading_periods_end_date
         # OPTIONAL - grading_periods[weight] - The percentage weight of how much the period should count toward the course grade.
         if grading_periods_weight is not None:
-            payload["grading_periods[weight]"] = grading_periods_weight
+            data["grading_periods[weight]"] = grading_periods_weight
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_grading_period_courses(self, id, course_id):
         """
@@ -178,15 +187,16 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_grading_period_accounts(self, id, account_id):
         """
@@ -195,15 +205,16 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/grading_periods/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/grading_periods/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/grading_periods/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Gradingperiod(BaseModel):

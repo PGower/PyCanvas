@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         List all features that apply to a given Account, Course, or User.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/features with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/features".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/features".format(**path), data=data, params=params, all_pages=True)
 
     def list_features_accounts(self, account_id):
         """
@@ -37,13 +39,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         List all features that apply to a given Account, Course, or User.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/features with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features".format(**path), data=data, params=params, all_pages=True)
 
     def list_features_users(self, user_id):
         """
@@ -52,13 +55,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         List all features that apply to a given Account, Course, or User.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/features with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/features".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/features".format(**path), data=data, params=params, all_pages=True)
 
     def list_enabled_features_courses(self, course_id):
         """
@@ -68,13 +72,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         Only the feature names are returned.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/features/enabled with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/features/enabled".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/features/enabled".format(**path), data=data, params=params, no_data=True)
 
     def list_enabled_features_accounts(self, account_id):
         """
@@ -84,13 +89,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         Only the feature names are returned.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/features/enabled with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features/enabled".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features/enabled".format(**path), data=data, params=params, no_data=True)
 
     def list_enabled_features_users(self, user_id):
         """
@@ -100,13 +106,14 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         Only the feature names are returned.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/features/enabled with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/features/enabled".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/features/enabled".format(**path), data=data, params=params, no_data=True)
 
     def get_feature_flag_courses(self, feature, course_id):
         """
@@ -119,15 +126,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         is the global Canvas default.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def get_feature_flag_accounts(self, feature, account_id):
         """
@@ -140,15 +148,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         is the global Canvas default.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def get_feature_flag_users(self, user_id, feature):
         """
@@ -161,15 +170,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         is the global Canvas default.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("GET /api/v1/users/{user_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def set_feature_flag_courses(self, feature, course_id, locking_account_id=None, state=None):
         """
@@ -179,7 +189,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         a feature flag for the same feature in any state other than "allowed".
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -188,14 +199,13 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
-        if state is not None:
-            payload["state"] = state
+            data["state"] = state
         # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
         if locking_account_id is not None:
-            payload["locking_account_id"] = locking_account_id
+            data["locking_account_id"] = locking_account_id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def set_feature_flag_accounts(self, feature, account_id, locking_account_id=None, state=None):
         """
@@ -205,7 +215,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         a feature flag for the same feature in any state other than "allowed".
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -214,14 +225,13 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
-        if state is not None:
-            payload["state"] = state
+            data["state"] = state
         # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
         if locking_account_id is not None:
-            payload["locking_account_id"] = locking_account_id
+            data["locking_account_id"] = locking_account_id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def set_feature_flag_users(self, user_id, feature, locking_account_id=None, state=None):
         """
@@ -231,7 +241,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         a feature flag for the same feature in any state other than "allowed".
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -240,14 +251,13 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
-        if state is not None:
-            payload["state"] = state
+            data["state"] = state
         # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
         if locking_account_id is not None:
-            payload["locking_account_id"] = locking_account_id
+            data["locking_account_id"] = locking_account_id
 
-        self.logger.debug("PUT /api/v1/users/{user_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def remove_feature_flag_courses(self, feature, course_id):
         """
@@ -259,15 +269,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         then lower-level account flags that were masked by this one will apply again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def remove_feature_flag_accounts(self, feature, account_id):
         """
@@ -279,15 +290,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         then lower-level account flags that were masked by this one will apply again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
     def remove_feature_flag_users(self, user_id, feature):
         """
@@ -299,15 +311,16 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         then lower-level account flags that were masked by this one will apply again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - feature - ID
         path["feature"] = feature
 
-        self.logger.debug("DELETE /api/v1/users/{user_id}/features/flags/{feature} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
 
 class Featureflag(BaseModel):

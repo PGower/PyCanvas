@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,7 +23,8 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         Returns the poll submission with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
@@ -31,8 +33,8 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_single_poll_submission(self, poll_id, poll_session_id, poll_submissions_poll_choice_id):
         """
@@ -41,17 +43,18 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         Create a new poll submission for this poll session
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - poll_id - ID
         path["poll_id"] = poll_id
         # REQUIRED - PATH - poll_session_id - ID
         path["poll_session_id"] = poll_session_id
         # REQUIRED - poll_submissions[poll_choice_id] - The chosen poll choice for this submission.
-        payload["poll_submissions[poll_choice_id]"] = poll_submissions_poll_choice_id
+        data["poll_submissions[poll_choice_id]"] = poll_submissions_poll_choice_id
 
-        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions".format(**path), data=data, params=params, no_data=True)
 
 
 class Pollsubmission(BaseModel):

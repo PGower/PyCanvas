@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class ProgressAPI(BaseCanvasAPI):
         Return completion and status information about an asynchronous job
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/progress/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/progress/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/progress/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/progress/{id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Progress(BaseModel):

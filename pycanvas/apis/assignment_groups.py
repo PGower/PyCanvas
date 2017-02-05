@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -23,24 +24,24 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         groups are sorted by their position field.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - include - Associations to include with the group. "discussion_topic", "all_dates" "assignment_visibility" are only valid are only valid if "assignments" is also included. The "assignment_visibility" option additionally requires that the Differentiated Assignments course feature be turned on.
         if include is not None:
             self._validate_enum(include, ["assignments", "discussion_topic", "all_dates", "assignment_visibility"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - override_assignment_dates - Apply assignment overrides for each assignment, defaults to true.
         if override_assignment_dates is not None:
-            payload["override_assignment_dates"] = override_assignment_dates
+            params["override_assignment_dates"] = override_assignment_dates
         # OPTIONAL - grading_period_id - The id of the grading period in which assignment groups are being requested (Requires the Multiple Grading Periods account feature turned on)
         if grading_period_id is not None:
-            payload["grading_period_id"] = grading_period_id
+            params["grading_period_id"] = grading_period_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups".format(**path), data=data, params=params, all_pages=True)
 
     def get_assignment_group(self, course_id, assignment_group_id, grading_period_id=None, include=None, override_assignment_dates=None):
         """
@@ -49,7 +50,8 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         Returns the assignment group with the given id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -58,17 +60,16 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # OPTIONAL - include - Associations to include with the group. "discussion_topic" and "assignment_visibility" are only valid if "assignments" is also included. The "assignment_visibility" option additionally requires that the Differentiated Assignments course feature be turned on.
         if include is not None:
             self._validate_enum(include, ["assignments", "discussion_topic", "assignment_visibility"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - override_assignment_dates - Apply assignment overrides for each assignment, defaults to true.
         if override_assignment_dates is not None:
-            payload["override_assignment_dates"] = override_assignment_dates
+            params["override_assignment_dates"] = override_assignment_dates
         # OPTIONAL - grading_period_id - The id of the grading period in which assignment groups are being requested (Requires the Multiple Grading Periods account feature turned on)
         if grading_period_id is not None:
-            payload["grading_period_id"] = grading_period_id
+            params["grading_period_id"] = grading_period_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
 
     def create_assignment_group(self, course_id, group_weight=None, name=None, position=None, rules=None):
         """
@@ -77,25 +78,26 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         Create a new assignment group for this course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - name - The assignment group's name
         if name is not None:
-            payload["name"] = name
+            data["name"] = name
         # OPTIONAL - position - The position of this assignment group in relation to the other assignment groups
         if position is not None:
-            payload["position"] = position
+            data["position"] = position
         # OPTIONAL - group_weight - The percent of the total grade that this assignment group represents
         if group_weight is not None:
-            payload["group_weight"] = group_weight
+            data["group_weight"] = group_weight
         # OPTIONAL - rules - The grading rules that are applied within this assignment group See the Assignment Group object definition for format
         if rules is not None:
-            payload["rules"] = rules
+            data["rules"] = rules
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/assignment_groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignment_groups".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignment_groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignment_groups".format(**path), data=data, params=params, single_item=True)
 
     def edit_assignment_group(self, course_id, assignment_group_id):
         """
@@ -105,15 +107,16 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         Accepts the same parameters as Assignment Group creation
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - assignment_group_id - ID
         path["assignment_group_id"] = assignment_group_id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
 
     def destroy_assignment_group(self, course_id, assignment_group_id, move_assignment_to=None):
         """
@@ -122,7 +125,8 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         Deletes the assignment group with the given id.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -130,10 +134,10 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         path["assignment_group_id"] = assignment_group_id
         # OPTIONAL - move_assignment_to - The ID of an active Assignment Group to which the assignments that are currently assigned to the destroyed Assignment Group will be assigned. NOTE: If this argument is not provided, any assignments in this Assignment Group will be deleted.
         if move_assignment_to is not None:
-            payload["move_assignment_to"] = move_assignment_to
+            params["move_assignment_to"] = move_assignment_to
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Gradingrules(BaseModel):

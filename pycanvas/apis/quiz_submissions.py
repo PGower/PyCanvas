@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -24,7 +25,8 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         <b>200 OK</b> response code is returned if the request was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -33,11 +35,10 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         # OPTIONAL - include - Associations to include with the quiz submission.
         if include is not None:
             self._validate_enum(include, ["submission", "quiz", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions".format(**path), data=data, params=params, no_data=True)
 
     def get_single_quiz_submission(self, id, quiz_id, course_id, include=None):
         """
@@ -48,7 +49,8 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         <b>200 OK</b> response code is returned if the request was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -59,11 +61,10 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         # OPTIONAL - include - Associations to include with the quiz submission.
         if include is not None:
             self._validate_enum(include, ["submission", "quiz", "user"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_quiz_submission_start_quiz_taking_session(self, quiz_id, course_id, access_code=None, preview=None):
         """
@@ -81,7 +82,8 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         * <b>409 Conflict</b> if a QuizSubmission already exists for this user and quiz
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -89,13 +91,13 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - access_code - Access code for the Quiz, if any.
         if access_code is not None:
-            payload["access_code"] = access_code
+            data["access_code"] = access_code
         # OPTIONAL - preview - Whether this should be a preview QuizSubmission and not count towards the user's course record. Teachers only.
         if preview is not None:
-            payload["preview"] = preview
+            data["preview"] = preview
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions".format(**path), data=data, params=params, no_data=True)
 
     def update_student_question_scores_and_comments(self, id, quiz_id, attempt, course_id, fudge_points=None, questions=None):
         """
@@ -113,7 +115,8 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         * <b>400 Bad Request</b> if the specified QS attempt is not yet complete
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -122,16 +125,16 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - attempt - The attempt number of the quiz submission that should be updated. This attempt MUST be already completed.
-        payload["attempt"] = attempt
+        data["attempt"] = attempt
         # OPTIONAL - fudge_points - Amount of positive or negative points to fudge the total score by.
         if fudge_points is not None:
-            payload["fudge_points"] = fudge_points
+            data["fudge_points"] = fudge_points
         # OPTIONAL - questions - A set of scores and comments for each question answered by the student. The keys are the question IDs, and the values are hashes of `score` and `comment` entries. See {Appendix: Manual Scoring} for more on this parameter.
         if questions is not None:
-            payload["questions"] = questions
+            data["questions"] = questions
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def complete_quiz_submission_turn_it_in(self, id, quiz_id, attempt, course_id, validation_token, access_code=None):
         """
@@ -152,7 +155,8 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         * <b>400 Bad Request</b> if the attempt parameter is not the latest attempt
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -161,15 +165,15 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - attempt - The attempt number of the quiz submission that should be completed. Note that this must be the latest attempt index, as earlier attempts can not be modified.
-        payload["attempt"] = attempt
+        data["attempt"] = attempt
         # REQUIRED - validation_token - The unique validation token you received when this Quiz Submission was created.
-        payload["validation_token"] = validation_token
+        data["validation_token"] = validation_token
         # OPTIONAL - access_code - Access code for the Quiz, if any.
         if access_code is not None:
-            payload["access_code"] = access_code
+            data["access_code"] = access_code
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete".format(**path), data=data, params=params, no_data=True)
 
 
 class Quizsubmission(BaseModel):

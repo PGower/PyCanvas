@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,10 +23,11 @@ class PollsAPI(BaseCanvasAPI):
         Returns the list of polls for the current user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/polls with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls".format(**path), data=data, params=params, no_data=True)
 
     def get_single_poll(self, id):
         """
@@ -34,13 +36,14 @@ class PollsAPI(BaseCanvasAPI):
         Returns the poll with the given id
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/polls/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/polls/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/polls/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/polls/{id}".format(**path), data=data, params=params, no_data=True)
 
     def create_single_poll(self, polls_question, polls_description=None):
         """
@@ -49,16 +52,17 @@ class PollsAPI(BaseCanvasAPI):
         Create a new poll for the current user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - polls[question] - The title of the poll.
-        payload["polls[question]"] = polls_question
+        data["polls[question]"] = polls_question
         # OPTIONAL - polls[description] - A brief description or instructions for the poll.
         if polls_description is not None:
-            payload["polls[description]"] = polls_description
+            data["polls[description]"] = polls_description
 
-        self.logger.debug("POST /api/v1/polls with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/polls".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/polls with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/polls".format(**path), data=data, params=params, no_data=True)
 
     def update_single_poll(self, id, polls_question, polls_description=None):
         """
@@ -67,18 +71,19 @@ class PollsAPI(BaseCanvasAPI):
         Update an existing poll belonging to the current user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - polls[question] - The title of the poll.
-        payload["polls[question]"] = polls_question
+        data["polls[question]"] = polls_question
         # OPTIONAL - polls[description] - A brief description or instructions for the poll.
         if polls_description is not None:
-            payload["polls[description]"] = polls_description
+            data["polls[description]"] = polls_description
 
-        self.logger.debug("PUT /api/v1/polls/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/polls/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/polls/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/polls/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_poll(self, id):
         """
@@ -87,13 +92,14 @@ class PollsAPI(BaseCanvasAPI):
         <b>204 No Content</b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/polls/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/polls/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/polls/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/polls/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Poll(BaseModel):

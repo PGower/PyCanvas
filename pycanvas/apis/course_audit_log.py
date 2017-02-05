@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,19 +23,28 @@ class CourseAuditLogAPI(BaseCanvasAPI):
         List course change events for a given course.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - start_time - The beginning of the time range from which you want events.
         if start_time is not None:
-            payload["start_time"] = start_time
+            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
+                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(start_time.__class__, basestring):
+                start_time = self._validate_iso8601_string(start_time)
+            params["start_time"] = start_time
         # OPTIONAL - end_time - The end of the time range from which you want events.
         if end_time is not None:
-            payload["end_time"] = end_time
+            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
+                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(end_time.__class__, basestring):
+                end_time = self._validate_iso8601_string(end_time)
+            params["end_time"] = end_time
 
-        self.logger.debug("GET /api/v1/audit/course/courses/{course_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/audit/course/courses/{course_id}".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/audit/course/courses/{course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/audit/course/courses/{course_id}".format(**path), data=data, params=params, all_pages=True)
 
 
 class Createdeventdata(BaseModel):

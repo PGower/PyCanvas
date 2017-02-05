@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -24,7 +25,8 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         <b>201 Created</b> response code is returned if the creation was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -32,19 +34,19 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - quiz_groups[name] - The name of the question group.
         if quiz_groups_name is not None:
-            payload["quiz_groups[name]"] = quiz_groups_name
+            data["quiz_groups[name]"] = quiz_groups_name
         # OPTIONAL - quiz_groups[pick_count] - The number of questions to randomly select for this group.
         if quiz_groups_pick_count is not None:
-            payload["quiz_groups[pick_count]"] = quiz_groups_pick_count
+            data["quiz_groups[pick_count]"] = quiz_groups_pick_count
         # OPTIONAL - quiz_groups[question_points] - The number of points to assign to each question in the group.
         if quiz_groups_question_points is not None:
-            payload["quiz_groups[question_points]"] = quiz_groups_question_points
+            data["quiz_groups[question_points]"] = quiz_groups_question_points
         # OPTIONAL - quiz_groups[assessment_question_bank_id] - The id of the assessment question bank to pull questions from.
         if quiz_groups_assessment_question_bank_id is not None:
-            payload["quiz_groups[assessment_question_bank_id]"] = quiz_groups_assessment_question_bank_id
+            data["quiz_groups[assessment_question_bank_id]"] = quiz_groups_assessment_question_bank_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups".format(**path), data=data, params=params, no_data=True)
 
     def update_question_group(self, id, quiz_id, course_id, quiz_groups_name=None, quiz_groups_pick_count=None, quiz_groups_question_points=None):
         """
@@ -53,7 +55,8 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         Update a question group
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -63,16 +66,16 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - quiz_groups[name] - The name of the question group.
         if quiz_groups_name is not None:
-            payload["quiz_groups[name]"] = quiz_groups_name
+            data["quiz_groups[name]"] = quiz_groups_name
         # OPTIONAL - quiz_groups[pick_count] - The number of questions to randomly select for this group.
         if quiz_groups_pick_count is not None:
-            payload["quiz_groups[pick_count]"] = quiz_groups_pick_count
+            data["quiz_groups[pick_count]"] = quiz_groups_pick_count
         # OPTIONAL - quiz_groups[question_points] - The number of points to assign to each question in the group.
         if quiz_groups_question_points is not None:
-            payload["quiz_groups[question_points]"] = quiz_groups_question_points
+            data["quiz_groups[question_points]"] = quiz_groups_question_points
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_question_group(self, id, quiz_id, course_id):
         """
@@ -83,7 +86,8 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         <b>204 No Content<b> response code is returned if the deletion was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -92,8 +96,8 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}".format(**path), data=data, params=params, no_data=True)
 
     def reorder_question_groups(self, id, quiz_id, order_id, course_id, order_type=None):
         """
@@ -104,7 +108,8 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         <b>204 No Content<b> response code is returned if the reorder was successful.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -113,15 +118,14 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - order[id] - The associated item's unique identifier
-        payload["order[id]"] = order_id
+        data["order[id]"] = order_id
         # OPTIONAL - order[type] - The type of item is always 'question' for a group
         if order_type is not None:
             self._validate_enum(order_type, ["question"])
-        if order_type is not None:
-            payload["order[type]"] = order_type
+            data["order[type]"] = order_type
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}/reorder with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}/reorder".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}/reorder with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}/reorder".format(**path), data=data, params=params, no_data=True)
 
 
 class Quizgroup(BaseModel):

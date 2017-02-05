@@ -1,11 +1,13 @@
 #PyCanvas
-A python library for accessing the Instructure Canvas REST Api. Mostly generated with swagger-codegen-cli from the published swagger api specs.
+A python library for accessing the Canvas LMS API. Generated from the Canvas API specs using a template.
+All requests currently return json data.
+
+Not all of the API's have been checked, if you fix an issue in one of the generated files please submit a pul request and I will integrate your changes.
+
 
 Quickstart:
 
-`from pycanvas.configuration import Configuration`  
-`c = Configuration(host='https://yourname.instructure.com/api', access_token='generated_oauth_token')`  
-`from pycanvas.users import UserApi`  
-`u = UserApi`  
-`data, status, headers, paging = u.list_users_in_account(account_id=1)`  
-`data, status, headers, paging = u.list_users_in_account(account_id=1, per_page=50, page=3)`  
+from pycanvas.apis import AccountsAPI
+
+`client = AccountsAPI(instance_address="https://mycanvas.instance.com", access_token="my access token")
+`client.list_accounts()

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
@@ -25,13 +26,14 @@ class UserObserveesAPI(BaseCanvasAPI):
         other users' observees.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/observees with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/observees".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/observees with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/observees".format(**path), data=data, params=params, all_pages=True)
 
     def add_observee_with_credentials(self, user_id, observee_password, observee_unique_id):
         """
@@ -44,17 +46,18 @@ class UserObserveesAPI(BaseCanvasAPI):
         the {api:UserObserveesController#update observee's id}.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - observee[unique_id] - The login id for the user to observe.
-        payload["observee[unique_id]"] = observee_unique_id
+        data["observee[unique_id]"] = observee_unique_id
         # REQUIRED - observee[password] - The password for the user to observe.
-        payload["observee[password]"] = observee_password
+        data["observee[password]"] = observee_password
 
-        self.logger.debug("POST /api/v1/users/{user_id}/observees with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/{user_id}/observees".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/users/{user_id}/observees with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{user_id}/observees".format(**path), data=data, params=params, single_item=True)
 
     def show_observee(self, user_id, observee_id):
         """
@@ -65,15 +68,16 @@ class UserObserveesAPI(BaseCanvasAPI):
         *Note:* all users are allowed to view their own observees.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - observee_id - ID
         path["observee_id"] = observee_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/observees/{observee_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/observees/{observee_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), data=data, params=params, single_item=True)
 
     def add_observee(self, user_id, observee_id):
         """
@@ -82,15 +86,16 @@ class UserObserveesAPI(BaseCanvasAPI):
         Registers a user as being observed by the given user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - observee_id - ID
         path["observee_id"] = observee_id
 
-        self.logger.debug("PUT /api/v1/users/{user_id}/observees/{observee_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{user_id}/observees/{observee_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), data=data, params=params, single_item=True)
 
     def remove_observee(self, user_id, observee_id):
         """
@@ -99,13 +104,14 @@ class UserObserveesAPI(BaseCanvasAPI):
         Unregisters a user as being observed by the given user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - observee_id - ID
         path["observee_id"] = observee_id
 
-        self.logger.debug("DELETE /api/v1/users/{user_id}/observees/{observee_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/users/{user_id}/observees/{observee_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/{user_id}/observees/{observee_id}".format(**path), data=data, params=params, single_item=True)
 

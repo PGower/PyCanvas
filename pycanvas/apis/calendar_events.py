@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,31 +23,31 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Retrieve the list of calendar events or assignments for the current user
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # OPTIONAL - type - Defaults to "event"
         if type is not None:
             self._validate_enum(type, ["event", "assignment"])
-        if type is not None:
-            payload["type"] = type
+            params["type"] = type
         # OPTIONAL - start_date - Only return events since the start_date (inclusive). Defaults to today. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.
         if start_date is not None:
-            payload["start_date"] = start_date
+            params["start_date"] = start_date
         # OPTIONAL - end_date - Only return events before the end_date (inclusive). Defaults to start_date. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ. If end_date is the same as start_date, then only events on that day are returned.
         if end_date is not None:
-            payload["end_date"] = end_date
+            params["end_date"] = end_date
         # OPTIONAL - undated - Defaults to false (dated events only). If true, only return undated events and ignore start_date and end_date.
         if undated is not None:
-            payload["undated"] = undated
+            params["undated"] = undated
         # OPTIONAL - all_events - Defaults to false (uses start_date, end_date, and undated criteria). If true, all events are returned, ignoring start_date, end_date, and undated criteria.
         if all_events is not None:
-            payload["all_events"] = all_events
+            params["all_events"] = all_events
         # OPTIONAL - context_codes - List of context codes of courses/groups/users whose events you want to see. If not specified, defaults to the current user (i.e personal calendar, no course/group events). Limited to 10 context codes, additional ones are ignored. The format of this field is the context type, followed by an underscore, followed by the context id. For example: course_42
         if context_codes is not None:
-            payload["context_codes"] = context_codes
+            params["context_codes"] = context_codes
 
-        self.logger.debug("GET /api/v1/calendar_events with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/calendar_events".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/calendar_events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/calendar_events".format(**path), data=data, params=params, all_pages=True)
 
     def create_calendar_event(self, calendar_event_context_code, calendar_event_child_event_data_X_context_code=None, calendar_event_child_event_data_X_end_at=None, calendar_event_child_event_data_X_start_at=None, calendar_event_description=None, calendar_event_end_at=None, calendar_event_location_address=None, calendar_event_location_name=None, calendar_event_start_at=None, calendar_event_time_zone_edited=None, calendar_event_title=None):
         """
@@ -55,43 +56,60 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Create and return a new calendar event
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - calendar_event[context_code] - Context code of the course/group/user whose calendar this event should be added to.
-        payload["calendar_event[context_code]"] = calendar_event_context_code
+        data["calendar_event[context_code]"] = calendar_event_context_code
         # OPTIONAL - calendar_event[title] - Short title for the calendar event.
         if calendar_event_title is not None:
-            payload["calendar_event[title]"] = calendar_event_title
+            data["calendar_event[title]"] = calendar_event_title
         # OPTIONAL - calendar_event[description] - Longer HTML description of the event.
         if calendar_event_description is not None:
-            payload["calendar_event[description]"] = calendar_event_description
+            data["calendar_event[description]"] = calendar_event_description
         # OPTIONAL - calendar_event[start_at] - Start date/time of the event.
         if calendar_event_start_at is not None:
-            payload["calendar_event[start_at]"] = calendar_event_start_at
+            if issubclass(calendar_event_start_at.__class__, date) or issubclass(calendar_event_start_at.__class__, datetime):
+                calendar_event_start_at = calendar_event_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_start_at.__class__, basestring):
+                calendar_event_start_at = self._validate_iso8601_string(calendar_event_start_at)
+            data["calendar_event[start_at]"] = calendar_event_start_at
         # OPTIONAL - calendar_event[end_at] - End date/time of the event.
         if calendar_event_end_at is not None:
-            payload["calendar_event[end_at]"] = calendar_event_end_at
+            if issubclass(calendar_event_end_at.__class__, date) or issubclass(calendar_event_end_at.__class__, datetime):
+                calendar_event_end_at = calendar_event_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_end_at.__class__, basestring):
+                calendar_event_end_at = self._validate_iso8601_string(calendar_event_end_at)
+            data["calendar_event[end_at]"] = calendar_event_end_at
         # OPTIONAL - calendar_event[location_name] - Location name of the event.
         if calendar_event_location_name is not None:
-            payload["calendar_event[location_name]"] = calendar_event_location_name
+            data["calendar_event[location_name]"] = calendar_event_location_name
         # OPTIONAL - calendar_event[location_address] - Location address
         if calendar_event_location_address is not None:
-            payload["calendar_event[location_address]"] = calendar_event_location_address
+            data["calendar_event[location_address]"] = calendar_event_location_address
         # OPTIONAL - calendar_event[time_zone_edited] - Time zone of the user editing the event. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
         if calendar_event_time_zone_edited is not None:
-            payload["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
+            data["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
         # OPTIONAL - calendar_event[child_event_data][X][start_at] - Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code
         if calendar_event_child_event_data_X_start_at is not None:
-            payload["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
+            if issubclass(calendar_event_child_event_data_X_start_at.__class__, date) or issubclass(calendar_event_child_event_data_X_start_at.__class__, datetime):
+                calendar_event_child_event_data_X_start_at = calendar_event_child_event_data_X_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_child_event_data_X_start_at.__class__, basestring):
+                calendar_event_child_event_data_X_start_at = self._validate_iso8601_string(calendar_event_child_event_data_X_start_at)
+            data["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
         # OPTIONAL - calendar_event[child_event_data][X][end_at] - Section-level end time(s) if this is a course event.
         if calendar_event_child_event_data_X_end_at is not None:
-            payload["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
+            if issubclass(calendar_event_child_event_data_X_end_at.__class__, date) or issubclass(calendar_event_child_event_data_X_end_at.__class__, datetime):
+                calendar_event_child_event_data_X_end_at = calendar_event_child_event_data_X_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_child_event_data_X_end_at.__class__, basestring):
+                calendar_event_child_event_data_X_end_at = self._validate_iso8601_string(calendar_event_child_event_data_X_end_at)
+            data["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
         # OPTIONAL - calendar_event[child_event_data][X][context_code] - Context code(s) corresponding to the section-level start and end time(s).
         if calendar_event_child_event_data_X_context_code is not None:
-            payload["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
+            data["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
 
-        self.logger.debug("POST /api/v1/calendar_events with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/calendar_events".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/calendar_events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events".format(**path), data=data, params=params, no_data=True)
 
     def get_single_calendar_event_or_assignment(self, id):
         """
@@ -100,13 +118,14 @@ class CalendarEventsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/calendar_events/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/calendar_events/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/calendar_events/{id}".format(**path), data=data, params=params, single_item=True)
 
     def reserve_time_slot(self, id, cancel_existing=None, participant_id=None):
         """
@@ -115,19 +134,20 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Reserves a particular time slot and return the new reservation
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - participant_id - User or group id for whom you are making the reservation (depends on the participant type). Defaults to the current user (or user's candidate group).
         if participant_id is not None:
-            payload["participant_id"] = participant_id
+            data["participant_id"] = participant_id
         # OPTIONAL - cancel_existing - Defaults to false. If true, cancel any previous reservation(s) for this participant and appointment group.
         if cancel_existing is not None:
-            payload["cancel_existing"] = cancel_existing
+            data["cancel_existing"] = cancel_existing
 
-        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations".format(**path), data=data, params=params, no_data=True)
 
     def reserve_time_slot_participant_id(self, id, participant_id, cancel_existing=None):
         """
@@ -136,7 +156,8 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Reserves a particular time slot and return the new reservation
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
@@ -144,10 +165,10 @@ class CalendarEventsAPI(BaseCanvasAPI):
         path["participant_id"] = participant_id
         # OPTIONAL - cancel_existing - Defaults to false. If true, cancel any previous reservation(s) for this participant and appointment group.
         if cancel_existing is not None:
-            payload["cancel_existing"] = cancel_existing
+            data["cancel_existing"] = cancel_existing
 
-        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations/{participant_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations/{participant_id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations/{participant_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations/{participant_id}".format(**path), data=data, params=params, no_data=True)
 
     def update_calendar_event(self, id, calendar_event_context_code, calendar_event_child_event_data_X_context_code=None, calendar_event_child_event_data_X_end_at=None, calendar_event_child_event_data_X_start_at=None, calendar_event_description=None, calendar_event_end_at=None, calendar_event_location_address=None, calendar_event_location_name=None, calendar_event_start_at=None, calendar_event_time_zone_edited=None, calendar_event_title=None):
         """
@@ -156,45 +177,62 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Update and return a calendar event
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - calendar_event[context_code] - Context code of the course/group/user whose calendar this event should be added to.
-        payload["calendar_event[context_code]"] = calendar_event_context_code
+        data["calendar_event[context_code]"] = calendar_event_context_code
         # OPTIONAL - calendar_event[title] - Short title for the calendar event.
         if calendar_event_title is not None:
-            payload["calendar_event[title]"] = calendar_event_title
+            data["calendar_event[title]"] = calendar_event_title
         # OPTIONAL - calendar_event[description] - Longer HTML description of the event.
         if calendar_event_description is not None:
-            payload["calendar_event[description]"] = calendar_event_description
+            data["calendar_event[description]"] = calendar_event_description
         # OPTIONAL - calendar_event[start_at] - Start date/time of the event.
         if calendar_event_start_at is not None:
-            payload["calendar_event[start_at]"] = calendar_event_start_at
+            if issubclass(calendar_event_start_at.__class__, date) or issubclass(calendar_event_start_at.__class__, datetime):
+                calendar_event_start_at = calendar_event_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_start_at.__class__, basestring):
+                calendar_event_start_at = self._validate_iso8601_string(calendar_event_start_at)
+            data["calendar_event[start_at]"] = calendar_event_start_at
         # OPTIONAL - calendar_event[end_at] - End date/time of the event.
         if calendar_event_end_at is not None:
-            payload["calendar_event[end_at]"] = calendar_event_end_at
+            if issubclass(calendar_event_end_at.__class__, date) or issubclass(calendar_event_end_at.__class__, datetime):
+                calendar_event_end_at = calendar_event_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_end_at.__class__, basestring):
+                calendar_event_end_at = self._validate_iso8601_string(calendar_event_end_at)
+            data["calendar_event[end_at]"] = calendar_event_end_at
         # OPTIONAL - calendar_event[location_name] - Location name of the event.
         if calendar_event_location_name is not None:
-            payload["calendar_event[location_name]"] = calendar_event_location_name
+            data["calendar_event[location_name]"] = calendar_event_location_name
         # OPTIONAL - calendar_event[location_address] - Location address
         if calendar_event_location_address is not None:
-            payload["calendar_event[location_address]"] = calendar_event_location_address
+            data["calendar_event[location_address]"] = calendar_event_location_address
         # OPTIONAL - calendar_event[time_zone_edited] - Time zone of the user editing the event. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
         if calendar_event_time_zone_edited is not None:
-            payload["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
+            data["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
         # OPTIONAL - calendar_event[child_event_data][X][start_at] - Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code
         if calendar_event_child_event_data_X_start_at is not None:
-            payload["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
+            if issubclass(calendar_event_child_event_data_X_start_at.__class__, date) or issubclass(calendar_event_child_event_data_X_start_at.__class__, datetime):
+                calendar_event_child_event_data_X_start_at = calendar_event_child_event_data_X_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_child_event_data_X_start_at.__class__, basestring):
+                calendar_event_child_event_data_X_start_at = self._validate_iso8601_string(calendar_event_child_event_data_X_start_at)
+            data["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
         # OPTIONAL - calendar_event[child_event_data][X][end_at] - Section-level end time(s) if this is a course event.
         if calendar_event_child_event_data_X_end_at is not None:
-            payload["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
+            if issubclass(calendar_event_child_event_data_X_end_at.__class__, date) or issubclass(calendar_event_child_event_data_X_end_at.__class__, datetime):
+                calendar_event_child_event_data_X_end_at = calendar_event_child_event_data_X_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(calendar_event_child_event_data_X_end_at.__class__, basestring):
+                calendar_event_child_event_data_X_end_at = self._validate_iso8601_string(calendar_event_child_event_data_X_end_at)
+            data["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
         # OPTIONAL - calendar_event[child_event_data][X][context_code] - Context code(s) corresponding to the section-level start and end time(s).
         if calendar_event_child_event_data_X_context_code is not None:
-            payload["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
+            data["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
 
-        self.logger.debug("PUT /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/calendar_events/{id}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/calendar_events/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/calendar_events/{id}".format(**path), data=data, params=params, no_data=True)
 
     def delete_calendar_event(self, id, cancel_reason=None):
         """
@@ -203,16 +241,17 @@ class CalendarEventsAPI(BaseCanvasAPI):
         Delete an event from the calendar and return the deleted event
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - cancel_reason - Reason for deleting/canceling the event.
         if cancel_reason is not None:
-            payload["cancel_reason"] = cancel_reason
+            params["cancel_reason"] = cancel_reason
 
-        self.logger.debug("DELETE /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/calendar_events/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/calendar_events/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/calendar_events/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Calendarevent(BaseModel):

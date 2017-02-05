@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,15 +23,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated migration issues
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - content_migration_id - ID
         path["content_migration_id"] = content_migration_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_issues_courses(self, course_id, content_migration_id):
         """
@@ -39,15 +41,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated migration issues
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - content_migration_id - ID
         path["content_migration_id"] = content_migration_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_issues_groups(self, group_id, content_migration_id):
         """
@@ -56,15 +59,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated migration issues
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - content_migration_id - ID
         path["content_migration_id"] = content_migration_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_issues_users(self, user_id, content_migration_id):
         """
@@ -73,15 +77,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated migration issues
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - content_migration_id - ID
         path["content_migration_id"] = content_migration_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues".format(**path), data=data, params=params, all_pages=True)
 
     def get_migration_issue_accounts(self, id, account_id, content_migration_id):
         """
@@ -90,7 +95,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -99,8 +105,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_migration_issue_courses(self, id, course_id, content_migration_id):
         """
@@ -109,7 +115,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -118,8 +125,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_migration_issue_groups(self, id, group_id, content_migration_id):
         """
@@ -128,7 +135,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -137,8 +145,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_migration_issue_users(self, id, user_id, content_migration_id):
         """
@@ -147,7 +155,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -156,8 +165,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_migration_issue_accounts(self, id, account_id, workflow_state, content_migration_id):
         """
@@ -166,7 +175,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Update the workflow_state of a migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -175,12 +185,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - workflow_state - Set the workflow_state of the issue.
-        if workflow_state is not None:
-            self._validate_enum(workflow_state, ["active", "resolved"])
-        payload["workflow_state"] = workflow_state
+        self._validate_enum(workflow_state, ["active", "resolved"])
+        data["workflow_state"] = workflow_state
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_migration_issue_courses(self, id, course_id, workflow_state, content_migration_id):
         """
@@ -189,7 +198,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Update the workflow_state of a migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -198,12 +208,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - workflow_state - Set the workflow_state of the issue.
-        if workflow_state is not None:
-            self._validate_enum(workflow_state, ["active", "resolved"])
-        payload["workflow_state"] = workflow_state
+        self._validate_enum(workflow_state, ["active", "resolved"])
+        data["workflow_state"] = workflow_state
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_migration_issue_groups(self, id, group_id, workflow_state, content_migration_id):
         """
@@ -212,7 +221,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Update the workflow_state of a migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
@@ -221,12 +231,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - workflow_state - Set the workflow_state of the issue.
-        if workflow_state is not None:
-            self._validate_enum(workflow_state, ["active", "resolved"])
-        payload["workflow_state"] = workflow_state
+        self._validate_enum(workflow_state, ["active", "resolved"])
+        data["workflow_state"] = workflow_state
 
-        self.logger.debug("PUT /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/groups/{group_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_migration_issue_users(self, id, user_id, workflow_state, content_migration_id):
         """
@@ -235,7 +244,8 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Update the workflow_state of a migration issue
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -244,12 +254,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - workflow_state - Set the workflow_state of the issue.
-        if workflow_state is not None:
-            self._validate_enum(workflow_state, ["active", "resolved"])
-        payload["workflow_state"] = workflow_state
+        self._validate_enum(workflow_state, ["active", "resolved"])
+        data["workflow_state"] = workflow_state
 
-        self.logger.debug("PUT /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{user_id}/content_migrations/{content_migration_id}/migration_issues/{id}".format(**path), data=data, params=params, single_item=True)
 
     def list_content_migrations_accounts(self, account_id):
         """
@@ -258,13 +267,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated content migrations
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations".format(**path), data=data, params=params, all_pages=True)
 
     def list_content_migrations_courses(self, course_id):
         """
@@ -273,13 +283,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated content migrations
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations".format(**path), data=data, params=params, all_pages=True)
 
     def list_content_migrations_groups(self, group_id):
         """
@@ -288,13 +299,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated content migrations
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations".format(**path), data=data, params=params, all_pages=True)
 
     def list_content_migrations_users(self, user_id):
         """
@@ -303,13 +315,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns paginated content migrations
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations".format(**path), data=data, params=params, all_pages=True)
 
     def get_content_migration_accounts(self, id, account_id):
         """
@@ -318,15 +331,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual content migration
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_content_migration_courses(self, id, course_id):
         """
@@ -335,15 +349,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual content migration
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_content_migration_groups(self, id, group_id):
         """
@@ -352,15 +367,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual content migration
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_content_migration_users(self, id, user_id):
         """
@@ -369,15 +385,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Returns data on an individual content migration
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def create_content_migration_accounts(self, account_id, migration_type, date_shift_options_day_substitutions_X=None, date_shift_options_new_end_date=None, date_shift_options_new_start_date=None, date_shift_options_old_end_date=None, date_shift_options_old_start_date=None, date_shift_options_remove_dates=None, date_shift_options_shift_dates=None, pre_attachment_*=None, pre_attachment_name=None, settings_file_url=None, settings_folder_id=None, settings_overwrite_quizzes=None, settings_question_bank_id=None, settings_question_bank_name=None, settings_source_course_id=None):
         """
@@ -412,60 +429,61 @@ class ContentMigrationsAPI(BaseCanvasAPI):
          (required if doing .zip file upload)
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - migration_type - The type of the migration. Use the {api:ContentMigrationsController#available_migrators Migrator} endpoint to see all available migrators. Default allowed values: canvas_cartridge_importer, common_cartridge_importer, course_copy_importer, zip_file_importer, qti_converter, moodle_converter
-        payload["migration_type"] = migration_type
+        data["migration_type"] = migration_type
         # OPTIONAL - pre_attachment[name] - Required if uploading a file. This is the first step in uploading a file to the content migration. See the {file:file_uploads.html File Upload Documentation} for details on the file upload workflow.
         if pre_attachment_name is not None:
-            payload["pre_attachment[name]"] = pre_attachment_name
+            data["pre_attachment[name]"] = pre_attachment_name
         # OPTIONAL - pre_attachment[*] - Other file upload properties, See {file:file_uploads.html File Upload Documentation}
         if pre_attachment_* is not None:
-            payload["pre_attachment[*]"] = pre_attachment_*
+            data["pre_attachment[*]"] = pre_attachment_*
         # OPTIONAL - settings[file_url] - A URL to download the file from. Must not require authentication.
         if settings_file_url is not None:
-            payload["settings[file_url]"] = settings_file_url
+            data["settings[file_url]"] = settings_file_url
         # OPTIONAL - settings[source_course_id] - The course to copy from for a course copy migration. (required if doing course copy)
         if settings_source_course_id is not None:
-            payload["settings[source_course_id]"] = settings_source_course_id
+            data["settings[source_course_id]"] = settings_source_course_id
         # OPTIONAL - settings[folder_id] - The folder to unzip the .zip file into for a zip_file_import.
         if settings_folder_id is not None:
-            payload["settings[folder_id]"] = settings_folder_id
+            data["settings[folder_id]"] = settings_folder_id
         # OPTIONAL - settings[overwrite_quizzes] - Whether to overwrite quizzes with the same identifiers between content packages.
         if settings_overwrite_quizzes is not None:
-            payload["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+            data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
         # OPTIONAL - settings[question_bank_id] - The existing question bank ID to import questions into if not specified in the content package.
         if settings_question_bank_id is not None:
-            payload["settings[question_bank_id]"] = settings_question_bank_id
+            data["settings[question_bank_id]"] = settings_question_bank_id
         # OPTIONAL - settings[question_bank_name] - The question bank to import questions into if not specified in the content package, if both bank id and name are set, id will take precedence.
         if settings_question_bank_name is not None:
-            payload["settings[question_bank_name]"] = settings_question_bank_name
+            data["settings[question_bank_name]"] = settings_question_bank_name
         # OPTIONAL - date_shift_options[shift_dates] - Whether to shift dates in the copied course
         if date_shift_options_shift_dates is not None:
-            payload["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+            data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
         # OPTIONAL - date_shift_options[old_start_date] - The original start date of the source content/course
         if date_shift_options_old_start_date is not None:
-            payload["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+            data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
         # OPTIONAL - date_shift_options[old_end_date] - The original end date of the source content/course
         if date_shift_options_old_end_date is not None:
-            payload["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+            data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
         # OPTIONAL - date_shift_options[new_start_date] - The new start date for the content/course
         if date_shift_options_new_start_date is not None:
-            payload["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+            data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
         # OPTIONAL - date_shift_options[new_end_date] - The new end date for the source content/course
         if date_shift_options_new_end_date is not None:
-            payload["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+            data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
         # OPTIONAL - date_shift_options[day_substitutions][X] - Move anything scheduled for day 'X' to the specified day. (0-Sunday, 1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)
         if date_shift_options_day_substitutions_X is not None:
-            payload["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+            data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
         # OPTIONAL - date_shift_options[remove_dates] - Whether to remove dates in the copied course. Cannot be used in conjunction with *shift_dates*.
         if date_shift_options_remove_dates is not None:
-            payload["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
+            data["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/content_migrations".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/content_migrations".format(**path), data=data, params=params, single_item=True)
 
     def create_content_migration_courses(self, course_id, migration_type, date_shift_options_day_substitutions_X=None, date_shift_options_new_end_date=None, date_shift_options_new_start_date=None, date_shift_options_old_end_date=None, date_shift_options_old_start_date=None, date_shift_options_remove_dates=None, date_shift_options_shift_dates=None, pre_attachment_*=None, pre_attachment_name=None, settings_file_url=None, settings_folder_id=None, settings_overwrite_quizzes=None, settings_question_bank_id=None, settings_question_bank_name=None, settings_source_course_id=None):
         """
@@ -500,60 +518,61 @@ class ContentMigrationsAPI(BaseCanvasAPI):
          (required if doing .zip file upload)
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - migration_type - The type of the migration. Use the {api:ContentMigrationsController#available_migrators Migrator} endpoint to see all available migrators. Default allowed values: canvas_cartridge_importer, common_cartridge_importer, course_copy_importer, zip_file_importer, qti_converter, moodle_converter
-        payload["migration_type"] = migration_type
+        data["migration_type"] = migration_type
         # OPTIONAL - pre_attachment[name] - Required if uploading a file. This is the first step in uploading a file to the content migration. See the {file:file_uploads.html File Upload Documentation} for details on the file upload workflow.
         if pre_attachment_name is not None:
-            payload["pre_attachment[name]"] = pre_attachment_name
+            data["pre_attachment[name]"] = pre_attachment_name
         # OPTIONAL - pre_attachment[*] - Other file upload properties, See {file:file_uploads.html File Upload Documentation}
         if pre_attachment_* is not None:
-            payload["pre_attachment[*]"] = pre_attachment_*
+            data["pre_attachment[*]"] = pre_attachment_*
         # OPTIONAL - settings[file_url] - A URL to download the file from. Must not require authentication.
         if settings_file_url is not None:
-            payload["settings[file_url]"] = settings_file_url
+            data["settings[file_url]"] = settings_file_url
         # OPTIONAL - settings[source_course_id] - The course to copy from for a course copy migration. (required if doing course copy)
         if settings_source_course_id is not None:
-            payload["settings[source_course_id]"] = settings_source_course_id
+            data["settings[source_course_id]"] = settings_source_course_id
         # OPTIONAL - settings[folder_id] - The folder to unzip the .zip file into for a zip_file_import.
         if settings_folder_id is not None:
-            payload["settings[folder_id]"] = settings_folder_id
+            data["settings[folder_id]"] = settings_folder_id
         # OPTIONAL - settings[overwrite_quizzes] - Whether to overwrite quizzes with the same identifiers between content packages.
         if settings_overwrite_quizzes is not None:
-            payload["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+            data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
         # OPTIONAL - settings[question_bank_id] - The existing question bank ID to import questions into if not specified in the content package.
         if settings_question_bank_id is not None:
-            payload["settings[question_bank_id]"] = settings_question_bank_id
+            data["settings[question_bank_id]"] = settings_question_bank_id
         # OPTIONAL - settings[question_bank_name] - The question bank to import questions into if not specified in the content package, if both bank id and name are set, id will take precedence.
         if settings_question_bank_name is not None:
-            payload["settings[question_bank_name]"] = settings_question_bank_name
+            data["settings[question_bank_name]"] = settings_question_bank_name
         # OPTIONAL - date_shift_options[shift_dates] - Whether to shift dates in the copied course
         if date_shift_options_shift_dates is not None:
-            payload["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+            data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
         # OPTIONAL - date_shift_options[old_start_date] - The original start date of the source content/course
         if date_shift_options_old_start_date is not None:
-            payload["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+            data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
         # OPTIONAL - date_shift_options[old_end_date] - The original end date of the source content/course
         if date_shift_options_old_end_date is not None:
-            payload["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+            data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
         # OPTIONAL - date_shift_options[new_start_date] - The new start date for the content/course
         if date_shift_options_new_start_date is not None:
-            payload["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+            data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
         # OPTIONAL - date_shift_options[new_end_date] - The new end date for the source content/course
         if date_shift_options_new_end_date is not None:
-            payload["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+            data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
         # OPTIONAL - date_shift_options[day_substitutions][X] - Move anything scheduled for day 'X' to the specified day. (0-Sunday, 1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)
         if date_shift_options_day_substitutions_X is not None:
-            payload["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+            data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
         # OPTIONAL - date_shift_options[remove_dates] - Whether to remove dates in the copied course. Cannot be used in conjunction with *shift_dates*.
         if date_shift_options_remove_dates is not None:
-            payload["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
+            data["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/content_migrations".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/content_migrations".format(**path), data=data, params=params, single_item=True)
 
     def create_content_migration_groups(self, group_id, migration_type, date_shift_options_day_substitutions_X=None, date_shift_options_new_end_date=None, date_shift_options_new_start_date=None, date_shift_options_old_end_date=None, date_shift_options_old_start_date=None, date_shift_options_remove_dates=None, date_shift_options_shift_dates=None, pre_attachment_*=None, pre_attachment_name=None, settings_file_url=None, settings_folder_id=None, settings_overwrite_quizzes=None, settings_question_bank_id=None, settings_question_bank_name=None, settings_source_course_id=None):
         """
@@ -588,60 +607,61 @@ class ContentMigrationsAPI(BaseCanvasAPI):
          (required if doing .zip file upload)
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - migration_type - The type of the migration. Use the {api:ContentMigrationsController#available_migrators Migrator} endpoint to see all available migrators. Default allowed values: canvas_cartridge_importer, common_cartridge_importer, course_copy_importer, zip_file_importer, qti_converter, moodle_converter
-        payload["migration_type"] = migration_type
+        data["migration_type"] = migration_type
         # OPTIONAL - pre_attachment[name] - Required if uploading a file. This is the first step in uploading a file to the content migration. See the {file:file_uploads.html File Upload Documentation} for details on the file upload workflow.
         if pre_attachment_name is not None:
-            payload["pre_attachment[name]"] = pre_attachment_name
+            data["pre_attachment[name]"] = pre_attachment_name
         # OPTIONAL - pre_attachment[*] - Other file upload properties, See {file:file_uploads.html File Upload Documentation}
         if pre_attachment_* is not None:
-            payload["pre_attachment[*]"] = pre_attachment_*
+            data["pre_attachment[*]"] = pre_attachment_*
         # OPTIONAL - settings[file_url] - A URL to download the file from. Must not require authentication.
         if settings_file_url is not None:
-            payload["settings[file_url]"] = settings_file_url
+            data["settings[file_url]"] = settings_file_url
         # OPTIONAL - settings[source_course_id] - The course to copy from for a course copy migration. (required if doing course copy)
         if settings_source_course_id is not None:
-            payload["settings[source_course_id]"] = settings_source_course_id
+            data["settings[source_course_id]"] = settings_source_course_id
         # OPTIONAL - settings[folder_id] - The folder to unzip the .zip file into for a zip_file_import.
         if settings_folder_id is not None:
-            payload["settings[folder_id]"] = settings_folder_id
+            data["settings[folder_id]"] = settings_folder_id
         # OPTIONAL - settings[overwrite_quizzes] - Whether to overwrite quizzes with the same identifiers between content packages.
         if settings_overwrite_quizzes is not None:
-            payload["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+            data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
         # OPTIONAL - settings[question_bank_id] - The existing question bank ID to import questions into if not specified in the content package.
         if settings_question_bank_id is not None:
-            payload["settings[question_bank_id]"] = settings_question_bank_id
+            data["settings[question_bank_id]"] = settings_question_bank_id
         # OPTIONAL - settings[question_bank_name] - The question bank to import questions into if not specified in the content package, if both bank id and name are set, id will take precedence.
         if settings_question_bank_name is not None:
-            payload["settings[question_bank_name]"] = settings_question_bank_name
+            data["settings[question_bank_name]"] = settings_question_bank_name
         # OPTIONAL - date_shift_options[shift_dates] - Whether to shift dates in the copied course
         if date_shift_options_shift_dates is not None:
-            payload["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+            data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
         # OPTIONAL - date_shift_options[old_start_date] - The original start date of the source content/course
         if date_shift_options_old_start_date is not None:
-            payload["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+            data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
         # OPTIONAL - date_shift_options[old_end_date] - The original end date of the source content/course
         if date_shift_options_old_end_date is not None:
-            payload["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+            data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
         # OPTIONAL - date_shift_options[new_start_date] - The new start date for the content/course
         if date_shift_options_new_start_date is not None:
-            payload["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+            data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
         # OPTIONAL - date_shift_options[new_end_date] - The new end date for the source content/course
         if date_shift_options_new_end_date is not None:
-            payload["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+            data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
         # OPTIONAL - date_shift_options[day_substitutions][X] - Move anything scheduled for day 'X' to the specified day. (0-Sunday, 1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)
         if date_shift_options_day_substitutions_X is not None:
-            payload["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+            data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
         # OPTIONAL - date_shift_options[remove_dates] - Whether to remove dates in the copied course. Cannot be used in conjunction with *shift_dates*.
         if date_shift_options_remove_dates is not None:
-            payload["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
+            data["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
 
-        self.logger.debug("POST /api/v1/groups/{group_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/groups/{group_id}/content_migrations".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/groups/{group_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/groups/{group_id}/content_migrations".format(**path), data=data, params=params, single_item=True)
 
     def create_content_migration_users(self, user_id, migration_type, date_shift_options_day_substitutions_X=None, date_shift_options_new_end_date=None, date_shift_options_new_start_date=None, date_shift_options_old_end_date=None, date_shift_options_old_start_date=None, date_shift_options_remove_dates=None, date_shift_options_shift_dates=None, pre_attachment_*=None, pre_attachment_name=None, settings_file_url=None, settings_folder_id=None, settings_overwrite_quizzes=None, settings_question_bank_id=None, settings_question_bank_name=None, settings_source_course_id=None):
         """
@@ -676,60 +696,61 @@ class ContentMigrationsAPI(BaseCanvasAPI):
          (required if doing .zip file upload)
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - migration_type - The type of the migration. Use the {api:ContentMigrationsController#available_migrators Migrator} endpoint to see all available migrators. Default allowed values: canvas_cartridge_importer, common_cartridge_importer, course_copy_importer, zip_file_importer, qti_converter, moodle_converter
-        payload["migration_type"] = migration_type
+        data["migration_type"] = migration_type
         # OPTIONAL - pre_attachment[name] - Required if uploading a file. This is the first step in uploading a file to the content migration. See the {file:file_uploads.html File Upload Documentation} for details on the file upload workflow.
         if pre_attachment_name is not None:
-            payload["pre_attachment[name]"] = pre_attachment_name
+            data["pre_attachment[name]"] = pre_attachment_name
         # OPTIONAL - pre_attachment[*] - Other file upload properties, See {file:file_uploads.html File Upload Documentation}
         if pre_attachment_* is not None:
-            payload["pre_attachment[*]"] = pre_attachment_*
+            data["pre_attachment[*]"] = pre_attachment_*
         # OPTIONAL - settings[file_url] - A URL to download the file from. Must not require authentication.
         if settings_file_url is not None:
-            payload["settings[file_url]"] = settings_file_url
+            data["settings[file_url]"] = settings_file_url
         # OPTIONAL - settings[source_course_id] - The course to copy from for a course copy migration. (required if doing course copy)
         if settings_source_course_id is not None:
-            payload["settings[source_course_id]"] = settings_source_course_id
+            data["settings[source_course_id]"] = settings_source_course_id
         # OPTIONAL - settings[folder_id] - The folder to unzip the .zip file into for a zip_file_import.
         if settings_folder_id is not None:
-            payload["settings[folder_id]"] = settings_folder_id
+            data["settings[folder_id]"] = settings_folder_id
         # OPTIONAL - settings[overwrite_quizzes] - Whether to overwrite quizzes with the same identifiers between content packages.
         if settings_overwrite_quizzes is not None:
-            payload["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+            data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
         # OPTIONAL - settings[question_bank_id] - The existing question bank ID to import questions into if not specified in the content package.
         if settings_question_bank_id is not None:
-            payload["settings[question_bank_id]"] = settings_question_bank_id
+            data["settings[question_bank_id]"] = settings_question_bank_id
         # OPTIONAL - settings[question_bank_name] - The question bank to import questions into if not specified in the content package, if both bank id and name are set, id will take precedence.
         if settings_question_bank_name is not None:
-            payload["settings[question_bank_name]"] = settings_question_bank_name
+            data["settings[question_bank_name]"] = settings_question_bank_name
         # OPTIONAL - date_shift_options[shift_dates] - Whether to shift dates in the copied course
         if date_shift_options_shift_dates is not None:
-            payload["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+            data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
         # OPTIONAL - date_shift_options[old_start_date] - The original start date of the source content/course
         if date_shift_options_old_start_date is not None:
-            payload["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+            data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
         # OPTIONAL - date_shift_options[old_end_date] - The original end date of the source content/course
         if date_shift_options_old_end_date is not None:
-            payload["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+            data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
         # OPTIONAL - date_shift_options[new_start_date] - The new start date for the content/course
         if date_shift_options_new_start_date is not None:
-            payload["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+            data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
         # OPTIONAL - date_shift_options[new_end_date] - The new end date for the source content/course
         if date_shift_options_new_end_date is not None:
-            payload["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+            data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
         # OPTIONAL - date_shift_options[day_substitutions][X] - Move anything scheduled for day 'X' to the specified day. (0-Sunday, 1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)
         if date_shift_options_day_substitutions_X is not None:
-            payload["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+            data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
         # OPTIONAL - date_shift_options[remove_dates] - Whether to remove dates in the copied course. Cannot be used in conjunction with *shift_dates*.
         if date_shift_options_remove_dates is not None:
-            payload["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
+            data["date_shift_options[remove_dates]"] = date_shift_options_remove_dates
 
-        self.logger.debug("POST /api/v1/users/{user_id}/content_migrations with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/{user_id}/content_migrations".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/users/{user_id}/content_migrations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{user_id}/content_migrations".format(**path), data=data, params=params, single_item=True)
 
     def update_content_migration_accounts(self, id, account_id):
         """
@@ -743,15 +764,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         start the process again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/content_migrations/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_content_migration_courses(self, id, course_id):
         """
@@ -765,15 +787,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         start the process again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/content_migrations/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_content_migration_groups(self, id, group_id):
         """
@@ -787,15 +810,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         start the process again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/groups/{group_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/groups/{group_id}/content_migrations/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/groups/{group_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/groups/{group_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_content_migration_users(self, id, user_id):
         """
@@ -809,15 +833,16 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         start the process again.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/users/{user_id}/content_migrations/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/{user_id}/content_migrations/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/users/{user_id}/content_migrations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{user_id}/content_migrations/{id}".format(**path), data=data, params=params, single_item=True)
 
     def list_migration_systems_accounts(self, account_id):
         """
@@ -826,13 +851,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Lists the currently available migration types. These values may change.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/migrators with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/migrators".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/content_migrations/migrators with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/content_migrations/migrators".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_systems_courses(self, course_id):
         """
@@ -841,13 +867,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Lists the currently available migration types. These values may change.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/migrators with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/migrators".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/content_migrations/migrators with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/content_migrations/migrators".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_systems_groups(self, group_id):
         """
@@ -856,13 +883,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Lists the currently available migration types. These values may change.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/migrators with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/migrators".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/content_migrations/migrators with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/content_migrations/migrators".format(**path), data=data, params=params, all_pages=True)
 
     def list_migration_systems_users(self, user_id):
         """
@@ -871,13 +899,14 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         Lists the currently available migration types. These values may change.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/migrators with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/migrators".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/content_migrations/migrators with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/content_migrations/migrators".format(**path), data=data, params=params, all_pages=True)
 
 
 class Contentmigration(BaseModel):

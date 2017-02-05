@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -23,13 +24,14 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         position.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels".format(**path), data=data, params=params, all_pages=True)
 
     def create_communication_channel(self, user_id, communication_channel_type, communication_channel_address, communication_channel_token=None, skip_confirmation=None):
         """
@@ -38,25 +40,25 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         Creates a new communication channel for the specified user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - communication_channel[address] - An email address or SMS number. Not required for "push" type channels.
-        payload["communication_channel[address]"] = communication_channel_address
+        data["communication_channel[address]"] = communication_channel_address
         # REQUIRED - communication_channel[type] - The type of communication channel. In order to enable push notification support, the server must be properly configured (via sns.yml) to communicate with Amazon Simple Notification Services, and the developer key used to create the access token from this request must have an SNS ARN configured on it.
-        if communication_channel_type is not None:
-            self._validate_enum(communication_channel_type, ["email", "sms", "push"])
-        payload["communication_channel[type]"] = communication_channel_type
+        self._validate_enum(communication_channel_type, ["email", "sms", "push"])
+        data["communication_channel[type]"] = communication_channel_type
         # OPTIONAL - communication_channel[token] - A registration id, device token, or equivalent token given to an app when registering with a push notification provider. Only valid for "push" type channels.
         if communication_channel_token is not None:
-            payload["communication_channel[token]"] = communication_channel_token
+            data["communication_channel[token]"] = communication_channel_token
         # OPTIONAL - skip_confirmation - Only valid for site admins and account admins making requests; If true, the channel is automatically validated and no confirmation email or SMS is sent. Otherwise, the user must respond to a confirmation message to confirm the channel.
         if skip_confirmation is not None:
-            payload["skip_confirmation"] = skip_confirmation
+            data["skip_confirmation"] = skip_confirmation
 
-        self.logger.debug("POST /api/v1/users/{user_id}/communication_channels with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/users/{user_id}/communication_channels".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/users/{user_id}/communication_channels with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{user_id}/communication_channels".format(**path), data=data, params=params, single_item=True)
 
     def delete_communication_channel_id(self, id, user_id):
         """
@@ -65,15 +67,16 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         Delete an existing communication channel.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/{user_id}/communication_channels/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/{user_id}/communication_channels/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_communication_channel_type(self, type, user_id, address):
         """
@@ -82,7 +85,8 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         Delete an existing communication channel.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -91,8 +95,8 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - address - ID
         path["address"] = address
 
-        self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{type}/{address} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/users/{user_id}/communication_channels/{type}/{address}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{type}/{address} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/{user_id}/communication_channels/{type}/{address}".format(**path), data=data, params=params, single_item=True)
 
 
 class Communicationchannel(BaseModel):

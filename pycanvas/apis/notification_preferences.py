@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,15 +23,16 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Fetch all preferences for the given communication channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - PATH - communication_channel_id - ID
         path["communication_channel_id"] = communication_channel_id
 
-        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences".format(**path), data=data, params=params, all_pages=True)
 
     def list_preferences_type(self, type, user_id, address):
         """
@@ -39,7 +41,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Fetch all preferences for the given communication channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -48,8 +51,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - address - ID
         path["address"] = address
 
-        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences".format(**path), data=data, params=params, all_pages=True)
 
     def get_preference_communication_channel_id(self, user_id, notification, communication_channel_id):
         """
@@ -58,7 +61,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Fetch the preference for the given notification for the given communicaiton channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -67,8 +71,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - notification - ID
         path["notification"] = notification
 
-        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences/{notification} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences/{notification}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences/{notification} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{communication_channel_id}/notification_preferences/{notification}".format(**path), data=data, params=params, single_item=True)
 
     def get_preference_type(self, type, user_id, address, notification):
         """
@@ -77,7 +81,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Fetch the preference for the given notification for the given communicaiton channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
@@ -88,8 +93,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - notification - ID
         path["notification"] = notification
 
-        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences/{notification} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences/{notification}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences/{notification} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/communication_channels/{type}/{address}/notification_preferences/{notification}".format(**path), data=data, params=params, single_item=True)
 
     def update_preference_communication_channel_id(self, notification, communication_channel_id, notification_preferences_frequency):
         """
@@ -98,17 +103,18 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Change the preference for a single notification for a single communication channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - communication_channel_id - ID
         path["communication_channel_id"] = communication_channel_id
         # REQUIRED - PATH - notification - ID
         path["notification"] = notification
         # REQUIRED - notification_preferences[frequency] - The desired frequency for this notification
-        payload["notification_preferences[frequency]"] = notification_preferences_frequency
+        data["notification_preferences[frequency]"] = notification_preferences_frequency
 
-        self.logger.debug("PUT /api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences/{notification} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences/{notification}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences/{notification} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences/{notification}".format(**path), data=data, params=params, no_data=True)
 
     def update_preference_type(self, type, address, notification, notification_preferences_frequency):
         """
@@ -117,7 +123,8 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Change the preference for a single notification for a single communication channel
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - type - ID
         path["type"] = type
@@ -126,10 +133,10 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - notification - ID
         path["notification"] = notification
         # REQUIRED - notification_preferences[frequency] - The desired frequency for this notification
-        payload["notification_preferences[frequency]"] = notification_preferences_frequency
+        data["notification_preferences[frequency]"] = notification_preferences_frequency
 
-        self.logger.debug("PUT /api/v1/users/self/communication_channels/{type}/{address}/notification_preferences/{notification} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{type}/{address}/notification_preferences/{notification}".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/users/self/communication_channels/{type}/{address}/notification_preferences/{notification} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{type}/{address}/notification_preferences/{notification}".format(**path), data=data, params=params, no_data=True)
 
     def update_multiple_preferences_communication_channel_id(self, communication_channel_id, notification_preferences_<X>_frequency):
         """
@@ -138,15 +145,16 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Change the preferences for multiple notifications for a single communication channel at once
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - communication_channel_id - ID
         path["communication_channel_id"] = communication_channel_id
         # REQUIRED - notification_preferences[<X>][frequency] - The desired frequency for <X> notification
-        payload["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency
+        data["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency
 
-        self.logger.debug("PUT /api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{communication_channel_id}/notification_preferences".format(**path), data=data, params=params, no_data=True)
 
     def update_multiple_preferences_type(self, type, address, notification_preferences_<X>_frequency):
         """
@@ -155,17 +163,18 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         Change the preferences for multiple notifications for a single communication channel at once
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - type - ID
         path["type"] = type
         # REQUIRED - PATH - address - ID
         path["address"] = address
         # REQUIRED - notification_preferences[<X>][frequency] - The desired frequency for <X> notification
-        payload["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency
+        data["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency
 
-        self.logger.debug("PUT /api/v1/users/self/communication_channels/{type}/{address}/notification_preferences with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{type}/{address}/notification_preferences".format(**path), data=payload, no_data=True)
+        self.logger.debug("PUT /api/v1/users/self/communication_channels/{type}/{address}/notification_preferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/self/communication_channels/{type}/{address}/notification_preferences".format(**path), data=data, params=params, no_data=True)
 
 
 class Notificationpreference(BaseModel):

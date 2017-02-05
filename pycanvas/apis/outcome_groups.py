@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -23,10 +24,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         context. Will redirect to the appropriate outcome group's URL.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
-        self.logger.debug("GET /api/v1/global/root_outcome_group with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/global/root_outcome_group".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/global/root_outcome_group with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/global/root_outcome_group".format(**path), data=data, params=params, no_data=True)
 
     def redirect_to_root_outcome_group_for_context_accounts(self, account_id):
         """
@@ -36,13 +38,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         context. Will redirect to the appropriate outcome group's URL.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/root_outcome_group with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/root_outcome_group".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/root_outcome_group with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/root_outcome_group".format(**path), data=data, params=params, no_data=True)
 
     def redirect_to_root_outcome_group_for_context_courses(self, course_id):
         """
@@ -52,13 +55,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         context. Will redirect to the appropriate outcome group's URL.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/root_outcome_group with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/root_outcome_group".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/root_outcome_group with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/root_outcome_group".format(**path), data=data, params=params, no_data=True)
 
     def get_all_outcome_groups_for_context_accounts(self, account_id):
         """
@@ -67,13 +71,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups".format(**path), data=data, params=params, all_pages=True)
 
     def get_all_outcome_groups_for_context_courses(self, course_id):
         """
@@ -82,13 +87,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups".format(**path), data=data, params=params, all_pages=True)
 
     def get_all_outcome_links_for_context_accounts(self, account_id, outcome_group_style=None, outcome_style=None):
         """
@@ -97,19 +103,20 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - outcome_style - The detail level of the outcomes. Defaults to "abbrev". Specify "full" for more information.
         if outcome_style is not None:
-            payload["outcome_style"] = outcome_style
+            params["outcome_style"] = outcome_style
         # OPTIONAL - outcome_group_style - The detail level of the outcome groups. Defaults to "abbrev". Specify "full" for more information.
         if outcome_group_style is not None:
-            payload["outcome_group_style"] = outcome_group_style
+            params["outcome_group_style"] = outcome_group_style
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_group_links with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_group_links".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_group_links with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_group_links".format(**path), data=data, params=params, all_pages=True)
 
     def get_all_outcome_links_for_context_courses(self, course_id, outcome_group_style=None, outcome_style=None):
         """
@@ -118,19 +125,20 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - outcome_style - The detail level of the outcomes. Defaults to "abbrev". Specify "full" for more information.
         if outcome_style is not None:
-            payload["outcome_style"] = outcome_style
+            params["outcome_style"] = outcome_style
         # OPTIONAL - outcome_group_style - The detail level of the outcome groups. Defaults to "abbrev". Specify "full" for more information.
         if outcome_group_style is not None:
-            payload["outcome_group_style"] = outcome_group_style
+            params["outcome_group_style"] = outcome_group_style
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_group_links with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_group_links".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_group_links with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_group_links".format(**path), data=data, params=params, all_pages=True)
 
     def show_outcome_group_global(self, id):
         """
@@ -139,13 +147,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/global/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/global/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def show_outcome_group_accounts(self, id, account_id):
         """
@@ -154,15 +163,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def show_outcome_group_courses(self, id, course_id):
         """
@@ -171,15 +181,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_outcome_group_global(self, id, description=None, parent_outcome_group_id=None, title=None, vendor_guid=None):
         """
@@ -193,25 +204,26 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         this outcome group (i.e. no cycles allowed).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - title - The new outcome group title.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - description - The new outcome group description.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - parent_outcome_group_id - The id of the new parent outcome group.
         if parent_outcome_group_id is not None:
-            payload["parent_outcome_group_id"] = parent_outcome_group_id
+            data["parent_outcome_group_id"] = parent_outcome_group_id
 
-        self.logger.debug("PUT /api/v1/global/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/global/outcome_groups/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/global/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/global/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_outcome_group_accounts(self, id, account_id, description=None, parent_outcome_group_id=None, title=None, vendor_guid=None):
         """
@@ -225,7 +237,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         this outcome group (i.e. no cycles allowed).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -233,19 +246,19 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - title - The new outcome group title.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - description - The new outcome group description.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - parent_outcome_group_id - The id of the new parent outcome group.
         if parent_outcome_group_id is not None:
-            payload["parent_outcome_group_id"] = parent_outcome_group_id
+            data["parent_outcome_group_id"] = parent_outcome_group_id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def update_outcome_group_courses(self, id, course_id, description=None, parent_outcome_group_id=None, title=None, vendor_guid=None):
         """
@@ -259,7 +272,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         this outcome group (i.e. no cycles allowed).
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -267,19 +281,19 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - title - The new outcome group title.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - description - The new outcome group description.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - parent_outcome_group_id - The id of the new parent outcome group.
         if parent_outcome_group_id is not None:
-            payload["parent_outcome_group_id"] = parent_outcome_group_id
+            data["parent_outcome_group_id"] = parent_outcome_group_id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_outcome_group_global(self, id):
         """
@@ -294,13 +308,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         deletion will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/global/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/global/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/global/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/global/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_outcome_group_accounts(self, id, account_id):
         """
@@ -315,15 +330,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         deletion will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_outcome_group_courses(self, id, course_id):
         """
@@ -338,15 +354,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         deletion will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/outcome_groups/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/outcome_groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/outcome_groups/{id}".format(**path), data=data, params=params, single_item=True)
 
     def list_linked_outcomes_global(self, id):
         """
@@ -355,13 +372,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeLink children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/global/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}/outcomes".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/global/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, all_pages=True)
 
     def list_linked_outcomes_accounts(self, id, account_id):
         """
@@ -370,15 +388,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeLink children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, all_pages=True)
 
     def list_linked_outcomes_courses(self, id, course_id):
         """
@@ -387,15 +406,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeLink children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, all_pages=True)
 
     def create_link_outcome_global(self, id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, outcome_id=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -425,45 +445,45 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # OPTIONAL - outcome_id - The ID of the existing outcome to link.
         if outcome_id is not None:
-            payload["outcome_id"] = outcome_id
+            data["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/outcomes".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, single_item=True)
 
     def create_link_outcome_global_outcome_id(self, id, outcome_id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -493,7 +513,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
@@ -501,36 +522,35 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("PUT /api/v1/global/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/global/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/global/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/global/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def create_link_outcome_accounts(self, id, account_id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, outcome_id=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -560,7 +580,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -568,39 +589,38 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - outcome_id - The ID of the existing outcome to link.
         if outcome_id is not None:
-            payload["outcome_id"] = outcome_id
+            data["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, single_item=True)
 
     def create_link_outcome_accounts_outcome_id(self, id, account_id, outcome_id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -630,7 +650,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -640,36 +661,35 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def create_link_outcome_courses(self, id, course_id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, outcome_id=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -699,7 +719,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -707,39 +728,38 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - outcome_id - The ID of the existing outcome to link.
         if outcome_id is not None:
-            payload["outcome_id"] = outcome_id
+            data["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes".format(**path), data=data, params=params, single_item=True)
 
     def create_link_outcome_courses_outcome_id(self, id, course_id, outcome_id, calculation_int=None, calculation_method=None, description=None, display_name=None, mastery_points=None, ratings_description=None, ratings_points=None, title=None, vendor_guid=None):
         """
@@ -769,7 +789,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         ignored.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -779,36 +800,35 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         path["outcome_id"] = outcome_id
         # OPTIONAL - title - The title of the new outcome. Required if outcome_id is absent.
         if title is not None:
-            payload["title"] = title
+            data["title"] = title
         # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
         if display_name is not None:
-            payload["display_name"] = display_name
+            data["display_name"] = display_name
         # OPTIONAL - description - The description of the new outcome.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
         # OPTIONAL - mastery_points - The mastery threshold for the embedded rubric criterion.
         if mastery_points is not None:
-            payload["mastery_points"] = mastery_points
+            data["mastery_points"] = mastery_points
         # OPTIONAL - ratings[description] - The description of a rating level for the embedded rubric criterion.
         if ratings_description is not None:
-            payload["ratings[description]"] = ratings_description
+            data["ratings[description]"] = ratings_description
         # OPTIONAL - ratings[points] - The points corresponding to a rating level for the embedded rubric criterion.
         if ratings_points is not None:
-            payload["ratings[points]"] = ratings_points
+            data["ratings[points]"] = ratings_points
         # OPTIONAL - calculation_method - The new calculation method. Defaults to "highest"
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
-        if calculation_method is not None:
-            payload["calculation_method"] = calculation_method
+            data["calculation_method"] = calculation_method
         # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
         if calculation_int is not None:
-            payload["calculation_int"] = calculation_int
+            data["calculation_int"] = calculation_int
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def unlink_outcome_global(self, id, outcome_id):
         """
@@ -820,15 +840,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         unlinking will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - PATH - outcome_id - ID
         path["outcome_id"] = outcome_id
 
-        self.logger.debug("DELETE /api/v1/global/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/global/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/global/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/global/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def unlink_outcome_accounts(self, id, account_id, outcome_id):
         """
@@ -840,7 +861,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         unlinking will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -849,8 +871,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - outcome_id - ID
         path["outcome_id"] = outcome_id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def unlink_outcome_courses(self, id, course_id, outcome_id):
         """
@@ -862,7 +884,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         unlinking will fail.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -871,8 +894,8 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - outcome_id - ID
         path["outcome_id"] = outcome_id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/outcome_groups/{id}/outcomes/{outcome_id}".format(**path), data=data, params=params, single_item=True)
 
     def list_subgroups_global(self, id):
         """
@@ -881,13 +904,14 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeGroup children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/global/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}/subgroups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/global/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/global/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, all_pages=True)
 
     def list_subgroups_accounts(self, id, account_id):
         """
@@ -896,15 +920,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeGroup children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, all_pages=True)
 
     def list_subgroups_courses(self, id, course_id):
         """
@@ -913,15 +938,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         List the immediate OutcomeGroup children of the outcome group. Paginated.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}/subgroups".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, all_pages=True)
 
     def create_subgroup_global(self, id, title, description=None, vendor_guid=None):
         """
@@ -931,21 +957,22 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         and description.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - title - The title of the new outcome group.
-        payload["title"] = title
+        data["title"] = title
         # OPTIONAL - description - The description of the new outcome group.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
 
-        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/subgroups".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, single_item=True)
 
     def create_subgroup_accounts(self, id, title, account_id, description=None, vendor_guid=None):
         """
@@ -955,23 +982,24 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         and description.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - title - The title of the new outcome group.
-        payload["title"] = title
+        data["title"] = title
         # OPTIONAL - description - The description of the new outcome group.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, single_item=True)
 
     def create_subgroup_courses(self, id, title, course_id, description=None, vendor_guid=None):
         """
@@ -981,23 +1009,24 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         and description.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - title - The title of the new outcome group.
-        payload["title"] = title
+        data["title"] = title
         # OPTIONAL - description - The description of the new outcome group.
         if description is not None:
-            payload["description"] = description
+            data["description"] = description
         # OPTIONAL - vendor_guid - A custom GUID for the learning standard
         if vendor_guid is not None:
-            payload["vendor_guid"] = vendor_guid
+            data["vendor_guid"] = vendor_guid
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/subgroups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/subgroups".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/subgroups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/subgroups".format(**path), data=data, params=params, single_item=True)
 
     def import_outcome_group_global(self, id, source_outcome_group_id):
         """
@@ -1017,15 +1046,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         the root outcome group of its context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - source_outcome_group_id - The ID of the source outcome group.
-        payload["source_outcome_group_id"] = source_outcome_group_id
+        data["source_outcome_group_id"] = source_outcome_group_id
 
-        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/import with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/import".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/global/outcome_groups/{id}/import with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/global/outcome_groups/{id}/import".format(**path), data=data, params=params, single_item=True)
 
     def import_outcome_group_accounts(self, id, account_id, source_outcome_group_id):
         """
@@ -1045,17 +1075,18 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         the root outcome group of its context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - source_outcome_group_id - The ID of the source outcome group.
-        payload["source_outcome_group_id"] = source_outcome_group_id
+        data["source_outcome_group_id"] = source_outcome_group_id
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/import with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/import".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/outcome_groups/{id}/import with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/outcome_groups/{id}/import".format(**path), data=data, params=params, single_item=True)
 
     def import_outcome_group_courses(self, id, course_id, source_outcome_group_id):
         """
@@ -1075,17 +1106,18 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         the root outcome group of its context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
         # REQUIRED - source_outcome_group_id - The ID of the source outcome group.
-        payload["source_outcome_group_id"] = source_outcome_group_id
+        data["source_outcome_group_id"] = source_outcome_group_id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/import with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/import".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/outcome_groups/{id}/import with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/outcome_groups/{id}/import".format(**path), data=data, params=params, single_item=True)
 
 
 class Outcomegroup(BaseModel):

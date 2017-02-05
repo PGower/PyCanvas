@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,18 +23,18 @@ class TabsAPI(BaseCanvasAPI):
         Returns a list of navigation tabs available in the current context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - include - Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)
         if include is not None:
             self._validate_enum(include, ["external"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/tabs with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/tabs".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/tabs with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/tabs".format(**path), data=data, params=params, no_data=True)
 
     def list_available_tabs_for_course_or_group_groups(self, group_id, include=None):
         """
@@ -42,18 +43,18 @@ class TabsAPI(BaseCanvasAPI):
         Returns a list of navigation tabs available in the current context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - group_id - ID
         path["group_id"] = group_id
         # OPTIONAL - include - Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)
         if include is not None:
             self._validate_enum(include, ["external"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/groups/{group_id}/tabs with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/groups/{group_id}/tabs".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/groups/{group_id}/tabs with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/groups/{group_id}/tabs".format(**path), data=data, params=params, no_data=True)
 
     def update_tab_for_course(self, tab_id, course_id, hidden=None, position=None):
         """
@@ -64,7 +65,8 @@ class TabsAPI(BaseCanvasAPI):
         Returns a tab object
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -72,13 +74,13 @@ class TabsAPI(BaseCanvasAPI):
         path["tab_id"] = tab_id
         # OPTIONAL - position - The new position of the tab, 1-based
         if position is not None:
-            payload["position"] = position
+            data["position"] = position
         # OPTIONAL - hidden - no description
         if hidden is not None:
-            payload["hidden"] = hidden
+            data["hidden"] = hidden
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/tabs/{tab_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/tabs/{tab_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/tabs/{tab_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/tabs/{tab_id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Tab(BaseModel):

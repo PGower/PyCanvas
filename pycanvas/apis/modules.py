@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,24 +23,24 @@ class ModulesAPI(BaseCanvasAPI):
         List the modules in a course
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - include - - "items": Return module items inline if possible. This parameter suggests that Canvas return module items directly in the Module object JSON, to avoid having to make separate API requests for each module when enumerating modules and items. Canvas is free to omit 'items' for any particular module if it deems them too numerous to return inline. Callers must be prepared to use the {api:ContextModuleItemsApiController#index List Module Items API} if items are not returned. - "content_details": Requires include['items']. Returns additional details with module items specific to their associated content items. Includes standard lock information for each item.
         if include is not None:
             self._validate_enum(include, ["items", "content_details"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - search_term - The partial name of the modules (and module items, if include['items'] is specified) to match and return.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - student_id - Returns module completion information for the student with this id.
         if student_id is not None:
-            payload["student_id"] = student_id
+            params["student_id"] = student_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/modules with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/modules with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules".format(**path), data=data, params=params, all_pages=True)
 
     def show_module(self, id, course_id, include=None, student_id=None):
         """
@@ -48,7 +49,8 @@ class ModulesAPI(BaseCanvasAPI):
         Get information about a single module
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -57,14 +59,13 @@ class ModulesAPI(BaseCanvasAPI):
         # OPTIONAL - include - - "items": Return module items inline if possible. This parameter suggests that Canvas return module items directly in the Module object JSON, to avoid having to make separate API requests for each module when enumerating modules and items. Canvas is free to omit 'items' for any particular module if it deems them too numerous to return inline. Callers must be prepared to use the {api:ContextModuleItemsApiController#index List Module Items API} if items are not returned. - "content_details": Requires include['items']. Returns additional details with module items specific to their associated content items. Includes standard lock information for each item.
         if include is not None:
             self._validate_enum(include, ["items", "content_details"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - student_id - Returns module completion information for the student with this id.
         if student_id is not None:
-            payload["student_id"] = student_id
+            params["student_id"] = student_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{id}".format(**path), data=data, params=params, single_item=True)
 
     def create_module(self, course_id, module_name, module_position=None, module_prerequisite_module_ids=None, module_publish_final_grade=None, module_require_sequential_progress=None, module_unlock_at=None):
         """
@@ -73,30 +74,35 @@ class ModulesAPI(BaseCanvasAPI):
         Create and return a new module
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - module[name] - The name of the module
-        payload["module[name]"] = module_name
+        data["module[name]"] = module_name
         # OPTIONAL - module[unlock_at] - The date the module will unlock
         if module_unlock_at is not None:
-            payload["module[unlock_at]"] = module_unlock_at
+            if issubclass(module_unlock_at.__class__, date) or issubclass(module_unlock_at.__class__, datetime):
+                module_unlock_at = module_unlock_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(module_unlock_at.__class__, basestring):
+                module_unlock_at = self._validate_iso8601_string(module_unlock_at)
+            data["module[unlock_at]"] = module_unlock_at
         # OPTIONAL - module[position] - The position of this module in the course (1-based)
         if module_position is not None:
-            payload["module[position]"] = module_position
+            data["module[position]"] = module_position
         # OPTIONAL - module[require_sequential_progress] - Whether module items must be unlocked in order
         if module_require_sequential_progress is not None:
-            payload["module[require_sequential_progress]"] = module_require_sequential_progress
+            data["module[require_sequential_progress]"] = module_require_sequential_progress
         # OPTIONAL - module[prerequisite_module_ids] - IDs of Modules that must be completed before this one is unlocked. Prerequisite modules must precede this module (i.e. have a lower position value), otherwise they will be ignored
         if module_prerequisite_module_ids is not None:
-            payload["module[prerequisite_module_ids]"] = module_prerequisite_module_ids
+            data["module[prerequisite_module_ids]"] = module_prerequisite_module_ids
         # OPTIONAL - module[publish_final_grade] - Whether to publish the student's final grade for the course upon completion of this module.
         if module_publish_final_grade is not None:
-            payload["module[publish_final_grade]"] = module_publish_final_grade
+            data["module[publish_final_grade]"] = module_publish_final_grade
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/modules with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/modules with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules".format(**path), data=data, params=params, single_item=True)
 
     def update_module(self, id, course_id, module_name=None, module_position=None, module_prerequisite_module_ids=None, module_publish_final_grade=None, module_published=None, module_require_sequential_progress=None, module_unlock_at=None):
         """
@@ -105,7 +111,8 @@ class ModulesAPI(BaseCanvasAPI):
         Update and return an existing module
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -113,28 +120,32 @@ class ModulesAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - module[name] - The name of the module
         if module_name is not None:
-            payload["module[name]"] = module_name
+            data["module[name]"] = module_name
         # OPTIONAL - module[unlock_at] - The date the module will unlock
         if module_unlock_at is not None:
-            payload["module[unlock_at]"] = module_unlock_at
+            if issubclass(module_unlock_at.__class__, date) or issubclass(module_unlock_at.__class__, datetime):
+                module_unlock_at = module_unlock_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            elif issubclass(module_unlock_at.__class__, basestring):
+                module_unlock_at = self._validate_iso8601_string(module_unlock_at)
+            data["module[unlock_at]"] = module_unlock_at
         # OPTIONAL - module[position] - The position of the module in the course (1-based)
         if module_position is not None:
-            payload["module[position]"] = module_position
+            data["module[position]"] = module_position
         # OPTIONAL - module[require_sequential_progress] - Whether module items must be unlocked in order
         if module_require_sequential_progress is not None:
-            payload["module[require_sequential_progress]"] = module_require_sequential_progress
+            data["module[require_sequential_progress]"] = module_require_sequential_progress
         # OPTIONAL - module[prerequisite_module_ids] - IDs of Modules that must be completed before this one is unlocked Prerequisite modules must precede this module (i.e. have a lower position value), otherwise they will be ignored
         if module_prerequisite_module_ids is not None:
-            payload["module[prerequisite_module_ids]"] = module_prerequisite_module_ids
+            data["module[prerequisite_module_ids]"] = module_prerequisite_module_ids
         # OPTIONAL - module[publish_final_grade] - Whether to publish the student's final grade for the course upon completion of this module.
         if module_publish_final_grade is not None:
-            payload["module[publish_final_grade]"] = module_publish_final_grade
+            data["module[publish_final_grade]"] = module_publish_final_grade
         # OPTIONAL - module[published] - Whether the module is published and visible to students
         if module_published is not None:
-            payload["module[published]"] = module_published
+            data["module[published]"] = module_published
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_module(self, id, course_id):
         """
@@ -143,15 +154,16 @@ class ModulesAPI(BaseCanvasAPI):
         Delete a module
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/modules/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/modules/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/modules/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/modules/{id}".format(**path), data=data, params=params, single_item=True)
 
     def re_lock_module_progressions(self, id, course_id):
         """
@@ -164,15 +176,16 @@ class ModulesAPI(BaseCanvasAPI):
         out of modules they have already unlocked unless this action is called.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{id}/relock with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{id}/relock".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{id}/relock with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{id}/relock".format(**path), data=data, params=params, single_item=True)
 
     def list_module_items(self, course_id, module_id, include=None, search_term=None, student_id=None):
         """
@@ -181,7 +194,8 @@ class ModulesAPI(BaseCanvasAPI):
         List the items in a module
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -190,17 +204,16 @@ class ModulesAPI(BaseCanvasAPI):
         # OPTIONAL - include - If included, will return additional details specific to the content associated with each item. Refer to the {api:Modules:Module%20Item Module Item specification} for more details. Includes standard lock information for each item.
         if include is not None:
             self._validate_enum(include, ["content_details"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - search_term - The partial title of the items to match and return.
         if search_term is not None:
-            payload["search_term"] = search_term
+            params["search_term"] = search_term
         # OPTIONAL - student_id - Returns module completion information for the student with this id.
         if student_id is not None:
-            payload["student_id"] = student_id
+            params["student_id"] = student_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{module_id}/items with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{module_id}/items".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{module_id}/items with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{module_id}/items".format(**path), data=data, params=params, all_pages=True)
 
     def show_module_item(self, id, course_id, module_id, include=None, student_id=None):
         """
@@ -209,7 +222,8 @@ class ModulesAPI(BaseCanvasAPI):
         Get information about a single module item
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -220,14 +234,13 @@ class ModulesAPI(BaseCanvasAPI):
         # OPTIONAL - include - If included, will return additional details specific to the content associated with this item. Refer to the {api:Modules:Module%20Item Module Item specification} for more details. Includes standard lock information for each item.
         if include is not None:
             self._validate_enum(include, ["content_details"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
         # OPTIONAL - student_id - Returns module completion information for the student with this id.
         if student_id is not None:
-            payload["student_id"] = student_id
+            params["student_id"] = student_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), data=data, params=params, single_item=True)
 
     def create_module_item(self, course_id, module_id, module_item_type, module_item_content_id, module_item_completion_requirement_min_score=None, module_item_completion_requirement_type=None, module_item_external_url=None, module_item_indent=None, module_item_new_tab=None, module_item_page_url=None, module_item_position=None, module_item_title=None):
         """
@@ -236,7 +249,8 @@ class ModulesAPI(BaseCanvasAPI):
         Create and return a new module item
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -244,39 +258,37 @@ class ModulesAPI(BaseCanvasAPI):
         path["module_id"] = module_id
         # OPTIONAL - module_item[title] - The name of the module item and associated content
         if module_item_title is not None:
-            payload["module_item[title]"] = module_item_title
+            data["module_item[title]"] = module_item_title
         # REQUIRED - module_item[type] - The type of content linked to the item
-        if module_item_type is not None:
-            self._validate_enum(module_item_type, ["File", "Page", "Discussion", "Assignment", "Quiz", "SubHeader", "ExternalUrl", "ExternalTool"])
-        payload["module_item[type]"] = module_item_type
+        self._validate_enum(module_item_type, ["File", "Page", "Discussion", "Assignment", "Quiz", "SubHeader", "ExternalUrl", "ExternalTool"])
+        data["module_item[type]"] = module_item_type
         # REQUIRED - module_item[content_id] - The id of the content to link to the module item. Required, except for 'ExternalUrl', 'Page', and 'SubHeader' types.
-        payload["module_item[content_id]"] = module_item_content_id
+        data["module_item[content_id]"] = module_item_content_id
         # OPTIONAL - module_item[position] - The position of this item in the module (1-based).
         if module_item_position is not None:
-            payload["module_item[position]"] = module_item_position
+            data["module_item[position]"] = module_item_position
         # OPTIONAL - module_item[indent] - 0-based indent level; module items may be indented to show a hierarchy
         if module_item_indent is not None:
-            payload["module_item[indent]"] = module_item_indent
+            data["module_item[indent]"] = module_item_indent
         # OPTIONAL - module_item[page_url] - Suffix for the linked wiki page (e.g. 'front-page'). Required for 'Page' type.
         if module_item_page_url is not None:
-            payload["module_item[page_url]"] = module_item_page_url
+            data["module_item[page_url]"] = module_item_page_url
         # OPTIONAL - module_item[external_url] - External url that the item points to. [Required for 'ExternalUrl' and 'ExternalTool' types.
         if module_item_external_url is not None:
-            payload["module_item[external_url]"] = module_item_external_url
+            data["module_item[external_url]"] = module_item_external_url
         # OPTIONAL - module_item[new_tab] - Whether the external tool opens in a new tab. Only applies to 'ExternalTool' type.
         if module_item_new_tab is not None:
-            payload["module_item[new_tab]"] = module_item_new_tab
+            data["module_item[new_tab]"] = module_item_new_tab
         # OPTIONAL - module_item[completion_requirement][type] - Completion requirement for this module item. "must_view": Applies to all item types "must_contribute": Only applies to "Assignment", "Discussion", and "Page" types "must_submit", "min_score": Only apply to "Assignment" and "Quiz" types Inapplicable types will be ignored
         if module_item_completion_requirement_type is not None:
             self._validate_enum(module_item_completion_requirement_type, ["must_view", "must_contribute", "must_submit"])
-        if module_item_completion_requirement_type is not None:
-            payload["module_item[completion_requirement][type]"] = module_item_completion_requirement_type
+            data["module_item[completion_requirement][type]"] = module_item_completion_requirement_type
         # OPTIONAL - module_item[completion_requirement][min_score] - Minimum score required to complete. Required for completion_requirement type 'min_score'.
         if module_item_completion_requirement_min_score is not None:
-            payload["module_item[completion_requirement][min_score]"] = module_item_completion_requirement_min_score
+            data["module_item[completion_requirement][min_score]"] = module_item_completion_requirement_min_score
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/modules/{module_id}/items with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules/{module_id}/items".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/modules/{module_id}/items with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules/{module_id}/items".format(**path), data=data, params=params, single_item=True)
 
     def update_module_item(self, id, course_id, module_id, module_item_completion_requirement_min_score=None, module_item_completion_requirement_type=None, module_item_external_url=None, module_item_indent=None, module_item_module_id=None, module_item_new_tab=None, module_item_position=None, module_item_published=None, module_item_title=None):
         """
@@ -285,7 +297,8 @@ class ModulesAPI(BaseCanvasAPI):
         Update and return an existing module item
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -295,36 +308,35 @@ class ModulesAPI(BaseCanvasAPI):
         path["id"] = id
         # OPTIONAL - module_item[title] - The name of the module item
         if module_item_title is not None:
-            payload["module_item[title]"] = module_item_title
+            data["module_item[title]"] = module_item_title
         # OPTIONAL - module_item[position] - The position of this item in the module (1-based)
         if module_item_position is not None:
-            payload["module_item[position]"] = module_item_position
+            data["module_item[position]"] = module_item_position
         # OPTIONAL - module_item[indent] - 0-based indent level; module items may be indented to show a hierarchy
         if module_item_indent is not None:
-            payload["module_item[indent]"] = module_item_indent
+            data["module_item[indent]"] = module_item_indent
         # OPTIONAL - module_item[external_url] - External url that the item points to. Only applies to 'ExternalUrl' type.
         if module_item_external_url is not None:
-            payload["module_item[external_url]"] = module_item_external_url
+            data["module_item[external_url]"] = module_item_external_url
         # OPTIONAL - module_item[new_tab] - Whether the external tool opens in a new tab. Only applies to 'ExternalTool' type.
         if module_item_new_tab is not None:
-            payload["module_item[new_tab]"] = module_item_new_tab
+            data["module_item[new_tab]"] = module_item_new_tab
         # OPTIONAL - module_item[completion_requirement][type] - Completion requirement for this module item. "must_view": Applies to all item types "must_contribute": Only applies to "Assignment", "Discussion", and "Page" types "must_submit", "min_score": Only apply to "Assignment" and "Quiz" types Inapplicable types will be ignored
         if module_item_completion_requirement_type is not None:
             self._validate_enum(module_item_completion_requirement_type, ["must_view", "must_contribute", "must_submit"])
-        if module_item_completion_requirement_type is not None:
-            payload["module_item[completion_requirement][type]"] = module_item_completion_requirement_type
+            data["module_item[completion_requirement][type]"] = module_item_completion_requirement_type
         # OPTIONAL - module_item[completion_requirement][min_score] - Minimum score required to complete, Required for completion_requirement type 'min_score'.
         if module_item_completion_requirement_min_score is not None:
-            payload["module_item[completion_requirement][min_score]"] = module_item_completion_requirement_min_score
+            data["module_item[completion_requirement][min_score]"] = module_item_completion_requirement_min_score
         # OPTIONAL - module_item[published] - Whether the module item is published and visible to students.
         if module_item_published is not None:
-            payload["module_item[published]"] = module_item_published
+            data["module_item[published]"] = module_item_published
         # OPTIONAL - module_item[module_id] - Move this item to another module by specifying the target module id here. The target module must be in the same course.
         if module_item_module_id is not None:
-            payload["module_item[module_id]"] = module_item_module_id
+            data["module_item[module_id]"] = module_item_module_id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_module_item(self, id, course_id, module_id):
         """
@@ -333,7 +345,8 @@ class ModulesAPI(BaseCanvasAPI):
         Delete a module item
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -342,8 +355,8 @@ class ModulesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/modules/{module_id}/items/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_module_item_sequence(self, course_id, asset_id=None, asset_type=None):
         """
@@ -353,21 +366,21 @@ class ModulesAPI(BaseCanvasAPI):
         in the course sequence.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - asset_type - The type of asset to find module sequence information for. Use the ModuleItem if it is known (e.g., the user navigated from a module item), since this will avoid ambiguity if the asset appears more than once in the module sequence.
         if asset_type is not None:
             self._validate_enum(asset_type, ["ModuleItem", "File", "Page", "Discussion", "Assignment", "Quiz", "ExternalTool"])
-        if asset_type is not None:
-            payload["asset_type"] = asset_type
+            params["asset_type"] = asset_type
         # OPTIONAL - asset_id - The id of the asset (or the url in the case of a Page)
         if asset_id is not None:
-            payload["asset_id"] = asset_id
+            params["asset_id"] = asset_id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/module_item_sequence with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/module_item_sequence".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/module_item_sequence with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/module_item_sequence".format(**path), data=data, params=params, single_item=True)
 
     def mark_module_item_read(self, id, course_id, module_id):
         """
@@ -380,7 +393,8 @@ class ModulesAPI(BaseCanvasAPI):
         This endpoint cannot be used to complete requirements on locked or unpublished module items.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -389,8 +403,8 @@ class ModulesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/modules/{module_id}/items/{id}/mark_read with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}/mark_read".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/modules/{module_id}/items/{id}/mark_read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/modules/{module_id}/items/{id}/mark_read".format(**path), data=data, params=params, no_data=True)
 
 
 class Contentdetails(BaseModel):

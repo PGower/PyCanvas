@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,24 +23,24 @@ class OutcomeResultsAPI(BaseCanvasAPI):
         Gets the outcome results for users and outcomes in the specified context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - user_ids - If specified, only the users whose ids are given will be included in the results. it is an error to specify an id for a user who is not a student in the context
         if user_ids is not None:
-            payload["user_ids"] = user_ids
+            params["user_ids"] = user_ids
         # OPTIONAL - outcome_ids - If specified, only the outcomes whose ids are given will be included in the results. it is an error to specify an id for an outcome which is not linked to the context.
         if outcome_ids is not None:
-            payload["outcome_ids"] = outcome_ids
+            params["outcome_ids"] = outcome_ids
         # OPTIONAL - include - Specify additional collections to be side loaded with the result. "alignments" includes only the alignments referenced by the returned results. "outcomes.alignments" includes all alignments referenced by outcomes in the context.
         if include is not None:
             self._validate_enum(include, ["alignments", "outcomes", "outcomes.alignments", "outcome_groups", "outcome_links", "outcome_paths", "users"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_results with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_results".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_results with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_results".format(**path), data=data, params=params, no_data=True)
 
     def get_outcome_result_rollups(self, course_id, aggregate=None, include=None, outcome_ids=None, user_ids=None):
         """
@@ -49,29 +50,28 @@ class OutcomeResultsAPI(BaseCanvasAPI):
         context.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - aggregate - If specified, instead of returning one rollup for each user, all the user rollups will be combined into one rollup for the course that will contain the average rollup score for each outcome.
         if aggregate is not None:
             self._validate_enum(aggregate, ["course"])
-        if aggregate is not None:
-            payload["aggregate"] = aggregate
+            params["aggregate"] = aggregate
         # OPTIONAL - user_ids - If specified, only the users whose ids are given will be included in the results or used in an aggregate result. it is an error to specify an id for a user who is not a student in the context
         if user_ids is not None:
-            payload["user_ids"] = user_ids
+            params["user_ids"] = user_ids
         # OPTIONAL - outcome_ids - If specified, only the outcomes whose ids are given will be included in the results. it is an error to specify an id for an outcome which is not linked to the context.
         if outcome_ids is not None:
-            payload["outcome_ids"] = outcome_ids
+            params["outcome_ids"] = outcome_ids
         # OPTIONAL - include - Specify additional collections to be side loaded with the result.
         if include is not None:
             self._validate_enum(include, ["courses", "outcomes", "outcomes.alignments", "outcome_groups", "outcome_links", "outcome_paths", "users"])
-        if include is not None:
-            payload["include"] = include
+            params["include"] = include
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_rollups with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_rollups".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/outcome_rollups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/outcome_rollups".format(**path), data=data, params=params, no_data=True)
 
 
 class Outcomeresult(BaseModel):

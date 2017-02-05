@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         Returns the list of authorization configs
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs".format(**path), data=data, params=params, all_pages=True)
 
     def create_authorization_config(self, account_id):
         """
@@ -219,13 +221,14 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
           account_authorization_config[1][auth_password]=password
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/account_authorization_configs with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/account_authorization_configs".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/account_authorization_configs with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/account_authorization_configs".format(**path), data=data, params=params, single_item=True)
 
     def update_authorization_config(self, id, account_id):
         """
@@ -235,15 +238,16 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         You can not update an existing configuration to a new authentication type.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/account_authorization_configs/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/account_authorization_configs/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), data=data, params=params, single_item=True)
 
     def get_authorization_config(self, id, account_id):
         """
@@ -252,15 +256,16 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         Get the specified authorization config
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_authorization_config(self, id, account_id):
         """
@@ -269,15 +274,16 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         Delete the config
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/account_authorization_configs/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/account_authorization_configs/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/account_authorization_configs/{id}".format(**path), data=data, params=params, no_data=True)
 
     def get_discovery_url(self, account_id):
         """
@@ -286,13 +292,14 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         Get the discovery url
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), data=data, params=params, single_item=True)
 
     def set_discovery_url(self, account_id):
         """
@@ -307,13 +314,14 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         attempt to authenticate the user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("PUT /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), data=data, params=params, single_item=True)
 
     def delete_discovery_url(self, account_id):
         """
@@ -322,13 +330,14 @@ class AccountAuthenticationServicesAPI(BaseCanvasAPI):
         Clear discovery url
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), params=payload, no_data=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/account_authorization_configs/discovery_url with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/account_authorization_configs/discovery_url".format(**path), data=data, params=params, no_data=True)
 
 
 class Accountauthorizationconfig(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
@@ -24,21 +25,22 @@ class AccountDomainLookupsAPI(BaseCanvasAPI):
         Partial match on name / domain are supported
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # OPTIONAL - name - campus name
         if name is not None:
-            payload["name"] = name
+            params["name"] = name
         # OPTIONAL - domain - no description
         if domain is not None:
-            payload["domain"] = domain
+            params["domain"] = domain
         # OPTIONAL - latitude - no description
         if latitude is not None:
-            payload["latitude"] = latitude
+            params["latitude"] = latitude
         # OPTIONAL - longitude - no description
         if longitude is not None:
-            payload["longitude"] = longitude
+            params["longitude"] = longitude
 
-        self.logger.debug("GET /api/v1/accounts/search with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/search".format(**path), params=payload, no_data=True)
+        self.logger.debug("GET /api/v1/accounts/search with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/search".format(**path), data=data, params=params, no_data=True)
 

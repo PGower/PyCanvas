@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,16 +23,17 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         List all custom gradebook columns for a course
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - include_hidden - Include hidden parameters (defaults to false)
         if include_hidden is not None:
-            payload["include_hidden"] = include_hidden
+            params["include_hidden"] = include_hidden
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/custom_gradebook_columns with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/custom_gradebook_columns".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/custom_gradebook_columns with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/custom_gradebook_columns".format(**path), data=data, params=params, all_pages=True)
 
     def create_custom_gradebook_column(self, course_id, column_title, column_hidden=None, column_position=None, column_teacher_notes=None):
         """
@@ -40,24 +42,25 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         Create a custom gradebook column
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - column[title] - no description
-        payload["column[title]"] = column_title
+        data["column[title]"] = column_title
         # OPTIONAL - column[position] - The position of the column relative to other custom columns
         if column_position is not None:
-            payload["column[position]"] = column_position
+            data["column[position]"] = column_position
         # OPTIONAL - column[hidden] - Hidden columns are not displayed in the gradebook
         if column_hidden is not None:
-            payload["column[hidden]"] = column_hidden
+            data["column[hidden]"] = column_hidden
         # OPTIONAL - column[teacher_notes] - Set this if the column is created by a teacher. The gradebook only supports one teacher_notes column.
         if column_teacher_notes is not None:
-            payload["column[teacher_notes]"] = column_teacher_notes
+            data["column[teacher_notes]"] = column_teacher_notes
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/custom_gradebook_columns with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/custom_gradebook_columns".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/custom_gradebook_columns with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/custom_gradebook_columns".format(**path), data=data, params=params, single_item=True)
 
     def update_custom_gradebook_column(self, id, course_id):
         """
@@ -66,15 +69,16 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         Accepts the same parameters as custom gradebook column creation
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/custom_gradebook_columns/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/custom_gradebook_columns/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}".format(**path), data=data, params=params, single_item=True)
 
     def delete_custom_gradebook_column(self, id, course_id):
         """
@@ -83,15 +87,16 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         Permanently deletes a custom column and its associated data
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("DELETE /api/v1/courses/{course_id}/custom_gradebook_columns/{id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/courses/{course_id}/custom_gradebook_columns/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}".format(**path), data=data, params=params, single_item=True)
 
     def reorder_custom_columns(self, order, course_id):
         """
@@ -102,15 +107,16 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         <b>200 OK</b> is returned if successful
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - order - no description
-        payload["order"] = order
+        data["order"] = order
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/custom_gradebook_columns/reorder with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/custom_gradebook_columns/reorder".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/custom_gradebook_columns/reorder with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/custom_gradebook_columns/reorder".format(**path), data=data, params=params, no_data=True)
 
     def list_entries_for_column(self, id, course_id):
         """
@@ -119,15 +125,16 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         This does not list entries for students without associated data.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data".format(**path), data=data, params=params, all_pages=True)
 
     def update_column_data(self, id, user_id, course_id, column_data_content):
         """
@@ -136,7 +143,8 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         Set the content of a custom column
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -145,10 +153,10 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id - ID
         path["user_id"] = user_id
         # REQUIRED - column_data[content] - Column content. Setting this to blank will delete the datum object.
-        payload["column_data[content]"] = column_data_content
+        data["column_data[content]"] = column_data_content
 
-        self.logger.debug("PUT /api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("PUT", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data/{user_id}".format(**path), data=payload, single_item=True)
+        self.logger.debug("PUT /api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/custom_gradebook_columns/{id}/data/{user_id}".format(**path), data=data, params=params, single_item=True)
 
 
 class Columndatum(BaseModel):

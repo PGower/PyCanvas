@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
@@ -27,7 +28,8 @@ class QuizSubmissionFilesAPI(BaseCanvasAPI):
         documentation there.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
@@ -35,11 +37,11 @@ class QuizSubmissionFilesAPI(BaseCanvasAPI):
         path["quiz_id"] = quiz_id
         # OPTIONAL - name - The name of the quiz submission file
         if name is not None:
-            payload["name"] = name
+            data["name"] = name
         # OPTIONAL - on_duplicate - How to handle duplicate names
         if on_duplicate is not None:
-            payload["on_duplicate"] = on_duplicate
+            data["on_duplicate"] = on_duplicate
 
-        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/self/files with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/self/files".format(**path), data=payload, no_data=True)
+        self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/self/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/self/files".format(**path), data=data, params=params, no_data=True)
 

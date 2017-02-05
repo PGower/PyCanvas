@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,24 +23,25 @@ class AdminsAPI(BaseCanvasAPI):
         Flag an existing user as an admin within the account.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # REQUIRED - user_id - The id of the user to promote.
-        payload["user_id"] = user_id
+        data["user_id"] = user_id
         # OPTIONAL - role - (deprecated) The user's admin relationship with the account will be created with the given role. Defaults to 'AccountAdmin'.
         if role is not None:
-            payload["role"] = role
+            data["role"] = role
         # OPTIONAL - role_id - The user's admin relationship with the account will be created with the given role. Defaults to the built-in role for 'AccountAdmin'.
         if role_id is not None:
-            payload["role_id"] = role_id
+            data["role_id"] = role_id
         # OPTIONAL - send_confirmation - Send a notification email to the new admin if true. Default is true.
         if send_confirmation is not None:
-            payload["send_confirmation"] = send_confirmation
+            data["send_confirmation"] = send_confirmation
 
-        self.logger.debug("POST /api/v1/accounts/{account_id}/admins with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/admins".format(**path), data=payload, single_item=True)
+        self.logger.debug("POST /api/v1/accounts/{account_id}/admins with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/admins".format(**path), data=data, params=params, single_item=True)
 
     def remove_account_admin(self, user_id, account_id, role=None, role_id=None):
         """
@@ -48,7 +50,8 @@ class AdminsAPI(BaseCanvasAPI):
         Remove the rights associated with an account admin role from a user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
@@ -56,13 +59,13 @@ class AdminsAPI(BaseCanvasAPI):
         path["user_id"] = user_id
         # OPTIONAL - role - (Deprecated) Account role to remove from the user. Defaults to 'AccountAdmin'. Any other account role must be specified explicitly.
         if role is not None:
-            payload["role"] = role
+            params["role"] = role
         # OPTIONAL - role_id - The user's admin relationship with the account will be created with the given role. Defaults to the built-in role for 'AccountAdmin'.
         if role_id is not None:
-            payload["role_id"] = role_id
+            params["role_id"] = role_id
 
-        self.logger.debug("DELETE /api/v1/accounts/{account_id}/admins/{user_id} with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/admins/{user_id}".format(**path), params=payload, single_item=True)
+        self.logger.debug("DELETE /api/v1/accounts/{account_id}/admins/{user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/accounts/{account_id}/admins/{user_id}".format(**path), data=data, params=params, single_item=True)
 
     def list_account_admins(self, account_id, user_id=None):
         """
@@ -71,16 +74,17 @@ class AdminsAPI(BaseCanvasAPI):
         List the admins in the account
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - account_id - ID
         path["account_id"] = account_id
         # OPTIONAL - user_id - Scope the results to those with user IDs equal to any of the IDs specified here.
         if user_id is not None:
-            payload["user_id"] = user_id
+            params["user_id"] = user_id
 
-        self.logger.debug("GET /api/v1/accounts/{account_id}/admins with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/admins".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/accounts/{account_id}/admins with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/admins".format(**path), data=data, params=params, all_pages=True)
 
 
 class Admin(BaseModel):

@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -22,13 +23,14 @@ class CollaborationsAPI(BaseCanvasAPI):
         List the collaborators of a given collaboration
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - id - ID
         path["id"] = id
 
-        self.logger.debug("GET /api/v1/collaborations/{id}/members with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/collaborations/{id}/members".format(**path), params=payload, all_pages=True)
+        self.logger.debug("GET /api/v1/collaborations/{id}/members with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/collaborations/{id}/members".format(**path), data=data, params=params, all_pages=True)
 
 
 class Collaborator(BaseModel):

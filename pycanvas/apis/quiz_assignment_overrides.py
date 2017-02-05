@@ -3,6 +3,7 @@
 This API client was generated using a template. Make sure this code is valid before using it.
 """
 import logging
+from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
 
@@ -23,16 +24,17 @@ class QuizAssignmentOverridesAPI(BaseCanvasAPI):
         based on the assignment overrides active for the current API user.
         """
         path = {}
-        payload = {}
+        data = {}
+        params = {}
 
         # REQUIRED - PATH - course_id - ID
         path["course_id"] = course_id
         # OPTIONAL - quiz_assignment_overrides[0][quiz_ids] - An array of quiz IDs. If omitted, overrides for all quizzes available to the operating user will be returned.
         if quiz_assignment_overrides_0_quiz_ids is not None:
-            payload["quiz_assignment_overrides[0][quiz_ids]"] = quiz_assignment_overrides_0_quiz_ids
+            params["quiz_assignment_overrides[0][quiz_ids]"] = quiz_assignment_overrides_0_quiz_ids
 
-        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/assignment_overrides with payload: {payload}".format(payload=payload, **path))
-        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/assignment_overrides".format(**path), params=payload, single_item=True)
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/assignment_overrides with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/assignment_overrides".format(**path), data=data, params=params, single_item=True)
 
 
 class Quizassignmentoverride(BaseModel):
