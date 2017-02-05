@@ -32,11 +32,14 @@ class SubmissionCommentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))

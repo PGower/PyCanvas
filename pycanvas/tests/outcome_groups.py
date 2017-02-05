@@ -116,21 +116,21 @@ class TestOutcomeGroupsAPI(unittest.TestCase):
         """Integration test for the OutcomeGroupsAPI.list_linked_outcomes_global method."""
         id = None  # Change me!!
 
-        r = self.client.list_linked_outcomes_global(id)
+        r = self.client.list_linked_outcomes_global(id, outcome_style=None)
 
     def test_list_linked_outcomes_accounts(self):
         """Integration test for the OutcomeGroupsAPI.list_linked_outcomes_accounts method."""
         account_id = None  # Change me!!
         id = None  # Change me!!
 
-        r = self.client.list_linked_outcomes_accounts(id, account_id)
+        r = self.client.list_linked_outcomes_accounts(id, account_id, outcome_style=None)
 
     def test_list_linked_outcomes_courses(self):
         """Integration test for the OutcomeGroupsAPI.list_linked_outcomes_courses method."""
         course_id = None  # Change me!!
         id = None  # Change me!!
 
-        r = self.client.list_linked_outcomes_courses(id, course_id)
+        r = self.client.list_linked_outcomes_courses(id, course_id, outcome_style=None)
 
     def test_create_link_outcome_global(self):
         """Integration test for the OutcomeGroupsAPI.create_link_outcome_global method."""

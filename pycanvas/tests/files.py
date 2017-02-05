@@ -40,37 +40,58 @@ class TestFilesAPI(unittest.TestCase):
         """Integration test for the FilesAPI.list_files_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_files_courses(course_id, content_types=None, include=None, order=None, search_term=None, sort=None)
+        r = self.client.list_files_courses(course_id, content_types=None, include=None, only=None, order=None, search_term=None, sort=None)
 
     def test_list_files_users(self):
         """Integration test for the FilesAPI.list_files_users method."""
         user_id = None  # Change me!!
 
-        r = self.client.list_files_users(user_id, content_types=None, include=None, order=None, search_term=None, sort=None)
+        r = self.client.list_files_users(user_id, content_types=None, include=None, only=None, order=None, search_term=None, sort=None)
 
     def test_list_files_groups(self):
         """Integration test for the FilesAPI.list_files_groups method."""
         group_id = None  # Change me!!
 
-        r = self.client.list_files_groups(group_id, content_types=None, include=None, order=None, search_term=None, sort=None)
+        r = self.client.list_files_groups(group_id, content_types=None, include=None, only=None, order=None, search_term=None, sort=None)
 
     def test_list_files_folders(self):
         """Integration test for the FilesAPI.list_files_folders method."""
         id = None  # Change me!!
 
-        r = self.client.list_files_folders(id, content_types=None, include=None, order=None, search_term=None, sort=None)
+        r = self.client.list_files_folders(id, content_types=None, include=None, only=None, order=None, search_term=None, sort=None)
 
-    def test_get_quota_information(self):
-        """Integration test for the FilesAPI.get_quota_information method."""
+    def test_get_public_inline_preview_url(self):
+        """Integration test for the FilesAPI.get_public_inline_preview_url method."""
         id = None  # Change me!!
 
-        r = self.client.get_quota_information(id)
+        r = self.client.get_public_inline_preview_url(id, submission_id=None)
 
-    def test_get_file(self):
-        """Integration test for the FilesAPI.get_file method."""
+    def test_get_file_files(self):
+        """Integration test for the FilesAPI.get_file_files method."""
         id = None  # Change me!!
 
-        r = self.client.get_file(id, include=None)
+        r = self.client.get_file_files(id, include=None)
+
+    def test_get_file_courses(self):
+        """Integration test for the FilesAPI.get_file_courses method."""
+        course_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.get_file_courses(id, course_id, include=None)
+
+    def test_get_file_groups(self):
+        """Integration test for the FilesAPI.get_file_groups method."""
+        group_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.get_file_groups(id, group_id, include=None)
+
+    def test_get_file_users(self):
+        """Integration test for the FilesAPI.get_file_users method."""
+        user_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.get_file_users(id, user_id, include=None)
 
     def test_update_file(self):
         """Integration test for the FilesAPI.update_file method."""

@@ -26,13 +26,18 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - The id of the account to retrieve roles for.
+        # REQUIRED - PATH - account_id
+        """The id of the account to retrieve roles for."""
         path["account_id"] = account_id
-        # OPTIONAL - state - Filter by role state. If this argument is omitted, only 'active' roles are returned.
+        # OPTIONAL - state
+        """Filter by role state. If this argument is omitted, only 'active' roles are
+        returned."""
         if state is not None:
             self._validate_enum(state, ["active", "inactive"])
             params["state"] = state
-        # OPTIONAL - show_inherited - If this argument is true, all roles inherited from parent accounts will be included.
+        # OPTIONAL - show_inherited
+        """If this argument is true, all roles inherited from parent accounts will
+        be included."""
         if show_inherited is not None:
             params["show_inherited"] = show_inherited
 
@@ -49,20 +54,24 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - PATH - account_id - The id of the account containing the role
+        # REQUIRED - PATH - account_id
+        """The id of the account containing the role"""
         path["account_id"] = account_id
-        # REQUIRED - role_id - The unique identifier for the role
+        # REQUIRED - role_id
+        """The unique identifier for the role"""
         params["role_id"] = role_id
-        # OPTIONAL - role - The name for the role
+        # OPTIONAL - role
+        """The name for the role"""
         if role is not None:
             params["role"] = role
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/roles/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/accounts/{account_id}/roles/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def create_new_role(self, label, account_id, base_role_type=None, permissions_<X>_enabled=None, permissions_<X>_explicit=None, permissions_<X>_locked=None, role=None):
+    def create_new_role(self, label, account_id, base_role_type=None, permissions_<X>_applies_to_descendants=None, permissions_<X>_applies_to_self=None, permissions_<X>_enabled=None, permissions_<X>_explicit=None, permissions_<X>_locked=None, role=None):
         """
         Create a new role.
 
@@ -72,26 +81,126 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - label - Label for the role.
+        # REQUIRED - label
+        """Label for the role."""
         data["label"] = label
-        # OPTIONAL - role - Deprecated alias for label.
+        # OPTIONAL - role
+        """Deprecated alias for label."""
         if role is not None:
             data["role"] = role
-        # OPTIONAL - base_role_type - Specifies the role type that will be used as a base for the permissions granted to this role. Defaults to 'AccountMembership' if absent
+        # OPTIONAL - base_role_type
+        """Specifies the role type that will be used as a base
+        for the permissions granted to this role.
+        
+        Defaults to 'AccountMembership' if absent"""
         if base_role_type is not None:
             self._validate_enum(base_role_type, ["AccountMembership", "StudentEnrollment", "TeacherEnrollment", "TaEnrollment", "ObserverEnrollment", "DesignerEnrollment"])
             data["base_role_type"] = base_role_type
-        # OPTIONAL - permissions[<X>][explicit] - no description
+        # OPTIONAL - permissions[<X>][explicit]
+        """no description"""
         if permissions_<X>_explicit is not None:
             data["permissions[<X>][explicit]"] = permissions_<X>_explicit
-        # OPTIONAL - permissions[<X>][enabled] - If explicit is 1 and enabled is 1, permission <X> will be explicitly granted to this role. If explicit is 1 and enabled has any other value (typically 0), permission <X> will be explicitly denied to this role. If explicit is any other value (typically 0) or absent, or if enabled is absent, the value for permission <X> will be inherited from upstream. Ignored if permission <X> is locked upstream (in an ancestor account). May occur multiple times with unique values for <X>. Recognized permission names for <X> are: [For Account-Level Roles Only] become_user -- Become other users manage_account_memberships -- Add/remove other admins for the account manage_account_settings -- Manage account-level settings manage_alerts -- Manage global alerts manage_courses -- Manage ( add / edit / delete ) courses manage_developer_keys -- Manage developer keys manage_global_outcomes -- Manage learning outcomes manage_jobs -- Manage background jobs manage_role_overrides -- Manage permissions manage_storage_quotas -- Set storage quotas for courses, groups, and users manage_sis -- Import and manage SIS data manage_site_settings -- Manage site-wide and plugin settings manage_user_logins -- Modify login details for users read_course_content -- View course content read_course_list -- View the list of courses read_messages -- View notifications sent to users site_admin -- Use the Site Admin section and admin all other accounts view_error_reports -- View error reports view_statistics -- View statistics manage_feature_flags -- Enable or disable features at an account level [For both Account-Level and Course-Level roles] Note: Applicable enrollment types for course-level roles are given in brackets: S = student, T = teacher, A = TA, D = designer, O = observer. Lower-case letters indicate permissions that are off by default. A missing letter indicates the permission cannot be enabled for the role or any derived custom roles. change_course_state -- [ TaD ] Change course state comment_on_others_submissions -- [sTAD ] View all students' submissions and make comments on them create_collaborations -- [STADo] Create student collaborations create_conferences -- [STADo] Create web conferences manage_admin_users -- [ Tad ] Add/remove other teachers, course designers or TAs to the course manage_assignments -- [ TADo] Manage (add / edit / delete) assignments and quizzes manage_calendar -- [sTADo] Add, edit and delete events on the course calendar manage_content -- [ TADo] Manage all other course content manage_files -- [ TADo] Manage (add / edit / delete) course files manage_grades -- [ TA ] Edit grades manage_groups -- [ TAD ] Manage (create / edit / delete) groups manage_interaction_alerts -- [ Ta ] Manage alerts manage_outcomes -- [sTaDo] Manage learning outcomes manage_sections -- [ TaD ] Manage (create / edit / delete) course sections manage_students -- [ TAD ] Add/remove students for the course manage_user_notes -- [ TA ] Manage faculty journal entries manage_rubrics -- [ TAD ] Edit assessing rubrics manage_wiki -- [ TADo] Manage wiki (add / edit / delete pages) read_forum -- [STADO] View discussions moderate_forum -- [sTADo] Moderate discussions (delete/edit others' posts, lock topics) post_to_forum -- [STADo] Post to discussions read_question_banks -- [ TADo] View and link to question banks read_reports -- [ TAD ] View usage reports for the course read_roster -- [STADo] See the list of users read_sis -- [sTa ] Read SIS data send_messages -- [STADo] Send messages to individual course members send_messages_all -- [sTADo] Send messages to the entire class view_all_grades -- [ TAd ] View all grades view_group_pages -- [sTADo] View the group pages of all student groups Some of these permissions are applicable only for roles on the site admin account, on a root account, or for course-level roles with a particular base role type; if a specified permission is inapplicable, it will be ignored. Additional permissions may exist based on installed plugins.
+        # OPTIONAL - permissions[<X>][enabled]
+        """If explicit is 1 and enabled is 1, permission <X> will be explicitly
+        granted to this role. If explicit is 1 and enabled has any other value
+        (typically 0), permission <X> will be explicitly denied to this role. If
+        explicit is any other value (typically 0) or absent, or if enabled is
+        absent, the value for permission <X> will be inherited from upstream.
+        Ignored if permission <X> is locked upstream (in an ancestor account).
+        
+        May occur multiple times with unique values for <X>. Recognized
+        permission names for <X> are:
+        
+          [For Account-Level Roles Only]
+          become_user                      -- Become other users
+          import_sis                       -- Import SIS data
+          manage_account_memberships       -- Add/remove other admins for the account
+          manage_account_settings          -- Manage account-level settings
+          manage_alerts                    -- Manage global alerts
+          manage_courses                   -- Manage ( add / edit / delete ) courses
+          manage_developer_keys            -- Manage developer keys
+          manage_global_outcomes           -- Manage learning outcomes
+          manage_jobs                      -- Manage background jobs
+          manage_role_overrides            -- Manage permissions
+          manage_storage_quotas            -- Set storage quotas for courses, groups, and users
+          manage_sis                       -- Manage SIS data
+          manage_site_settings             -- Manage site-wide and plugin settings
+          manage_user_logins               -- Modify login details for users
+          read_course_content              -- View course content
+          read_course_list                 -- View the list of courses
+          read_messages                    -- View notifications sent to users
+          site_admin                       -- Use the Site Admin section and admin all other accounts
+          view_error_reports               -- View error reports
+          view_statistics                  -- View statistics
+          manage_feature_flags             -- Enable or disable features at an account level
+        
+          [For both Account-Level and Course-Level roles]
+           Note: Applicable enrollment types for course-level roles are given in brackets:
+                 S = student, T = teacher, A = TA, D = designer, O = observer.
+                 Lower-case letters indicate permissions that are off by default.
+                 A missing letter indicates the permission cannot be enabled for the role
+                 or any derived custom roles.
+          change_course_state              -- [ TaD ] Change course state
+          comment_on_others_submissions    -- [sTAD ] View all students' submissions and make comments on them
+          create_collaborations            -- [STADo] Create student collaborations
+          create_conferences               -- [STADo] Create web conferences
+          manage_admin_users               -- [ Tad ] Add/remove other teachers, course designers or TAs to the course
+          manage_assignments               -- [ TADo] Manage (add / edit / delete) assignments and quizzes
+          manage_calendar                  -- [sTADo] Add, edit and delete events on the course calendar
+          manage_content                   -- [ TADo] Manage all other course content
+          manage_files                     -- [ TADo] Manage (add / edit / delete) course files
+          manage_grades                    -- [ TA  ] Edit grades
+          manage_groups                    -- [ TAD ] Manage (create / edit / delete) groups
+          manage_interaction_alerts        -- [ Ta  ] Manage alerts
+          manage_outcomes                  -- [sTaDo] Manage learning outcomes
+          manage_sections                  -- [ TaD ] Manage (create / edit / delete) course sections
+          manage_students                  -- [ TAD ] Add/remove students for the course
+          manage_user_notes                -- [ TA  ] Manage faculty journal entries
+          manage_rubrics                   -- [ TAD ] Edit assessing rubrics
+          manage_wiki                      -- [ TADo] Manage (add / edit / delete) pages
+          read_forum                       -- [STADO] View discussions
+          moderate_forum                   -- [sTADo] Moderate discussions (delete/edit others' posts, lock topics)
+          post_to_forum                    -- [STADo] Post to discussions
+          read_announcements               -- [STADO] View announcements
+          read_question_banks              -- [ TADo] View and link to question banks
+          read_reports                     -- [ TAD ] View usage reports for the course
+          read_roster                      -- [STADo] See the list of users
+          read_sis                         -- [sTa  ] Read SIS data
+          send_messages                    -- [STADo] Send messages to individual course members
+          send_messages_all                -- [sTADo] Send messages to the entire class
+          view_all_grades                  -- [ TAd ] View all grades
+          view_group_pages                 -- [sTADo] View the group pages of all student groups
+          lti_add_edit                     -- [ TAD ] LTI add and edit
+        
+        Some of these permissions are applicable only for roles on the site admin
+        account, on a root account, or for course-level roles with a particular base role type;
+        if a specified permission is inapplicable, it will be ignored.
+        
+        Additional permissions may exist based on installed plugins."""
         if permissions_<X>_enabled is not None:
             data["permissions[<X>][enabled]"] = permissions_<X>_enabled
-        # OPTIONAL - permissions[<X>][locked] - If the value is 1, permission <X> will be locked downstream (new roles in subaccounts cannot override the setting). For any other value, permission <X> is left unlocked. Ignored if permission <X> is already locked upstream. May occur multiple times with unique values for <X>.
+        # OPTIONAL - permissions[<X>][locked]
+        """If the value is 1, permission <X> will be locked downstream (new roles in
+        subaccounts cannot override the setting). For any other value, permission
+        <X> is left unlocked. Ignored if permission <X> is already locked
+        upstream. May occur multiple times with unique values for <X>."""
         if permissions_<X>_locked is not None:
             data["permissions[<X>][locked]"] = permissions_<X>_locked
+        # OPTIONAL - permissions[<X>][applies_to_self]
+        """If the value is 1, permission <X> applies to the account this role is in.
+        The default value is 1. Must be true if applies_to_descendants is false.
+        This value is only returned if enabled is true."""
+        if permissions_<X>_applies_to_self is not None:
+            data["permissions[<X>][applies_to_self]"] = permissions_<X>_applies_to_self
+        # OPTIONAL - permissions[<X>][applies_to_descendants]
+        """If the value is 1, permission <X> cascades down to sub accounts of the
+        account this role is in. The default value is 1.  Must be true if
+        applies_to_self is false.This value is only returned if enabled is true."""
+        if permissions_<X>_applies_to_descendants is not None:
+            data["permissions[<X>][applies_to_descendants]"] = permissions_<X>_applies_to_descendants
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/roles with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/accounts/{account_id}/roles".format(**path), data=data, params=params, single_item=True)
@@ -109,13 +218,17 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - role_id - The unique identifier for the role
+        # REQUIRED - role_id
+        """The unique identifier for the role"""
         params["role_id"] = role_id
-        # OPTIONAL - role - The name for the role
+        # OPTIONAL - role
+        """The name for the role"""
         if role is not None:
             params["role"] = role
 
@@ -132,20 +245,24 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - role_id - The unique identifier for the role
+        # REQUIRED - role_id
+        """The unique identifier for the role"""
         data["role_id"] = role_id
-        # OPTIONAL - role - The name for the role
+        # OPTIONAL - role
+        """The name for the role"""
         if role is not None:
             data["role"] = role
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/roles/{id}/activate with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/accounts/{account_id}/roles/{id}/activate".format(**path), data=data, params=params, single_item=True)
 
-    def update_role(self, id, account_id, label=None, permissions_<X>_enabled=None, permissions_<X>_explicit=None):
+    def update_role(self, id, account_id, label=None, permissions_<X>_applies_to_descendants=None, permissions_<X>_applies_to_self=None, permissions_<X>_enabled=None, permissions_<X>_explicit=None):
         """
         Update a role.
 
@@ -164,19 +281,37 @@ class RolesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - label - The label for the role. Can only change the label of a custom role that belongs directly to the account.
+        # OPTIONAL - label
+        """The label for the role. Can only change the label of a custom role that belongs directly to the account."""
         if label is not None:
             data["label"] = label
-        # OPTIONAL - permissions[<X>][explicit] - no description
+        # OPTIONAL - permissions[<X>][explicit]
+        """no description"""
         if permissions_<X>_explicit is not None:
             data["permissions[<X>][explicit]"] = permissions_<X>_explicit
-        # OPTIONAL - permissions[<X>][enabled] - These arguments are described in the documentation for the {api:RoleOverridesController#add_role add_role method}.
+        # OPTIONAL - permissions[<X>][enabled]
+        """These arguments are described in the documentation for the
+        {api:RoleOverridesController#add_role add_role method}."""
         if permissions_<X>_enabled is not None:
             data["permissions[<X>][enabled]"] = permissions_<X>_enabled
+        # OPTIONAL - permissions[<X>][applies_to_self]
+        """If the value is 1, permission <X> applies to the account this role is in.
+        The default value is 1. Must be true if applies_to_descendants is false.
+        This value is only returned if enabled is true."""
+        if permissions_<X>_applies_to_self is not None:
+            data["permissions[<X>][applies_to_self]"] = permissions_<X>_applies_to_self
+        # OPTIONAL - permissions[<X>][applies_to_descendants]
+        """If the value is 1, permission <X> cascades down to sub accounts of the
+        account this role is in. The default value is 1.  Must be true if
+        applies_to_self is false.This value is only returned if enabled is true."""
+        if permissions_<X>_applies_to_descendants is not None:
+            data["permissions[<X>][applies_to_descendants]"] = permissions_<X>_applies_to_descendants
 
         self.logger.debug("PUT /api/v1/accounts/{account_id}/roles/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/accounts/{account_id}/roles/{id}".format(**path), data=data, params=params, single_item=True)
@@ -185,13 +320,15 @@ class RolesAPI(BaseCanvasAPI):
 class Rolepermissions(BaseModel):
     """Rolepermissions Model."""
 
-    def __init__(self, locked=None, readonly=None, prior_default=None, enabled=None, explicit=None):
+    def __init__(self, locked=False, applies_to_descendants=True, explicit=False, enabled=None, readonly=False, prior_default=None, applies_to_self=True):
         """Init method for Rolepermissions class."""
         self._locked = locked
+        self._applies_to_descendants = applies_to_descendants
+        self._explicit = explicit
+        self._enabled = enabled
         self._readonly = readonly
         self._prior_default = prior_default
-        self._enabled = enabled
-        self._explicit = explicit
+        self._applies_to_self = applies_to_self
 
         self.logger = logging.getLogger('pycanvas.Rolepermissions')
 
@@ -205,6 +342,39 @@ class Rolepermissions(BaseModel):
         """Setter for locked property."""
         self.logger.warn("Setting values on locked will NOT update the remote Canvas instance.")
         self._locked = value
+
+    @property
+    def applies_to_descendants(self):
+        """Whether the permission cascades down to sub accounts of the account this role is in. Only present if enabled is true."""
+        return self._applies_to_descendants
+
+    @applies_to_descendants.setter
+    def applies_to_descendants(self, value):
+        """Setter for applies_to_descendants property."""
+        self.logger.warn("Setting values on applies_to_descendants will NOT update the remote Canvas instance.")
+        self._applies_to_descendants = value
+
+    @property
+    def explicit(self):
+        """Whether the value of enabled is specified explicitly by this role, or inherited from an upstream role."""
+        return self._explicit
+
+    @explicit.setter
+    def explicit(self, value):
+        """Setter for explicit property."""
+        self.logger.warn("Setting values on explicit will NOT update the remote Canvas instance.")
+        self._explicit = value
+
+    @property
+    def enabled(self):
+        """Whether the role has the permission."""
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        """Setter for enabled property."""
+        self.logger.warn("Setting values on enabled will NOT update the remote Canvas instance.")
+        self._enabled = value
 
     @property
     def readonly(self):
@@ -229,26 +399,15 @@ class Rolepermissions(BaseModel):
         self._prior_default = value
 
     @property
-    def enabled(self):
-        """Whether the role has the permission."""
-        return self._enabled
+    def applies_to_self(self):
+        """Whether the permission applies to the account this role is in. Only present if enabled is true."""
+        return self._applies_to_self
 
-    @enabled.setter
-    def enabled(self, value):
-        """Setter for enabled property."""
-        self.logger.warn("Setting values on enabled will NOT update the remote Canvas instance.")
-        self._enabled = value
-
-    @property
-    def explicit(self):
-        """Whether the value of enabled is specified explicitly by this role, or inherited from an upstream role."""
-        return self._explicit
-
-    @explicit.setter
-    def explicit(self, value):
-        """Setter for explicit property."""
-        self.logger.warn("Setting values on explicit will NOT update the remote Canvas instance.")
-        self._explicit = value
+    @applies_to_self.setter
+    def applies_to_self(self, value):
+        """Setter for applies_to_self property."""
+        self.logger.warn("Setting values on applies_to_self will NOT update the remote Canvas instance.")
+        self._applies_to_self = value
 
 
 class Role(BaseModel):

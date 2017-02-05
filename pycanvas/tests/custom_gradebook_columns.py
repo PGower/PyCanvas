@@ -49,7 +49,7 @@ class TestCustomGradebookColumnsAPI(unittest.TestCase):
         course_id = None  # Change me!!
         id = None  # Change me!!
 
-        r = self.client.list_entries_for_column(id, course_id)
+        r = self.client.list_entries_for_column(id, course_id, include_hidden=None)
 
     def test_update_column_data(self):
         """Integration test for the CustomGradebookColumnsAPI.update_column_data method."""

@@ -28,9 +28,11 @@ class QuizIpFiltersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/ip_filters with query params: {params} and form data: {data}".format(params=params, data=data, **path))

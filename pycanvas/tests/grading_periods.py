@@ -15,49 +15,27 @@ class TestGradingPeriodsAPI(unittest.TestCase):
     def setUp(self):
         self.client = GradingPeriodsAPI(secrets.instance_address, secrets.access_token)
 
-    def test_list_grading_periods_courses(self):
-        """Integration test for the GradingPeriodsAPI.list_grading_periods_courses method."""
-        course_id = None  # Change me!!
-
-        r = self.client.list_grading_periods_courses(course_id)
-
     def test_list_grading_periods_accounts(self):
         """Integration test for the GradingPeriodsAPI.list_grading_periods_accounts method."""
         account_id = None  # Change me!!
 
         r = self.client.list_grading_periods_accounts(account_id)
 
-    def test_get_single_grading_period_courses(self):
-        """Integration test for the GradingPeriodsAPI.get_single_grading_period_courses method."""
+    def test_list_grading_periods_courses(self):
+        """Integration test for the GradingPeriodsAPI.list_grading_periods_courses method."""
+        course_id = None  # Change me!!
+
+        r = self.client.list_grading_periods_courses(course_id)
+
+    def test_get_single_grading_period(self):
+        """Integration test for the GradingPeriodsAPI.get_single_grading_period method."""
         course_id = None  # Change me!!
         id = None  # Change me!!
 
-        r = self.client.get_single_grading_period_courses(id, course_id)
+        r = self.client.get_single_grading_period(id, course_id)
 
-    def test_get_single_grading_period_accounts(self):
-        """Integration test for the GradingPeriodsAPI.get_single_grading_period_accounts method."""
-        account_id = None  # Change me!!
-        id = None  # Change me!!
-
-        r = self.client.get_single_grading_period_accounts(id, account_id)
-
-    def test_create_single_grading_period_courses(self):
-        """Integration test for the GradingPeriodsAPI.create_single_grading_period_courses method."""
-        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
-        pass
-
-    def test_create_single_grading_period_accounts(self):
-        """Integration test for the GradingPeriodsAPI.create_single_grading_period_accounts method."""
-        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
-        pass
-
-    def test_update_single_grading_period_courses(self):
-        """Integration test for the GradingPeriodsAPI.update_single_grading_period_courses method."""
-        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
-        pass
-
-    def test_update_single_grading_period_accounts(self):
-        """Integration test for the GradingPeriodsAPI.update_single_grading_period_accounts method."""
+    def test_update_single_grading_period(self):
+        """Integration test for the GradingPeriodsAPI.update_single_grading_period method."""
         # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
         pass
 

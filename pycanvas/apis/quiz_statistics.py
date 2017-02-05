@@ -30,11 +30,14 @@ class QuizStatisticsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - all_versions - Whether the statistics report should include all submissions attempts.
+        # OPTIONAL - all_versions
+        """Whether the statistics report should include all submissions attempts."""
         if all_versions is not None:
             params["all_versions"] = all_versions
 

@@ -26,14 +26,23 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - quiz_submission_id - If specified, the endpoint will return the questions that were presented for that submission. This is useful if the quiz has been modified after the submission was created and the latest quiz version's set of questions does not match the submission's. NOTE: you must specify quiz_submission_attempt as well if you specify this parameter.
+        # OPTIONAL - quiz_submission_id
+        """If specified, the endpoint will return the questions that were presented
+        for that submission. This is useful if the quiz has been modified after
+        the submission was created and the latest quiz version's set of questions
+        does not match the submission's.
+        NOTE: you must specify quiz_submission_attempt as well if you specify this
+        parameter."""
         if quiz_submission_id is not None:
             params["quiz_submission_id"] = quiz_submission_id
-        # OPTIONAL - quiz_submission_attempt - The attempt of the submission you want the questions for.
+        # OPTIONAL - quiz_submission_attempt
+        """The attempt of the submission you want the questions for."""
         if quiz_submission_attempt is not None:
             params["quiz_submission_attempt"] = quiz_submission_attempt
 
@@ -50,11 +59,14 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - The quiz question unique identifier.
+        # REQUIRED - PATH - id
+        """The quiz question unique identifier."""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -70,42 +82,55 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - question[question_name] - The name of the question.
+        # OPTIONAL - question[question_name]
+        """The name of the question."""
         if question_question_name is not None:
             data["question[question_name]"] = question_question_name
-        # OPTIONAL - question[question_text] - The text of the question.
+        # OPTIONAL - question[question_text]
+        """The text of the question."""
         if question_question_text is not None:
             data["question[question_text]"] = question_question_text
-        # OPTIONAL - question[quiz_group_id] - The id of the quiz group to assign the question to.
+        # OPTIONAL - question[quiz_group_id]
+        """The id of the quiz group to assign the question to."""
         if question_quiz_group_id is not None:
             data["question[quiz_group_id]"] = question_quiz_group_id
-        # OPTIONAL - question[question_type] - The type of question. Multiple optional fields depend upon the type of question to be used.
+        # OPTIONAL - question[question_type]
+        """The type of question. Multiple optional fields depend upon the type of question to be used."""
         if question_question_type is not None:
-            self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question"])
+            self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question", "true_false_question"])
             data["question[question_type]"] = question_question_type
-        # OPTIONAL - question[position] - The order in which the question will be displayed in the quiz in relation to other questions.
+        # OPTIONAL - question[position]
+        """The order in which the question will be displayed in the quiz in relation to other questions."""
         if question_position is not None:
             data["question[position]"] = question_position
-        # OPTIONAL - question[points_possible] - The maximum amount of points received for answering this question correctly.
+        # OPTIONAL - question[points_possible]
+        """The maximum amount of points received for answering this question correctly."""
         if question_points_possible is not None:
             data["question[points_possible]"] = question_points_possible
-        # OPTIONAL - question[correct_comments] - The comment to display if the student answers the question correctly.
+        # OPTIONAL - question[correct_comments]
+        """The comment to display if the student answers the question correctly."""
         if question_correct_comments is not None:
             data["question[correct_comments]"] = question_correct_comments
-        # OPTIONAL - question[incorrect_comments] - The comment to display if the student answers incorrectly.
+        # OPTIONAL - question[incorrect_comments]
+        """The comment to display if the student answers incorrectly."""
         if question_incorrect_comments is not None:
             data["question[incorrect_comments]"] = question_incorrect_comments
-        # OPTIONAL - question[neutral_comments] - The comment to display regardless of how the student answered.
+        # OPTIONAL - question[neutral_comments]
+        """The comment to display regardless of how the student answered."""
         if question_neutral_comments is not None:
             data["question[neutral_comments]"] = question_neutral_comments
-        # OPTIONAL - question[text_after_answers] - no description
+        # OPTIONAL - question[text_after_answers]
+        """no description"""
         if question_text_after_answers is not None:
             data["question[text_after_answers]"] = question_text_after_answers
-        # OPTIONAL - question[answers] - no description
+        # OPTIONAL - question[answers]
+        """no description"""
         if question_answers is not None:
             data["question[answers]"] = question_answers
 
@@ -122,44 +147,58 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - The associated quiz's unique identifier.
+        # REQUIRED - PATH - quiz_id
+        """The associated quiz's unique identifier."""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - The quiz question's unique identifier.
+        # REQUIRED - PATH - id
+        """The quiz question's unique identifier."""
         path["id"] = id
-        # OPTIONAL - question[question_name] - The name of the question.
+        # OPTIONAL - question[question_name]
+        """The name of the question."""
         if question_question_name is not None:
             data["question[question_name]"] = question_question_name
-        # OPTIONAL - question[question_text] - The text of the question.
+        # OPTIONAL - question[question_text]
+        """The text of the question."""
         if question_question_text is not None:
             data["question[question_text]"] = question_question_text
-        # OPTIONAL - question[quiz_group_id] - The id of the quiz group to assign the question to.
+        # OPTIONAL - question[quiz_group_id]
+        """The id of the quiz group to assign the question to."""
         if question_quiz_group_id is not None:
             data["question[quiz_group_id]"] = question_quiz_group_id
-        # OPTIONAL - question[question_type] - The type of question. Multiple optional fields depend upon the type of question to be used.
+        # OPTIONAL - question[question_type]
+        """The type of question. Multiple optional fields depend upon the type of question to be used."""
         if question_question_type is not None:
-            self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question"])
+            self._validate_enum(question_question_type, ["calculated_question", "essay_question", "file_upload_question", "fill_in_multiple_blanks_question", "matching_question", "multiple_answers_question", "multiple_choice_question", "multiple_dropdowns_question", "numerical_question", "short_answer_question", "text_only_question", "true_false_question"])
             data["question[question_type]"] = question_question_type
-        # OPTIONAL - question[position] - The order in which the question will be displayed in the quiz in relation to other questions.
+        # OPTIONAL - question[position]
+        """The order in which the question will be displayed in the quiz in relation to other questions."""
         if question_position is not None:
             data["question[position]"] = question_position
-        # OPTIONAL - question[points_possible] - The maximum amount of points received for answering this question correctly.
+        # OPTIONAL - question[points_possible]
+        """The maximum amount of points received for answering this question correctly."""
         if question_points_possible is not None:
             data["question[points_possible]"] = question_points_possible
-        # OPTIONAL - question[correct_comments] - The comment to display if the student answers the question correctly.
+        # OPTIONAL - question[correct_comments]
+        """The comment to display if the student answers the question correctly."""
         if question_correct_comments is not None:
             data["question[correct_comments]"] = question_correct_comments
-        # OPTIONAL - question[incorrect_comments] - The comment to display if the student answers incorrectly.
+        # OPTIONAL - question[incorrect_comments]
+        """The comment to display if the student answers incorrectly."""
         if question_incorrect_comments is not None:
             data["question[incorrect_comments]"] = question_incorrect_comments
-        # OPTIONAL - question[neutral_comments] - The comment to display regardless of how the student answered.
+        # OPTIONAL - question[neutral_comments]
+        """The comment to display regardless of how the student answered."""
         if question_neutral_comments is not None:
             data["question[neutral_comments]"] = question_neutral_comments
-        # OPTIONAL - question[text_after_answers] - no description
+        # OPTIONAL - question[text_after_answers]
+        """no description"""
         if question_text_after_answers is not None:
             data["question[text_after_answers]"] = question_text_after_answers
-        # OPTIONAL - question[answers] - no description
+        # OPTIONAL - question[answers]
+        """no description"""
         if question_answers is not None:
             data["question[answers]"] = question_answers
 
@@ -176,11 +215,14 @@ class QuizQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - The associated quiz's unique identifier
+        # REQUIRED - PATH - quiz_id
+        """The associated quiz's unique identifier"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - The quiz question's unique identifier
+        # REQUIRED - PATH - id
+        """The quiz question's unique identifier"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -190,17 +232,19 @@ class QuizQuestionsAPI(BaseCanvasAPI):
 class Answer(BaseModel):
     """Answer Model."""
 
-    def __init__(self, answer_text, answer_weight, text_after_answers=None, answer_match_left=None, answer_comments=None, margin=None, matching_answer_incorrect_matches=None, start=None, answer_match_right=None, numerical_answer_type=None, end=None, blank_id=None, exact=None, id=None):
+    def __init__(self, answer_text, answer_weight, text_after_answers=None, answer_match_left=None, answer_comments=None, margin=None, matching_answer_incorrect_matches=None, approximate=None, start=None, answer_match_right=None, precision=None, numerical_answer_type=None, end=None, blank_id=None, exact=None, id=None):
         """Init method for Answer class."""
         self._text_after_answers = text_after_answers
         self._answer_match_left = answer_match_left
         self._answer_comments = answer_comments
         self._margin = margin
         self._matching_answer_incorrect_matches = matching_answer_incorrect_matches
+        self._approximate = approximate
         self._start = start
         self._answer_text = answer_text
         self._answer_weight = answer_weight
         self._answer_match_right = answer_match_right
+        self._precision = precision
         self._numerical_answer_type = numerical_answer_type
         self._end = end
         self._blank_id = blank_id
@@ -266,6 +310,17 @@ class Answer(BaseModel):
         self._matching_answer_incorrect_matches = value
 
     @property
+    def approximate(self):
+        """Used in numerical questions of type 'precision_answer'.  The value the answer should equal."""
+        return self._approximate
+
+    @approximate.setter
+    def approximate(self, value):
+        """Setter for approximate property."""
+        self.logger.warn("Setting values on approximate will NOT update the remote Canvas instance.")
+        self._approximate = value
+
+    @property
     def start(self):
         """Used in numerical questions of type 'range_answer'. The start of the allowed range (inclusive)."""
         return self._start
@@ -310,8 +365,19 @@ class Answer(BaseModel):
         self._answer_match_right = value
 
     @property
+    def precision(self):
+        """Used in numerical questions of type 'precision_answer'. The numerical precision that will be used when comparing the student's answer."""
+        return self._precision
+
+    @precision.setter
+    def precision(self, value):
+        """Setter for precision property."""
+        self.logger.warn("Setting values on precision will NOT update the remote Canvas instance.")
+        self._precision = value
+
+    @property
     def numerical_answer_type(self):
-        """Used in numerical questions.  Values can be 'exact_answer' or 'range_answer'."""
+        """Used in numerical questions.  Values can be 'exact_answer', 'range_answer', or 'precision_answer'."""
         return self._numerical_answer_type
 
     @numerical_answer_type.setter

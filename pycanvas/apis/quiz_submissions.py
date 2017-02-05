@@ -20,7 +20,12 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         """
         Get all quiz submissions.
 
-        Get a list of all submissions for this quiz.
+        Get a list of all submissions for this quiz. Users who can view or manage
+        grades for a course will have submissions from multiple users returned. A
+        user who can only submit will have only their own submissions returned. When
+        a user has an in-progress submission, only that submission is returned. When
+        there isn't an in-progress quiz_submission, all completed submissions,
+        including previous attempts, are returned.
         
         <b>200 OK</b> response code is returned if the request was successful.
         """
@@ -28,17 +33,47 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - include - Associations to include with the quiz submission.
+        # OPTIONAL - include
+        """Associations to include with the quiz submission."""
         if include is not None:
             self._validate_enum(include, ["submission", "quiz", "user"])
             params["include"] = include
 
         self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions".format(**path), data=data, params=params, no_data=True)
+
+    def get_quiz_submission(self, quiz_id, course_id, include=None):
+        """
+        Get the quiz submission.
+
+        Get the submission for this quiz for the current user.
+        
+        <b>200 OK</b> response code is returned if the request was successful.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - PATH - quiz_id
+        """ID"""
+        path["quiz_id"] = quiz_id
+        # OPTIONAL - include
+        """Associations to include with the quiz submission."""
+        if include is not None:
+            self._validate_enum(include, ["submission", "quiz", "user"])
+            params["include"] = include
+
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submission with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submission".format(**path), data=data, params=params, no_data=True)
 
     def get_single_quiz_submission(self, id, quiz_id, course_id, include=None):
         """
@@ -52,13 +87,17 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - include - Associations to include with the quiz submission.
+        # OPTIONAL - include
+        """Associations to include with the quiz submission."""
         if include is not None:
             self._validate_enum(include, ["submission", "quiz", "user"])
             params["include"] = include
@@ -85,14 +124,19 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - access_code - Access code for the Quiz, if any.
+        # OPTIONAL - access_code
+        """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
-        # OPTIONAL - preview - Whether this should be a preview QuizSubmission and not count towards the user's course record. Teachers only.
+        # OPTIONAL - preview
+        """Whether this should be a preview QuizSubmission and not count towards
+        the user's course record. Teachers only."""
         if preview is not None:
             data["preview"] = preview
 
@@ -118,18 +162,28 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - attempt - The attempt number of the quiz submission that should be updated. This attempt MUST be already completed.
+        # REQUIRED - attempt
+        """The attempt number of the quiz submission that should be updated. This
+        attempt MUST be already completed."""
         data["attempt"] = attempt
-        # OPTIONAL - fudge_points - Amount of positive or negative points to fudge the total score by.
+        # OPTIONAL - fudge_points
+        """Amount of positive or negative points to fudge the total score by."""
         if fudge_points is not None:
             data["fudge_points"] = fudge_points
-        # OPTIONAL - questions - A set of scores and comments for each question answered by the student. The keys are the question IDs, and the values are hashes of `score` and `comment` entries. See {Appendix: Manual Scoring} for more on this parameter.
+        # OPTIONAL - questions
+        """A set of scores and comments for each question answered by the student.
+        The keys are the question IDs, and the values are hashes of `score` and
+        `comment` entries. See {Appendix: Manual Scoring} for more on this
+        parameter."""
         if questions is not None:
             data["questions"] = questions
 
@@ -158,28 +212,65 @@ class QuizSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - attempt - The attempt number of the quiz submission that should be completed. Note that this must be the latest attempt index, as earlier attempts can not be modified.
+        # REQUIRED - attempt
+        """The attempt number of the quiz submission that should be completed. Note
+        that this must be the latest attempt index, as earlier attempts can not
+        be modified."""
         data["attempt"] = attempt
-        # REQUIRED - validation_token - The unique validation token you received when this Quiz Submission was created.
+        # REQUIRED - validation_token
+        """The unique validation token you received when this Quiz Submission was
+        created."""
         data["validation_token"] = validation_token
-        # OPTIONAL - access_code - Access code for the Quiz, if any.
+        # OPTIONAL - access_code
+        """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
 
         self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/complete".format(**path), data=data, params=params, no_data=True)
 
+    def get_current_quiz_submission_times(self, id, quiz_id, course_id):
+        """
+        Get current quiz submission times.
+
+        Get the current timing data for the quiz attempt, both the end_at timestamp
+        and the time_left parameter.
+        
+        <b>Responses</b>
+        
+        * <b>200 OK</b> if the request was successful
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - PATH - quiz_id
+        """ID"""
+        path["quiz_id"] = quiz_id
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/time with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/time".format(**path), data=data, params=params, no_data=True)
+
 
 class Quizsubmission(BaseModel):
     """Quizsubmission Model."""
 
-    def __init__(self, id, quiz_id, submission_id=None, user_id=None, kept_score=None, time_spent=None, workflow_state=None, finished_at=None, end_at=None, manually_unlocked=None, score_before_regrade=None, score=None, extra_attempts=None, fudge_points=None, attempt=None, started_at=None, extra_time=None, has_seen_results=None):
+    def __init__(self, id, quiz_id, submission_id=None, user_id=None, kept_score=None, time_spent=None, workflow_state=None, finished_at=None, overdue_and_needs_submission=None, end_at=None, manually_unlocked=None, score_before_regrade=None, score=None, extra_attempts=None, fudge_points=None, attempt=None, started_at=None, extra_time=None, has_seen_results=None):
         """Init method for Quizsubmission class."""
         self._submission_id = submission_id
         self._user_id = user_id
@@ -187,6 +278,7 @@ class Quizsubmission(BaseModel):
         self._time_spent = time_spent
         self._workflow_state = workflow_state
         self._finished_at = finished_at
+        self._overdue_and_needs_submission = overdue_and_needs_submission
         self._end_at = end_at
         self._manually_unlocked = manually_unlocked
         self._score_before_regrade = score_before_regrade
@@ -267,6 +359,17 @@ class Quizsubmission(BaseModel):
         """Setter for finished_at property."""
         self.logger.warn("Setting values on finished_at will NOT update the remote Canvas instance.")
         self._finished_at = value
+
+    @property
+    def overdue_and_needs_submission(self):
+        """Indicates whether the quiz submission is overdue and needs submission."""
+        return self._overdue_and_needs_submission
+
+    @overdue_and_needs_submission.setter
+    def overdue_and_needs_submission(self, value):
+        """Setter for overdue_and_needs_submission property."""
+        self.logger.warn("Setting values on overdue_and_needs_submission will NOT update the remote Canvas instance.")
+        self._overdue_and_needs_submission = value
 
     @property
     def end_at(self):

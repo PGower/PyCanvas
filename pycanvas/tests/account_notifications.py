@@ -22,6 +22,14 @@ class TestAccountNotificationsAPI(unittest.TestCase):
 
         r = self.client.index_of_active_global_notification_for_user(user_id, account_id)
 
+    def test_show_global_notification(self):
+        """Integration test for the AccountNotificationsAPI.show_global_notification method."""
+        account_id = None  # Change me!!
+        user_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.show_global_notification(id, user_id, account_id)
+
     def test_close_notification_for_user(self):
         """Integration test for the AccountNotificationsAPI.close_notification_for_user method."""
         account_id = None  # Change me!!
@@ -33,5 +41,10 @@ class TestAccountNotificationsAPI(unittest.TestCase):
     def test_create_global_notification(self):
         """Integration test for the AccountNotificationsAPI.create_global_notification method."""
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_update_global_notification(self):
+        """Integration test for the AccountNotificationsAPI.update_global_notification method."""
+        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
         pass
 

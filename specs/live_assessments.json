@@ -148,7 +148,7 @@
           "description": "When this result was recorded"
         },
         "links": {
-          "type": "ResultLinks",
+          "$ref": "ResultLinks",
           "example": {
             "user": "42",
             "assessor": "23",

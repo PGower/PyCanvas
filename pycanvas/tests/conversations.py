@@ -18,7 +18,7 @@ class TestConversationsAPI(unittest.TestCase):
     def test_list_conversations(self):
         """Integration test for the ConversationsAPI.list_conversations method."""
 
-        r = self.client.list_conversations(filter=None, filter_mode=None, include_all_conversation_ids=None, interleave_submissions=None, scope=None)
+        r = self.client.list_conversations(filter=None, filter_mode=None, include=None, include_all_conversation_ids=None, interleave_submissions=None, scope=None)
 
     def test_create_conversation(self):
         """Integration test for the ConversationsAPI.create_conversation method."""

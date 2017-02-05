@@ -109,7 +109,7 @@
               "format": null,
               "required": false,
               "items": {
-                "$ref": "boolean"
+                "type": "boolean"
               }
             }
           ],
@@ -173,7 +173,7 @@
               "format": null,
               "required": false,
               "items": {
-                "$ref": "boolean"
+                "type": "boolean"
               }
             }
           ],

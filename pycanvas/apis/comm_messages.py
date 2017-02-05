@@ -26,21 +26,16 @@ class CommMessagesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - user_id - The user id for whom you want to retrieve CommMessages
+        # REQUIRED - user_id
+        """The user id for whom you want to retrieve CommMessages"""
         params["user_id"] = user_id
-        # OPTIONAL - start_time - The beginning of the time range you want to retrieve message from.
+        # OPTIONAL - start_time
+        """The beginning of the time range you want to retrieve message from."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range you want to retrieve messages for.
+        # OPTIONAL - end_time
+        """The end of the time range you want to retrieve messages for."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/comm_messages with query params: {params} and form data: {data}".format(params=params, data=data, **path))

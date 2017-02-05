@@ -26,7 +26,8 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,9 +43,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -60,14 +63,18 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - poll_sessions[course_id] - The id of the course this session is associated with.
+        # REQUIRED - poll_sessions[course_id]
+        """The id of the course this session is associated with."""
         data["poll_sessions[course_id]"] = poll_sessions_course_id
-        # OPTIONAL - poll_sessions[course_section_id] - The id of the course section this session is associated with.
+        # OPTIONAL - poll_sessions[course_section_id]
+        """The id of the course section this session is associated with."""
         if poll_sessions_course_section_id is not None:
             data["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
-        # OPTIONAL - poll_sessions[has_public_results] - Whether or not results are viewable by students.
+        # OPTIONAL - poll_sessions[has_public_results]
+        """Whether or not results are viewable by students."""
         if poll_sessions_has_public_results is not None:
             data["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
 
@@ -84,17 +91,22 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - poll_sessions[course_id] - The id of the course this session is associated with.
+        # OPTIONAL - poll_sessions[course_id]
+        """The id of the course this session is associated with."""
         if poll_sessions_course_id is not None:
             data["poll_sessions[course_id]"] = poll_sessions_course_id
-        # OPTIONAL - poll_sessions[course_section_id] - The id of the course section this session is associated with.
+        # OPTIONAL - poll_sessions[course_section_id]
+        """The id of the course section this session is associated with."""
         if poll_sessions_course_section_id is not None:
             data["poll_sessions[course_section_id]"] = poll_sessions_course_section_id
-        # OPTIONAL - poll_sessions[has_public_results] - Whether or not results are viewable by students.
+        # OPTIONAL - poll_sessions[has_public_results]
+        """Whether or not results are viewable by students."""
         if poll_sessions_has_public_results is not None:
             data["poll_sessions[has_public_results]"] = poll_sessions_has_public_results
 
@@ -111,9 +123,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_sessions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -129,9 +143,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/open with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -147,9 +163,11 @@ class PollSessionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{id}/close with query params: {params} and form data: {data}".format(params=params, data=data, **path))

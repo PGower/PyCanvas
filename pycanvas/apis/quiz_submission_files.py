@@ -31,14 +31,18 @@ class QuizSubmissionFilesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - name - The name of the quiz submission file
+        # OPTIONAL - name
+        """The name of the quiz submission file"""
         if name is not None:
             data["name"] = name
-        # OPTIONAL - on_duplicate - How to handle duplicate names
+        # OPTIONAL - on_duplicate
+        """How to handle duplicate names"""
         if on_duplicate is not None:
             data["on_duplicate"] = on_duplicate
 

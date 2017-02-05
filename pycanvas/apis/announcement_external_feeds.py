@@ -26,7 +26,8 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,7 +43,8 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
 
         self.logger.debug("GET /api/v1/groups/{group_id}/external_feeds with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -58,14 +60,18 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - url - The url to the external rss or atom feed
+        # REQUIRED - url
+        """The url to the external rss or atom feed"""
         data["url"] = url
-        # OPTIONAL - header_match - If given, only feed entries that contain this string in their title will be imported
+        # OPTIONAL - header_match
+        """If given, only feed entries that contain this string in their title will be imported"""
         if header_match is not None:
             data["header_match"] = header_match
-        # OPTIONAL - verbosity - Defaults to "full"
+        # OPTIONAL - verbosity
+        """Defaults to "full""""
         if verbosity is not None:
             self._validate_enum(verbosity, ["full", "truncate", "link_only"])
             data["verbosity"] = verbosity
@@ -83,14 +89,18 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # REQUIRED - url - The url to the external rss or atom feed
+        # REQUIRED - url
+        """The url to the external rss or atom feed"""
         data["url"] = url
-        # OPTIONAL - header_match - If given, only feed entries that contain this string in their title will be imported
+        # OPTIONAL - header_match
+        """If given, only feed entries that contain this string in their title will be imported"""
         if header_match is not None:
             data["header_match"] = header_match
-        # OPTIONAL - verbosity - Defaults to "full"
+        # OPTIONAL - verbosity
+        """Defaults to "full""""
         if verbosity is not None:
             self._validate_enum(verbosity, ["full", "truncate", "link_only"])
             data["verbosity"] = verbosity
@@ -108,9 +118,11 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - external_feed_id - ID
+        # REQUIRED - PATH - external_feed_id
+        """ID"""
         path["external_feed_id"] = external_feed_id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/external_feeds/{external_feed_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -126,9 +138,11 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # REQUIRED - PATH - external_feed_id - ID
+        # REQUIRED - PATH - external_feed_id
+        """ID"""
         path["external_feed_id"] = external_feed_id
 
         self.logger.debug("DELETE /api/v1/groups/{group_id}/external_feeds/{external_feed_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))

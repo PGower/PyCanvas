@@ -36,16 +36,16 @@
             {
               "paramType": "form",
               "name": "enrollment_term[start_at]",
-              "description": "The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the term starts.\nAccepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "enrollment_term[end_at]",
-              "description": "The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the term ends.\nAccepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -99,16 +99,16 @@
             {
               "paramType": "form",
               "name": "enrollment_term[start_at]",
-              "description": "The day/time the term starts. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the term starts.\nAccepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "enrollment_term[end_at]",
-              "description": "The day/time the term ends. Accepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the term ends.\nAccepts times in ISO 8601 format, e.g. 2015-01-10T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -177,10 +177,15 @@
             {
               "paramType": "query",
               "name": "workflow_state",
-              "description": "no description",
+              "description": "If set, only returns terms that are in the given state.\nDefaults to 'active'.",
               "type": "array",
               "format": null,
               "required": false,
+              "enum": [
+                "active",
+                "deleted",
+                "all"
+              ],
               "items": {
                 "type": "string"
               }

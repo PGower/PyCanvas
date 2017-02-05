@@ -19,19 +19,19 @@ class TestGroupsAPI(unittest.TestCase):
     def test_list_your_groups(self):
         """Integration test for the GroupsAPI.list_your_groups method."""
 
-        r = self.client.list_your_groups(context_type=None)
+        r = self.client.list_your_groups(context_type=None, include=None)
 
     def test_list_groups_available_in_context_accounts(self):
         """Integration test for the GroupsAPI.list_groups_available_in_context_accounts method."""
         account_id = None  # Change me!!
 
-        r = self.client.list_groups_available_in_context_accounts(account_id, only_own_groups=None)
+        r = self.client.list_groups_available_in_context_accounts(account_id, include=None, only_own_groups=None)
 
     def test_list_groups_available_in_context_courses(self):
         """Integration test for the GroupsAPI.list_groups_available_in_context_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_groups_available_in_context_courses(course_id, only_own_groups=None)
+        r = self.client.list_groups_available_in_context_courses(course_id, include=None, only_own_groups=None)
 
     def test_get_single_group(self):
         """Integration test for the GroupsAPI.get_single_group method."""
@@ -98,6 +98,20 @@ class TestGroupsAPI(unittest.TestCase):
         group_id = None  # Change me!!
 
         r = self.client.list_group_memberships(group_id, filter_states=None)
+
+    def test_get_single_group_membership_memberships(self):
+        """Integration test for the GroupsAPI.get_single_group_membership_memberships method."""
+        group_id = None  # Change me!!
+        membership_id = None  # Change me!!
+
+        r = self.client.get_single_group_membership_memberships(group_id, membership_id)
+
+    def test_get_single_group_membership_users(self):
+        """Integration test for the GroupsAPI.get_single_group_membership_users method."""
+        group_id = None  # Change me!!
+        user_id = None  # Change me!!
+
+        r = self.client.get_single_group_membership_users(user_id, group_id)
 
     def test_create_membership(self):
         """Integration test for the GroupsAPI.create_membership method."""

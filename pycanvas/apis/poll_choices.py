@@ -26,7 +26,8 @@ class PollChoicesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,9 +43,11 @@ class PollChoicesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_choices/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -60,14 +63,18 @@ class PollChoicesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - poll_choices[text] - The descriptive text of the poll choice.
+        # REQUIRED - poll_choices[text]
+        """The descriptive text of the poll choice."""
         data["poll_choices[text]"] = poll_choices_text
-        # OPTIONAL - poll_choices[is_correct] - Whether this poll choice is considered correct or not. Defaults to false.
+        # OPTIONAL - poll_choices[is_correct]
+        """Whether this poll choice is considered correct or not. Defaults to false."""
         if poll_choices_is_correct is not None:
             data["poll_choices[is_correct]"] = poll_choices_is_correct
-        # OPTIONAL - poll_choices[position] - The order this poll choice should be returned in the context it's sibling poll choices.
+        # OPTIONAL - poll_choices[position]
+        """The order this poll choice should be returned in the context it's sibling poll choices."""
         if poll_choices_position is not None:
             data["poll_choices[position]"] = poll_choices_position
 
@@ -84,16 +91,21 @@ class PollChoicesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - poll_choices[text] - The descriptive text of the poll choice.
+        # REQUIRED - poll_choices[text]
+        """The descriptive text of the poll choice."""
         data["poll_choices[text]"] = poll_choices_text
-        # OPTIONAL - poll_choices[is_correct] - Whether this poll choice is considered correct or not. Defaults to false.
+        # OPTIONAL - poll_choices[is_correct]
+        """Whether this poll choice is considered correct or not.  Defaults to false."""
         if poll_choices_is_correct is not None:
             data["poll_choices[is_correct]"] = poll_choices_is_correct
-        # OPTIONAL - poll_choices[position] - The order this poll choice should be returned in the context it's sibling poll choices.
+        # OPTIONAL - poll_choices[position]
+        """The order this poll choice should be returned in the context it's sibling poll choices."""
         if poll_choices_position is not None:
             data["poll_choices[position]"] = poll_choices_position
 
@@ -110,9 +122,11 @@ class PollChoicesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/polls/{poll_id}/poll_choices/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))

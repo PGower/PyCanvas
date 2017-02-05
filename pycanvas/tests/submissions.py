@@ -45,13 +45,13 @@ class TestSubmissionsAPI(unittest.TestCase):
         """Integration test for the SubmissionsAPI.list_submissions_for_multiple_assignments_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_submissions_for_multiple_assignments_courses(course_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None)
+        r = self.client.list_submissions_for_multiple_assignments_courses(course_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, order=None, order_direction=None, student_ids=None)
 
     def test_list_submissions_for_multiple_assignments_sections(self):
         """Integration test for the SubmissionsAPI.list_submissions_for_multiple_assignments_sections method."""
         section_id = None  # Change me!!
 
-        r = self.client.list_submissions_for_multiple_assignments_sections(section_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None)
+        r = self.client.list_submissions_for_multiple_assignments_sections(section_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, order=None, order_direction=None, student_ids=None)
 
     def test_get_single_submission_courses(self):
         """Integration test for the SubmissionsAPI.get_single_submission_courses method."""

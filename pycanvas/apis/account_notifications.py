@@ -27,13 +27,39 @@ class AccountNotificationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/users/{user_id}/account_notifications with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/accounts/{account_id}/users/{user_id}/account_notifications".format(**path), data=data, params=params, all_pages=True)
+
+    def show_global_notification(self, id, user_id, account_id):
+        """
+        Show a global notification.
+
+        Returns a global notification
+        A notification that has been closed by the user will not be returned
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - account_id
+        """ID"""
+        path["account_id"] = account_id
+        # REQUIRED - PATH - user_id
+        """ID"""
+        path["user_id"] = user_id
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/accounts/{account_id}/users/{user_id}/account_notifications/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/users/{user_id}/account_notifications/{id}".format(**path), data=data, params=params, single_item=True)
 
     def close_notification_for_user(self, id, user_id, account_id):
         """
@@ -45,11 +71,14 @@ class AccountNotificationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/accounts/{account_id}/users/{user_id}/account_notifications/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -65,34 +94,87 @@ class AccountNotificationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - account_notification[subject] - The subject of the notification.
+        # REQUIRED - account_notification[subject]
+        """The subject of the notification."""
         data["account_notification[subject]"] = account_notification_subject
-        # REQUIRED - account_notification[message] - The message body of the notification.
+        # REQUIRED - account_notification[message]
+        """The message body of the notification."""
         data["account_notification[message]"] = account_notification_message
-        # REQUIRED - account_notification[start_at] - The start date and time of the notification in ISO8601 format. e.g. 2014-01-01T01:00Z
-        if issubclass(account_notification_start_at.__class__, date) or issubclass(account_notification_start_at.__class__, datetime):
-            account_notification_start_at = account_notification_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-        elif issubclass(account_notification_start_at.__class__, basestring):
-            account_notification_start_at = self._validate_iso8601_string(account_notification_start_at)
+        # REQUIRED - account_notification[start_at]
+        """The start date and time of the notification in ISO8601 format.
+        e.g. 2014-01-01T01:00Z"""
         data["account_notification[start_at]"] = account_notification_start_at
-        # REQUIRED - account_notification[end_at] - The end date and time of the notification in ISO8601 format. e.g. 2014-01-01T01:00Z
-        if issubclass(account_notification_end_at.__class__, date) or issubclass(account_notification_end_at.__class__, datetime):
-            account_notification_end_at = account_notification_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-        elif issubclass(account_notification_end_at.__class__, basestring):
-            account_notification_end_at = self._validate_iso8601_string(account_notification_end_at)
+        # REQUIRED - account_notification[end_at]
+        """The end date and time of the notification in ISO8601 format.
+        e.g. 2014-01-01T01:00Z"""
         data["account_notification[end_at]"] = account_notification_end_at
-        # OPTIONAL - account_notification[icon] - The icon to display with the notification. Note: Defaults to warning.
+        # OPTIONAL - account_notification[icon]
+        """The icon to display with the notification.
+        Note: Defaults to warning."""
         if account_notification_icon is not None:
             self._validate_enum(account_notification_icon, ["warning", "information", "question", "error", "calendar"])
             data["account_notification[icon]"] = account_notification_icon
-        # OPTIONAL - account_notification_roles - The role(s) to send global notification to. Note: ommitting this field will send to everyone Example: account_notification_roles: ["StudentEnrollment", "TeacherEnrollment"]
+        # OPTIONAL - account_notification_roles
+        """The role(s) to send global notification to.  Note:  ommitting this field will send to everyone
+        Example:
+          account_notification_roles: ["StudentEnrollment", "TeacherEnrollment"]"""
         if account_notification_roles is not None:
             data["account_notification_roles"] = account_notification_roles
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/account_notifications with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/accounts/{account_id}/account_notifications".format(**path), data=data, params=params, no_data=True)
+
+    def update_global_notification(self, id, account_id, account_notification_end_at=None, account_notification_icon=None, account_notification_message=None, account_notification_roles=None, account_notification_start_at=None, account_notification_subject=None):
+        """
+        Update a global notification.
+
+        Update global notification for an account.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - account_id
+        """ID"""
+        path["account_id"] = account_id
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+        # OPTIONAL - account_notification[subject]
+        """The subject of the notification."""
+        if account_notification_subject is not None:
+            data["account_notification[subject]"] = account_notification_subject
+        # OPTIONAL - account_notification[message]
+        """The message body of the notification."""
+        if account_notification_message is not None:
+            data["account_notification[message]"] = account_notification_message
+        # OPTIONAL - account_notification[start_at]
+        """The start date and time of the notification in ISO8601 format.
+        e.g. 2014-01-01T01:00Z"""
+        if account_notification_start_at is not None:
+            data["account_notification[start_at]"] = account_notification_start_at
+        # OPTIONAL - account_notification[end_at]
+        """The end date and time of the notification in ISO8601 format.
+        e.g. 2014-01-01T01:00Z"""
+        if account_notification_end_at is not None:
+            data["account_notification[end_at]"] = account_notification_end_at
+        # OPTIONAL - account_notification[icon]
+        """The icon to display with the notification."""
+        if account_notification_icon is not None:
+            self._validate_enum(account_notification_icon, ["warning", "information", "question", "error", "calendar"])
+            data["account_notification[icon]"] = account_notification_icon
+        # OPTIONAL - account_notification_roles
+        """The role(s) to send global notification to.  Note:  ommitting this field will send to everyone
+        Example:
+          account_notification_roles: ["StudentEnrollment", "TeacherEnrollment"]"""
+        if account_notification_roles is not None:
+            data["account_notification_roles"] = account_notification_roles
+
+        self.logger.debug("PUT /api/v1/accounts/{account_id}/account_notifications/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/accounts/{account_id}/account_notifications/{id}".format(**path), data=data, params=params, no_data=True)
 
 
 class Accountnotification(BaseModel):

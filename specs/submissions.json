@@ -52,7 +52,8 @@
                 "online_text_entry",
                 "online_url",
                 "online_upload",
-                "media_recording"
+                "media_recording",
+                "basic_lti_launch"
               ]
             },
             {
@@ -66,7 +67,7 @@
             {
               "paramType": "form",
               "name": "submission[url]",
-              "description": "Submit the assignment as a URL. The URL scheme must be \"http\" or \"https\",\nno \"ftp\" or other URL schemes are allowed. If no scheme is given (e.g.\n\"www.example.com\") then \"http\" will be assumed. Requires a submission_type\nof \"online_url\".",
+              "description": "Submit the assignment as a URL. The URL scheme must be \"http\" or \"https\",\nno \"ftp\" or other URL schemes are allowed. If no scheme is given (e.g.\n\"www.example.com\") then \"http\" will be assumed. Requires a submission_type\nof \"online_url\" or \"basic_lti_launch\".",
               "type": "string",
               "format": null,
               "required": false
@@ -152,7 +153,8 @@
                 "online_text_entry",
                 "online_url",
                 "online_upload",
-                "media_recording"
+                "media_recording",
+                "basic_lti_launch"
               ]
             },
             {
@@ -166,7 +168,7 @@
             {
               "paramType": "form",
               "name": "submission[url]",
-              "description": "Submit the assignment as a URL. The URL scheme must be \"http\" or \"https\",\nno \"ftp\" or other URL schemes are allowed. If no scheme is given (e.g.\n\"www.example.com\") then \"http\" will be assumed. Requires a submission_type\nof \"online_url\".",
+              "description": "Submit the assignment as a URL. The URL scheme must be \"http\" or \"https\",\nno \"ftp\" or other URL schemes are allowed. If no scheme is given (e.g.\n\"www.example.com\") then \"http\" will be assumed. Requires a submission_type\nof \"online_url\" or \"basic_lti_launch\".",
               "type": "string",
               "format": null,
               "required": false
@@ -391,6 +393,30 @@
             },
             {
               "paramType": "query",
+              "name": "order",
+              "description": "The order submissions will be returned in.  Defaults to \"id\".  Doesn't\naffect results for \"grouped\" mode.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "id",
+                "graded_at"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order_direction",
+              "description": "Determines whether ordered results are retured in ascending or descending\norder.  Defaults to \"ascending\".  Doesn't affect results for \"grouped\" mode.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "ascending",
+                "descending"
+              ]
+            },
+            {
+              "paramType": "query",
               "name": "include",
               "description": "Associations to include with the group. `total_scores` requires the\n`grouped` argument.",
               "type": "array",
@@ -470,6 +496,30 @@
               "type": "integer",
               "format": "int64",
               "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "order",
+              "description": "The order submissions will be returned in.  Defaults to \"id\".  Doesn't\naffect results for \"grouped\" mode.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "id",
+                "graded_at"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "order_direction",
+              "description": "Determines whether ordered results are retured in ascending or descending\norder.  Defaults to \"ascending\".  Doesn't affect results for \"grouped\" mode.",
+              "type": "string",
+              "format": null,
+              "required": false,
+              "enum": [
+                "ascending",
+                "descending"
+              ]
             },
             {
               "paramType": "query",
@@ -986,6 +1036,14 @@
             },
             {
               "paramType": "form",
+              "name": "grade_data[<student_id>][excuse]",
+              "description": "See documentation for the excuse argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
               "name": "grade_data[<student_id>][rubric_assessment]",
               "description": "See documentation for the rubric_assessment argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
               "type": "RubricAssessment",
@@ -1080,6 +1138,14 @@
             },
             {
               "paramType": "form",
+              "name": "grade_data[<student_id>][excuse]",
+              "description": "See documentation for the excuse argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
               "name": "grade_data[<student_id>][rubric_assessment]",
               "description": "See documentation for the rubric_assessment argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
               "type": "RubricAssessment",
@@ -1161,6 +1227,14 @@
               "name": "grade_data[<student_id>][posted_grade]",
               "description": "See documentation for the posted_grade argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
               "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "grade_data[<student_id>][excuse]",
+              "description": "See documentation for the excuse argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
+              "type": "boolean",
               "format": null,
               "required": false
             },
@@ -1255,6 +1329,14 @@
               "name": "grade_data[<student_id>][posted_grade]",
               "description": "See documentation for the posted_grade argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
               "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "grade_data[<student_id>][excuse]",
+              "description": "See documentation for the excuse argument in the\n{api:SubmissionsApiController#update Submissions Update} documentation",
+              "type": "boolean",
               "format": null,
               "required": false
             },
@@ -1657,6 +1739,19 @@
           "description": "Whether the assignment is excused.  Excused assignments have no impact on a user's grade.",
           "example": true,
           "type": "boolean"
+        },
+        "workflow_state": {
+          "description": "The current state of the submission",
+          "example": "submitted",
+          "type": "string",
+          "allowableValues": {
+            "values": [
+              "graded",
+              "submitted",
+              "unsubmitted",
+              "pending_review"
+            ]
+          }
         }
       }
     }

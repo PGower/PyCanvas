@@ -20,19 +20,19 @@ class TestEnrollmentsAPI(unittest.TestCase):
         """Integration test for the EnrollmentsAPI.list_enrollments_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_enrollments_courses(course_id, role=None, state=None, type=None, user_id=None)
+        r = self.client.list_enrollments_courses(course_id, grading_period_id=None, include=None, role=None, sis_account_id=None, sis_course_id=None, sis_section_id=None, sis_user_id=None, state=None, type=None, user_id=None)
 
     def test_list_enrollments_sections(self):
         """Integration test for the EnrollmentsAPI.list_enrollments_sections method."""
         section_id = None  # Change me!!
 
-        r = self.client.list_enrollments_sections(section_id, role=None, state=None, type=None, user_id=None)
+        r = self.client.list_enrollments_sections(section_id, grading_period_id=None, include=None, role=None, sis_account_id=None, sis_course_id=None, sis_section_id=None, sis_user_id=None, state=None, type=None, user_id=None)
 
     def test_list_enrollments_users(self):
         """Integration test for the EnrollmentsAPI.list_enrollments_users method."""
         user_id = None  # Change me!!
 
-        r = self.client.list_enrollments_users(user_id, role=None, state=None, type=None)
+        r = self.client.list_enrollments_users(user_id, grading_period_id=None, include=None, role=None, sis_account_id=None, sis_course_id=None, sis_section_id=None, sis_user_id=None, state=None, type=None)
 
     def test_enrollment_by_id(self):
         """Integration test for the EnrollmentsAPI.enrollment_by_id method."""
@@ -51,10 +51,15 @@ class TestEnrollmentsAPI(unittest.TestCase):
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
         pass
 
-    def test_conclude_enrollment(self):
-        """Integration test for the EnrollmentsAPI.conclude_enrollment method."""
+    def test_conclude_deactivate_or_delete_enrollment(self):
+        """Integration test for the EnrollmentsAPI.conclude_deactivate_or_delete_enrollment method."""
         course_id = None  # Change me!!
         id = None  # Change me!!
 
-        r = self.client.conclude_enrollment(id, course_id, task=None)
+        r = self.client.conclude_deactivate_or_delete_enrollment(id, course_id, task=None)
+
+    def test_re_activate_enrollment(self):
+        """Integration test for the EnrollmentsAPI.re_activate_enrollment method."""
+        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
+        pass
 

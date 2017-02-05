@@ -26,7 +26,8 @@ class AccountReportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/reports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,11 +43,14 @@ class AccountReportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - report - ID
+        # REQUIRED - PATH - report
+        """ID"""
         path["report"] = report
-        # OPTIONAL - [parameters] - The parameters will vary for each report
+        # OPTIONAL - [parameters]
+        """The parameters will vary for each report"""
         if _parameters is not None:
             data["[parameters]"] = _parameters
 
@@ -63,9 +67,11 @@ class AccountReportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - report - ID
+        # REQUIRED - PATH - report
+        """ID"""
         path["report"] = report
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -81,11 +87,14 @@ class AccountReportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - report - ID
+        # REQUIRED - PATH - report
+        """ID"""
         path["report"] = report
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/reports/{report}/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -101,11 +110,14 @@ class AccountReportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - report - ID
+        # REQUIRED - PATH - report
+        """ID"""
         path["report"] = report
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/accounts/{account_id}/reports/{report}/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -197,10 +209,9 @@ class Reportparameters(BaseModel):
     """Reportparameters Model.
     The parameters returned will vary for each report."""
 
-    def __init__(self, include_enrollment_state=None, enrollment_state[]=None, sis_terms_csv=None, terms=None, users=None, enrollments=None, enrollment_term_id=None, include_deleted=None, courses=None, sis_accounts_csv=None, accounts=None, groups=None, course_id=None, start_at=None, end_at=None, sections=None, order=None, xlist=None):
+    def __init__(self, include_enrollment_state=None, sis_terms_csv=None, terms=None, users=None, enrollments=None, enrollment_term_id=None, include_deleted=None, courses=None, sis_accounts_csv=None, accounts=None, groups=None, course_id=None, start_at=None, enrollment_state=None, end_at=None, sections=None, order=None, xlist=None):
         """Init method for Reportparameters class."""
         self._include_enrollment_state = include_enrollment_state
-        self._enrollment_state[] = enrollment_state[]
         self._sis_terms_csv = sis_terms_csv
         self._terms = terms
         self._users = users
@@ -213,6 +224,7 @@ class Reportparameters(BaseModel):
         self._groups = groups
         self._course_id = course_id
         self._start_at = start_at
+        self._enrollment_state = enrollment_state
         self._end_at = end_at
         self._sections = sections
         self._order = order
@@ -230,17 +242,6 @@ class Reportparameters(BaseModel):
         """Setter for include_enrollment_state property."""
         self.logger.warn("Setting values on include_enrollment_state will NOT update the remote Canvas instance.")
         self._include_enrollment_state = value
-
-    @property
-    def enrollment_state[](self):
-        """Include enrollment state. Defaults to 'all' Options: ['active'| 'invited'| 'creation_pending'| 'deleted'| 'rejected'| 'completed'| 'inactive'| 'all']."""
-        return self._enrollment_state[]
-
-    @enrollment_state[].setter
-    def enrollment_state[](self, value):
-        """Setter for enrollment_state[] property."""
-        self.logger.warn("Setting values on enrollment_state[] will NOT update the remote Canvas instance.")
-        self._enrollment_state[] = value
 
     @property
     def sis_terms_csv(self):
@@ -373,6 +374,17 @@ class Reportparameters(BaseModel):
         """Setter for start_at property."""
         self.logger.warn("Setting values on start_at will NOT update the remote Canvas instance.")
         self._start_at = value
+
+    @property
+    def enrollment_state(self):
+        """Include enrollment state. Defaults to 'all' Options: ['active'| 'invited'| 'creation_pending'| 'deleted'| 'rejected'| 'completed'| 'inactive'| 'all']."""
+        return self._enrollment_state
+
+    @enrollment_state.setter
+    def enrollment_state(self, value):
+        """Setter for enrollment_state property."""
+        self.logger.warn("Setting values on enrollment_state will NOT update the remote Canvas instance.")
+        self._enrollment_state = value
 
     @property
     def end_at(self):

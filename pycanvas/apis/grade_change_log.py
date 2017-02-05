@@ -26,21 +26,16 @@ class GradeChangeLogAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - start_time - The beginning of the time range from which you want events.
+        # OPTIONAL - start_time
+        """The beginning of the time range from which you want events."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range from which you want events.
+        # OPTIONAL - end_time
+        """The end of the time range from which you want events."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/audit/grade_change/assignments/{assignment_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -56,21 +51,16 @@ class GradeChangeLogAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - start_time - The beginning of the time range from which you want events.
+        # OPTIONAL - start_time
+        """The beginning of the time range from which you want events."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range from which you want events.
+        # OPTIONAL - end_time
+        """The end of the time range from which you want events."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/audit/grade_change/courses/{course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -86,21 +76,16 @@ class GradeChangeLogAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - student_id - ID
+        # REQUIRED - PATH - student_id
+        """ID"""
         path["student_id"] = student_id
-        # OPTIONAL - start_time - The beginning of the time range from which you want events.
+        # OPTIONAL - start_time
+        """The beginning of the time range from which you want events."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range from which you want events.
+        # OPTIONAL - end_time
+        """The end of the time range from which you want events."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/audit/grade_change/students/{student_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -116,21 +101,16 @@ class GradeChangeLogAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - grader_id - ID
+        # REQUIRED - PATH - grader_id
+        """ID"""
         path["grader_id"] = grader_id
-        # OPTIONAL - start_time - The beginning of the time range from which you want events.
+        # OPTIONAL - start_time
+        """The beginning of the time range from which you want events."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range from which you want events.
+        # OPTIONAL - end_time
+        """The end of the time range from which you want events."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/audit/grade_change/graders/{grader_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -140,15 +120,18 @@ class GradeChangeLogAPI(BaseCanvasAPI):
 class Gradechangeevent(BaseModel):
     """Gradechangeevent Model."""
 
-    def __init__(self, version_number=None, event_type=None, links=None, created_at=None, grade_before=None, id=None, request_id=None, grade_after=None):
+    def __init__(self, version_number=None, event_type=None, links=None, created_at=None, request_id=None, grade_before=None, id=None, graded_anonymously=None, excused_after=None, excused_before=None, grade_after=None):
         """Init method for Gradechangeevent class."""
         self._version_number = version_number
         self._event_type = event_type
         self._links = links
         self._created_at = created_at
+        self._request_id = request_id
         self._grade_before = grade_before
         self._id = id
-        self._request_id = request_id
+        self._graded_anonymously = graded_anonymously
+        self._excused_after = excused_after
+        self._excused_before = excused_before
         self._grade_after = grade_after
 
         self.logger = logging.getLogger('pycanvas.Gradechangeevent')
@@ -198,6 +181,17 @@ class Gradechangeevent(BaseModel):
         self._created_at = value
 
     @property
+    def request_id(self):
+        """The unique request id of the request during the grade change."""
+        return self._request_id
+
+    @request_id.setter
+    def request_id(self, value):
+        """Setter for request_id property."""
+        self.logger.warn("Setting values on request_id will NOT update the remote Canvas instance.")
+        self._request_id = value
+
+    @property
     def grade_before(self):
         """The grade before the change."""
         return self._grade_before
@@ -220,15 +214,37 @@ class Gradechangeevent(BaseModel):
         self._id = value
 
     @property
-    def request_id(self):
-        """The unique request id of the request during the grade change."""
-        return self._request_id
+    def graded_anonymously(self):
+        """Boolean indicating whether the student name was visible when the grade was given. Could be null if the grade change record was created before this feature existed."""
+        return self._graded_anonymously
 
-    @request_id.setter
-    def request_id(self, value):
-        """Setter for request_id property."""
-        self.logger.warn("Setting values on request_id will NOT update the remote Canvas instance.")
-        self._request_id = value
+    @graded_anonymously.setter
+    def graded_anonymously(self, value):
+        """Setter for graded_anonymously property."""
+        self.logger.warn("Setting values on graded_anonymously will NOT update the remote Canvas instance.")
+        self._graded_anonymously = value
+
+    @property
+    def excused_after(self):
+        """Boolean indicating whether the submission was excused after the change."""
+        return self._excused_after
+
+    @excused_after.setter
+    def excused_after(self, value):
+        """Setter for excused_after property."""
+        self.logger.warn("Setting values on excused_after will NOT update the remote Canvas instance.")
+        self._excused_after = value
+
+    @property
+    def excused_before(self):
+        """Boolean indicating whether the submission was excused before the change."""
+        return self._excused_before
+
+    @excused_before.setter
+    def excused_before(self, value):
+        """Setter for excused_before property."""
+        self.logger.warn("Setting values on excused_before will NOT update the remote Canvas instance.")
+        self._excused_before = value
 
     @property
     def grade_after(self):

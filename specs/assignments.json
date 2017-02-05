@@ -59,7 +59,7 @@
             {
               "paramType": "query",
               "name": "include",
-              "description": "Associations to include with the assignment. The \"assignment_visibility\" option requires that the Differentiated Assignments course feature be turned on.",
+              "description": "Associations to include with the assignment. The \"assignment_visibility\" option\nrequires that the Differentiated Assignments course feature be turned on. If\n\"observed_users\" is passed, submissions for observed users will also be included as an array.",
               "type": "array",
               "format": null,
               "required": false,
@@ -67,7 +67,8 @@
                 "submission",
                 "assignment_visibility",
                 "all_dates",
-                "overrides"
+                "overrides",
+                "observed_users"
               ],
               "items": {
                 "type": "string"
@@ -100,10 +101,30 @@
             {
               "paramType": "query",
               "name": "bucket",
-              "description": "If included, only return certain assignments depending on due date and submission status. Valid buckets are \"past\", \"overdue\", \"undated\", \"ungraded\", \"upcoming\", and \"future\".",
+              "description": "If included, only return certain assignments depending on due date and submission status.",
               "type": "string",
               "format": null,
-              "required": false
+              "required": false,
+              "enum": [
+                "past",
+                "overdue",
+                "undated",
+                "ungraded",
+                "unsubmitted",
+                "upcoming",
+                "future"
+              ]
+            },
+            {
+              "paramType": "query",
+              "name": "assignment_ids",
+              "description": "if set, return only assignments specified",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "items": {
+                "type": "string"
+              }
             }
           ],
           "type": "array",
@@ -114,13 +135,44 @@
       ]
     },
     {
+      "path": "/v1/users/{user_id}/courses/{course_id}/assignments",
+      "description": "Returns the list of assignments for the specified user if the current user has rights to view.\nSee {api:AssignmentsApiController#index List assignments} for valid arguments.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "List assignments for user",
+          "notes": "Returns the list of assignments for the specified user if the current user has rights to view.\nSee {api:AssignmentsApiController#index List assignments} for valid arguments.",
+          "nickname": "list_assignments_for_user",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            }
+          ],
+          "type": "void"
+        }
+      ]
+    },
+    {
       "path": "/v1/courses/{course_id}/assignments/{id}",
-      "description": "Returns the assignment with the given id.",
+      "description": "Returns the assignment with the given id.\n \"observed_users\" is passed, submissions for observed users will also be included.",
       "operations": [
         {
           "method": "GET",
           "summary": "Get a single assignment",
-          "notes": "Returns the assignment with the given id.",
+          "notes": "Returns the assignment with the given id.\n \"observed_users\" is passed, submissions for observed users will also be included.",
           "nickname": "get_single_assignment",
           "parameters": [
             {
@@ -142,14 +194,15 @@
             {
               "paramType": "query",
               "name": "include",
-              "description": "Associations to include with the assignment. The \"assignment_visibility\" option requires that the Differentiated Assignments course feature be turned on.",
+              "description": "Associations to include with the assignment. The \"assignment_visibility\" option\nrequires that the Differentiated Assignments course feature be turned on. If",
               "type": "array",
               "format": null,
               "required": false,
               "enum": [
                 "submission",
                 "assignment_visibility",
-                "overrides"
+                "overrides",
+                "observed_users"
               ],
               "items": {
                 "type": "string"
@@ -213,7 +266,7 @@
             {
               "paramType": "form",
               "name": "assignment[position]",
-              "description": "The position of this assignment in the group when displaying assignment lists.",
+              "description": "The position of this assignment in the group when displaying\nassignment lists.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -221,7 +274,7 @@
             {
               "paramType": "form",
               "name": "assignment[submission_types]",
-              "description": "List of supported submission types for the assignment. Unless the assignment is allowing online submissions, the array should only have one element. If not allowing online submissions, your options are: \"online_quiz\" \"none\" \"on_paper\" \"online_quiz\" \"discussion_topic\" \"external_tool\" If you are allowing online submissions, you can have one or many allowed submission types: \"online_upload\" \"online_text_entry\" \"online_url\" \"media_recording\" (Only valid when the Kaltura plugin is enabled)",
+              "description": "List of supported submission types for the assignment.\nUnless the assignment is allowing online submissions, the array should\nonly have one element.\n\nIf not allowing online submissions, your options are:\n  \"online_quiz\"\n  \"none\"\n  \"on_paper\"\n  \"online_quiz\"\n  \"discussion_topic\"\n  \"external_tool\"\n\nIf you are allowing online submissions, you can have one or many\nallowed submission types:\n\n  \"online_upload\"\n  \"online_text_entry\"\n  \"online_url\"\n  \"media_recording\" (Only valid when the Kaltura plugin is enabled)",
               "type": "array",
               "format": null,
               "required": false,
@@ -244,7 +297,7 @@
             {
               "paramType": "form",
               "name": "assignment[allowed_extensions]",
-              "description": "Allowed extensions if submission_types includes \"online_upload\" Example: allowed_extensions: [\"docx\",\"ppt\"]",
+              "description": "Allowed extensions if submission_types includes \"online_upload\"\n\nExample:\n  allowed_extensions: [\"docx\",\"ppt\"]",
               "type": "array",
               "format": null,
               "required": false,
@@ -255,7 +308,15 @@
             {
               "paramType": "form",
               "name": "assignment[turnitin_enabled]",
-              "description": "Only applies when the Turnitin plugin is enabled for a course and the submission_types array includes \"online_upload\". Toggles Turnitin submissions for the assignment. Will be ignored if Turnitin is not available for the course.",
+              "description": "Only applies when the Turnitin plugin is enabled for a course and\nthe submission_types array includes \"online_upload\".\nToggles Turnitin submissions for the assignment.\nWill be ignored if Turnitin is not available for the course.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "assignment[vericite_enabled]",
+              "description": "Only applies when the VeriCite plugin is enabled for a course and\nthe submission_types array includes \"online_upload\".\nToggles VeriCite submissions for the assignment.\nWill be ignored if VeriCite is not available for the course.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -263,7 +324,7 @@
             {
               "paramType": "form",
               "name": "assignment[turnitin_settings]",
-              "description": "Settings to send along to turnitin. See Assignment object definition for format.",
+              "description": "Settings to send along to turnitin. See Assignment object definition for\nformat.",
               "type": "string",
               "format": null,
               "required": false
@@ -287,7 +348,7 @@
             {
               "paramType": "form",
               "name": "assignment[peer_reviews]",
-              "description": "If submission_types does not include external_tool,discussion_topic, online_quiz, or on_paper, determines whether or not peer reviews will be turned on for the assignment.",
+              "description": "If submission_types does not include external_tool,discussion_topic,\nonline_quiz, or on_paper, determines whether or not peer reviews\nwill be turned on for the assignment.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -295,7 +356,7 @@
             {
               "paramType": "form",
               "name": "assignment[automatic_peer_reviews]",
-              "description": "Whether peer reviews will be assigned automatically by Canvas or if teachers must manually assign peer reviews. Does not apply if peer reviews are not enabled.",
+              "description": "Whether peer reviews will be assigned automatically by Canvas or if\nteachers must manually assign peer reviews. Does not apply if peer reviews\nare not enabled.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -303,7 +364,7 @@
             {
               "paramType": "form",
               "name": "assignment[notify_of_update]",
-              "description": "If true, Canvas will send a notification to students in the class notifying them that the content has changed.",
+              "description": "If true, Canvas will send a notification to students in the class\nnotifying them that the content has changed.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -311,7 +372,7 @@
             {
               "paramType": "form",
               "name": "assignment[group_category_id]",
-              "description": "If present, the assignment will become a group assignment assigned to the group.",
+              "description": "If present, the assignment will become a group assignment assigned\nto the group.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -319,7 +380,7 @@
             {
               "paramType": "form",
               "name": "assignment[grade_group_students_individually]",
-              "description": "If this is a group assignment, teachers have the options to grade students individually. If false, Canvas will apply the assignment's score to each member of the group. If true, the teacher can manually assign scores to each member of the group.",
+              "description": "If this is a group assignment, teachers have the options to grade\nstudents individually. If false, Canvas will apply the assignment's\nscore to each member of the group. If true, the teacher can manually\nassign scores to each member of the group.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -327,26 +388,23 @@
             {
               "paramType": "form",
               "name": "assignment[external_tool_tag_attributes]",
-              "description": "no description",
-              "type": "// create a new tab for the module",
+              "description": "Hash of external tool parameters if submission_types is [\"external_tool\"].\nSee Assignment object definition for format.",
+              "type": "string",
               "format": null,
-              "required": false,
-              "enum": [
-                "Hash of attributes if submission_types is [external_tool] Example: external_tool_tag_attributes: { // url to the external tool url: http://instructure.com"
-              ]
+              "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[points_possible]",
               "description": "The maximum points possible on the assignment.",
-              "type": "float",
+              "type": "Float",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[grading_type]",
-              "description": "The strategy used for grading the assignment. The assignment is ungraded if this field is omitted.",
+              "description": "The strategy used for grading the assignment.\nThe assignment defaults to \"points\" if this field is omitted.",
               "type": "string",
               "format": null,
               "required": false,
@@ -361,24 +419,24 @@
             {
               "paramType": "form",
               "name": "assignment[due_at]",
-              "description": "The day/time the assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is due.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[lock_at]",
-              "description": "The day/time the assignment is locked after. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is locked after.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[unlock_at]",
-              "description": "The day/time the assignment is unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is unlocked.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -393,7 +451,7 @@
             {
               "paramType": "form",
               "name": "assignment[assignment_group_id]",
-              "description": "The assignment group id to put the assignment in. Defaults to the top assignment group in the course.",
+              "description": "The assignment group id to put the assignment in.\nDefaults to the top assignment group in the course.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -401,7 +459,7 @@
             {
               "paramType": "form",
               "name": "assignment[muted]",
-              "description": "Whether this assignment is muted. A muted assignment does not send change notifications and hides grades from students. Defaults to false.",
+              "description": "Whether this assignment is muted.\nA muted assignment does not send change notifications\nand hides grades from students.\nDefaults to false.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -409,18 +467,18 @@
             {
               "paramType": "form",
               "name": "assignment[assignment_overrides]",
-              "description": "List of overrides for the assignment. NOTE: The assignment overrides feature is in beta.",
+              "description": "List of overrides for the assignment.\nNOTE: The assignment overrides feature is in beta.",
               "type": "array",
               "format": null,
               "required": false,
               "items": {
-                "$ref": "assignmentoverride"
+                "$ref": "AssignmentOverride"
               }
             },
             {
               "paramType": "form",
               "name": "assignment[only_visible_to_overrides]",
-              "description": "Whether this assignment is only visible to overrides (Only useful if 'differentiated assignments' account setting is on)",
+              "description": "Whether this assignment is only visible to overrides\n(Only useful if 'differentiated assignments' account setting is on)",
               "type": "boolean",
               "format": null,
               "required": false
@@ -428,7 +486,7 @@
             {
               "paramType": "form",
               "name": "assignment[published]",
-              "description": "Whether this assignment is published. (Only useful if 'draft state' account setting is on) Unpublished assignments are not visible to students.",
+              "description": "Whether this assignment is published.\n(Only useful if 'draft state' account setting is on)\nUnpublished assignments are not visible to students.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -436,9 +494,17 @@
             {
               "paramType": "form",
               "name": "assignment[grading_standard_id]",
-              "description": "The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course. This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.",
+              "description": "The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course.\nThis will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.",
               "type": "integer",
               "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "assignment[omit_from_final_grade]",
+              "description": "Whether this assignment is counted towards a student's final grade.",
+              "type": "boolean",
+              "format": null,
               "required": false
             }
           ],
@@ -483,7 +549,7 @@
             {
               "paramType": "form",
               "name": "assignment[position]",
-              "description": "The position of this assignment in the group when displaying assignment lists.",
+              "description": "The position of this assignment in the group when displaying\nassignment lists.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -491,7 +557,7 @@
             {
               "paramType": "form",
               "name": "assignment[submission_types]",
-              "description": "List of supported submission types for the assignment. Unless the assignment is allowing online submissions, the array should only have one element. If not allowing online submissions, your options are: \"online_quiz\" \"none\" \"on_paper\" \"online_quiz\" \"discussion_topic\" \"external_tool\" If you are allowing online submissions, you can have one or many allowed submission types: \"online_upload\" \"online_text_entry\" \"online_url\" \"media_recording\" (Only valid when the Kaltura plugin is enabled)",
+              "description": "List of supported submission types for the assignment.\nUnless the assignment is allowing online submissions, the array should\nonly have one element.\n\nIf not allowing online submissions, your options are:\n  \"online_quiz\"\n  \"none\"\n  \"on_paper\"\n  \"online_quiz\"\n  \"discussion_topic\"\n  \"external_tool\"\n\nIf you are allowing online submissions, you can have one or many\nallowed submission types:\n\n  \"online_upload\"\n  \"online_text_entry\"\n  \"online_url\"\n  \"media_recording\" (Only valid when the Kaltura plugin is enabled)",
               "type": "array",
               "format": null,
               "required": false,
@@ -514,7 +580,7 @@
             {
               "paramType": "form",
               "name": "assignment[allowed_extensions]",
-              "description": "Allowed extensions if submission_types includes \"online_upload\" Example: allowed_extensions: [\"docx\",\"ppt\"]",
+              "description": "Allowed extensions if submission_types includes \"online_upload\"\n\nExample:\n  allowed_extensions: [\"docx\",\"ppt\"]",
               "type": "array",
               "format": null,
               "required": false,
@@ -525,7 +591,15 @@
             {
               "paramType": "form",
               "name": "assignment[turnitin_enabled]",
-              "description": "Only applies when the Turnitin plugin is enabled for a course and the submission_types array includes \"online_upload\". Toggles Turnitin submissions for the assignment. Will be ignored if Turnitin is not available for the course.",
+              "description": "Only applies when the Turnitin plugin is enabled for a course and\nthe submission_types array includes \"online_upload\".\nToggles Turnitin submissions for the assignment.\nWill be ignored if Turnitin is not available for the course.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "assignment[vericite_enabled]",
+              "description": "Only applies when the VeriCite plugin is enabled for a course and\nthe submission_types array includes \"online_upload\".\nToggles VeriCite submissions for the assignment.\nWill be ignored if VeriCite is not available for the course.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -533,7 +607,7 @@
             {
               "paramType": "form",
               "name": "assignment[turnitin_settings]",
-              "description": "Settings to send along to turnitin. See Assignment object definition for format.",
+              "description": "Settings to send along to turnitin. See Assignment object definition for\nformat.",
               "type": "string",
               "format": null,
               "required": false
@@ -557,7 +631,7 @@
             {
               "paramType": "form",
               "name": "assignment[peer_reviews]",
-              "description": "If submission_types does not include external_tool,discussion_topic, online_quiz, or on_paper, determines whether or not peer reviews will be turned on for the assignment.",
+              "description": "If submission_types does not include external_tool,discussion_topic,\nonline_quiz, or on_paper, determines whether or not peer reviews\nwill be turned on for the assignment.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -565,7 +639,7 @@
             {
               "paramType": "form",
               "name": "assignment[automatic_peer_reviews]",
-              "description": "Whether peer reviews will be assigned automatically by Canvas or if teachers must manually assign peer reviews. Does not apply if peer reviews are not enabled.",
+              "description": "Whether peer reviews will be assigned automatically by Canvas or if\nteachers must manually assign peer reviews. Does not apply if peer reviews\nare not enabled.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -573,7 +647,7 @@
             {
               "paramType": "form",
               "name": "assignment[notify_of_update]",
-              "description": "If true, Canvas will send a notification to students in the class notifying them that the content has changed.",
+              "description": "If true, Canvas will send a notification to students in the class\nnotifying them that the content has changed.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -581,7 +655,7 @@
             {
               "paramType": "form",
               "name": "assignment[group_category_id]",
-              "description": "If present, the assignment will become a group assignment assigned to the group.",
+              "description": "If present, the assignment will become a group assignment assigned\nto the group.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -589,7 +663,7 @@
             {
               "paramType": "form",
               "name": "assignment[grade_group_students_individually]",
-              "description": "If this is a group assignment, teachers have the options to grade students individually. If false, Canvas will apply the assignment's score to each member of the group. If true, the teacher can manually assign scores to each member of the group.",
+              "description": "If this is a group assignment, teachers have the options to grade\nstudents individually. If false, Canvas will apply the assignment's\nscore to each member of the group. If true, the teacher can manually\nassign scores to each member of the group.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -597,26 +671,23 @@
             {
               "paramType": "form",
               "name": "assignment[external_tool_tag_attributes]",
-              "description": "no description",
-              "type": "// create a new tab for the module",
+              "description": "Hash of external tool parameters if submission_types is [\"external_tool\"].\nSee Assignment object definition for format.",
+              "type": "string",
               "format": null,
-              "required": false,
-              "enum": [
-                "Hash of attributes if submission_types is [external_tool] Example: external_tool_tag_attributes: { // url to the external tool url: http://instructure.com"
-              ]
+              "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[points_possible]",
               "description": "The maximum points possible on the assignment.",
-              "type": "float",
+              "type": "Float",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[grading_type]",
-              "description": "The strategy used for grading the assignment. The assignment is ungraded if this field is omitted.",
+              "description": "The strategy used for grading the assignment.\nThe assignment defaults to \"points\" if this field is omitted.",
               "type": "string",
               "format": null,
               "required": false,
@@ -631,24 +702,24 @@
             {
               "paramType": "form",
               "name": "assignment[due_at]",
-              "description": "The day/time the assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is due.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[lock_at]",
-              "description": "The day/time the assignment is locked after. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is locked after.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment[unlock_at]",
-              "description": "The day/time the assignment is unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
-              "type": "timestamp",
+              "description": "The day/time the assignment is unlocked.\nAccepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -663,7 +734,7 @@
             {
               "paramType": "form",
               "name": "assignment[assignment_group_id]",
-              "description": "The assignment group id to put the assignment in. Defaults to the top assignment group in the course.",
+              "description": "The assignment group id to put the assignment in.\nDefaults to the top assignment group in the course.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -671,7 +742,7 @@
             {
               "paramType": "form",
               "name": "assignment[muted]",
-              "description": "Whether this assignment is muted. A muted assignment does not send change notifications and hides grades from students. Defaults to false.",
+              "description": "Whether this assignment is muted.\nA muted assignment does not send change notifications\nand hides grades from students.\nDefaults to false.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -679,18 +750,18 @@
             {
               "paramType": "form",
               "name": "assignment[assignment_overrides]",
-              "description": "List of overrides for the assignment. NOTE: The assignment overrides feature is in beta.",
+              "description": "List of overrides for the assignment.\nNOTE: The assignment overrides feature is in beta.",
               "type": "array",
               "format": null,
               "required": false,
               "items": {
-                "$ref": "assignmentoverride"
+                "$ref": "AssignmentOverride"
               }
             },
             {
               "paramType": "form",
               "name": "assignment[only_visible_to_overrides]",
-              "description": "Whether this assignment is only visible to overrides (Only useful if 'differentiated assignments' account setting is on)",
+              "description": "Whether this assignment is only visible to overrides\n(Only useful if 'differentiated assignments' account setting is on)",
               "type": "boolean",
               "format": null,
               "required": false
@@ -698,7 +769,7 @@
             {
               "paramType": "form",
               "name": "assignment[published]",
-              "description": "Whether this assignment is published. (Only useful if 'draft state' account setting is on) Unpublished assignments are not visible to students.",
+              "description": "Whether this assignment is published.\n(Only useful if 'draft state' account setting is on)\nUnpublished assignments are not visible to students.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -706,9 +777,17 @@
             {
               "paramType": "form",
               "name": "assignment[grading_standard_id]",
-              "description": "The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course. This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.",
+              "description": "The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course.\nThis will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.",
               "type": "integer",
               "format": "int64",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "assignment[omit_from_final_grade]",
+              "description": "Whether this assignment is counted towards a student's final grade.",
+              "type": "boolean",
+              "format": null,
               "required": false
             }
           ],
@@ -880,7 +959,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[student_ids]",
-              "description": "The IDs of the override's target students. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override.",
+              "description": "The IDs of\nthe override's target students. If present, the IDs must each identify a\nuser with an active student enrollment in the course that is not already\ntargetted by a different adhoc override.",
               "type": "array",
               "format": "int64",
               "required": false,
@@ -891,7 +970,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[title]",
-              "description": "The title of the adhoc assignment override. Required if student_ids is present, ignored otherwise (the title is set to the name of the targetted group or section instead).",
+              "description": "The title of the adhoc\nassignment override. Required if student_ids is present, ignored\notherwise (the title is set to the name of the targetted group or section\ninstead).",
               "type": "string",
               "format": null,
               "required": false
@@ -899,7 +978,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[group_id]",
-              "description": "The ID of the override's target group. If present, the following conditions must be met for the override to be successful: 1. the assignment MUST be a group assignment (a group_category_id is assigned to it) 2. the ID must identify an active group in the group set the assignment is in 3. the ID must not be targetted by a different override See {Appendix: Group assignments} for more info.",
+              "description": "The ID of the\noverride's target group. If present, the following conditions must be met\nfor the override to be successful:\n\n1. the assignment MUST be a group assignment (a group_category_id is assigned to it)\n2. the ID must identify an active group in the group set the assignment is in\n3. the ID must not be targetted by a different override\n\nSee {Appendix: Group assignments} for more info.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -907,7 +986,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[course_section_id]",
-              "description": "The ID of the override's target section. If present, must identify an active section of the assignment's course not already targetted by a different override.",
+              "description": "The ID\nof the override's target section. If present, must identify an active\nsection of the assignment's course not already targetted by a different\noverride.",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -915,24 +994,24 @@
             {
               "paramType": "form",
               "name": "assignment_override[due_at]",
-              "description": "The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment is due. Accepts times in ISO 8601 format, e.g.\n2014-10-21T18:48:00Z. If absent, this override will not affect due date.\nMay be present but null to indicate the override removes any previous due\ndate.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment_override[unlock_at]",
-              "description": "The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment becomes unlocked. Accepts times in ISO 8601\nformat, e.g. 2014-10-21T18:48:00Z. If absent, this override will not\naffect the unlock date. May be present but null to indicate the override\nremoves any previous unlock date.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment_override[lock_at]",
-              "description": "The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment becomes locked. Accepts times in ISO 8601\nformat, e.g. 2014-10-21T18:48:00Z. If absent, this override will not\naffect the lock date. May be present but null to indicate the override\nremoves any previous lock date.",
+              "type": "DateTime",
               "format": null,
               "required": false
             }
@@ -978,7 +1057,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[student_ids]",
-              "description": "The IDs of the override's target students. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override. Ignored unless the override being updated is adhoc.",
+              "description": "The IDs of the\noverride's target students. If present, the IDs must each identify a\nuser with an active student enrollment in the course that is not already\ntargetted by a different adhoc override. Ignored unless the override\nbeing updated is adhoc.",
               "type": "array",
               "format": "int64",
               "required": false,
@@ -989,7 +1068,7 @@
             {
               "paramType": "form",
               "name": "assignment_override[title]",
-              "description": "The title of an adhoc assignment override. Ignored unless the override being updated is adhoc.",
+              "description": "The title of an adhoc\nassignment override. Ignored unless the override being updated is adhoc.",
               "type": "string",
               "format": null,
               "required": false
@@ -997,24 +1076,24 @@
             {
               "paramType": "form",
               "name": "assignment_override[due_at]",
-              "description": "The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment is due. Accepts times in ISO 8601 format, e.g.\n2014-10-21T18:48:00Z. If absent, this override will not affect due date.\nMay be present but null to indicate the override removes any previous due\ndate.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment_override[unlock_at]",
-              "description": "The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment becomes unlocked. Accepts times in ISO 8601\nformat, e.g. 2014-10-21T18:48:00Z. If absent, this override will not\naffect the unlock date. May be present but null to indicate the override\nremoves any previous unlock date.",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
             {
               "paramType": "form",
               "name": "assignment_override[lock_at]",
-              "description": "The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.",
-              "type": "timestamp",
+              "description": "The day/time\nthe overridden assignment becomes locked. Accepts times in ISO 8601\nformat, e.g. 2014-10-21T18:48:00Z. If absent, this override will not\naffect the lock date. May be present but null to indicate the override\nremoves any previous lock date.",
+              "type": "DateTime",
               "format": null,
               "required": false
             }
@@ -1059,6 +1138,128 @@
             }
           ],
           "type": "AssignmentOverride"
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/assignments/overrides",
+      "description": "Returns a list of specified overrides in this course, providing\nthey target sections/groups/students visible to the current user.\nReturns null elements in the list for requests that were not found.",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Batch retrieve overrides in a course",
+          "notes": "Returns a list of specified overrides in this course, providing\nthey target sections/groups/students visible to the current user.\nReturns null elements in the list for requests that were not found.",
+          "nickname": "batch_retrieve_overrides_in_course",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "assignment_overrides[id]",
+              "description": "Ids of overrides to retrieve",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "paramType": "query",
+              "name": "assignment_overrides[assignment_id]",
+              "description": "Ids of assignments for each override",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "AssignmentOverride"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/assignments/overrides",
+      "description": "Creates the specified overrides for each assignment.  Handles creation in a\ntransaction, so all records are created or none are.\n\nOne of student_ids, group_id, or course_section_id must be present. At most\none should be present; if multiple are present only the most specific\n(student_ids first, then group_id, then course_section_id) is used and any\nothers are ignored.\n\nErrors are reported in an errors attribute, an array of errors corresponding\nto inputs.  Global errors will be reported as a single element errors array",
+      "operations": [
+        {
+          "method": "POST",
+          "summary": "Batch create overrides in a course",
+          "notes": "Creates the specified overrides for each assignment.  Handles creation in a\ntransaction, so all records are created or none are.\n\nOne of student_ids, group_id, or course_section_id must be present. At most\none should be present; if multiple are present only the most specific\n(student_ids first, then group_id, then course_section_id) is used and any\nothers are ignored.\n\nErrors are reported in an errors attribute, an array of errors corresponding\nto inputs.  Global errors will be reported as a single element errors array",
+          "nickname": "batch_create_overrides_in_course",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "assignment_overrides",
+              "description": "Attributes for the new assignment overrides.\nSee {api:AssignmentOverridesController#create Create an assignment override} for available\nattributes",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "$ref": "AssignmentOverride"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "AssignmentOverride"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/v1/courses/{course_id}/assignments/overrides",
+      "description": "Updates a list of specified overrides for each assignment.  Handles overrides\nin a transaction, so either all updates are applied or none.\nSee {api:AssignmentOverridesController#update Update an assignment override} for\navailable attributes.\n\nAll current overridden values must be supplied if they are to be retained;\ne.g. if due_at was overridden, but this PUT omits a value for due_at,\ndue_at will no longer be overridden. If the override is adhoc and\nstudent_ids is not supplied, the target override set is unchanged. Target\noverride sets cannot be changed for group or section overrides.\n\nErrors are reported in an errors attribute, an array of errors corresponding\nto inputs.  Global errors will be reported as a single element errors array",
+      "operations": [
+        {
+          "method": "PUT",
+          "summary": "Batch update overrides in a course",
+          "notes": "Updates a list of specified overrides for each assignment.  Handles overrides\nin a transaction, so either all updates are applied or none.\nSee {api:AssignmentOverridesController#update Update an assignment override} for\navailable attributes.\n\nAll current overridden values must be supplied if they are to be retained;\ne.g. if due_at was overridden, but this PUT omits a value for due_at,\ndue_at will no longer be overridden. If the override is adhoc and\nstudent_ids is not supplied, the target override set is unchanged. Target\noverride sets cannot be changed for group or section overrides.\n\nErrors are reported in an errors attribute, an array of errors corresponding\nto inputs.  Global errors will be reported as a single element errors array",
+          "nickname": "batch_update_overrides_in_course",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "course_id",
+              "description": "ID",
+              "type": "string",
+              "format": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "assignment_overrides",
+              "description": "Attributes for the updated overrides.",
+              "type": "array",
+              "format": null,
+              "required": true,
+              "items": {
+                "$ref": "AssignmentOverride"
+              }
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "AssignmentOverride"
+          }
         }
       ]
     }
@@ -1348,6 +1549,11 @@
           "example": "https://...",
           "type": "string"
         },
+        "submissions_download_url": {
+          "description": "the URL to download all submissions as a zip",
+          "example": "https://example.com/courses/:course_id/assignments/:id/submissions?zip=1",
+          "type": "string"
+        },
         "assignment_group_id": {
           "description": "the ID of the assignment's group",
           "example": 2,
@@ -1355,7 +1561,10 @@
         },
         "allowed_extensions": {
           "description": "Allowed file extensions, which take effect if submission_types includes 'online_upload'.",
-          "example": "[\"docx\", \"ppt\"]",
+          "example": [
+            "docx",
+            "ppt"
+          ],
           "type": "array",
           "items": {
             "type": "string"
@@ -1363,6 +1572,11 @@
         },
         "turnitin_enabled": {
           "description": "Boolean flag indicating whether or not Turnitin has been enabled for the assignment. NOTE: This flag will not appear unless your account has the Turnitin plugin available",
+          "example": true,
+          "type": "boolean"
+        },
+        "vericite_enabled": {
+          "description": "Boolean flag indicating whether or not VeriCite has been enabled for the assignment. NOTE: This flag will not appear unless your account has the VeriCite plugin available",
           "example": true,
           "type": "boolean"
         },
@@ -1376,7 +1590,7 @@
           "type": "boolean"
         },
         "external_tool_tag_attributes": {
-          "description": "(Optional) assignment's settings for external tools if submission_types include 'external_tool'. Only url and new_tab are included. Use the 'External Tools' API if you need more information about an external tool.",
+          "description": "(Optional) assignment's settings for external tools if submission_types include 'external_tool'. Only url and new_tab are included (new_tab defaults to false).  Use the 'External Tools' API if you need more information about an external tool.",
           "$ref": "ExternalToolTagAttributes"
         },
         "peer_reviews": {
@@ -1398,6 +1612,11 @@
           "description": "String representing a date the reviews are due by. Must be a date that occurs after the default due date. If blank, or date is not after the assignment's due date, the assignment's due date will be used. NOTE: This key is NOT present unless you have automatic_peer_reviews set to true.",
           "example": "2012-07-01T23:59:00-06:00",
           "type": "datetime"
+        },
+        "intra_group_peer_reviews": {
+          "description": "Boolean representing whether or not members from within the same group on a group assignment can be assigned to peer review their own group's work",
+          "example": "false",
+          "type": "boolean"
         },
         "group_category_id": {
           "description": "The ID of the assignment's group set, if this is a group assignment. For group discussions, set group_category_id on the discussion topic, not the linked assignment.",
@@ -1457,7 +1676,9 @@
         },
         "submission_types": {
           "description": "the types of submissions allowed for this assignment list containing one or more of the following: 'discussion_topic', 'online_quiz', 'on_paper', 'none', 'external_tool', 'online_text_entry', 'online_url', 'online_upload' 'media_recording'",
-          "example": "[\"online_text_entry\"]",
+          "example": [
+            "online_text_entry"
+          ],
           "type": "array",
           "items": {
             "type": "string"
@@ -1467,6 +1688,7 @@
               "discussion_topic",
               "online_quiz",
               "on_paper",
+              "not_graded",
               "none",
               "external_tool",
               "online_text_entry",
@@ -1495,17 +1717,17 @@
           "type": "integer"
         },
         "published": {
-          "description": "(Only visible if 'enable draft' account setting is on) whether the assignment is published",
+          "description": "Whether the assignment is published",
           "example": true,
           "type": "boolean"
         },
         "unpublishable": {
-          "description": "(Only visible if 'enable draft' account setting is on) Whether the assignment's 'published' state can be changed to false. Will be false if there are student submissions for the assignment.",
+          "description": "Whether the assignment's 'published' state can be changed to false. Will be false if there are student submissions for the assignment.",
           "example": false,
           "type": "boolean"
         },
         "only_visible_to_overrides": {
-          "description": "(Only visible if the Differentiated Assignments course feature is turned on) Whether the assignment is only visible to overrides.",
+          "description": "Whether the assignment is only visible to overrides.",
           "example": false,
           "type": "boolean"
         },
@@ -1549,7 +1771,9 @@
         },
         "frozen_attributes": {
           "description": "(Optional) Array of frozen attributes for the assignment. Only account administrators currently have permission to change an attribute in this list. Will be empty if no attributes are frozen for this assignment. Possible frozen attributes are: title, description, lock_at, points_possible, grading_type, submission_types, assignment_group_id, allowed_extensions, group_category_id, notify_of_update, peer_reviews NOTE: This field will only be present if the AssignmentFreezer plugin is available for your account.",
-          "example": "[\"title\"]",
+          "example": [
+            "title"
+          ],
           "type": "array",
           "items": {
             "type": "string"
@@ -1557,7 +1781,6 @@
         },
         "submission": {
           "description": "(Optional) If 'submission' is included in the 'include' parameter, includes a Submission object that represents the current user's (user who is requesting information from the api) current submission for the assignment. See the Submissions API for an example response. If the user does not have a submission, this key will be absent.",
-          "example": "{}",
           "$ref": "Submission"
         },
         "use_rubric_for_grading": {
@@ -1579,7 +1802,11 @@
         },
         "assignment_visibility": {
           "description": "(Optional) If 'assignment_visibility' is included in the 'include' parameter, includes an array of student IDs who can see this assignment.",
-          "example": "[137,381,572]",
+          "example": [
+            137,
+            381,
+            572
+          ],
           "type": "array",
           "items": {
             "type": "integer"
@@ -1591,6 +1818,11 @@
           "items": {
             "$ref": "AssignmentOverride"
           }
+        },
+        "omit_from_final_grade": {
+          "description": "(Optional) If true, the assignment will be ommitted from the student's final grade",
+          "example": true,
+          "type": "boolean"
         }
       }
     },
@@ -1613,7 +1845,11 @@
         },
         "student_ids": {
           "description": "the IDs of the override's target students (present if the override targets an ad-hoc set of students)",
-          "example": "[1, 2, 3]",
+          "example": [
+            1,
+            2,
+            3
+          ],
           "type": "array",
           "items": {
             "type": "integer"

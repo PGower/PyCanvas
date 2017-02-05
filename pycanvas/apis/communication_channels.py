@@ -27,7 +27,8 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/communication_channels with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -43,17 +44,32 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - communication_channel[address] - An email address or SMS number. Not required for "push" type channels.
+        # REQUIRED - communication_channel[address]
+        """An email address or SMS number. Not required for "push" type channels."""
         data["communication_channel[address]"] = communication_channel_address
-        # REQUIRED - communication_channel[type] - The type of communication channel. In order to enable push notification support, the server must be properly configured (via sns.yml) to communicate with Amazon Simple Notification Services, and the developer key used to create the access token from this request must have an SNS ARN configured on it.
+        # REQUIRED - communication_channel[type]
+        """The type of communication channel.
+        
+        In order to enable push notification support, the server must be
+        properly configured (via sns.yml) to communicate with Amazon
+        Simple Notification Services, and the developer key used to create
+        the access token from this request must have an SNS ARN configured on
+        it."""
         self._validate_enum(communication_channel_type, ["email", "sms", "push"])
         data["communication_channel[type]"] = communication_channel_type
-        # OPTIONAL - communication_channel[token] - A registration id, device token, or equivalent token given to an app when registering with a push notification provider. Only valid for "push" type channels.
+        # OPTIONAL - communication_channel[token]
+        """A registration id, device token, or equivalent token given to an app when
+        registering with a push notification provider. Only valid for "push" type channels."""
         if communication_channel_token is not None:
             data["communication_channel[token]"] = communication_channel_token
-        # OPTIONAL - skip_confirmation - Only valid for site admins and account admins making requests; If true, the channel is automatically validated and no confirmation email or SMS is sent. Otherwise, the user must respond to a confirmation message to confirm the channel.
+        # OPTIONAL - skip_confirmation
+        """Only valid for site admins and account admins making requests; If true, the channel is
+        automatically validated and no confirmation email or SMS is sent.
+        Otherwise, the user must respond to a confirmation message to confirm the
+        channel."""
         if skip_confirmation is not None:
             data["skip_confirmation"] = skip_confirmation
 
@@ -70,9 +86,11 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -88,11 +106,14 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - type - ID
+        # REQUIRED - PATH - type
+        """ID"""
         path["type"] = type
-        # REQUIRED - PATH - address - ID
+        # REQUIRED - PATH - address
+        """ID"""
         path["address"] = address
 
         self.logger.debug("DELETE /api/v1/users/{user_id}/communication_channels/{type}/{address} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -159,7 +180,7 @@ class Communicationchannel(BaseModel):
 
     @property
     def type(self):
-        """The type of communcation channel being described. Possible values are: 'email', 'sms', 'chat', 'facebook', 'twitter' or 'yo'. This field determines the type of value seen in 'address'."""
+        """The type of communcation channel being described. Possible values are: 'email', 'push', 'sms', 'twitter' or 'yo'. This field determines the type of value seen in 'address'."""
         return self._type
 
     @type.setter

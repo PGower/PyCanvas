@@ -27,7 +27,8 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -44,7 +45,8 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
 
         self.logger.debug("GET /api/v1/groups/{group_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -61,7 +63,8 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/content_exports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -77,9 +80,11 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -95,9 +100,11 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/groups/{group_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -113,9 +120,11 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/users/{user_id}/content_exports/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -138,12 +147,17 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
+        # REQUIRED - export_type
+        """"common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format
+        "qti":: Export quizzes from a course in the QTI format
+        "zip":: Export files from a course, group, or user in a zip file"""
         self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
         data["export_type"] = export_type
-        # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
+        # OPTIONAL - skip_notifications
+        """Don't send the notifications about the export to the user. Default: false"""
         if skip_notifications is not None:
             data["skip_notifications"] = skip_notifications
 
@@ -167,12 +181,17 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
+        # REQUIRED - export_type
+        """"common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format
+        "qti":: Export quizzes from a course in the QTI format
+        "zip":: Export files from a course, group, or user in a zip file"""
         self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
         data["export_type"] = export_type
-        # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
+        # OPTIONAL - skip_notifications
+        """Don't send the notifications about the export to the user. Default: false"""
         if skip_notifications is not None:
             data["skip_notifications"] = skip_notifications
 
@@ -196,12 +215,17 @@ class ContentExportsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - export_type - "common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format "qti":: Export quizzes from a course in the QTI format "zip":: Export files from a course, group, or user in a zip file
+        # REQUIRED - export_type
+        """"common_cartridge":: Export the contents of the course in the Common Cartridge (.imscc) format
+        "qti":: Export quizzes from a course in the QTI format
+        "zip":: Export files from a course, group, or user in a zip file"""
         self._validate_enum(export_type, ["common_cartridge", "qti", "zip"])
         data["export_type"] = export_type
-        # OPTIONAL - skip_notifications - Don't send the notifications about the export to the user. Default: false
+        # OPTIONAL - skip_notifications
+        """Don't send the notifications about the export to the user. Default: false"""
         if skip_notifications is not None:
             data["skip_notifications"] = skip_notifications
 

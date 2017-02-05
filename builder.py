@@ -4,6 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 import os
 import importlib
 import re
+import requests
 
 
 def extract_type(element):
@@ -158,6 +159,8 @@ def build_service_class(metadata):
 def build_api_from_specfile(specfile, api_name, output_folder):
     base_name = os.path.basename(specfile.name)
 
+    click.echo('Generating code for specfile: {}'.format(base_name))
+
     output_file_name = base_name.replace('.json', '.py')
 
     module_path = 'pycanvas.apis.{}'.format(base_name[:base_name.find('.')])
@@ -199,6 +202,20 @@ def build_all_apis(ctx, specfile_path, output_folder):
             ctx.invoke(build_api_from_specfile, specfile=f, api_name=None, output_folder=output_folder)
 
 
+@click.command()
+@click.option('--specfile-path', required=True, type=click.Path(file_okay=False, readable=True), help='Path for specfiles')
+def update_spec_files(specfile_path):
+    specs = os.listdir(specfile_path)
+    for spec in specs:
+        r = requests.get('https://canvas.instructure.com/doc/api/{}'.format(spec))
+        if r.status_code == 200:
+            specfile = os.path.join(specfile_path, spec)
+            with open(specfile, 'w+') as f:
+                f.write(r.content)
+                click.echo('Updated {}'.format(specfile))
+        else:
+            click.echo('Something went wrong trying to retrieve {}. Status Code: {}'.format(spec, r.status_code))
+
 
 @click.group()
 def cli():
@@ -209,6 +226,7 @@ cli.add_command(build_model_classes)
 cli.add_command(build_service_class)
 cli.add_command(build_api_from_specfile)
 cli.add_command(build_all_apis)
+cli.add_command(update_spec_files)
 
 
 

@@ -30,6 +30,13 @@ class TestNotificationPreferencesAPI(unittest.TestCase):
 
         r = self.client.list_preferences_type(type, user_id, address)
 
+    def test_list_of_preference_categories(self):
+        """Integration test for the NotificationPreferencesAPI.list_of_preference_categories method."""
+        user_id = None  # Change me!!
+        communication_channel_id = None  # Change me!!
+
+        r = self.client.list_of_preference_categories(user_id, communication_channel_id)
+
     def test_get_preference_communication_channel_id(self):
         """Integration test for the NotificationPreferencesAPI.get_preference_communication_channel_id method."""
         user_id = None  # Change me!!
@@ -54,6 +61,11 @@ class TestNotificationPreferencesAPI(unittest.TestCase):
 
     def test_update_preference_type(self):
         """Integration test for the NotificationPreferencesAPI.update_preference_type method."""
+        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_update_preferences_by_category(self):
+        """Integration test for the NotificationPreferencesAPI.update_preferences_by_category method."""
         # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
         pass
 

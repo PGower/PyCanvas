@@ -26,9 +26,18 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - include - - "students": Associations to include with the group. Note: this is only available if you have permission to view users or grades in the course - "avatar_url": Include the avatar URLs for students returned. - "enrollments": If 'students' is also included, return the section enrollment for each student - "total_students": Returns the total amount of active and invited students for the course section - "passback_status": Include the grade passback status.
+        # OPTIONAL - include
+        """- "students": Associations to include with the group. Note: this is only
+          available if you have permission to view users or grades in the course
+        - "avatar_url": Include the avatar URLs for students returned.
+        - "enrollments": If 'students' is also included, return the section
+          enrollment for each student
+        - "total_students": Returns the total amount of active and invited students
+          for the course section
+        - "passback_status": Include the grade passback status."""
         if include is not None:
             self._validate_enum(include, ["students", "avatar_url", "enrollments", "total_students", "passback_status"])
             params["include"] = include
@@ -36,7 +45,7 @@ class SectionsAPI(BaseCanvasAPI):
         self.logger.debug("GET /api/v1/courses/{course_id}/sections with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/sections".format(**path), data=data, params=params, all_pages=True)
 
-    def create_course_section(self, course_id, course_section_end_at=None, course_section_name=None, course_section_restrict_enrollments_to_section_dates=None, course_section_sis_section_id=None, course_section_start_at=None):
+    def create_course_section(self, course_id, course_section_end_at=None, course_section_name=None, course_section_restrict_enrollments_to_section_dates=None, course_section_sis_section_id=None, course_section_start_at=None, enable_sis_reactivation=None):
         """
         Create course section.
 
@@ -46,31 +55,33 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - course_section[name] - The name of the section
+        # OPTIONAL - course_section[name]
+        """The name of the section"""
         if course_section_name is not None:
             data["course_section[name]"] = course_section_name
-        # OPTIONAL - course_section[sis_section_id] - The sis ID of the section
+        # OPTIONAL - course_section[sis_section_id]
+        """The sis ID of the section"""
         if course_section_sis_section_id is not None:
             data["course_section[sis_section_id]"] = course_section_sis_section_id
-        # OPTIONAL - course_section[start_at] - Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z
+        # OPTIONAL - course_section[start_at]
+        """Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z"""
         if course_section_start_at is not None:
-            if issubclass(course_section_start_at.__class__, date) or issubclass(course_section_start_at.__class__, datetime):
-                course_section_start_at = course_section_start_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(course_section_start_at.__class__, basestring):
-                course_section_start_at = self._validate_iso8601_string(course_section_start_at)
             data["course_section[start_at]"] = course_section_start_at
-        # OPTIONAL - course_section[end_at] - Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z
+        # OPTIONAL - course_section[end_at]
+        """Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z"""
         if course_section_end_at is not None:
-            if issubclass(course_section_end_at.__class__, date) or issubclass(course_section_end_at.__class__, datetime):
-                course_section_end_at = course_section_end_at.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(course_section_end_at.__class__, basestring):
-                course_section_end_at = self._validate_iso8601_string(course_section_end_at)
             data["course_section[end_at]"] = course_section_end_at
-        # OPTIONAL - course_section[restrict_enrollments_to_section_dates] - Set to true to restrict user enrollments to the start and end dates of the section.
+        # OPTIONAL - course_section[restrict_enrollments_to_section_dates]
+        """Set to true to restrict user enrollments to the start and end dates of the section."""
         if course_section_restrict_enrollments_to_section_dates is not None:
             data["course_section[restrict_enrollments_to_section_dates]"] = course_section_restrict_enrollments_to_section_dates
+        # OPTIONAL - enable_sis_reactivation
+        """When true, will first try to re-activate a deleted section with matching sis_section_id if possible."""
+        if enable_sis_reactivation is not None:
+            data["enable_sis_reactivation"] = enable_sis_reactivation
 
         self.logger.debug("POST /api/v1/courses/{course_id}/sections with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/sections".format(**path), data=data, params=params, single_item=True)
@@ -86,9 +97,11 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - PATH - new_course_id - ID
+        # REQUIRED - PATH - new_course_id
+        """ID"""
         path["new_course_id"] = new_course_id
 
         self.logger.debug("POST /api/v1/sections/{id}/crosslist/{new_course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -104,29 +117,51 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/sections/{id}/crosslist with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("DELETE", "/api/v1/sections/{id}/crosslist".format(**path), data=data, params=params, single_item=True)
 
-    def edit_section(self, id):
+    def edit_section(self, id, course_section_end_at=None, course_section_name=None, course_section_restrict_enrollments_to_section_dates=None, course_section_sis_section_id=None, course_section_start_at=None):
         """
         Edit a section.
 
-        Modify an existing section.  See the documentation for {api:SectionsController#create create API action}.
+        Modify an existing section.
         """
         path = {}
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
+        # OPTIONAL - course_section[name]
+        """The name of the section"""
+        if course_section_name is not None:
+            data["course_section[name]"] = course_section_name
+        # OPTIONAL - course_section[sis_section_id]
+        """The sis ID of the section"""
+        if course_section_sis_section_id is not None:
+            data["course_section[sis_section_id]"] = course_section_sis_section_id
+        # OPTIONAL - course_section[start_at]
+        """Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z"""
+        if course_section_start_at is not None:
+            data["course_section[start_at]"] = course_section_start_at
+        # OPTIONAL - course_section[end_at]
+        """Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z"""
+        if course_section_end_at is not None:
+            data["course_section[end_at]"] = course_section_end_at
+        # OPTIONAL - course_section[restrict_enrollments_to_section_dates]
+        """Set to true to restrict user enrollments to the start and end dates of the section."""
+        if course_section_restrict_enrollments_to_section_dates is not None:
+            data["course_section[restrict_enrollments_to_section_dates]"] = course_section_restrict_enrollments_to_section_dates
 
         self.logger.debug("PUT /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def get_section_information_courses(self, id, course_id):
+    def get_section_information_courses(self, id, course_id, include=None):
         """
         Get section information.
 
@@ -136,15 +171,29 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
+        # OPTIONAL - include
+        """- "students": Associations to include with the group. Note: this is only
+          available if you have permission to view users or grades in the course
+        - "avatar_url": Include the avatar URLs for students returned.
+        - "enrollments": If 'students' is also included, return the section
+          enrollment for each student
+        - "total_students": Returns the total amount of active and invited students
+          for the course section
+        - "passback_status": Include the grade passback status."""
+        if include is not None:
+            self._validate_enum(include, ["students", "avatar_url", "enrollments", "total_students", "passback_status"])
+            params["include"] = include
 
         self.logger.debug("GET /api/v1/courses/{course_id}/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/sections/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def get_section_information_sections(self, id):
+    def get_section_information_sections(self, id, include=None):
         """
         Get section information.
 
@@ -154,8 +203,21 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
+        # OPTIONAL - include
+        """- "students": Associations to include with the group. Note: this is only
+          available if you have permission to view users or grades in the course
+        - "avatar_url": Include the avatar URLs for students returned.
+        - "enrollments": If 'students' is also included, return the section
+          enrollment for each student
+        - "total_students": Returns the total amount of active and invited students
+          for the course section
+        - "passback_status": Include the grade passback status."""
+        if include is not None:
+            self._validate_enum(include, ["students", "avatar_url", "enrollments", "total_students", "passback_status"])
+            params["include"] = include
 
         self.logger.debug("GET /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/sections/{id}".format(**path), data=data, params=params, single_item=True)
@@ -170,7 +232,8 @@ class SectionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/sections/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))

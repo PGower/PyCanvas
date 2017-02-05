@@ -18,7 +18,7 @@ class TestUserObserveesAPI(unittest.TestCase):
         """Integration test for the UserObserveesAPI.list_observees method."""
         user_id = None  # Change me!!
 
-        r = self.client.list_observees(user_id)
+        r = self.client.list_observees(user_id, include=None)
 
     def test_add_observee_with_credentials(self):
         """Integration test for the UserObserveesAPI.add_observee_with_credentials method."""

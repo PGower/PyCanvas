@@ -15,6 +15,14 @@ class TestQuizQuestionGroupsAPI(unittest.TestCase):
     def setUp(self):
         self.client = QuizQuestionGroupsAPI(secrets.instance_address, secrets.access_token)
 
+    def test_get_single_quiz_group(self):
+        """Integration test for the QuizQuestionGroupsAPI.get_single_quiz_group method."""
+        course_id = None  # Change me!!
+        quiz_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.get_single_quiz_group(id, quiz_id, course_id)
+
     def test_create_question_group(self):
         """Integration test for the QuizQuestionGroupsAPI.create_question_group method."""
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.

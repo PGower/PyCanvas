@@ -26,7 +26,8 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - The id of the contextual course for this API call
+        # REQUIRED - PATH - course_id
+        """The id of the contextual course for this API call"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/gradebook_history/days with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -44,9 +45,11 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - The id of the contextual course for this API call
+        # REQUIRED - PATH - course_id
+        """The id of the contextual course for this API call"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - date - The date for which you would like to see detailed information
+        # REQUIRED - PATH - date
+        """The date for which you would like to see detailed information"""
         path["date"] = date
 
         self.logger.debug("GET /api/v1/courses/{course_id}/gradebook_history/{date} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -62,13 +65,17 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - The id of the contextual course for this API call
+        # REQUIRED - PATH - course_id
+        """The id of the contextual course for this API call"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - date - The date for which you would like to see submissions
+        # REQUIRED - PATH - date
+        """The date for which you would like to see submissions"""
         path["date"] = date
-        # REQUIRED - PATH - grader_id - The ID of the grader for which you want to see submissions
+        # REQUIRED - PATH - grader_id
+        """The ID of the grader for which you want to see submissions"""
         path["grader_id"] = grader_id
-        # REQUIRED - PATH - assignment_id - The ID of the assignment for which you want to see submissions
+        # REQUIRED - PATH - assignment_id
+        """The ID of the assignment for which you want to see submissions"""
         path["assignment_id"] = assignment_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/gradebook_history/{date}/graders/{grader_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -87,15 +94,24 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - The id of the contextual course for this API call
+        # REQUIRED - PATH - course_id
+        """The id of the contextual course for this API call"""
         path["course_id"] = course_id
-        # OPTIONAL - assignment_id - The ID of the assignment for which you want to see submissions. If absent, versions of submissions from any assignment in the course are included.
+        # OPTIONAL - assignment_id
+        """The ID of the assignment for which you want to see submissions. If
+        absent, versions of submissions from any assignment in the course are
+        included."""
         if assignment_id is not None:
             params["assignment_id"] = assignment_id
-        # OPTIONAL - user_id - The ID of the user for which you want to see submissions. If absent, versions of submissions from any user in the course are included.
+        # OPTIONAL - user_id
+        """The ID of the user for which you want to see submissions. If absent,
+        versions of submissions from any user in the course are included."""
         if user_id is not None:
             params["user_id"] = user_id
-        # OPTIONAL - ascending - Returns submission versions in ascending date order (oldest first). If absent, returns submission versions in descending date order (newest first).
+        # OPTIONAL - ascending
+        """Returns submission versions in ascending date order (oldest first). If
+        absent, returns submission versions in descending date order (newest
+        first)."""
         if ascending is not None:
             params["ascending"] = ascending
 

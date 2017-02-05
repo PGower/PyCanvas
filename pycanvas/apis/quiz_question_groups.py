@@ -16,6 +16,29 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         super(QuizQuestionGroupsAPI, self).__init__(*args, **kwargs)
         self.logger = logging.getLogger("pycanvas.QuizQuestionGroupsAPI")
 
+    def get_single_quiz_group(self, id, quiz_id, course_id):
+        """
+        Get a single quiz group.
+
+        Returns details of the quiz group with the given id.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - PATH - quiz_id
+        """ID"""
+        path["quiz_id"] = quiz_id
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id}".format(**path), data=data, params=params, single_item=True)
+
     def create_question_group(self, quiz_id, course_id, quiz_groups_assessment_question_bank_id=None, quiz_groups_name=None, quiz_groups_pick_count=None, quiz_groups_question_points=None):
         """
         Create a question group.
@@ -28,20 +51,26 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # OPTIONAL - quiz_groups[name] - The name of the question group.
+        # OPTIONAL - quiz_groups[name]
+        """The name of the question group."""
         if quiz_groups_name is not None:
             data["quiz_groups[name]"] = quiz_groups_name
-        # OPTIONAL - quiz_groups[pick_count] - The number of questions to randomly select for this group.
+        # OPTIONAL - quiz_groups[pick_count]
+        """The number of questions to randomly select for this group."""
         if quiz_groups_pick_count is not None:
             data["quiz_groups[pick_count]"] = quiz_groups_pick_count
-        # OPTIONAL - quiz_groups[question_points] - The number of points to assign to each question in the group.
+        # OPTIONAL - quiz_groups[question_points]
+        """The number of points to assign to each question in the group."""
         if quiz_groups_question_points is not None:
             data["quiz_groups[question_points]"] = quiz_groups_question_points
-        # OPTIONAL - quiz_groups[assessment_question_bank_id] - The id of the assessment question bank to pull questions from.
+        # OPTIONAL - quiz_groups[assessment_question_bank_id]
+        """The id of the assessment question bank to pull questions from."""
         if quiz_groups_assessment_question_bank_id is not None:
             data["quiz_groups[assessment_question_bank_id]"] = quiz_groups_assessment_question_bank_id
 
@@ -58,19 +87,25 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - quiz_groups[name] - The name of the question group.
+        # OPTIONAL - quiz_groups[name]
+        """The name of the question group."""
         if quiz_groups_name is not None:
             data["quiz_groups[name]"] = quiz_groups_name
-        # OPTIONAL - quiz_groups[pick_count] - The number of questions to randomly select for this group.
+        # OPTIONAL - quiz_groups[pick_count]
+        """The number of questions to randomly select for this group."""
         if quiz_groups_pick_count is not None:
             data["quiz_groups[pick_count]"] = quiz_groups_pick_count
-        # OPTIONAL - quiz_groups[question_points] - The number of points to assign to each question in the group.
+        # OPTIONAL - quiz_groups[question_points]
+        """The number of points to assign to each question in the group."""
         if quiz_groups_question_points is not None:
             data["quiz_groups[question_points]"] = quiz_groups_question_points
 
@@ -89,11 +124,14 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/quizzes/{quiz_id}/groups/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -111,15 +149,20 @@ class QuizQuestionGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - order[id] - The associated item's unique identifier
+        # REQUIRED - order[id]
+        """The associated item's unique identifier"""
         data["order[id]"] = order_id
-        # OPTIONAL - order[type] - The type of item is always 'question' for a group
+        # OPTIONAL - order[type]
+        """The type of item is always 'question' for a group"""
         if order_type is not None:
             self._validate_enum(order_type, ["question"])
             data["order[type]"] = order_type

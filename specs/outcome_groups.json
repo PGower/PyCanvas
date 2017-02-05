@@ -142,7 +142,7 @@
             {
               "paramType": "query",
               "name": "outcome_style",
-              "description": "The detail level of the outcomes. Defaults to \"abbrev\". Specify \"full\" for more information.",
+              "description": "The detail level of the outcomes. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
               "type": "string",
               "format": null,
               "required": false
@@ -150,7 +150,7 @@
             {
               "paramType": "query",
               "name": "outcome_group_style",
-              "description": "The detail level of the outcome groups. Defaults to \"abbrev\". Specify \"full\" for more information.",
+              "description": "The detail level of the outcome groups. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
               "type": "string",
               "format": null,
               "required": false
@@ -184,7 +184,7 @@
             {
               "paramType": "query",
               "name": "outcome_style",
-              "description": "The detail level of the outcomes. Defaults to \"abbrev\". Specify \"full\" for more information.",
+              "description": "The detail level of the outcomes. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
               "type": "string",
               "format": null,
               "required": false
@@ -192,7 +192,7 @@
             {
               "paramType": "query",
               "name": "outcome_group_style",
-              "description": "The detail level of the outcome groups. Defaults to \"abbrev\". Specify \"full\" for more information.",
+              "description": "The detail level of the outcome groups. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
               "type": "string",
               "format": null,
               "required": false
@@ -573,6 +573,14 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "outcome_style",
+              "description": "The detail level of the outcomes. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
+              "type": "string",
+              "format": null,
+              "required": false
             }
           ],
           "type": "array",
@@ -607,6 +615,14 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "outcome_style",
+              "description": "The detail level of the outcomes. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
+              "type": "string",
+              "format": null,
+              "required": false
             }
           ],
           "type": "array",
@@ -641,6 +657,14 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "outcome_style",
+              "description": "The detail level of the outcomes. Defaults to \"abbrev\".\nSpecify \"full\" for more information.",
+              "type": "string",
+              "format": null,
+              "required": false
             }
           ],
           "type": "array",
@@ -687,7 +711,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -741,7 +765,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -755,7 +779,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -802,7 +826,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -856,7 +880,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -870,7 +894,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -925,7 +949,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -979,7 +1003,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -993,7 +1017,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -1048,7 +1072,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -1102,7 +1126,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -1116,7 +1140,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -1171,7 +1195,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -1225,7 +1249,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -1239,7 +1263,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -1294,7 +1318,7 @@
             {
               "paramType": "form",
               "name": "display_name",
-              "description": "A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.",
+              "description": "A friendly name shown in reports for outcomes with cryptic titles,\nsuch as common core standards names.",
               "type": "string",
               "format": null,
               "required": false
@@ -1348,7 +1372,7 @@
             {
               "paramType": "form",
               "name": "calculation_method",
-              "description": "The new calculation method. Defaults to \"highest\"",
+              "description": "The new calculation method.  Defaults to \"highest\"",
               "type": "string",
               "format": null,
               "required": false,
@@ -1362,7 +1386,7 @@
             {
               "paramType": "form",
               "name": "calculation_int",
-              "description": "The new calculation int. Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
+              "description": "The new calculation int.  Only applies if the calculation_method is \"decaying_average\" or \"n_mastery\"",
               "type": "integer",
               "format": "int64",
               "required": false
@@ -1938,6 +1962,15 @@
         "outcome": {
           "description": "an abbreviated Outcome object representing the outcome linked into the containing outcome group.",
           "$ref": "Outcome"
+        },
+        "assessed": {
+          "description": "whether this outcome has been used to assess a student in the context of this outcome link.  In other words, this will be set to true if the context is a course, and a student has been assessed with this outcome in that course.",
+          "example": true,
+          "type": "boolean"
+        },
+        "can_unlink": {
+          "description": "whether this outcome link is manageable and is not the last link to an aligned outcome",
+          "type": "boolean"
         }
       }
     }

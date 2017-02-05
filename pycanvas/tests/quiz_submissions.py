@@ -22,6 +22,13 @@ class TestQuizSubmissionsAPI(unittest.TestCase):
 
         r = self.client.get_all_quiz_submissions(quiz_id, course_id, include=None)
 
+    def test_get_quiz_submission(self):
+        """Integration test for the QuizSubmissionsAPI.get_quiz_submission method."""
+        course_id = None  # Change me!!
+        quiz_id = None  # Change me!!
+
+        r = self.client.get_quiz_submission(quiz_id, course_id, include=None)
+
     def test_get_single_quiz_submission(self):
         """Integration test for the QuizSubmissionsAPI.get_single_quiz_submission method."""
         course_id = None  # Change me!!
@@ -44,4 +51,12 @@ class TestQuizSubmissionsAPI(unittest.TestCase):
         """Integration test for the QuizSubmissionsAPI.complete_quiz_submission_turn_it_in method."""
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
         pass
+
+    def test_get_current_quiz_submission_times(self):
+        """Integration test for the QuizSubmissionsAPI.get_current_quiz_submission_times method."""
+        course_id = None  # Change me!!
+        quiz_id = None  # Change me!!
+        id = None  # Change me!!
+
+        r = self.client.get_current_quiz_submission_times(id, quiz_id, course_id)
 

@@ -34,51 +34,60 @@ class SubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - comment[text_comment] - Include a textual comment with the submission.
+        # OPTIONAL - comment[text_comment]
+        """Include a textual comment with the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
-        # REQUIRED - submission[submission_type] - The type of submission being made. The assignment submission_types must
-include this submission type as an allowed option, or the submission will be rejected with a 400 error.
-
-The submission_type given determines which of the following parameters is
-used. For instance, to submit a URL, submission [submission_type] must be
-set to "online_url", otherwise the submission [url] parameter will be
-ignored.
-        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
+        # REQUIRED - submission[submission_type]
+        """The type of submission being made. The assignment submission_types must
+        include this submission type as an allowed option, or the submission will be rejected with a 400 error.
+        
+        The submission_type given determines which of the following parameters is
+        used. For instance, to submit a URL, submission [submission_type] must be
+        set to "online_url", otherwise the submission [url] parameter will be
+        ignored."""
+        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording", "basic_lti_launch"])
         data["submission[submission_type]"] = submission_submission_type
-        # OPTIONAL - submission[body] - Submit the assignment as an HTML document snippet. Note this HTML snippet
-will be sanitized using the same ruleset as a submission made from the
-Canvas web UI. The sanitized HTML will be returned in the response as the
-submission body. Requires a submission_type of "online_text_entry".
+        # OPTIONAL - submission[body]
+        """Submit the assignment as an HTML document snippet. Note this HTML snippet
+        will be sanitized using the same ruleset as a submission made from the
+        Canvas web UI. The sanitized HTML will be returned in the response as the
+        submission body. Requires a submission_type of "online_text_entry"."""
         if submission_body is not None:
             data["submission[body]"] = submission_body
-        # OPTIONAL - submission[url] - Submit the assignment as a URL. The URL scheme must be "http" or "https",
-no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
-"www.example.com") then "http" will be assumed. Requires a submission_type
-of "online_url".
+        # OPTIONAL - submission[url]
+        """Submit the assignment as a URL. The URL scheme must be "http" or "https",
+        no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
+        "www.example.com") then "http" will be assumed. Requires a submission_type
+        of "online_url" or "basic_lti_launch"."""
         if submission_url is not None:
             data["submission[url]"] = submission_url
-        # OPTIONAL - submission[file_ids] - Submit the assignment as a set of one or more previously uploaded files
-residing in the submitting user's files section (or the group's files
-section, for group assignments).
-
-To upload a new file to submit, see the submissions {api:SubmissionsApiController#create_file Upload a file API}.
-
-Requires a submission_type of "online_upload".
+        # OPTIONAL - submission[file_ids]
+        """Submit the assignment as a set of one or more previously uploaded files
+        residing in the submitting user's files section (or the group's files
+        section, for group assignments).
+        
+        To upload a new file to submit, see the submissions {api:SubmissionsApiController#create_file Upload a file API}.
+        
+        Requires a submission_type of "online_upload"."""
         if submission_file_ids is not None:
             data["submission[file_ids]"] = submission_file_ids
-        # OPTIONAL - submission[media_comment_id] - The media comment id to submit. Media comment ids can be submitted via
-this API, however, note that there is not yet an API to generate or list
-existing media comments, so this functionality is currently of limited use.
-
-Requires a submission_type of "media_recording".
+        # OPTIONAL - submission[media_comment_id]
+        """The media comment id to submit. Media comment ids can be submitted via
+        this API, however, note that there is not yet an API to generate or list
+        existing media comments, so this functionality is currently of limited use.
+        
+        Requires a submission_type of "media_recording"."""
         if submission_media_comment_id is not None:
             data["submission[media_comment_id]"] = submission_media_comment_id
-        # OPTIONAL - submission[media_comment_type] - The type of media comment being submitted.
+        # OPTIONAL - submission[media_comment_type]
+        """The type of media comment being submitted."""
         if submission_media_comment_type is not None:
             self._validate_enum(submission_media_comment_type, ["audio", "video"])
             data["submission[media_comment_type]"] = submission_media_comment_type
@@ -104,51 +113,60 @@ Requires a submission_type of "media_recording".
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - comment[text_comment] - Include a textual comment with the submission.
+        # OPTIONAL - comment[text_comment]
+        """Include a textual comment with the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
-        # REQUIRED - submission[submission_type] - The type of submission being made. The assignment submission_types must
-include this submission type as an allowed option, or the submission will be rejected with a 400 error.
-
-The submission_type given determines which of the following parameters is
-used. For instance, to submit a URL, submission [submission_type] must be
-set to "online_url", otherwise the submission [url] parameter will be
-ignored.
-        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording"])
+        # REQUIRED - submission[submission_type]
+        """The type of submission being made. The assignment submission_types must
+        include this submission type as an allowed option, or the submission will be rejected with a 400 error.
+        
+        The submission_type given determines which of the following parameters is
+        used. For instance, to submit a URL, submission [submission_type] must be
+        set to "online_url", otherwise the submission [url] parameter will be
+        ignored."""
+        self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording", "basic_lti_launch"])
         data["submission[submission_type]"] = submission_submission_type
-        # OPTIONAL - submission[body] - Submit the assignment as an HTML document snippet. Note this HTML snippet
-will be sanitized using the same ruleset as a submission made from the
-Canvas web UI. The sanitized HTML will be returned in the response as the
-submission body. Requires a submission_type of "online_text_entry".
+        # OPTIONAL - submission[body]
+        """Submit the assignment as an HTML document snippet. Note this HTML snippet
+        will be sanitized using the same ruleset as a submission made from the
+        Canvas web UI. The sanitized HTML will be returned in the response as the
+        submission body. Requires a submission_type of "online_text_entry"."""
         if submission_body is not None:
             data["submission[body]"] = submission_body
-        # OPTIONAL - submission[url] - Submit the assignment as a URL. The URL scheme must be "http" or "https",
-no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
-"www.example.com") then "http" will be assumed. Requires a submission_type
-of "online_url".
+        # OPTIONAL - submission[url]
+        """Submit the assignment as a URL. The URL scheme must be "http" or "https",
+        no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
+        "www.example.com") then "http" will be assumed. Requires a submission_type
+        of "online_url" or "basic_lti_launch"."""
         if submission_url is not None:
             data["submission[url]"] = submission_url
-        # OPTIONAL - submission[file_ids] - Submit the assignment as a set of one or more previously uploaded files
-residing in the submitting user's files section (or the group's files
-section, for group assignments).
-
-To upload a new file to submit, see the submissions {api:SubmissionsApiController#create_file Upload a file API}.
-
-Requires a submission_type of "online_upload".
+        # OPTIONAL - submission[file_ids]
+        """Submit the assignment as a set of one or more previously uploaded files
+        residing in the submitting user's files section (or the group's files
+        section, for group assignments).
+        
+        To upload a new file to submit, see the submissions {api:SubmissionsApiController#create_file Upload a file API}.
+        
+        Requires a submission_type of "online_upload"."""
         if submission_file_ids is not None:
             data["submission[file_ids]"] = submission_file_ids
-        # OPTIONAL - submission[media_comment_id] - The media comment id to submit. Media comment ids can be submitted via
-this API, however, note that there is not yet an API to generate or list
-existing media comments, so this functionality is currently of limited use.
-
-Requires a submission_type of "media_recording".
+        # OPTIONAL - submission[media_comment_id]
+        """The media comment id to submit. Media comment ids can be submitted via
+        this API, however, note that there is not yet an API to generate or list
+        existing media comments, so this functionality is currently of limited use.
+        
+        Requires a submission_type of "media_recording"."""
         if submission_media_comment_id is not None:
             data["submission[media_comment_id]"] = submission_media_comment_id
-        # OPTIONAL - submission[media_comment_type] - The type of media comment being submitted.
+        # OPTIONAL - submission[media_comment_type]
+        """The type of media comment being submitted."""
         if submission_media_comment_type is not None:
             self._validate_enum(submission_media_comment_type, ["audio", "video"])
             data["submission[media_comment_type]"] = submission_media_comment_type
@@ -166,15 +184,19 @@ Requires a submission_type of "media_recording".
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - include - Associations to include with the group.  "group" will add group_id and group_name.
+        # OPTIONAL - include
+        """Associations to include with the group.  "group" will add group_id and group_name."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
             params["include"] = include
-        # OPTIONAL - grouped - If this argument is true, the response will be grouped by student groups.
+        # OPTIONAL - grouped
+        """If this argument is true, the response will be grouped by student groups."""
         if grouped is not None:
             params["grouped"] = grouped
 
@@ -191,22 +213,26 @@ Requires a submission_type of "media_recording".
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - include - Associations to include with the group.  "group" will add group_id and group_name.
+        # OPTIONAL - include
+        """Associations to include with the group.  "group" will add group_id and group_name."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
             params["include"] = include
-        # OPTIONAL - grouped - If this argument is true, the response will be grouped by student groups.
+        # OPTIONAL - grouped
+        """If this argument is true, the response will be grouped by student groups."""
         if grouped is not None:
             params["grouped"] = grouped
 
         self.logger.debug("GET /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/sections/{section_id}/assignments/{assignment_id}/submissions".format(**path), data=data, params=params, all_pages=True)
 
-    def list_submissions_for_multiple_assignments_courses(self, course_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None):
+    def list_submissions_for_multiple_assignments_courses(self, course_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, order=None, order_direction=None, student_ids=None):
         """
         List submissions for multiple assignments.
 
@@ -216,29 +242,47 @@ Requires a submission_type of "media_recording".
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - student_ids - List of student ids to return submissions for. If this argument is
-omitted, return submissions for the calling user. Students may only list
-their own submissions. Observers may only list those of associated
-students. The special id "all" will return submissions for all students
-in the course/section as appropriate.
+        # OPTIONAL - student_ids
+        """List of student ids to return submissions for. If this argument is
+        omitted, return submissions for the calling user. Students may only list
+        their own submissions. Observers may only list those of associated
+        students. The special id "all" will return submissions for all students
+        in the course/section as appropriate."""
         if student_ids is not None:
             params["student_ids"] = student_ids
-        # OPTIONAL - assignment_ids - List of assignments to return submissions for. If none are given,
-submissions for all assignments are returned.
+        # OPTIONAL - assignment_ids
+        """List of assignments to return submissions for. If none are given,
+        submissions for all assignments are returned."""
         if assignment_ids is not None:
             params["assignment_ids"] = assignment_ids
-        # OPTIONAL - grouped - If this argument is present, the response will be grouped by student,
-rather than a flat array of submissions.
+        # OPTIONAL - grouped
+        """If this argument is present, the response will be grouped by student,
+        rather than a flat array of submissions."""
         if grouped is not None:
             params["grouped"] = grouped
-        # OPTIONAL - grading_period_id - The id of the grading period in which submissions are being requested
-(Requires the Multiple Grading Periods account feature turned on)
+        # OPTIONAL - grading_period_id
+        """The id of the grading period in which submissions are being requested
+        (Requires the Multiple Grading Periods account feature turned on)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
-        # OPTIONAL - include - Associations to include with the group. `total_scores` requires the
-`grouped` argument.
+        # OPTIONAL - order
+        """The order submissions will be returned in.  Defaults to "id".  Doesn't
+        affect results for "grouped" mode."""
+        if order is not None:
+            self._validate_enum(order, ["id", "graded_at"])
+            params["order"] = order
+        # OPTIONAL - order_direction
+        """Determines whether ordered results are retured in ascending or descending
+        order.  Defaults to "ascending".  Doesn't affect results for "grouped" mode."""
+        if order_direction is not None:
+            self._validate_enum(order_direction, ["ascending", "descending"])
+            params["order_direction"] = order_direction
+        # OPTIONAL - include
+        """Associations to include with the group. `total_scores` requires the
+        `grouped` argument."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "total_scores", "visibility", "course", "user"])
             params["include"] = include
@@ -246,7 +290,7 @@ rather than a flat array of submissions.
         self.logger.debug("GET /api/v1/courses/{course_id}/students/submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/students/submissions".format(**path), data=data, params=params, no_data=True)
 
-    def list_submissions_for_multiple_assignments_sections(self, section_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, student_ids=None):
+    def list_submissions_for_multiple_assignments_sections(self, section_id, assignment_ids=None, grading_period_id=None, grouped=None, include=None, order=None, order_direction=None, student_ids=None):
         """
         List submissions for multiple assignments.
 
@@ -256,29 +300,47 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # OPTIONAL - student_ids - List of student ids to return submissions for. If this argument is
-omitted, return submissions for the calling user. Students may only list
-their own submissions. Observers may only list those of associated
-students. The special id "all" will return submissions for all students
-in the course/section as appropriate.
+        # OPTIONAL - student_ids
+        """List of student ids to return submissions for. If this argument is
+        omitted, return submissions for the calling user. Students may only list
+        their own submissions. Observers may only list those of associated
+        students. The special id "all" will return submissions for all students
+        in the course/section as appropriate."""
         if student_ids is not None:
             params["student_ids"] = student_ids
-        # OPTIONAL - assignment_ids - List of assignments to return submissions for. If none are given,
-submissions for all assignments are returned.
+        # OPTIONAL - assignment_ids
+        """List of assignments to return submissions for. If none are given,
+        submissions for all assignments are returned."""
         if assignment_ids is not None:
             params["assignment_ids"] = assignment_ids
-        # OPTIONAL - grouped - If this argument is present, the response will be grouped by student,
-rather than a flat array of submissions.
+        # OPTIONAL - grouped
+        """If this argument is present, the response will be grouped by student,
+        rather than a flat array of submissions."""
         if grouped is not None:
             params["grouped"] = grouped
-        # OPTIONAL - grading_period_id - The id of the grading period in which submissions are being requested
-(Requires the Multiple Grading Periods account feature turned on)
+        # OPTIONAL - grading_period_id
+        """The id of the grading period in which submissions are being requested
+        (Requires the Multiple Grading Periods account feature turned on)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
-        # OPTIONAL - include - Associations to include with the group. `total_scores` requires the
-`grouped` argument.
+        # OPTIONAL - order
+        """The order submissions will be returned in.  Defaults to "id".  Doesn't
+        affect results for "grouped" mode."""
+        if order is not None:
+            self._validate_enum(order, ["id", "graded_at"])
+            params["order"] = order
+        # OPTIONAL - order_direction
+        """Determines whether ordered results are retured in ascending or descending
+        order.  Defaults to "ascending".  Doesn't affect results for "grouped" mode."""
+        if order_direction is not None:
+            self._validate_enum(order_direction, ["ascending", "descending"])
+            params["order_direction"] = order_direction
+        # OPTIONAL - include
+        """Associations to include with the group. `total_scores` requires the
+        `grouped` argument."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "total_scores", "visibility", "course", "user"])
             params["include"] = include
@@ -296,13 +358,17 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # OPTIONAL - include - Associations to include with the group.
+        # OPTIONAL - include
+        """Associations to include with the group."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "visibility", "course", "user"])
             params["include"] = include
@@ -320,13 +386,17 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # OPTIONAL - include - Associations to include with the group.
+        # OPTIONAL - include
+        """Associations to include with the group."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "visibility", "course", "user"])
             params["include"] = include
@@ -351,11 +421,14 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -378,11 +451,14 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("POST /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -401,106 +477,118 @@ rather than a flat array of submissions.
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # OPTIONAL - comment[text_comment] - Add a textual comment to the submission.
+        # OPTIONAL - comment[text_comment]
+        """Add a textual comment to the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
-        # OPTIONAL - comment[group_comment] - Whether or not this comment should be sent to the entire group (defaults
-to false). Ignored if this is not a group assignment or if no text_comment
-is provided.
+        # OPTIONAL - comment[group_comment]
+        """Whether or not this comment should be sent to the entire group (defaults
+        to false). Ignored if this is not a group assignment or if no text_comment
+        is provided."""
         if comment_group_comment is not None:
             data["comment[group_comment]"] = comment_group_comment
-        # OPTIONAL - comment[media_comment_id] - Add an audio/video comment to the submission. Media comments can be added
-via this API, however, note that there is not yet an API to generate or
-list existing media comments, so this functionality is currently of
-limited use.
+        # OPTIONAL - comment[media_comment_id]
+        """Add an audio/video comment to the submission. Media comments can be added
+        via this API, however, note that there is not yet an API to generate or
+        list existing media comments, so this functionality is currently of
+        limited use."""
         if comment_media_comment_id is not None:
             data["comment[media_comment_id]"] = comment_media_comment_id
-        # OPTIONAL - comment[media_comment_type] - The type of media comment being added.
+        # OPTIONAL - comment[media_comment_type]
+        """The type of media comment being added."""
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
             data["comment[media_comment_type]"] = comment_media_comment_type
-        # OPTIONAL - comment[file_ids] - Attach files to this comment that were previously uploaded using the
-Submission Comment API's files action
+        # OPTIONAL - comment[file_ids]
+        """Attach files to this comment that were previously uploaded using the
+        Submission Comment API's files action"""
         if comment_file_ids is not None:
             data["comment[file_ids]"] = comment_file_ids
-        # OPTIONAL - include[visibility] - Whether this assignment is visible to the owner of the submission
+        # OPTIONAL - include[visibility]
+        """Whether this assignment is visible to the owner of the submission"""
         if include_visibility is not None:
             data["include[visibility]"] = include_visibility
-        # OPTIONAL - submission[posted_grade] - Assign a score to the submission, updating both the "score" and "grade"
-fields on the submission record. This parameter can be passed in a few
-different formats:
-
-points:: A floating point or integral value, such as "13.5". The grade
-  will be interpreted directly as the score of the assignment.
-  Values above assignment.points_possible are allowed, for awarding
-  extra credit.
-percentage:: A floating point value appended with a percent sign, such as
-   "40%". The grade will be interpreted as a percentage score on the
-   assignment, where 100% == assignment.points_possible. Values above 100%
-   are allowed, for awarding extra credit.
-letter grade:: A letter grade, following the assignment's defined letter
-   grading scheme. For example, "A-". The resulting score will be the high
-   end of the defined range for the letter grade. For instance, if "B" is
-   defined as 86% to 84%, a letter grade of "B" will be worth 86%. The
-   letter grade will be rejected if the assignment does not have a defined
-   letter grading scheme. For more fine-grained control of scores, pass in
-   points or percentage rather than the letter grade.
-"pass/complete/fail/incomplete":: A string value of "pass" or "complete"
-   will give a score of 100%. "fail" or "incomplete" will give a score of
-   0.
-
-Note that assignments with grading_type of "pass_fail" can only be
-assigned a score of 0 or assignment.points_possible, nothing inbetween. If
-a posted_grade in the "points" or "percentage" format is sent, the grade
-will only be accepted if the grade equals one of those two values.
+        # OPTIONAL - submission[posted_grade]
+        """Assign a score to the submission, updating both the "score" and "grade"
+        fields on the submission record. This parameter can be passed in a few
+        different formats:
+        
+        points:: A floating point or integral value, such as "13.5". The grade
+          will be interpreted directly as the score of the assignment.
+          Values above assignment.points_possible are allowed, for awarding
+          extra credit.
+        percentage:: A floating point value appended with a percent sign, such as
+           "40%". The grade will be interpreted as a percentage score on the
+           assignment, where 100% == assignment.points_possible. Values above 100%
+           are allowed, for awarding extra credit.
+        letter grade:: A letter grade, following the assignment's defined letter
+           grading scheme. For example, "A-". The resulting score will be the high
+           end of the defined range for the letter grade. For instance, if "B" is
+           defined as 86% to 84%, a letter grade of "B" will be worth 86%. The
+           letter grade will be rejected if the assignment does not have a defined
+           letter grading scheme. For more fine-grained control of scores, pass in
+           points or percentage rather than the letter grade.
+        "pass/complete/fail/incomplete":: A string value of "pass" or "complete"
+           will give a score of 100%. "fail" or "incomplete" will give a score of
+           0.
+        
+        Note that assignments with grading_type of "pass_fail" can only be
+        assigned a score of 0 or assignment.points_possible, nothing inbetween. If
+        a posted_grade in the "points" or "percentage" format is sent, the grade
+        will only be accepted if the grade equals one of those two values."""
         if submission_posted_grade is not None:
             data["submission[posted_grade]"] = submission_posted_grade
-        # OPTIONAL - submission[excuse] - Sets the "excused" status of an assignment.
+        # OPTIONAL - submission[excuse]
+        """Sets the "excused" status of an assignment."""
         if submission_excuse is not None:
             data["submission[excuse]"] = submission_excuse
-        # OPTIONAL - rubric_assessment - Assign a rubric assessment to this assignment submission. The
-sub-parameters here depend on the rubric for the assignment. The general
-format is, for each row in the rubric:
-
-The points awarded for this row.
-  rubric_assessment[criterion_id][points]
-
-Comments to add for this row.
-  rubric_assessment[criterion_id][comments]
-
-For example, if the assignment rubric is (in JSON format):
-  !!!javascript
-  [
-    {
-      'id': 'crit1',
-      'points': 10,
-      'description': 'Criterion 1',
-      'ratings':
-      [
-        { 'description': 'Good', 'points': 10 },
-        { 'description': 'Poor', 'points': 3 }
-      ]
-    },
-    {
-      'id': 'crit2',
-      'points': 5,
-      'description': 'Criterion 2',
-      'ratings':
-      [
-        { 'description': 'Complete', 'points': 5 },
-        { 'description': 'Incomplete', 'points': 0 }
-      ]
-    }
-  ]
-
-Then a possible set of values for rubric_assessment would be:
-    rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done.
+        # OPTIONAL - rubric_assessment
+        """Assign a rubric assessment to this assignment submission. The
+        sub-parameters here depend on the rubric for the assignment. The general
+        format is, for each row in the rubric:
+        
+        The points awarded for this row.
+          rubric_assessment[criterion_id][points]
+        
+        Comments to add for this row.
+          rubric_assessment[criterion_id][comments]
+        
+        For example, if the assignment rubric is (in JSON format):
+          !!!javascript
+          [
+            {
+              'id': 'crit1',
+              'points': 10,
+              'description': 'Criterion 1',
+              'ratings':
+              [
+                { 'description': 'Good', 'points': 10 },
+                { 'description': 'Poor', 'points': 3 }
+              ]
+            },
+            {
+              'id': 'crit2',
+              'points': 5,
+              'description': 'Criterion 2',
+              'ratings':
+              [
+                { 'description': 'Complete', 'points': 5 },
+                { 'description': 'Incomplete', 'points': 0 }
+              ]
+            }
+          ]
+        
+        Then a possible set of values for rubric_assessment would be:
+            rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done."""
         if rubric_assessment is not None:
             data["rubric_assessment"] = rubric_assessment
 
@@ -520,106 +608,118 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # OPTIONAL - comment[text_comment] - Add a textual comment to the submission.
+        # OPTIONAL - comment[text_comment]
+        """Add a textual comment to the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
-        # OPTIONAL - comment[group_comment] - Whether or not this comment should be sent to the entire group (defaults
-to false). Ignored if this is not a group assignment or if no text_comment
-is provided.
+        # OPTIONAL - comment[group_comment]
+        """Whether or not this comment should be sent to the entire group (defaults
+        to false). Ignored if this is not a group assignment or if no text_comment
+        is provided."""
         if comment_group_comment is not None:
             data["comment[group_comment]"] = comment_group_comment
-        # OPTIONAL - comment[media_comment_id] - Add an audio/video comment to the submission. Media comments can be added
-via this API, however, note that there is not yet an API to generate or
-list existing media comments, so this functionality is currently of
-limited use.
+        # OPTIONAL - comment[media_comment_id]
+        """Add an audio/video comment to the submission. Media comments can be added
+        via this API, however, note that there is not yet an API to generate or
+        list existing media comments, so this functionality is currently of
+        limited use."""
         if comment_media_comment_id is not None:
             data["comment[media_comment_id]"] = comment_media_comment_id
-        # OPTIONAL - comment[media_comment_type] - The type of media comment being added.
+        # OPTIONAL - comment[media_comment_type]
+        """The type of media comment being added."""
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
             data["comment[media_comment_type]"] = comment_media_comment_type
-        # OPTIONAL - comment[file_ids] - Attach files to this comment that were previously uploaded using the
-Submission Comment API's files action
+        # OPTIONAL - comment[file_ids]
+        """Attach files to this comment that were previously uploaded using the
+        Submission Comment API's files action"""
         if comment_file_ids is not None:
             data["comment[file_ids]"] = comment_file_ids
-        # OPTIONAL - include[visibility] - Whether this assignment is visible to the owner of the submission
+        # OPTIONAL - include[visibility]
+        """Whether this assignment is visible to the owner of the submission"""
         if include_visibility is not None:
             data["include[visibility]"] = include_visibility
-        # OPTIONAL - submission[posted_grade] - Assign a score to the submission, updating both the "score" and "grade"
-fields on the submission record. This parameter can be passed in a few
-different formats:
-
-points:: A floating point or integral value, such as "13.5". The grade
-  will be interpreted directly as the score of the assignment.
-  Values above assignment.points_possible are allowed, for awarding
-  extra credit.
-percentage:: A floating point value appended with a percent sign, such as
-   "40%". The grade will be interpreted as a percentage score on the
-   assignment, where 100% == assignment.points_possible. Values above 100%
-   are allowed, for awarding extra credit.
-letter grade:: A letter grade, following the assignment's defined letter
-   grading scheme. For example, "A-". The resulting score will be the high
-   end of the defined range for the letter grade. For instance, if "B" is
-   defined as 86% to 84%, a letter grade of "B" will be worth 86%. The
-   letter grade will be rejected if the assignment does not have a defined
-   letter grading scheme. For more fine-grained control of scores, pass in
-   points or percentage rather than the letter grade.
-"pass/complete/fail/incomplete":: A string value of "pass" or "complete"
-   will give a score of 100%. "fail" or "incomplete" will give a score of
-   0.
-
-Note that assignments with grading_type of "pass_fail" can only be
-assigned a score of 0 or assignment.points_possible, nothing inbetween. If
-a posted_grade in the "points" or "percentage" format is sent, the grade
-will only be accepted if the grade equals one of those two values.
+        # OPTIONAL - submission[posted_grade]
+        """Assign a score to the submission, updating both the "score" and "grade"
+        fields on the submission record. This parameter can be passed in a few
+        different formats:
+        
+        points:: A floating point or integral value, such as "13.5". The grade
+          will be interpreted directly as the score of the assignment.
+          Values above assignment.points_possible are allowed, for awarding
+          extra credit.
+        percentage:: A floating point value appended with a percent sign, such as
+           "40%". The grade will be interpreted as a percentage score on the
+           assignment, where 100% == assignment.points_possible. Values above 100%
+           are allowed, for awarding extra credit.
+        letter grade:: A letter grade, following the assignment's defined letter
+           grading scheme. For example, "A-". The resulting score will be the high
+           end of the defined range for the letter grade. For instance, if "B" is
+           defined as 86% to 84%, a letter grade of "B" will be worth 86%. The
+           letter grade will be rejected if the assignment does not have a defined
+           letter grading scheme. For more fine-grained control of scores, pass in
+           points or percentage rather than the letter grade.
+        "pass/complete/fail/incomplete":: A string value of "pass" or "complete"
+           will give a score of 100%. "fail" or "incomplete" will give a score of
+           0.
+        
+        Note that assignments with grading_type of "pass_fail" can only be
+        assigned a score of 0 or assignment.points_possible, nothing inbetween. If
+        a posted_grade in the "points" or "percentage" format is sent, the grade
+        will only be accepted if the grade equals one of those two values."""
         if submission_posted_grade is not None:
             data["submission[posted_grade]"] = submission_posted_grade
-        # OPTIONAL - submission[excuse] - Sets the "excused" status of an assignment.
+        # OPTIONAL - submission[excuse]
+        """Sets the "excused" status of an assignment."""
         if submission_excuse is not None:
             data["submission[excuse]"] = submission_excuse
-        # OPTIONAL - rubric_assessment - Assign a rubric assessment to this assignment submission. The
-sub-parameters here depend on the rubric for the assignment. The general
-format is, for each row in the rubric:
-
-The points awarded for this row.
-  rubric_assessment[criterion_id][points]
-
-Comments to add for this row.
-  rubric_assessment[criterion_id][comments]
-
-For example, if the assignment rubric is (in JSON format):
-  !!!javascript
-  [
-    {
-      'id': 'crit1',
-      'points': 10,
-      'description': 'Criterion 1',
-      'ratings':
-      [
-        { 'description': 'Good', 'points': 10 },
-        { 'description': 'Poor', 'points': 3 }
-      ]
-    },
-    {
-      'id': 'crit2',
-      'points': 5,
-      'description': 'Criterion 2',
-      'ratings':
-      [
-        { 'description': 'Complete', 'points': 5 },
-        { 'description': 'Incomplete', 'points': 0 }
-      ]
-    }
-  ]
-
-Then a possible set of values for rubric_assessment would be:
-    rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done.
+        # OPTIONAL - rubric_assessment
+        """Assign a rubric assessment to this assignment submission. The
+        sub-parameters here depend on the rubric for the assignment. The general
+        format is, for each row in the rubric:
+        
+        The points awarded for this row.
+          rubric_assessment[criterion_id][points]
+        
+        Comments to add for this row.
+          rubric_assessment[criterion_id][comments]
+        
+        For example, if the assignment rubric is (in JSON format):
+          !!!javascript
+          [
+            {
+              'id': 'crit1',
+              'points': 10,
+              'description': 'Criterion 1',
+              'ratings':
+              [
+                { 'description': 'Good', 'points': 10 },
+                { 'description': 'Poor', 'points': 3 }
+              ]
+            },
+            {
+              'id': 'crit2',
+              'points': 5,
+              'description': 'Criterion 2',
+              'ratings':
+              [
+                { 'description': 'Complete', 'points': 5 },
+                { 'description': 'Incomplete', 'points': 0 }
+              ]
+            }
+          ]
+        
+        Then a possible set of values for rubric_assessment would be:
+            rubric_assessment[crit1][points]=3&rubric_assessment[crit2][points]=5&rubric_assessment[crit2][comments]=Well%20Done."""
         if rubric_assessment is not None:
             data["rubric_assessment"] = rubric_assessment
 
@@ -640,15 +740,17 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{assignment_id}/gradeable_students".format(**path), data=data, params=params, no_data=True)
 
-    def grade_or_comment_on_multiple_submissions_courses_submissions(self, course_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
+    def grade_or_comment_on_multiple_submissions_courses_submissions(self, course_id, grade_data_<student_id>_excuse=None, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
         Grade or comment on multiple submissions.
 
@@ -662,38 +764,51 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][posted_grade]
+        """See documentation for the posted_grade argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
-        # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][excuse]
+        """See documentation for the excuse argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
+        if grade_data_<student_id>_excuse is not None:
+            data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+        # OPTIONAL - grade_data[<student_id>][rubric_assessment]
+        """See documentation for the rubric_assessment argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
-        # OPTIONAL - grade_data[<student_id>][text_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][text_comment]
+        """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
-        # OPTIONAL - grade_data[<student_id>][group_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][group_comment]
+        """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
-        # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_id]
+        """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
-        # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_type]
+        """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
-        # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][file_ids]
+        """See documentation for the comment[] arguments in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_file_ids is not None:
             data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
         self.logger.debug("POST /api/v1/courses/{course_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
-    def grade_or_comment_on_multiple_submissions_courses_assignments(self, course_id, assignment_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
+    def grade_or_comment_on_multiple_submissions_courses_assignments(self, course_id, assignment_id, grade_data_<student_id>_excuse=None, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
         Grade or comment on multiple submissions.
 
@@ -707,40 +822,54 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][posted_grade]
+        """See documentation for the posted_grade argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
-        # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][excuse]
+        """See documentation for the excuse argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
+        if grade_data_<student_id>_excuse is not None:
+            data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+        # OPTIONAL - grade_data[<student_id>][rubric_assessment]
+        """See documentation for the rubric_assessment argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
-        # OPTIONAL - grade_data[<student_id>][text_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][text_comment]
+        """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
-        # OPTIONAL - grade_data[<student_id>][group_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][group_comment]
+        """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
-        # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_id]
+        """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
-        # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_type]
+        """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
-        # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][file_ids]
+        """See documentation for the comment[] arguments in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_file_ids is not None:
             data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
         self.logger.debug("POST /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
-    def grade_or_comment_on_multiple_submissions_sections_submissions(self, section_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
+    def grade_or_comment_on_multiple_submissions_sections_submissions(self, section_id, grade_data_<student_id>_excuse=None, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
         Grade or comment on multiple submissions.
 
@@ -754,38 +883,51 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][posted_grade]
+        """See documentation for the posted_grade argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
-        # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][excuse]
+        """See documentation for the excuse argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
+        if grade_data_<student_id>_excuse is not None:
+            data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+        # OPTIONAL - grade_data[<student_id>][rubric_assessment]
+        """See documentation for the rubric_assessment argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
-        # OPTIONAL - grade_data[<student_id>][text_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][text_comment]
+        """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
-        # OPTIONAL - grade_data[<student_id>][group_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][group_comment]
+        """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
-        # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_id]
+        """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
-        # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_type]
+        """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
-        # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][file_ids]
+        """See documentation for the comment[] arguments in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_file_ids is not None:
             data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
         self.logger.debug("POST /api/v1/sections/{section_id}/submissions/update_grades with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/sections/{section_id}/submissions/update_grades".format(**path), data=data, params=params, single_item=True)
 
-    def grade_or_comment_on_multiple_submissions_sections_assignments(self, section_id, assignment_id, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
+    def grade_or_comment_on_multiple_submissions_sections_assignments(self, section_id, assignment_id, grade_data_<student_id>_excuse=None, grade_data_<student_id>_file_ids=None, grade_data_<student_id>_group_comment=None, grade_data_<student_id>_media_comment_id=None, grade_data_<student_id>_media_comment_type=None, grade_data_<student_id>_posted_grade=None, grade_data_<student_id>_rubric_assessment=None, grade_data_<student_id>_text_comment=None):
         """
         Grade or comment on multiple submissions.
 
@@ -799,33 +941,47 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - grade_data[<student_id>][posted_grade] - See documentation for the posted_grade argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][posted_grade]
+        """See documentation for the posted_grade argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
-        # OPTIONAL - grade_data[<student_id>][rubric_assessment] - See documentation for the rubric_assessment argument in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][excuse]
+        """See documentation for the excuse argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
+        if grade_data_<student_id>_excuse is not None:
+            data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+        # OPTIONAL - grade_data[<student_id>][rubric_assessment]
+        """See documentation for the rubric_assessment argument in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
-        # OPTIONAL - grade_data[<student_id>][text_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][text_comment]
+        """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
-        # OPTIONAL - grade_data[<student_id>][group_comment] - no description
+        # OPTIONAL - grade_data[<student_id>][group_comment]
+        """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
-        # OPTIONAL - grade_data[<student_id>][media_comment_id] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_id]
+        """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
-        # OPTIONAL - grade_data[<student_id>][media_comment_type] - no description
+        # OPTIONAL - grade_data[<student_id>][media_comment_type]
+        """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
-        # OPTIONAL - grade_data[<student_id>][file_ids] - See documentation for the comment[] arguments in the
-{api:SubmissionsApiController#update Submissions Update} documentation
+        # OPTIONAL - grade_data[<student_id>][file_ids]
+        """See documentation for the comment[] arguments in the
+        {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_file_ids is not None:
             data["grade_data[<student_id>][file_ids]"] = grade_data_<student_id>_file_ids
 
@@ -844,11 +1000,14 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -866,11 +1025,14 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("PUT /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -888,11 +1050,14 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -910,11 +1075,14 @@ Then a possible set of values for rubric_assessment would be:
         data = {}
         params = {}
 
-        # REQUIRED - PATH - section_id - ID
+        # REQUIRED - PATH - section_id
+        """ID"""
         path["section_id"] = section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("DELETE /api/v1/sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}/read with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -1017,7 +1185,7 @@ class Submissioncomment(BaseModel):
 class Submission(BaseModel):
     """Submission Model."""
 
-    def __init__(self, body=None, attempt=None, submitted_at=None, excused=None, course=None, assignment_id=None, assignment=None, html_url=None, preview_url=None, late=None, grade=None, submission_comments=None, score=None, grade_matches_current_submission=None, url=None, grader_id=None, user_id=None, submission_type=None, assignment_visible=None, user=None):
+    def __init__(self, body=None, attempt=None, submitted_at=None, excused=None, course=None, assignment_id=None, assignment=None, workflow_state=None, html_url=None, preview_url=None, late=None, grade=None, submission_comments=None, score=None, grade_matches_current_submission=None, url=None, grader_id=None, user_id=None, submission_type=None, assignment_visible=None, user=None):
         """Init method for Submission class."""
         self._body = body
         self._attempt = attempt
@@ -1026,6 +1194,7 @@ class Submission(BaseModel):
         self._course = course
         self._assignment_id = assignment_id
         self._assignment = assignment
+        self._workflow_state = workflow_state
         self._html_url = html_url
         self._preview_url = preview_url
         self._late = late
@@ -1118,6 +1287,17 @@ class Submission(BaseModel):
         """Setter for assignment property."""
         self.logger.warn("Setting values on assignment will NOT update the remote Canvas instance.")
         self._assignment = value
+
+    @property
+    def workflow_state(self):
+        """The current state of the submission."""
+        return self._workflow_state
+
+    @workflow_state.setter
+    def workflow_state(self, value):
+        """Setter for workflow_state property."""
+        self.logger.warn("Setting values on workflow_state will NOT update the remote Canvas instance.")
+        self._workflow_state = value
 
     @property
     def html_url(self):

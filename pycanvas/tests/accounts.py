@@ -41,7 +41,7 @@ class TestAccountsAPI(unittest.TestCase):
         """Integration test for the AccountsAPI.list_active_courses_in_account method."""
         account_id = None  # Change me!!
 
-        r = self.client.list_active_courses_in_account(account_id, by_subaccounts=None, by_teachers=None, completed=None, enrollment_term_id=None, hide_enrollmentless_courses=None, include=None, published=None, search_term=None, state=None, with_enrollments=None)
+        r = self.client.list_active_courses_in_account(account_id, by_subaccounts=None, by_teachers=None, completed=None, enrollment_term_id=None, enrollment_type=None, hide_enrollmentless_courses=None, include=None, published=None, search_term=None, state=None, with_enrollments=None)
 
     def test_update_account(self):
         """Integration test for the AccountsAPI.update_account method."""

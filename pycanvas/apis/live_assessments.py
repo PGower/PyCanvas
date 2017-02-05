@@ -26,9 +26,11 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assessment_id - ID
+        # REQUIRED - PATH - assessment_id
+        """ID"""
         path["assessment_id"] = assessment_id
 
         self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments/{assessment_id}/results with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -44,11 +46,14 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assessment_id - ID
+        # REQUIRED - PATH - assessment_id
+        """ID"""
         path["assessment_id"] = assessment_id
-        # OPTIONAL - user_id - If set, restrict results to those for this user
+        # OPTIONAL - user_id
+        """If set, restrict results to those for this user"""
         if user_id is not None:
             params["user_id"] = user_id
 
@@ -66,7 +71,8 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("POST /api/v1/courses/{course_id}/live_assessments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -82,7 +88,8 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/live_assessments with query params: {params} and form data: {data}".format(params=params, data=data, **path))

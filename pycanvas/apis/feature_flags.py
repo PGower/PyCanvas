@@ -26,7 +26,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,7 +43,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -58,7 +60,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/features with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -75,7 +78,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -92,7 +96,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -109,7 +114,8 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/features/enabled with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -129,9 +135,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("GET /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -151,9 +159,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -173,15 +183,17 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("GET /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
-    def set_feature_flag_courses(self, feature, course_id, locking_account_id=None, state=None):
+    def set_feature_flag_courses(self, feature, course_id, state=None):
         """
         Set feature flag.
 
@@ -192,22 +204,25 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
-        # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
+        # OPTIONAL - state
+        """"off":: The feature is not available for the course, user, or account and sub-accounts.
+        "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
+                    sub-accounts and courses by setting a feature flag on the sub-account or course.
+        "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts."""
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
             data["state"] = state
-        # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
-        if locking_account_id is not None:
-            data["locking_account_id"] = locking_account_id
 
         self.logger.debug("PUT /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/courses/{course_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
-    def set_feature_flag_accounts(self, feature, account_id, locking_account_id=None, state=None):
+    def set_feature_flag_accounts(self, feature, account_id, state=None):
         """
         Set feature flag.
 
@@ -218,22 +233,25 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
-        # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
+        # OPTIONAL - state
+        """"off":: The feature is not available for the course, user, or account and sub-accounts.
+        "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
+                    sub-accounts and courses by setting a feature flag on the sub-account or course.
+        "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts."""
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
             data["state"] = state
-        # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
-        if locking_account_id is not None:
-            data["locking_account_id"] = locking_account_id
 
         self.logger.debug("PUT /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/accounts/{account_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
 
-    def set_feature_flag_users(self, user_id, feature, locking_account_id=None, state=None):
+    def set_feature_flag_users(self, user_id, feature, state=None):
         """
         Set feature flag.
 
@@ -244,17 +262,20 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
-        # OPTIONAL - state - "off":: The feature is not available for the course, user, or account and sub-accounts. "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in sub-accounts and courses by setting a feature flag on the sub-account or course. "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.
+        # OPTIONAL - state
+        """"off":: The feature is not available for the course, user, or account and sub-accounts.
+        "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
+                    sub-accounts and courses by setting a feature flag on the sub-account or course.
+        "on":: The feature is turned on unconditionally for the user, course, or account and sub-accounts."""
         if state is not None:
             self._validate_enum(state, ["off", "allowed", "on"])
             data["state"] = state
-        # OPTIONAL - locking_account_id - If set, this FeatureFlag may only be modified by someone with administrative rights in the specified account. The locking account must be above the target object in the account chain.
-        if locking_account_id is not None:
-            data["locking_account_id"] = locking_account_id
 
         self.logger.debug("PUT /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/users/{user_id}/features/flags/{feature}".format(**path), data=data, params=params, single_item=True)
@@ -272,9 +293,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -293,9 +316,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("DELETE /api/v1/accounts/{account_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -314,9 +339,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - PATH - feature - ID
+        # REQUIRED - PATH - feature
+        """ID"""
         path["feature"] = feature
 
         self.logger.debug("DELETE /api/v1/users/{user_id}/features/flags/{feature} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -326,38 +353,15 @@ class FeatureFlagsAPI(BaseCanvasAPI):
 class Featureflag(BaseModel):
     """Featureflag Model."""
 
-    def __init__(self, locking_account_id=None, locked=None, context_type=None, context_id=None, feature=None, state=None):
+    def __init__(self, context_type=None, context_id=None, state=None, locked=None, feature=None):
         """Init method for Featureflag class."""
-        self._locking_account_id = locking_account_id
-        self._locked = locked
         self._context_type = context_type
         self._context_id = context_id
-        self._feature = feature
         self._state = state
+        self._locked = locked
+        self._feature = feature
 
         self.logger = logging.getLogger('pycanvas.Featureflag')
-
-    @property
-    def locking_account_id(self):
-        """If set, this FeatureFlag can only be modified by someone with administrative rights in the specified account."""
-        return self._locking_account_id
-
-    @locking_account_id.setter
-    def locking_account_id(self, value):
-        """Setter for locking_account_id property."""
-        self.logger.warn("Setting values on locking_account_id will NOT update the remote Canvas instance.")
-        self._locking_account_id = value
-
-    @property
-    def locked(self):
-        """If set, this feature flag cannot be changed in the caller's context because the flag is set 'off' or 'on' in a higher context, or the flag is locked by an account the caller does not have permission to administer."""
-        return self._locked
-
-    @locked.setter
-    def locked(self, value):
-        """Setter for locked property."""
-        self.logger.warn("Setting values on locked will NOT update the remote Canvas instance.")
-        self._locked = value
 
     @property
     def context_type(self):
@@ -382,17 +386,6 @@ class Featureflag(BaseModel):
         self._context_id = value
 
     @property
-    def feature(self):
-        """The feature this flag controls."""
-        return self._feature
-
-    @feature.setter
-    def feature(self, value):
-        """Setter for feature property."""
-        self.logger.warn("Setting values on feature will NOT update the remote Canvas instance.")
-        self._feature = value
-
-    @property
     def state(self):
         """The policy for the feature at this context.  can be 'off', 'allowed', or 'on'."""
         return self._state
@@ -403,15 +396,38 @@ class Featureflag(BaseModel):
         self.logger.warn("Setting values on state will NOT update the remote Canvas instance.")
         self._state = value
 
+    @property
+    def locked(self):
+        """If set, this feature flag cannot be changed in the caller's context because the flag is set 'off' or 'on' in a higher context."""
+        return self._locked
+
+    @locked.setter
+    def locked(self, value):
+        """Setter for locked property."""
+        self.logger.warn("Setting values on locked will NOT update the remote Canvas instance.")
+        self._locked = value
+
+    @property
+    def feature(self):
+        """The feature this flag controls."""
+        return self._feature
+
+    @feature.setter
+    def feature(self, value):
+        """Setter for feature property."""
+        self.logger.warn("Setting values on feature will NOT update the remote Canvas instance.")
+        self._feature = value
+
 
 class Feature(BaseModel):
     """Feature Model."""
 
-    def __init__(self, development=None, display_name=None, name=None, enable_at=None, beta=None, feature_flag=None, applies_to=None, root_opt_in=None, release_notes_url=None):
+    def __init__(self, development=None, display_name=None, name=None, autoexpand=None, enable_at=None, beta=None, feature_flag=None, applies_to=None, root_opt_in=None, release_notes_url=None):
         """Init method for Feature class."""
         self._development = development
         self._display_name = display_name
         self._name = name
+        self._autoexpand = autoexpand
         self._enable_at = enable_at
         self._beta = beta
         self._feature_flag = feature_flag
@@ -453,6 +469,17 @@ class Feature(BaseModel):
         """Setter for name property."""
         self.logger.warn("Setting values on name will NOT update the remote Canvas instance.")
         self._name = value
+
+    @property
+    def autoexpand(self):
+        """Whether the details of the feature are autoexpanded on page load vs. the user clicking to expand."""
+        return self._autoexpand
+
+    @autoexpand.setter
+    def autoexpand(self, value):
+        """Setter for autoexpand property."""
+        self.logger.warn("Setting values on autoexpand will NOT update the remote Canvas instance.")
+        self._autoexpand = value
 
     @property
     def enable_at(self):

@@ -16,7 +16,7 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         super(AssignmentGroupsAPI, self).__init__(*args, **kwargs)
         self.logger = logging.getLogger("pycanvas.AssignmentGroupsAPI")
 
-    def list_assignment_groups(self, course_id, grading_period_id=None, include=None, override_assignment_dates=None):
+    def list_assignment_groups(self, course_id, exclude_assignment_submission_types=None, grading_period_id=None, include=None, override_assignment_dates=None, scope_assignments_to_student=None):
         """
         List assignment groups.
 
@@ -27,18 +27,39 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - include - Associations to include with the group. "discussion_topic", "all_dates" "assignment_visibility" are only valid are only valid if "assignments" is also included. The "assignment_visibility" option additionally requires that the Differentiated Assignments course feature be turned on.
+        # OPTIONAL - include
+        """Associations to include with the group. "discussion_topic", "all_dates"
+        "assignment_visibility" & "submission" are only valid are only valid if "assignments" is also included.
+        The "assignment_visibility" option additionally requires that the Differentiated Assignments course feature be turned on."""
         if include is not None:
-            self._validate_enum(include, ["assignments", "discussion_topic", "all_dates", "assignment_visibility"])
+            self._validate_enum(include, ["assignments", "discussion_topic", "all_dates", "assignment_visibility", "overrides", "submission"])
             params["include"] = include
-        # OPTIONAL - override_assignment_dates - Apply assignment overrides for each assignment, defaults to true.
+        # OPTIONAL - exclude_assignment_submission_types
+        """If "assignments" are included, those with the specified submission types
+        will be excluded from the assignment groups."""
+        if exclude_assignment_submission_types is not None:
+            self._validate_enum(exclude_assignment_submission_types, ["online_quiz", "discussion_topic", "wiki_page", "external_tool"])
+            params["exclude_assignment_submission_types"] = exclude_assignment_submission_types
+        # OPTIONAL - override_assignment_dates
+        """Apply assignment overrides for each assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
-        # OPTIONAL - grading_period_id - The id of the grading period in which assignment groups are being requested (Requires the Multiple Grading Periods account feature turned on)
+        # OPTIONAL - grading_period_id
+        """The id of the grading period in which assignment groups are being requested
+        (Requires the Multiple Grading Periods feature turned on.)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+        # OPTIONAL - scope_assignments_to_student
+        """If true, all assignments returned will apply to the current user in the
+        specified grading period. If assignments apply to other students in the
+        specified grading period, but not the current user, they will not be
+        returned. (Requires the grading_period_id argument and the Multiple Grading
+        Periods feature turned on. In addition, the current user must be a student.)"""
+        if scope_assignments_to_student is not None:
+            params["scope_assignments_to_student"] = scope_assignments_to_student
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups".format(**path), data=data, params=params, all_pages=True)
@@ -53,25 +74,33 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_group_id - ID
+        # REQUIRED - PATH - assignment_group_id
+        """ID"""
         path["assignment_group_id"] = assignment_group_id
-        # OPTIONAL - include - Associations to include with the group. "discussion_topic" and "assignment_visibility" are only valid if "assignments" is also included. The "assignment_visibility" option additionally requires that the Differentiated Assignments course feature be turned on.
+        # OPTIONAL - include
+        """Associations to include with the group. "discussion_topic" and "assignment_visibility" and "submission"
+        are only valid if "assignments" is also included. The "assignment_visibility" option additionally
+        requires that the Differentiated Assignments course feature be turned on."""
         if include is not None:
-            self._validate_enum(include, ["assignments", "discussion_topic", "assignment_visibility"])
+            self._validate_enum(include, ["assignments", "discussion_topic", "assignment_visibility", "submission"])
             params["include"] = include
-        # OPTIONAL - override_assignment_dates - Apply assignment overrides for each assignment, defaults to true.
+        # OPTIONAL - override_assignment_dates
+        """Apply assignment overrides for each assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
-        # OPTIONAL - grading_period_id - The id of the grading period in which assignment groups are being requested (Requires the Multiple Grading Periods account feature turned on)
+        # OPTIONAL - grading_period_id
+        """The id of the grading period in which assignment groups are being requested
+        (Requires the Multiple Grading Periods account feature turned on)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
 
-    def create_assignment_group(self, course_id, group_weight=None, name=None, position=None, rules=None):
+    def create_assignment_group(self, course_id, group_weight=None, integration_data=None, name=None, position=None, rules=None, sis_source_id=None):
         """
         Create an Assignment Group.
 
@@ -81,18 +110,32 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - name - The assignment group's name
+        # OPTIONAL - name
+        """The assignment group's name"""
         if name is not None:
             data["name"] = name
-        # OPTIONAL - position - The position of this assignment group in relation to the other assignment groups
+        # OPTIONAL - position
+        """The position of this assignment group in relation to the other assignment groups"""
         if position is not None:
             data["position"] = position
-        # OPTIONAL - group_weight - The percent of the total grade that this assignment group represents
+        # OPTIONAL - group_weight
+        """The percent of the total grade that this assignment group represents"""
         if group_weight is not None:
             data["group_weight"] = group_weight
-        # OPTIONAL - rules - The grading rules that are applied within this assignment group See the Assignment Group object definition for format
+        # OPTIONAL - sis_source_id
+        """The sis source id of the Assignment Group"""
+        if sis_source_id is not None:
+            data["sis_source_id"] = sis_source_id
+        # OPTIONAL - integration_data
+        """The integration data of the Assignment Group"""
+        if integration_data is not None:
+            data["integration_data"] = integration_data
+        # OPTIONAL - rules
+        """The grading rules that are applied within this assignment group
+        See the Assignment Group object definition for format"""
         if rules is not None:
             data["rules"] = rules
 
@@ -110,15 +153,17 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_group_id - ID
+        # REQUIRED - PATH - assignment_group_id
+        """ID"""
         path["assignment_group_id"] = assignment_group_id
 
         self.logger.debug("PUT /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
 
-    def destroy_assignment_group(self, course_id, assignment_group_id, move_assignment_to=None):
+    def destroy_assignment_group(self, course_id, assignment_group_id, move_assignments_to=None):
         """
         Destroy an Assignment Group.
 
@@ -128,13 +173,19 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_group_id - ID
+        # REQUIRED - PATH - assignment_group_id
+        """ID"""
         path["assignment_group_id"] = assignment_group_id
-        # OPTIONAL - move_assignment_to - The ID of an active Assignment Group to which the assignments that are currently assigned to the destroyed Assignment Group will be assigned. NOTE: If this argument is not provided, any assignments in this Assignment Group will be deleted.
-        if move_assignment_to is not None:
-            params["move_assignment_to"] = move_assignment_to
+        # OPTIONAL - move_assignments_to
+        """The ID of an active Assignment Group to which the assignments that are
+        currently assigned to the destroyed Assignment Group will be assigned.
+        NOTE: If this argument is not provided, any assignments in this Assignment
+        Group will be deleted."""
+        if move_assignments_to is not None:
+            params["move_assignments_to"] = move_assignments_to
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/assignment_groups/{assignment_group_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignment_groups/{assignment_group_id}".format(**path), data=data, params=params, single_item=True)
@@ -188,12 +239,14 @@ class Gradingrules(BaseModel):
 class Assignmentgroup(BaseModel):
     """Assignmentgroup Model."""
 
-    def __init__(self, group_weight=None, name=None, rules=None, assignments=None, position=None, id=None):
+    def __init__(self, group_weight=None, name=None, rules=None, assignments=None, sis_source_id=None, integration_data=None, position=None, id=None):
         """Init method for Assignmentgroup class."""
         self._group_weight = group_weight
         self._name = name
         self._rules = rules
         self._assignments = assignments
+        self._sis_source_id = sis_source_id
+        self._integration_data = integration_data
         self._position = position
         self._id = id
 
@@ -242,6 +295,28 @@ class Assignmentgroup(BaseModel):
         """Setter for assignments property."""
         self.logger.warn("Setting values on assignments will NOT update the remote Canvas instance.")
         self._assignments = value
+
+    @property
+    def sis_source_id(self):
+        """the sis source id of the Assignment Group."""
+        return self._sis_source_id
+
+    @sis_source_id.setter
+    def sis_source_id(self, value):
+        """Setter for sis_source_id property."""
+        self.logger.warn("Setting values on sis_source_id will NOT update the remote Canvas instance.")
+        self._sis_source_id = value
+
+    @property
+    def integration_data(self):
+        """the integration data of the Assignment Group."""
+        return self._integration_data
+
+    @integration_data.setter
+    def integration_data(self, value):
+        """Setter for integration_data property."""
+        self.logger.warn("Setting values on integration_data will NOT update the remote Canvas instance.")
+        self._integration_data = value
 
     @property
     def position(self):

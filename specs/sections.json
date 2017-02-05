@@ -28,7 +28,7 @@
             {
               "paramType": "query",
               "name": "include",
-              "description": "- \"students\": Associations to include with the group. Note: this is only available if you have permission to view users or grades in the course - \"avatar_url\": Include the avatar URLs for students returned. - \"enrollments\": If 'students' is also included, return the section enrollment for each student - \"total_students\": Returns the total amount of active and invited students for the course section - \"passback_status\": Include the grade passback status.",
+              "description": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
               "type": "array",
               "format": null,
               "required": false,
@@ -89,7 +89,7 @@
               "paramType": "form",
               "name": "course_section[start_at]",
               "description": "Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -97,7 +97,7 @@
               "paramType": "form",
               "name": "course_section[end_at]",
               "description": "Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -105,6 +105,14 @@
               "paramType": "form",
               "name": "course_section[restrict_enrollments_to_section_dates]",
               "description": "Set to true to restrict user enrollments to the start and end dates of the section.",
+              "type": "boolean",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "enable_sis_reactivation",
+              "description": "When true, will first try to re-activate a deleted section with matching sis_section_id if possible.",
               "type": "boolean",
               "format": null,
               "required": false
@@ -170,12 +178,12 @@
     },
     {
       "path": "/v1/sections/{id}",
-      "description": "Modify an existing section.  See the documentation for {api:SectionsController#create create API action}.",
+      "description": "Modify an existing section.",
       "operations": [
         {
           "method": "PUT",
           "summary": "Edit a section",
-          "notes": "Modify an existing section.  See the documentation for {api:SectionsController#create create API action}.",
+          "notes": "Modify an existing section.",
           "nickname": "edit_section",
           "parameters": [
             {
@@ -185,6 +193,46 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "course_section[name]",
+              "description": "The name of the section",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "course_section[sis_section_id]",
+              "description": "The sis ID of the section",
+              "type": "string",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "course_section[start_at]",
+              "description": "Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z",
+              "type": "DateTime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "course_section[end_at]",
+              "description": "Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z",
+              "type": "DateTime",
+              "format": null,
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "course_section[restrict_enrollments_to_section_dates]",
+              "description": "Set to true to restrict user enrollments to the start and end dates of the section.",
+              "type": "boolean",
+              "format": null,
+              "required": false
             }
           ],
           "type": "Section"
@@ -216,6 +264,24 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "students",
+                "avatar_url",
+                "enrollments",
+                "total_students",
+                "passback_status"
+              ],
+              "items": {
+                "type": "string"
+              }
             }
           ],
           "type": "Section"
@@ -239,6 +305,24 @@
               "type": "string",
               "format": null,
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "include",
+              "description": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
+              "type": "array",
+              "format": null,
+              "required": false,
+              "enum": [
+                "students",
+                "avatar_url",
+                "enrollments",
+                "total_students",
+                "passback_status"
+              ],
+              "items": {
+                "type": "string"
+              }
             }
           ],
           "type": "Section"

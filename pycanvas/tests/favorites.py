@@ -20,8 +20,18 @@ class TestFavoritesAPI(unittest.TestCase):
 
         r = self.client.list_favorite_courses()
 
+    def test_list_favorite_groups(self):
+        """Integration test for the FavoritesAPI.list_favorite_groups method."""
+
+        r = self.client.list_favorite_groups()
+
     def test_add_course_to_favorites(self):
         """Integration test for the FavoritesAPI.add_course_to_favorites method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_add_group_to_favorites(self):
+        """Integration test for the FavoritesAPI.add_group_to_favorites method."""
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
         pass
 
@@ -31,8 +41,19 @@ class TestFavoritesAPI(unittest.TestCase):
 
         r = self.client.remove_course_from_favorites(id)
 
+    def test_remove_group_from_favorites(self):
+        """Integration test for the FavoritesAPI.remove_group_from_favorites method."""
+        id = None  # Change me!!
+
+        r = self.client.remove_group_from_favorites(id)
+
     def test_reset_course_favorites(self):
         """Integration test for the FavoritesAPI.reset_course_favorites method."""
 
         r = self.client.reset_course_favorites()
+
+    def test_reset_group_favorites(self):
+        """Integration test for the FavoritesAPI.reset_group_favorites method."""
+
+        r = self.client.reset_group_favorites()
 

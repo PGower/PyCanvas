@@ -27,9 +27,12 @@ class QuizAssignmentOverridesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - quiz_assignment_overrides[0][quiz_ids] - An array of quiz IDs. If omitted, overrides for all quizzes available to the operating user will be returned.
+        # OPTIONAL - quiz_assignment_overrides[0][quiz_ids]
+        """An array of quiz IDs. If omitted, overrides for all quizzes available to
+        the operating user will be returned."""
         if quiz_assignment_overrides_0_quiz_ids is not None:
             params["quiz_assignment_overrides[0][quiz_ids]"] = quiz_assignment_overrides_0_quiz_ids
 

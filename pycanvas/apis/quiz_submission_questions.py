@@ -28,39 +28,17 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - quiz_submission_id - ID
+        # REQUIRED - PATH - quiz_submission_id
+        """ID"""
         path["quiz_submission_id"] = quiz_submission_id
-        # OPTIONAL - include - Associations to include with the quiz submission question.
+        # OPTIONAL - include
+        """Associations to include with the quiz submission question."""
         if include is not None:
             self._validate_enum(include, ["quiz_question"])
             params["include"] = include
 
         self.logger.debug("GET /api/v1/quiz_submissions/{quiz_submission_id}/questions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/quiz_submissions/{quiz_submission_id}/questions".format(**path), data=data, params=params, no_data=True)
-
-    def get_single_quiz_submission_question(self, id, quiz_submission_id, include=None):
-        """
-        Get a single quiz submission question.
-
-        Get a single question record.
-        
-        <b>200 OK</b> response code is returned if the request was successful.
-        """
-        path = {}
-        data = {}
-        params = {}
-
-        # REQUIRED - PATH - quiz_submission_id - ID
-        path["quiz_submission_id"] = quiz_submission_id
-        # REQUIRED - PATH - id - ID
-        path["id"] = id
-        # OPTIONAL - include - Associations to include with the quiz submission question.
-        if include is not None:
-            self._validate_enum(include, ["quiz_question"])
-            params["include"] = include
-
-        self.logger.debug("GET /api/v1/quiz_submissions/{quiz_submission_id}/questions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("GET", "/api/v1/quiz_submissions/{quiz_submission_id}/questions/{id}".format(**path), data=data, params=params, no_data=True)
 
     def answering_questions(self, attempt, validation_token, quiz_submission_id, access_code=None, quiz_questions=None):
         """
@@ -72,16 +50,27 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - quiz_submission_id - ID
+        # REQUIRED - PATH - quiz_submission_id
+        """ID"""
         path["quiz_submission_id"] = quiz_submission_id
-        # REQUIRED - attempt - The attempt number of the quiz submission being taken. Note that this must be the latest attempt index, as questions for earlier attempts can not be modified.
+        # REQUIRED - attempt
+        """The attempt number of the quiz submission being taken. Note that this
+        must be the latest attempt index, as questions for earlier attempts can
+        not be modified."""
         data["attempt"] = attempt
-        # REQUIRED - validation_token - The unique validation token you received when the Quiz Submission was created.
+        # REQUIRED - validation_token
+        """The unique validation token you received when the Quiz Submission was
+        created."""
         data["validation_token"] = validation_token
-        # OPTIONAL - access_code - Access code for the Quiz, if any.
+        # OPTIONAL - access_code
+        """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
-        # OPTIONAL - quiz_questions - Set of question IDs and the answer value. See {Appendix: Question Answer Formats} for the accepted answer formats for each question type.
+        # OPTIONAL - quiz_questions
+        """Set of question IDs and the answer value.
+        
+        See {Appendix: Question Answer Formats} for the accepted answer formats
+        for each question type."""
         if quiz_questions is not None:
             data["quiz_questions"] = quiz_questions
 
@@ -99,15 +88,23 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - quiz_submission_id - ID
+        # REQUIRED - PATH - quiz_submission_id
+        """ID"""
         path["quiz_submission_id"] = quiz_submission_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - attempt - The attempt number of the quiz submission being taken. Note that this must be the latest attempt index, as questions for earlier attempts can not be modified.
+        # REQUIRED - attempt
+        """The attempt number of the quiz submission being taken. Note that this
+        must be the latest attempt index, as questions for earlier attempts can
+        not be modified."""
         data["attempt"] = attempt
-        # REQUIRED - validation_token - The unique validation token you received when the Quiz Submission was created.
+        # REQUIRED - validation_token
+        """The unique validation token you received when the Quiz Submission was
+        created."""
         data["validation_token"] = validation_token
-        # OPTIONAL - access_code - Access code for the Quiz, if any.
+        # OPTIONAL - access_code
+        """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
 
@@ -125,15 +122,23 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - quiz_submission_id - ID
+        # REQUIRED - PATH - quiz_submission_id
+        """ID"""
         path["quiz_submission_id"] = quiz_submission_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - attempt - The attempt number of the quiz submission being taken. Note that this must be the latest attempt index, as questions for earlier attempts can not be modified.
+        # REQUIRED - attempt
+        """The attempt number of the quiz submission being taken. Note that this
+        must be the latest attempt index, as questions for earlier attempts can
+        not be modified."""
         data["attempt"] = attempt
-        # REQUIRED - validation_token - The unique validation token you received when the Quiz Submission was created.
+        # REQUIRED - validation_token
+        """The unique validation token you received when the Quiz Submission was
+        created."""
         data["validation_token"] = validation_token
-        # OPTIONAL - access_code - Access code for the Quiz, if any.
+        # OPTIONAL - access_code
+        """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
 
@@ -144,10 +149,11 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
 class Quizsubmissionquestion(BaseModel):
     """Quizsubmissionquestion Model."""
 
-    def __init__(self, id, answer=None, flagged=None):
+    def __init__(self, id, answer=None, answers=None, flagged=None):
         """Init method for Quizsubmissionquestion class."""
         self._answer = answer
         self._id = id
+        self._answers = answers
         self._flagged = flagged
 
         self.logger = logging.getLogger('pycanvas.Quizsubmissionquestion')
@@ -173,6 +179,17 @@ class Quizsubmissionquestion(BaseModel):
         """Setter for id property."""
         self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
         self._id = value
+
+    @property
+    def answers(self):
+        """The possible answers for this question when those possible answers are necessary.  The presence of this parameter is dependent on permissions."""
+        return self._answers
+
+    @answers.setter
+    def answers(self, value):
+        """Setter for answers property."""
+        self.logger.warn("Setting values on answers will NOT update the remote Canvas instance.")
+        self._answers = value
 
     @property
     def flagged(self):

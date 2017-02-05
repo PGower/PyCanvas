@@ -20,13 +20,13 @@ class TestDiscussionTopicsAPI(unittest.TestCase):
         """Integration test for the DiscussionTopicsAPI.list_discussion_topics_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_discussion_topics_courses(course_id, only_announcements=None, order_by=None, scope=None, search_term=None)
+        r = self.client.list_discussion_topics_courses(course_id, exclude_context_module_locked_topics=None, include=None, only_announcements=None, order_by=None, scope=None, search_term=None)
 
     def test_list_discussion_topics_groups(self):
         """Integration test for the DiscussionTopicsAPI.list_discussion_topics_groups method."""
         group_id = None  # Change me!!
 
-        r = self.client.list_discussion_topics_groups(group_id, only_announcements=None, order_by=None, scope=None, search_term=None)
+        r = self.client.list_discussion_topics_groups(group_id, exclude_context_module_locked_topics=None, include=None, only_announcements=None, order_by=None, scope=None, search_term=None)
 
     def test_create_new_discussion_topic_courses(self):
         """Integration test for the DiscussionTopicsAPI.create_new_discussion_topic_courses method."""
@@ -263,6 +263,16 @@ class TestDiscussionTopicsAPI(unittest.TestCase):
         entry_id = None  # Change me!!
 
         r = self.client.mark_entry_as_unread_groups(group_id, topic_id, entry_id, forced_read_state=None)
+
+    def test_rate_entry_courses(self):
+        """Integration test for the DiscussionTopicsAPI.rate_entry_courses method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_rate_entry_groups(self):
+        """Integration test for the DiscussionTopicsAPI.rate_entry_groups method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
 
     def test_subscribe_to_topic_courses(self):
         """Integration test for the DiscussionTopicsAPI.subscribe_to_topic_courses method."""

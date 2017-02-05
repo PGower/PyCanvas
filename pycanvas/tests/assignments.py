@@ -34,7 +34,14 @@ class TestAssignmentsAPI(unittest.TestCase):
         """Integration test for the AssignmentsAPI.list_assignments method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_assignments(course_id, bucket=None, include=None, needs_grading_count_by_section=None, override_assignment_dates=None, search_term=None)
+        r = self.client.list_assignments(course_id, assignment_ids=None, bucket=None, include=None, needs_grading_count_by_section=None, override_assignment_dates=None, search_term=None)
+
+    def test_list_assignments_for_user(self):
+        """Integration test for the AssignmentsAPI.list_assignments_for_user method."""
+        user_id = None  # Change me!!
+        course_id = None  # Change me!!
+
+        r = self.client.list_assignments_for_user(user_id, course_id)
 
     def test_get_single_assignment(self):
         """Integration test for the AssignmentsAPI.get_single_assignment method."""
@@ -99,4 +106,22 @@ class TestAssignmentsAPI(unittest.TestCase):
         id = None  # Change me!!
 
         r = self.client.delete_assignment_override(id, course_id, assignment_id)
+
+    def test_batch_retrieve_overrides_in_course(self):
+        """Integration test for the AssignmentsAPI.batch_retrieve_overrides_in_course method."""
+        course_id = None  # Change me!!
+        assignment_overrides[id] = None  # Change me!!
+        assignment_overrides[assignment_id] = None  # Change me!!
+
+        r = self.client.batch_retrieve_overrides_in_course(course_id, assignment_overrides_id, assignment_overrides_assignment_id)
+
+    def test_batch_create_overrides_in_course(self):
+        """Integration test for the AssignmentsAPI.batch_create_overrides_in_course method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_batch_update_overrides_in_course(self):
+        """Integration test for the AssignmentsAPI.batch_update_overrides_in_course method."""
+        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
+        pass
 

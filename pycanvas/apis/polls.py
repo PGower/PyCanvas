@@ -39,7 +39,8 @@ class PollsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -55,9 +56,11 @@ class PollsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - polls[question] - The title of the poll.
+        # REQUIRED - polls[question]
+        """The title of the poll."""
         data["polls[question]"] = polls_question
-        # OPTIONAL - polls[description] - A brief description or instructions for the poll.
+        # OPTIONAL - polls[description]
+        """A brief description or instructions for the poll."""
         if polls_description is not None:
             data["polls[description]"] = polls_description
 
@@ -74,11 +77,14 @@ class PollsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - polls[question] - The title of the poll.
+        # REQUIRED - polls[question]
+        """The title of the poll."""
         data["polls[question]"] = polls_question
-        # OPTIONAL - polls[description] - A brief description or instructions for the poll.
+        # OPTIONAL - polls[description]
+        """A brief description or instructions for the poll."""
         if polls_description is not None:
             data["polls[description]"] = polls_description
 
@@ -95,7 +101,8 @@ class PollsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/polls/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))

@@ -26,7 +26,8 @@ class OutcomesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/outcomes/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -53,34 +54,46 @@ class OutcomesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - title - The new outcome title.
+        # OPTIONAL - title
+        """The new outcome title."""
         if title is not None:
             data["title"] = title
-        # OPTIONAL - display_name - A friendly name shown in reports for outcomes with cryptic titles, such as common core standards names.
+        # OPTIONAL - display_name
+        """A friendly name shown in reports for outcomes with cryptic titles,
+        such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
-        # OPTIONAL - description - The new outcome description.
+        # OPTIONAL - description
+        """The new outcome description."""
         if description is not None:
             data["description"] = description
-        # OPTIONAL - vendor_guid - A custom GUID for the learning standard.
+        # OPTIONAL - vendor_guid
+        """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
-        # OPTIONAL - mastery_points - The new mastery threshold for the embedded rubric criterion.
+        # OPTIONAL - mastery_points
+        """The new mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
-        # OPTIONAL - ratings[description] - The description of a new rating level for the embedded rubric criterion.
+        # OPTIONAL - ratings[description]
+        """The description of a new rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
-        # OPTIONAL - ratings[points] - The points corresponding to a new rating level for the embedded rubric criterion.
+        # OPTIONAL - ratings[points]
+        """The points corresponding to a new rating level for the embedded rubric
+        criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
-        # OPTIONAL - calculation_method - The new calculation method.
+        # OPTIONAL - calculation_method
+        """The new calculation method."""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
-        # OPTIONAL - calculation_int - The new calculation int. Only applies if the calculation_method is "decaying_average" or "n_mastery"
+        # OPTIONAL - calculation_int
+        """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
             data["calculation_int"] = calculation_int
 
@@ -91,7 +104,7 @@ class OutcomesAPI(BaseCanvasAPI):
 class Outcome(BaseModel):
     """Outcome Model."""
 
-    def __init__(self, vendor_guid=None, can_edit=None, display_name=None, description=None, title=None, url=None, context_id=None, points_possible=None, context_type=None, ratings=None, calculation_int=None, calculation_method=None, assessed=None, id=None, mastery_points=None):
+    def __init__(self, vendor_guid=None, can_edit=None, display_name=None, description=None, title=None, url=None, context_id=None, points_possible=None, can_unlink=None, context_type=None, ratings=None, calculation_int=None, calculation_method=None, assessed=None, id=None, mastery_points=None):
         """Init method for Outcome class."""
         self._vendor_guid = vendor_guid
         self._can_edit = can_edit
@@ -101,6 +114,7 @@ class Outcome(BaseModel):
         self._url = url
         self._context_id = context_id
         self._points_possible = points_possible
+        self._can_unlink = can_unlink
         self._context_type = context_type
         self._ratings = ratings
         self._calculation_int = calculation_int
@@ -198,6 +212,17 @@ class Outcome(BaseModel):
         """Setter for points_possible property."""
         self.logger.warn("Setting values on points_possible will NOT update the remote Canvas instance.")
         self._points_possible = value
+
+    @property
+    def can_unlink(self):
+        """whether the outcome can be unlinked."""
+        return self._can_unlink
+
+    @can_unlink.setter
+    def can_unlink(self, value):
+        """Setter for can_unlink property."""
+        self.logger.warn("Setting values on can_unlink will NOT update the remote Canvas instance.")
+        self._can_unlink = value
 
     @property
     def context_type(self):

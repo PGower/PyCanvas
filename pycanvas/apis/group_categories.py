@@ -26,7 +26,8 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -42,7 +43,8 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/group_categories with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -59,7 +61,8 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
 
         self.logger.debug("GET /api/v1/group_categories/{group_category_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -75,25 +78,45 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - name - Name of the group category
+        # REQUIRED - name
+        """Name of the group category"""
         data["name"] = name
-        # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
+        # OPTIONAL - self_signup
+        """Allow students to sign up for a group themselves (Course Only).
+        valid values are:
+        "enabled":: allows students to self sign up for any group in course
+        "restricted":: allows students to self sign up only for groups in the
+                       same section null disallows self sign up"""
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
             data["self_signup"] = self_signup
-        # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
+        # OPTIONAL - auto_leader
+        """Assigns group leaders automatically when generating and allocating students to groups
+        Valid values are:
+        "first":: the first student to be allocated to a group is the leader
+        "random":: a random student from all members is chosen as the leader"""
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
             data["auto_leader"] = auto_leader
-        # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
+        # OPTIONAL - group_limit
+        """Limit the maximum number of users in each group (Course Only). Requires
+        self signup."""
         if group_limit is not None:
             data["group_limit"] = group_limit
-        # OPTIONAL - create_group_count - Create this number of groups (Course Only).
+        # OPTIONAL - create_group_count
+        """Create this number of groups (Course Only)."""
         if create_group_count is not None:
             data["create_group_count"] = create_group_count
-        # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
+        # OPTIONAL - split_group_count
+        """(Deprecated)
+        Create this number of groups, and evenly distribute students
+        among them. not allowed with "enable_self_signup". because
+        the group assignment happens synchronously, it's recommended
+        that you instead use the assign_unassigned_members endpoint.
+        (Course Only)"""
         if split_group_count is not None:
             data["split_group_count"] = split_group_count
 
@@ -110,25 +133,45 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - name - Name of the group category
+        # REQUIRED - name
+        """Name of the group category"""
         data["name"] = name
-        # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
+        # OPTIONAL - self_signup
+        """Allow students to sign up for a group themselves (Course Only).
+        valid values are:
+        "enabled":: allows students to self sign up for any group in course
+        "restricted":: allows students to self sign up only for groups in the
+                       same section null disallows self sign up"""
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
             data["self_signup"] = self_signup
-        # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
+        # OPTIONAL - auto_leader
+        """Assigns group leaders automatically when generating and allocating students to groups
+        Valid values are:
+        "first":: the first student to be allocated to a group is the leader
+        "random":: a random student from all members is chosen as the leader"""
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
             data["auto_leader"] = auto_leader
-        # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
+        # OPTIONAL - group_limit
+        """Limit the maximum number of users in each group (Course Only). Requires
+        self signup."""
         if group_limit is not None:
             data["group_limit"] = group_limit
-        # OPTIONAL - create_group_count - Create this number of groups (Course Only).
+        # OPTIONAL - create_group_count
+        """Create this number of groups (Course Only)."""
         if create_group_count is not None:
             data["create_group_count"] = create_group_count
-        # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
+        # OPTIONAL - split_group_count
+        """(Deprecated)
+        Create this number of groups, and evenly distribute students
+        among them. not allowed with "enable_self_signup". because
+        the group assignment happens synchronously, it's recommended
+        that you instead use the assign_unassigned_members endpoint.
+        (Course Only)"""
         if split_group_count is not None:
             data["split_group_count"] = split_group_count
 
@@ -145,26 +188,46 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
-        # OPTIONAL - name - Name of the group category
+        # OPTIONAL - name
+        """Name of the group category"""
         if name is not None:
             data["name"] = name
-        # OPTIONAL - self_signup - Allow students to sign up for a group themselves (Course Only). Valid values are: "enabled":: allows students to self sign up for any group in course "restricted":: allows students to self sign up only for groups in the same section null disallows self sign up
+        # OPTIONAL - self_signup
+        """Allow students to sign up for a group themselves (Course Only).
+        Valid values are:
+        "enabled":: allows students to self sign up for any group in course
+        "restricted":: allows students to self sign up only for groups in the
+                       same section null disallows self sign up"""
         if self_signup is not None:
             self._validate_enum(self_signup, ["enabled", "restricted"])
             data["self_signup"] = self_signup
-        # OPTIONAL - auto_leader - Assigns group leaders automatically when generating and allocating students to groups Valid values are: "first":: the first student to be allocated to a group is the leader "random":: a random student from all members is chosen as the leader
+        # OPTIONAL - auto_leader
+        """Assigns group leaders automatically when generating and allocating students to groups
+        Valid values are:
+        "first":: the first student to be allocated to a group is the leader
+        "random":: a random student from all members is chosen as the leader"""
         if auto_leader is not None:
             self._validate_enum(auto_leader, ["first", "random"])
             data["auto_leader"] = auto_leader
-        # OPTIONAL - group_limit - Limit the maximum number of users in each group (Course Only). Requires self signup.
+        # OPTIONAL - group_limit
+        """Limit the maximum number of users in each group (Course Only). Requires
+        self signup."""
         if group_limit is not None:
             data["group_limit"] = group_limit
-        # OPTIONAL - create_group_count - Create this number of groups (Course Only).
+        # OPTIONAL - create_group_count
+        """Create this number of groups (Course Only)."""
         if create_group_count is not None:
             data["create_group_count"] = create_group_count
-        # OPTIONAL - split_group_count - (Deprecated) Create this number of groups, and evenly distribute students among them. not allowed with "enable_self_signup". because the group assignment happens synchronously, it's recommended that you instead use the assign_unassigned_members endpoint. (Course Only)
+        # OPTIONAL - split_group_count
+        """(Deprecated)
+        Create this number of groups, and evenly distribute students
+        among them. not allowed with "enable_self_signup". because
+        the group assignment happens synchronously, it's recommended
+        that you instead use the assign_unassigned_members endpoint.
+        (Course Only)"""
         if split_group_count is not None:
             data["split_group_count"] = split_group_count
 
@@ -182,7 +245,8 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
 
         self.logger.debug("DELETE /api/v1/group_categories/{group_category_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -198,7 +262,8 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
 
         self.logger.debug("GET /api/v1/group_categories/{group_category_id}/groups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -214,12 +279,17 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
-        # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list. Must be at least 3 characters.
+        # OPTIONAL - search_term
+        """The partial name or full ID of the users to match and return in the results
+        list. Must be at least 3 characters."""
         if search_term is not None:
             params["search_term"] = search_term
-        # OPTIONAL - unassigned - Set this value to true if you wish only to search unassigned users in the group category.
+        # OPTIONAL - unassigned
+        """Set this value to true if you wish only to search unassigned users in the
+        group category."""
         if unassigned is not None:
             params["unassigned"] = unassigned
 
@@ -237,9 +307,13 @@ class GroupCategoriesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_category_id - ID
+        # REQUIRED - PATH - group_category_id
+        """ID"""
         path["group_category_id"] = group_category_id
-        # OPTIONAL - sync - The assigning is done asynchronously by default. If you would like to override this and have the assigning done synchronously, set this value to true.
+        # OPTIONAL - sync
+        """The assigning is done asynchronously by default. If you would like to
+        override this and have the assigning done synchronously, set this value
+        to true."""
         if sync is not None:
             data["sync"] = sync
 

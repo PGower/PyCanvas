@@ -26,15 +26,17 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/assignments/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignments/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def list_assignments(self, course_id, bucket=None, include=None, needs_grading_count_by_section=None, override_assignment_dates=None, search_term=None):
+    def list_assignments(self, course_id, assignment_ids=None, bucket=None, include=None, needs_grading_count_by_section=None, override_assignment_dates=None, search_term=None):
         """
         List assignments.
 
@@ -44,60 +46,102 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - include - Associations to include with the assignment. The "assignment_visibility" option requires that the Differentiated Assignments course feature be turned on.
+        # OPTIONAL - include
+        """Associations to include with the assignment. The "assignment_visibility" option
+        requires that the Differentiated Assignments course feature be turned on. If
+        "observed_users" is passed, submissions for observed users will also be included as an array."""
         if include is not None:
-            self._validate_enum(include, ["submission", "assignment_visibility", "all_dates", "overrides"])
+            self._validate_enum(include, ["submission", "assignment_visibility", "all_dates", "overrides", "observed_users"])
             params["include"] = include
-        # OPTIONAL - search_term - The partial title of the assignments to match and return.
+        # OPTIONAL - search_term
+        """The partial title of the assignments to match and return."""
         if search_term is not None:
             params["search_term"] = search_term
-        # OPTIONAL - override_assignment_dates - Apply assignment overrides for each assignment, defaults to true.
+        # OPTIONAL - override_assignment_dates
+        """Apply assignment overrides for each assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
-        # OPTIONAL - needs_grading_count_by_section - Split up "needs_grading_count" by sections into the "needs_grading_count_by_section" key, defaults to false
+        # OPTIONAL - needs_grading_count_by_section
+        """Split up "needs_grading_count" by sections into the "needs_grading_count_by_section" key, defaults to false"""
         if needs_grading_count_by_section is not None:
             params["needs_grading_count_by_section"] = needs_grading_count_by_section
-        # OPTIONAL - bucket - If included, only return certain assignments depending on due date and submission status. Valid buckets are "past", "overdue", "undated", "ungraded", "upcoming", and "future".
+        # OPTIONAL - bucket
+        """If included, only return certain assignments depending on due date and submission status."""
         if bucket is not None:
+            self._validate_enum(bucket, ["past", "overdue", "undated", "ungraded", "unsubmitted", "upcoming", "future"])
             params["bucket"] = bucket
+        # OPTIONAL - assignment_ids
+        """if set, return only assignments specified"""
+        if assignment_ids is not None:
+            params["assignment_ids"] = assignment_ids
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments".format(**path), data=data, params=params, all_pages=True)
+
+    def list_assignments_for_user(self, user_id, course_id):
+        """
+        List assignments for user.
+
+        Returns the list of assignments for the specified user if the current user has rights to view.
+        See {api:AssignmentsApiController#index List assignments} for valid arguments.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - user_id
+        """ID"""
+        path["user_id"] = user_id
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+
+        self.logger.debug("GET /api/v1/users/{user_id}/courses/{course_id}/assignments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/courses/{course_id}/assignments".format(**path), data=data, params=params, no_data=True)
 
     def get_single_assignment(self, id, course_id, all_dates=None, include=None, needs_grading_count_by_section=None, override_assignment_dates=None):
         """
         Get a single assignment.
 
         Returns the assignment with the given id.
+         "observed_users" is passed, submissions for observed users will also be included.
         """
         path = {}
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - include - Associations to include with the assignment. The "assignment_visibility" option requires that the Differentiated Assignments course feature be turned on.
+        # OPTIONAL - include
+        """Associations to include with the assignment. The "assignment_visibility" option
+        requires that the Differentiated Assignments course feature be turned on. If"""
         if include is not None:
-            self._validate_enum(include, ["submission", "assignment_visibility", "overrides"])
+            self._validate_enum(include, ["submission", "assignment_visibility", "overrides", "observed_users"])
             params["include"] = include
-        # OPTIONAL - override_assignment_dates - Apply assignment overrides to the assignment, defaults to true.
+        # OPTIONAL - override_assignment_dates
+        """Apply assignment overrides to the assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
-        # OPTIONAL - needs_grading_count_by_section - Split up "needs_grading_count" by sections into the "needs_grading_count_by_section" key, defaults to false
+        # OPTIONAL - needs_grading_count_by_section
+        """Split up "needs_grading_count" by sections into the "needs_grading_count_by_section" key, defaults to false"""
         if needs_grading_count_by_section is not None:
             params["needs_grading_count_by_section"] = needs_grading_count_by_section
-        # OPTIONAL - all_dates - All dates associated with the assignment, if applicable
+        # OPTIONAL - all_dates
+        """All dates associated with the assignment, if applicable"""
         if all_dates is not None:
             params["all_dates"] = all_dates
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def create_assignment(self, course_id, assignment_name, assignment_allowed_extensions=None, assignment_assignment_group_id=None, assignment_assignment_overrides=None, assignment_automatic_peer_reviews=None, assignment_description=None, assignment_due_at=None, assignment_external_tool_tag_attributes=None, assignment_grade_group_students_individually=None, assignment_grading_standard_id=None, assignment_grading_type=None, assignment_group_category_id=None, assignment_integration_data=None, assignment_integration_id=None, assignment_lock_at=None, assignment_muted=None, assignment_notify_of_update=None, assignment_only_visible_to_overrides=None, assignment_peer_reviews=None, assignment_points_possible=None, assignment_position=None, assignment_published=None, assignment_submission_types=None, assignment_turnitin_enabled=None, assignment_turnitin_settings=None, assignment_unlock_at=None):
+    def create_assignment(self, course_id, assignment_name, assignment_allowed_extensions=None, assignment_assignment_group_id=None, assignment_assignment_overrides=None, assignment_automatic_peer_reviews=None, assignment_description=None, assignment_due_at=None, assignment_external_tool_tag_attributes=None, assignment_grade_group_students_individually=None, assignment_grading_standard_id=None, assignment_grading_type=None, assignment_group_category_id=None, assignment_integration_data=None, assignment_integration_id=None, assignment_lock_at=None, assignment_muted=None, assignment_notify_of_update=None, assignment_omit_from_final_grade=None, assignment_only_visible_to_overrides=None, assignment_peer_reviews=None, assignment_points_possible=None, assignment_position=None, assignment_published=None, assignment_submission_types=None, assignment_turnitin_enabled=None, assignment_turnitin_settings=None, assignment_unlock_at=None, assignment_vericite_enabled=None):
         """
         Create an assignment.
 
@@ -108,93 +152,179 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - assignment[name] - The assignment name.
+        # REQUIRED - assignment[name]
+        """The assignment name."""
         data["assignment[name]"] = assignment_name
-        # OPTIONAL - assignment[position] - The position of this assignment in the group when displaying assignment lists.
+        # OPTIONAL - assignment[position]
+        """The position of this assignment in the group when displaying
+        assignment lists."""
         if assignment_position is not None:
             data["assignment[position]"] = assignment_position
-        # OPTIONAL - assignment[submission_types] - List of supported submission types for the assignment. Unless the assignment is allowing online submissions, the array should only have one element. If not allowing online submissions, your options are: "online_quiz" "none" "on_paper" "online_quiz" "discussion_topic" "external_tool" If you are allowing online submissions, you can have one or many allowed submission types: "online_upload" "online_text_entry" "online_url" "media_recording" (Only valid when the Kaltura plugin is enabled)
+        # OPTIONAL - assignment[submission_types]
+        """List of supported submission types for the assignment.
+        Unless the assignment is allowing online submissions, the array should
+        only have one element.
+        
+        If not allowing online submissions, your options are:
+          "online_quiz"
+          "none"
+          "on_paper"
+          "online_quiz"
+          "discussion_topic"
+          "external_tool"
+        
+        If you are allowing online submissions, you can have one or many
+        allowed submission types:
+        
+          "online_upload"
+          "online_text_entry"
+          "online_url"
+          "media_recording" (Only valid when the Kaltura plugin is enabled)"""
         if assignment_submission_types is not None:
             self._validate_enum(assignment_submission_types, ["online_quiz", "none", "on_paper", "online_quiz", "discussion_topic", "external_tool", "online_upload", "online_text_entry", "online_url", "media_recording"])
             data["assignment[submission_types]"] = assignment_submission_types
-        # OPTIONAL - assignment[allowed_extensions] - Allowed extensions if submission_types includes "online_upload" Example: allowed_extensions: ["docx","ppt"]
+        # OPTIONAL - assignment[allowed_extensions]
+        """Allowed extensions if submission_types includes "online_upload"
+        
+        Example:
+          allowed_extensions: ["docx","ppt"]"""
         if assignment_allowed_extensions is not None:
             data["assignment[allowed_extensions]"] = assignment_allowed_extensions
-        # OPTIONAL - assignment[turnitin_enabled] - Only applies when the Turnitin plugin is enabled for a course and the submission_types array includes "online_upload". Toggles Turnitin submissions for the assignment. Will be ignored if Turnitin is not available for the course.
+        # OPTIONAL - assignment[turnitin_enabled]
+        """Only applies when the Turnitin plugin is enabled for a course and
+        the submission_types array includes "online_upload".
+        Toggles Turnitin submissions for the assignment.
+        Will be ignored if Turnitin is not available for the course."""
         if assignment_turnitin_enabled is not None:
             data["assignment[turnitin_enabled]"] = assignment_turnitin_enabled
-        # OPTIONAL - assignment[turnitin_settings] - Settings to send along to turnitin. See Assignment object definition for format.
+        # OPTIONAL - assignment[vericite_enabled]
+        """Only applies when the VeriCite plugin is enabled for a course and
+        the submission_types array includes "online_upload".
+        Toggles VeriCite submissions for the assignment.
+        Will be ignored if VeriCite is not available for the course."""
+        if assignment_vericite_enabled is not None:
+            data["assignment[vericite_enabled]"] = assignment_vericite_enabled
+        # OPTIONAL - assignment[turnitin_settings]
+        """Settings to send along to turnitin. See Assignment object definition for
+        format."""
         if assignment_turnitin_settings is not None:
             data["assignment[turnitin_settings]"] = assignment_turnitin_settings
-        # OPTIONAL - assignment[integration_data] - Data related to third party integrations, JSON string required.
+        # OPTIONAL - assignment[integration_data]
+        """Data related to third party integrations, JSON string required."""
         if assignment_integration_data is not None:
             data["assignment[integration_data]"] = assignment_integration_data
-        # OPTIONAL - assignment[integration_id] - Unique ID from third party integrations
+        # OPTIONAL - assignment[integration_id]
+        """Unique ID from third party integrations"""
         if assignment_integration_id is not None:
             data["assignment[integration_id]"] = assignment_integration_id
-        # OPTIONAL - assignment[peer_reviews] - If submission_types does not include external_tool,discussion_topic, online_quiz, or on_paper, determines whether or not peer reviews will be turned on for the assignment.
+        # OPTIONAL - assignment[peer_reviews]
+        """If submission_types does not include external_tool,discussion_topic,
+        online_quiz, or on_paper, determines whether or not peer reviews
+        will be turned on for the assignment."""
         if assignment_peer_reviews is not None:
             data["assignment[peer_reviews]"] = assignment_peer_reviews
-        # OPTIONAL - assignment[automatic_peer_reviews] - Whether peer reviews will be assigned automatically by Canvas or if teachers must manually assign peer reviews. Does not apply if peer reviews are not enabled.
+        # OPTIONAL - assignment[automatic_peer_reviews]
+        """Whether peer reviews will be assigned automatically by Canvas or if
+        teachers must manually assign peer reviews. Does not apply if peer reviews
+        are not enabled."""
         if assignment_automatic_peer_reviews is not None:
             data["assignment[automatic_peer_reviews]"] = assignment_automatic_peer_reviews
-        # OPTIONAL - assignment[notify_of_update] - If true, Canvas will send a notification to students in the class notifying them that the content has changed.
+        # OPTIONAL - assignment[notify_of_update]
+        """If true, Canvas will send a notification to students in the class
+        notifying them that the content has changed."""
         if assignment_notify_of_update is not None:
             data["assignment[notify_of_update]"] = assignment_notify_of_update
-        # OPTIONAL - assignment[group_category_id] - If present, the assignment will become a group assignment assigned to the group.
+        # OPTIONAL - assignment[group_category_id]
+        """If present, the assignment will become a group assignment assigned
+        to the group."""
         if assignment_group_category_id is not None:
             data["assignment[group_category_id]"] = assignment_group_category_id
-        # OPTIONAL - assignment[grade_group_students_individually] - If this is a group assignment, teachers have the options to grade students individually. If false, Canvas will apply the assignment's score to each member of the group. If true, the teacher can manually assign scores to each member of the group.
+        # OPTIONAL - assignment[grade_group_students_individually]
+        """If this is a group assignment, teachers have the options to grade
+        students individually. If false, Canvas will apply the assignment's
+        score to each member of the group. If true, the teacher can manually
+        assign scores to each member of the group."""
         if assignment_grade_group_students_individually is not None:
             data["assignment[grade_group_students_individually]"] = assignment_grade_group_students_individually
-        # OPTIONAL - assignment[external_tool_tag_attributes] - no description
+        # OPTIONAL - assignment[external_tool_tag_attributes]
+        """Hash of external tool parameters if submission_types is ["external_tool"].
+        See Assignment object definition for format."""
         if assignment_external_tool_tag_attributes is not None:
-            self._validate_enum(assignment_external_tool_tag_attributes, ["Hash of attributes if submission_types is [external_tool] Example: external_tool_tag_attributes: { // url to the external tool url: http://instructure.com"])
             data["assignment[external_tool_tag_attributes]"] = assignment_external_tool_tag_attributes
-        # OPTIONAL - assignment[points_possible] - The maximum points possible on the assignment.
+        # OPTIONAL - assignment[points_possible]
+        """The maximum points possible on the assignment."""
         if assignment_points_possible is not None:
             data["assignment[points_possible]"] = assignment_points_possible
-        # OPTIONAL - assignment[grading_type] - The strategy used for grading the assignment. The assignment is ungraded if this field is omitted.
+        # OPTIONAL - assignment[grading_type]
+        """The strategy used for grading the assignment.
+        The assignment defaults to "points" if this field is omitted."""
         if assignment_grading_type is not None:
             self._validate_enum(assignment_grading_type, ["pass_fail", "percent", "letter_grade", "gpa_scale", "points"])
             data["assignment[grading_type]"] = assignment_grading_type
-        # OPTIONAL - assignment[due_at] - The day/time the assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[due_at]
+        """The day/time the assignment is due.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_due_at is not None:
             data["assignment[due_at]"] = assignment_due_at
-        # OPTIONAL - assignment[lock_at] - The day/time the assignment is locked after. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[lock_at]
+        """The day/time the assignment is locked after.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_lock_at is not None:
             data["assignment[lock_at]"] = assignment_lock_at
-        # OPTIONAL - assignment[unlock_at] - The day/time the assignment is unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[unlock_at]
+        """The day/time the assignment is unlocked.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_unlock_at is not None:
             data["assignment[unlock_at]"] = assignment_unlock_at
-        # OPTIONAL - assignment[description] - The assignment's description, supports HTML.
+        # OPTIONAL - assignment[description]
+        """The assignment's description, supports HTML."""
         if assignment_description is not None:
             data["assignment[description]"] = assignment_description
-        # OPTIONAL - assignment[assignment_group_id] - The assignment group id to put the assignment in. Defaults to the top assignment group in the course.
+        # OPTIONAL - assignment[assignment_group_id]
+        """The assignment group id to put the assignment in.
+        Defaults to the top assignment group in the course."""
         if assignment_assignment_group_id is not None:
             data["assignment[assignment_group_id]"] = assignment_assignment_group_id
-        # OPTIONAL - assignment[muted] - Whether this assignment is muted. A muted assignment does not send change notifications and hides grades from students. Defaults to false.
+        # OPTIONAL - assignment[muted]
+        """Whether this assignment is muted.
+        A muted assignment does not send change notifications
+        and hides grades from students.
+        Defaults to false."""
         if assignment_muted is not None:
             data["assignment[muted]"] = assignment_muted
-        # OPTIONAL - assignment[assignment_overrides] - List of overrides for the assignment. NOTE: The assignment overrides feature is in beta.
+        # OPTIONAL - assignment[assignment_overrides]
+        """List of overrides for the assignment.
+        NOTE: The assignment overrides feature is in beta."""
         if assignment_assignment_overrides is not None:
             data["assignment[assignment_overrides]"] = assignment_assignment_overrides
-        # OPTIONAL - assignment[only_visible_to_overrides] - Whether this assignment is only visible to overrides (Only useful if 'differentiated assignments' account setting is on)
+        # OPTIONAL - assignment[only_visible_to_overrides]
+        """Whether this assignment is only visible to overrides
+        (Only useful if 'differentiated assignments' account setting is on)"""
         if assignment_only_visible_to_overrides is not None:
             data["assignment[only_visible_to_overrides]"] = assignment_only_visible_to_overrides
-        # OPTIONAL - assignment[published] - Whether this assignment is published. (Only useful if 'draft state' account setting is on) Unpublished assignments are not visible to students.
+        # OPTIONAL - assignment[published]
+        """Whether this assignment is published.
+        (Only useful if 'draft state' account setting is on)
+        Unpublished assignments are not visible to students."""
         if assignment_published is not None:
             data["assignment[published]"] = assignment_published
-        # OPTIONAL - assignment[grading_standard_id] - The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course. This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.
+        # OPTIONAL - assignment[grading_standard_id]
+        """The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course.
+        This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'."""
         if assignment_grading_standard_id is not None:
             data["assignment[grading_standard_id]"] = assignment_grading_standard_id
+        # OPTIONAL - assignment[omit_from_final_grade]
+        """Whether this assignment is counted towards a student's final grade."""
+        if assignment_omit_from_final_grade is not None:
+            data["assignment[omit_from_final_grade]"] = assignment_omit_from_final_grade
 
         self.logger.debug("POST /api/v1/courses/{course_id}/assignments with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments".format(**path), data=data, params=params, single_item=True)
 
-    def edit_assignment(self, id, course_id, assignment_allowed_extensions=None, assignment_assignment_group_id=None, assignment_assignment_overrides=None, assignment_automatic_peer_reviews=None, assignment_description=None, assignment_due_at=None, assignment_external_tool_tag_attributes=None, assignment_grade_group_students_individually=None, assignment_grading_standard_id=None, assignment_grading_type=None, assignment_group_category_id=None, assignment_integration_data=None, assignment_integration_id=None, assignment_lock_at=None, assignment_muted=None, assignment_name=None, assignment_notify_of_update=None, assignment_only_visible_to_overrides=None, assignment_peer_reviews=None, assignment_points_possible=None, assignment_position=None, assignment_published=None, assignment_submission_types=None, assignment_turnitin_enabled=None, assignment_turnitin_settings=None, assignment_unlock_at=None):
+    def edit_assignment(self, id, course_id, assignment_allowed_extensions=None, assignment_assignment_group_id=None, assignment_assignment_overrides=None, assignment_automatic_peer_reviews=None, assignment_description=None, assignment_due_at=None, assignment_external_tool_tag_attributes=None, assignment_grade_group_students_individually=None, assignment_grading_standard_id=None, assignment_grading_type=None, assignment_group_category_id=None, assignment_integration_data=None, assignment_integration_id=None, assignment_lock_at=None, assignment_muted=None, assignment_name=None, assignment_notify_of_update=None, assignment_omit_from_final_grade=None, assignment_only_visible_to_overrides=None, assignment_peer_reviews=None, assignment_points_possible=None, assignment_position=None, assignment_published=None, assignment_submission_types=None, assignment_turnitin_enabled=None, assignment_turnitin_settings=None, assignment_unlock_at=None, assignment_vericite_enabled=None):
         """
         Edit an assignment.
 
@@ -211,91 +341,178 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - assignment[name] - The assignment name.
+        # OPTIONAL - assignment[name]
+        """The assignment name."""
         if assignment_name is not None:
             data["assignment[name]"] = assignment_name
-        # OPTIONAL - assignment[position] - The position of this assignment in the group when displaying assignment lists.
+        # OPTIONAL - assignment[position]
+        """The position of this assignment in the group when displaying
+        assignment lists."""
         if assignment_position is not None:
             data["assignment[position]"] = assignment_position
-        # OPTIONAL - assignment[submission_types] - List of supported submission types for the assignment. Unless the assignment is allowing online submissions, the array should only have one element. If not allowing online submissions, your options are: "online_quiz" "none" "on_paper" "online_quiz" "discussion_topic" "external_tool" If you are allowing online submissions, you can have one or many allowed submission types: "online_upload" "online_text_entry" "online_url" "media_recording" (Only valid when the Kaltura plugin is enabled)
+        # OPTIONAL - assignment[submission_types]
+        """List of supported submission types for the assignment.
+        Unless the assignment is allowing online submissions, the array should
+        only have one element.
+        
+        If not allowing online submissions, your options are:
+          "online_quiz"
+          "none"
+          "on_paper"
+          "online_quiz"
+          "discussion_topic"
+          "external_tool"
+        
+        If you are allowing online submissions, you can have one or many
+        allowed submission types:
+        
+          "online_upload"
+          "online_text_entry"
+          "online_url"
+          "media_recording" (Only valid when the Kaltura plugin is enabled)"""
         if assignment_submission_types is not None:
             self._validate_enum(assignment_submission_types, ["online_quiz", "none", "on_paper", "online_quiz", "discussion_topic", "external_tool", "online_upload", "online_text_entry", "online_url", "media_recording"])
             data["assignment[submission_types]"] = assignment_submission_types
-        # OPTIONAL - assignment[allowed_extensions] - Allowed extensions if submission_types includes "online_upload" Example: allowed_extensions: ["docx","ppt"]
+        # OPTIONAL - assignment[allowed_extensions]
+        """Allowed extensions if submission_types includes "online_upload"
+        
+        Example:
+          allowed_extensions: ["docx","ppt"]"""
         if assignment_allowed_extensions is not None:
             data["assignment[allowed_extensions]"] = assignment_allowed_extensions
-        # OPTIONAL - assignment[turnitin_enabled] - Only applies when the Turnitin plugin is enabled for a course and the submission_types array includes "online_upload". Toggles Turnitin submissions for the assignment. Will be ignored if Turnitin is not available for the course.
+        # OPTIONAL - assignment[turnitin_enabled]
+        """Only applies when the Turnitin plugin is enabled for a course and
+        the submission_types array includes "online_upload".
+        Toggles Turnitin submissions for the assignment.
+        Will be ignored if Turnitin is not available for the course."""
         if assignment_turnitin_enabled is not None:
             data["assignment[turnitin_enabled]"] = assignment_turnitin_enabled
-        # OPTIONAL - assignment[turnitin_settings] - Settings to send along to turnitin. See Assignment object definition for format.
+        # OPTIONAL - assignment[vericite_enabled]
+        """Only applies when the VeriCite plugin is enabled for a course and
+        the submission_types array includes "online_upload".
+        Toggles VeriCite submissions for the assignment.
+        Will be ignored if VeriCite is not available for the course."""
+        if assignment_vericite_enabled is not None:
+            data["assignment[vericite_enabled]"] = assignment_vericite_enabled
+        # OPTIONAL - assignment[turnitin_settings]
+        """Settings to send along to turnitin. See Assignment object definition for
+        format."""
         if assignment_turnitin_settings is not None:
             data["assignment[turnitin_settings]"] = assignment_turnitin_settings
-        # OPTIONAL - assignment[integration_data] - Data related to third party integrations, JSON string required.
+        # OPTIONAL - assignment[integration_data]
+        """Data related to third party integrations, JSON string required."""
         if assignment_integration_data is not None:
             data["assignment[integration_data]"] = assignment_integration_data
-        # OPTIONAL - assignment[integration_id] - Unique ID from third party integrations
+        # OPTIONAL - assignment[integration_id]
+        """Unique ID from third party integrations"""
         if assignment_integration_id is not None:
             data["assignment[integration_id]"] = assignment_integration_id
-        # OPTIONAL - assignment[peer_reviews] - If submission_types does not include external_tool,discussion_topic, online_quiz, or on_paper, determines whether or not peer reviews will be turned on for the assignment.
+        # OPTIONAL - assignment[peer_reviews]
+        """If submission_types does not include external_tool,discussion_topic,
+        online_quiz, or on_paper, determines whether or not peer reviews
+        will be turned on for the assignment."""
         if assignment_peer_reviews is not None:
             data["assignment[peer_reviews]"] = assignment_peer_reviews
-        # OPTIONAL - assignment[automatic_peer_reviews] - Whether peer reviews will be assigned automatically by Canvas or if teachers must manually assign peer reviews. Does not apply if peer reviews are not enabled.
+        # OPTIONAL - assignment[automatic_peer_reviews]
+        """Whether peer reviews will be assigned automatically by Canvas or if
+        teachers must manually assign peer reviews. Does not apply if peer reviews
+        are not enabled."""
         if assignment_automatic_peer_reviews is not None:
             data["assignment[automatic_peer_reviews]"] = assignment_automatic_peer_reviews
-        # OPTIONAL - assignment[notify_of_update] - If true, Canvas will send a notification to students in the class notifying them that the content has changed.
+        # OPTIONAL - assignment[notify_of_update]
+        """If true, Canvas will send a notification to students in the class
+        notifying them that the content has changed."""
         if assignment_notify_of_update is not None:
             data["assignment[notify_of_update]"] = assignment_notify_of_update
-        # OPTIONAL - assignment[group_category_id] - If present, the assignment will become a group assignment assigned to the group.
+        # OPTIONAL - assignment[group_category_id]
+        """If present, the assignment will become a group assignment assigned
+        to the group."""
         if assignment_group_category_id is not None:
             data["assignment[group_category_id]"] = assignment_group_category_id
-        # OPTIONAL - assignment[grade_group_students_individually] - If this is a group assignment, teachers have the options to grade students individually. If false, Canvas will apply the assignment's score to each member of the group. If true, the teacher can manually assign scores to each member of the group.
+        # OPTIONAL - assignment[grade_group_students_individually]
+        """If this is a group assignment, teachers have the options to grade
+        students individually. If false, Canvas will apply the assignment's
+        score to each member of the group. If true, the teacher can manually
+        assign scores to each member of the group."""
         if assignment_grade_group_students_individually is not None:
             data["assignment[grade_group_students_individually]"] = assignment_grade_group_students_individually
-        # OPTIONAL - assignment[external_tool_tag_attributes] - no description
+        # OPTIONAL - assignment[external_tool_tag_attributes]
+        """Hash of external tool parameters if submission_types is ["external_tool"].
+        See Assignment object definition for format."""
         if assignment_external_tool_tag_attributes is not None:
-            self._validate_enum(assignment_external_tool_tag_attributes, ["Hash of attributes if submission_types is [external_tool] Example: external_tool_tag_attributes: { // url to the external tool url: http://instructure.com"])
             data["assignment[external_tool_tag_attributes]"] = assignment_external_tool_tag_attributes
-        # OPTIONAL - assignment[points_possible] - The maximum points possible on the assignment.
+        # OPTIONAL - assignment[points_possible]
+        """The maximum points possible on the assignment."""
         if assignment_points_possible is not None:
             data["assignment[points_possible]"] = assignment_points_possible
-        # OPTIONAL - assignment[grading_type] - The strategy used for grading the assignment. The assignment is ungraded if this field is omitted.
+        # OPTIONAL - assignment[grading_type]
+        """The strategy used for grading the assignment.
+        The assignment defaults to "points" if this field is omitted."""
         if assignment_grading_type is not None:
             self._validate_enum(assignment_grading_type, ["pass_fail", "percent", "letter_grade", "gpa_scale", "points"])
             data["assignment[grading_type]"] = assignment_grading_type
-        # OPTIONAL - assignment[due_at] - The day/time the assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[due_at]
+        """The day/time the assignment is due.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_due_at is not None:
             data["assignment[due_at]"] = assignment_due_at
-        # OPTIONAL - assignment[lock_at] - The day/time the assignment is locked after. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[lock_at]
+        """The day/time the assignment is locked after.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_lock_at is not None:
             data["assignment[lock_at]"] = assignment_lock_at
-        # OPTIONAL - assignment[unlock_at] - The day/time the assignment is unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z.
+        # OPTIONAL - assignment[unlock_at]
+        """The day/time the assignment is unlocked.
+        Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z."""
         if assignment_unlock_at is not None:
             data["assignment[unlock_at]"] = assignment_unlock_at
-        # OPTIONAL - assignment[description] - The assignment's description, supports HTML.
+        # OPTIONAL - assignment[description]
+        """The assignment's description, supports HTML."""
         if assignment_description is not None:
             data["assignment[description]"] = assignment_description
-        # OPTIONAL - assignment[assignment_group_id] - The assignment group id to put the assignment in. Defaults to the top assignment group in the course.
+        # OPTIONAL - assignment[assignment_group_id]
+        """The assignment group id to put the assignment in.
+        Defaults to the top assignment group in the course."""
         if assignment_assignment_group_id is not None:
             data["assignment[assignment_group_id]"] = assignment_assignment_group_id
-        # OPTIONAL - assignment[muted] - Whether this assignment is muted. A muted assignment does not send change notifications and hides grades from students. Defaults to false.
+        # OPTIONAL - assignment[muted]
+        """Whether this assignment is muted.
+        A muted assignment does not send change notifications
+        and hides grades from students.
+        Defaults to false."""
         if assignment_muted is not None:
             data["assignment[muted]"] = assignment_muted
-        # OPTIONAL - assignment[assignment_overrides] - List of overrides for the assignment. NOTE: The assignment overrides feature is in beta.
+        # OPTIONAL - assignment[assignment_overrides]
+        """List of overrides for the assignment.
+        NOTE: The assignment overrides feature is in beta."""
         if assignment_assignment_overrides is not None:
             data["assignment[assignment_overrides]"] = assignment_assignment_overrides
-        # OPTIONAL - assignment[only_visible_to_overrides] - Whether this assignment is only visible to overrides (Only useful if 'differentiated assignments' account setting is on)
+        # OPTIONAL - assignment[only_visible_to_overrides]
+        """Whether this assignment is only visible to overrides
+        (Only useful if 'differentiated assignments' account setting is on)"""
         if assignment_only_visible_to_overrides is not None:
             data["assignment[only_visible_to_overrides]"] = assignment_only_visible_to_overrides
-        # OPTIONAL - assignment[published] - Whether this assignment is published. (Only useful if 'draft state' account setting is on) Unpublished assignments are not visible to students.
+        # OPTIONAL - assignment[published]
+        """Whether this assignment is published.
+        (Only useful if 'draft state' account setting is on)
+        Unpublished assignments are not visible to students."""
         if assignment_published is not None:
             data["assignment[published]"] = assignment_published
-        # OPTIONAL - assignment[grading_standard_id] - The grading standard id to set for the course. If no value is provided for this argument the current grading_standard will be un-set from this course. This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'.
+        # OPTIONAL - assignment[grading_standard_id]
+        """The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course.
+        This will update the grading_type for the course to 'letter_grade' unless it is already 'gpa_scale'."""
         if assignment_grading_standard_id is not None:
             data["assignment[grading_standard_id]"] = assignment_grading_standard_id
+        # OPTIONAL - assignment[omit_from_final_grade]
+        """Whether this assignment is counted towards a student's final grade."""
+        if assignment_omit_from_final_grade is not None:
+            data["assignment[omit_from_final_grade]"] = assignment_omit_from_final_grade
 
         self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/{id}".format(**path), data=data, params=params, single_item=True)
@@ -311,9 +528,11 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/overrides with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -329,11 +548,14 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/assignments/{assignment_id}/overrides/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -350,9 +572,11 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
 
         self.logger.debug("GET /api/v1/groups/{group_id}/assignments/{assignment_id}/override with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -369,9 +593,11 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_section_id - ID
+        # REQUIRED - PATH - course_section_id
+        """ID"""
         path["course_section_id"] = course_section_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
 
         self.logger.debug("GET /api/v1/sections/{course_section_id}/assignments/{assignment_id}/override with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -390,29 +616,67 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # OPTIONAL - assignment_override[student_ids] - The IDs of the override's target students. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override.
+        # OPTIONAL - assignment_override[student_ids]
+        """The IDs of
+        the override's target students. If present, the IDs must each identify a
+        user with an active student enrollment in the course that is not already
+        targetted by a different adhoc override."""
         if assignment_override_student_ids is not None:
             data["assignment_override[student_ids]"] = assignment_override_student_ids
-        # OPTIONAL - assignment_override[title] - The title of the adhoc assignment override. Required if student_ids is present, ignored otherwise (the title is set to the name of the targetted group or section instead).
+        # OPTIONAL - assignment_override[title]
+        """The title of the adhoc
+        assignment override. Required if student_ids is present, ignored
+        otherwise (the title is set to the name of the targetted group or section
+        instead)."""
         if assignment_override_title is not None:
             data["assignment_override[title]"] = assignment_override_title
-        # OPTIONAL - assignment_override[group_id] - The ID of the override's target group. If present, the following conditions must be met for the override to be successful: 1. the assignment MUST be a group assignment (a group_category_id is assigned to it) 2. the ID must identify an active group in the group set the assignment is in 3. the ID must not be targetted by a different override See {Appendix: Group assignments} for more info.
+        # OPTIONAL - assignment_override[group_id]
+        """The ID of the
+        override's target group. If present, the following conditions must be met
+        for the override to be successful:
+        
+        1. the assignment MUST be a group assignment (a group_category_id is assigned to it)
+        2. the ID must identify an active group in the group set the assignment is in
+        3. the ID must not be targetted by a different override
+        
+        See {Appendix: Group assignments} for more info."""
         if assignment_override_group_id is not None:
             data["assignment_override[group_id]"] = assignment_override_group_id
-        # OPTIONAL - assignment_override[course_section_id] - The ID of the override's target section. If present, must identify an active section of the assignment's course not already targetted by a different override.
+        # OPTIONAL - assignment_override[course_section_id]
+        """The ID
+        of the override's target section. If present, must identify an active
+        section of the assignment's course not already targetted by a different
+        override."""
         if assignment_override_course_section_id is not None:
             data["assignment_override[course_section_id]"] = assignment_override_course_section_id
-        # OPTIONAL - assignment_override[due_at] - The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.
+        # OPTIONAL - assignment_override[due_at]
+        """The day/time
+        the overridden assignment is due. Accepts times in ISO 8601 format, e.g.
+        2014-10-21T18:48:00Z. If absent, this override will not affect due date.
+        May be present but null to indicate the override removes any previous due
+        date."""
         if assignment_override_due_at is not None:
             data["assignment_override[due_at]"] = assignment_override_due_at
-        # OPTIONAL - assignment_override[unlock_at] - The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.
+        # OPTIONAL - assignment_override[unlock_at]
+        """The day/time
+        the overridden assignment becomes unlocked. Accepts times in ISO 8601
+        format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not
+        affect the unlock date. May be present but null to indicate the override
+        removes any previous unlock date."""
         if assignment_override_unlock_at is not None:
             data["assignment_override[unlock_at]"] = assignment_override_unlock_at
-        # OPTIONAL - assignment_override[lock_at] - The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.
+        # OPTIONAL - assignment_override[lock_at]
+        """The day/time
+        the overridden assignment becomes locked. Accepts times in ISO 8601
+        format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not
+        affect the lock date. May be present but null to indicate the override
+        removes any previous lock date."""
         if assignment_override_lock_at is not None:
             data["assignment_override[lock_at]"] = assignment_override_lock_at
 
@@ -433,25 +697,50 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - assignment_override[student_ids] - The IDs of the override's target students. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override. Ignored unless the override being updated is adhoc.
+        # OPTIONAL - assignment_override[student_ids]
+        """The IDs of the
+        override's target students. If present, the IDs must each identify a
+        user with an active student enrollment in the course that is not already
+        targetted by a different adhoc override. Ignored unless the override
+        being updated is adhoc."""
         if assignment_override_student_ids is not None:
             data["assignment_override[student_ids]"] = assignment_override_student_ids
-        # OPTIONAL - assignment_override[title] - The title of an adhoc assignment override. Ignored unless the override being updated is adhoc.
+        # OPTIONAL - assignment_override[title]
+        """The title of an adhoc
+        assignment override. Ignored unless the override being updated is adhoc."""
         if assignment_override_title is not None:
             data["assignment_override[title]"] = assignment_override_title
-        # OPTIONAL - assignment_override[due_at] - The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.
+        # OPTIONAL - assignment_override[due_at]
+        """The day/time
+        the overridden assignment is due. Accepts times in ISO 8601 format, e.g.
+        2014-10-21T18:48:00Z. If absent, this override will not affect due date.
+        May be present but null to indicate the override removes any previous due
+        date."""
         if assignment_override_due_at is not None:
             data["assignment_override[due_at]"] = assignment_override_due_at
-        # OPTIONAL - assignment_override[unlock_at] - The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.
+        # OPTIONAL - assignment_override[unlock_at]
+        """The day/time
+        the overridden assignment becomes unlocked. Accepts times in ISO 8601
+        format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not
+        affect the unlock date. May be present but null to indicate the override
+        removes any previous unlock date."""
         if assignment_override_unlock_at is not None:
             data["assignment_override[unlock_at]"] = assignment_override_unlock_at
-        # OPTIONAL - assignment_override[lock_at] - The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.
+        # OPTIONAL - assignment_override[lock_at]
+        """The day/time
+        the overridden assignment becomes locked. Accepts times in ISO 8601
+        format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not
+        affect the lock date. May be present but null to indicate the override
+        removes any previous lock date."""
         if assignment_override_lock_at is not None:
             data["assignment_override[lock_at]"] = assignment_override_lock_at
 
@@ -468,15 +757,106 @@ class AssignmentsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - assignment_id - ID
+        # REQUIRED - PATH - assignment_id
+        """ID"""
         path["assignment_id"] = assignment_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/courses/{course_id}/assignments/{assignment_id}/overrides/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("DELETE", "/api/v1/courses/{course_id}/assignments/{assignment_id}/overrides/{id}".format(**path), data=data, params=params, single_item=True)
+
+    def batch_retrieve_overrides_in_course(self, course_id, assignment_overrides_id, assignment_overrides_assignment_id):
+        """
+        Batch retrieve overrides in a course.
+
+        Returns a list of specified overrides in this course, providing
+        they target sections/groups/students visible to the current user.
+        Returns null elements in the list for requests that were not found.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - assignment_overrides[id]
+        """Ids of overrides to retrieve"""
+        params["assignment_overrides[id]"] = assignment_overrides_id
+        # REQUIRED - assignment_overrides[assignment_id]
+        """Ids of assignments for each override"""
+        params["assignment_overrides[assignment_id]"] = assignment_overrides_assignment_id
+
+        self.logger.debug("GET /api/v1/courses/{course_id}/assignments/overrides with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/assignments/overrides".format(**path), data=data, params=params, all_pages=True)
+
+    def batch_create_overrides_in_course(self, course_id, assignment_overrides):
+        """
+        Batch create overrides in a course.
+
+        Creates the specified overrides for each assignment.  Handles creation in a
+        transaction, so all records are created or none are.
+        
+        One of student_ids, group_id, or course_section_id must be present. At most
+        one should be present; if multiple are present only the most specific
+        (student_ids first, then group_id, then course_section_id) is used and any
+        others are ignored.
+        
+        Errors are reported in an errors attribute, an array of errors corresponding
+        to inputs.  Global errors will be reported as a single element errors array
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - assignment_overrides
+        """Attributes for the new assignment overrides.
+        See {api:AssignmentOverridesController#create Create an assignment override} for available
+        attributes"""
+        data["assignment_overrides"] = assignment_overrides
+
+        self.logger.debug("POST /api/v1/courses/{course_id}/assignments/overrides with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/courses/{course_id}/assignments/overrides".format(**path), data=data, params=params, all_pages=True)
+
+    def batch_update_overrides_in_course(self, course_id, assignment_overrides):
+        """
+        Batch update overrides in a course.
+
+        Updates a list of specified overrides for each assignment.  Handles overrides
+        in a transaction, so either all updates are applied or none.
+        See {api:AssignmentOverridesController#update Update an assignment override} for
+        available attributes.
+        
+        All current overridden values must be supplied if they are to be retained;
+        e.g. if due_at was overridden, but this PUT omits a value for due_at,
+        due_at will no longer be overridden. If the override is adhoc and
+        student_ids is not supplied, the target override set is unchanged. Target
+        override sets cannot be changed for group or section overrides.
+        
+        Errors are reported in an errors attribute, an array of errors corresponding
+        to inputs.  Global errors will be reported as a single element errors array
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - assignment_overrides
+        """Attributes for the updated overrides."""
+        data["assignment_overrides"] = assignment_overrides
+
+        self.logger.debug("PUT /api/v1/courses/{course_id}/assignments/overrides with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/courses/{course_id}/assignments/overrides".format(**path), data=data, params=params, all_pages=True)
 
 
 class Turnitinsettings(BaseModel):
@@ -774,7 +1154,7 @@ class Externaltooltagattributes(BaseModel):
 class Assignment(BaseModel):
     """Assignment Model."""
 
-    def __init__(self, use_rubric_for_grading=None, has_overrides=None, lock_info=None, frozen_attributes=None, points_possible=None, assignment_visibility=None, updated_at=None, turnitin_enabled=None, rubric=None, course_id=None, needs_grading_count_by_section=None, id=None, locked_for_user=None, muted=None, grading_type=None, rubric_settings=None, anonymous_submissions=None, peer_reviews=None, discussion_topic=None, quiz_id=None, freeze_on_copy=None, grade_group_students_individually=None, integration_data=None, description=None, peer_review_count=None, all_dates=None, grading_standard_id=None, external_tool_tag_attributes=None, html_url=None, turnitin_settings=None, group_category_id=None, lock_explanation=None, needs_grading_count=None, peer_reviews_assign_at=None, name=None, integration_id=None, frozen=None, only_visible_to_overrides=None, unlock_at=None, submission=None, due_at=None, created_at=None, post_to_sis=None, lock_at=None, assignment_group_id=None, allowed_extensions=None, automatic_peer_reviews=None, published=None, position=None, submission_types=None, overrides=None, unpublishable=None):
+    def __init__(self, use_rubric_for_grading=None, has_overrides=None, lock_info=None, frozen_attributes=None, points_possible=None, assignment_visibility=None, updated_at=None, turnitin_enabled=None, rubric=None, omit_from_final_grade=None, course_id=None, needs_grading_count_by_section=None, id=None, locked_for_user=None, muted=None, grading_type=None, rubric_settings=None, anonymous_submissions=None, peer_reviews=None, discussion_topic=None, intra_group_peer_reviews=None, quiz_id=None, freeze_on_copy=None, all_dates=None, integration_data=None, description=None, peer_review_count=None, grade_group_students_individually=None, grading_standard_id=None, external_tool_tag_attributes=None, html_url=None, turnitin_settings=None, group_category_id=None, lock_explanation=None, needs_grading_count=None, vericite_enabled=None, peer_reviews_assign_at=None, name=None, integration_id=None, frozen=None, only_visible_to_overrides=None, unlock_at=None, submission=None, due_at=None, created_at=None, post_to_sis=None, lock_at=None, assignment_group_id=None, allowed_extensions=None, automatic_peer_reviews=None, published=None, position=None, submission_types=None, submissions_download_url=None, overrides=None, unpublishable=None):
         """Init method for Assignment class."""
         self._use_rubric_for_grading = use_rubric_for_grading
         self._has_overrides = has_overrides
@@ -785,6 +1165,7 @@ class Assignment(BaseModel):
         self._updated_at = updated_at
         self._turnitin_enabled = turnitin_enabled
         self._rubric = rubric
+        self._omit_from_final_grade = omit_from_final_grade
         self._course_id = course_id
         self._needs_grading_count_by_section = needs_grading_count_by_section
         self._id = id
@@ -795,13 +1176,14 @@ class Assignment(BaseModel):
         self._anonymous_submissions = anonymous_submissions
         self._peer_reviews = peer_reviews
         self._discussion_topic = discussion_topic
+        self._intra_group_peer_reviews = intra_group_peer_reviews
         self._quiz_id = quiz_id
         self._freeze_on_copy = freeze_on_copy
-        self._grade_group_students_individually = grade_group_students_individually
+        self._all_dates = all_dates
         self._integration_data = integration_data
         self._description = description
         self._peer_review_count = peer_review_count
-        self._all_dates = all_dates
+        self._grade_group_students_individually = grade_group_students_individually
         self._grading_standard_id = grading_standard_id
         self._external_tool_tag_attributes = external_tool_tag_attributes
         self._html_url = html_url
@@ -809,6 +1191,7 @@ class Assignment(BaseModel):
         self._group_category_id = group_category_id
         self._lock_explanation = lock_explanation
         self._needs_grading_count = needs_grading_count
+        self._vericite_enabled = vericite_enabled
         self._peer_reviews_assign_at = peer_reviews_assign_at
         self._name = name
         self._integration_id = integration_id
@@ -826,6 +1209,7 @@ class Assignment(BaseModel):
         self._published = published
         self._position = position
         self._submission_types = submission_types
+        self._submissions_download_url = submissions_download_url
         self._overrides = overrides
         self._unpublishable = unpublishable
 
@@ -929,6 +1313,17 @@ class Assignment(BaseModel):
         """Setter for rubric property."""
         self.logger.warn("Setting values on rubric will NOT update the remote Canvas instance.")
         self._rubric = value
+
+    @property
+    def omit_from_final_grade(self):
+        """(Optional) If true, the assignment will be ommitted from the student's final grade."""
+        return self._omit_from_final_grade
+
+    @omit_from_final_grade.setter
+    def omit_from_final_grade(self, value):
+        """Setter for omit_from_final_grade property."""
+        self.logger.warn("Setting values on omit_from_final_grade will NOT update the remote Canvas instance.")
+        self._omit_from_final_grade = value
 
     @property
     def course_id(self):
@@ -1041,6 +1436,17 @@ class Assignment(BaseModel):
         self._discussion_topic = value
 
     @property
+    def intra_group_peer_reviews(self):
+        """Boolean representing whether or not members from within the same group on a group assignment can be assigned to peer review their own group's work."""
+        return self._intra_group_peer_reviews
+
+    @intra_group_peer_reviews.setter
+    def intra_group_peer_reviews(self, value):
+        """Setter for intra_group_peer_reviews property."""
+        self.logger.warn("Setting values on intra_group_peer_reviews will NOT update the remote Canvas instance.")
+        self._intra_group_peer_reviews = value
+
+    @property
     def quiz_id(self):
         """(Optional) id of the associated quiz (applies only when submission_types is ['online_quiz'])."""
         return self._quiz_id
@@ -1063,15 +1469,15 @@ class Assignment(BaseModel):
         self._freeze_on_copy = value
 
     @property
-    def grade_group_students_individually(self):
-        """If this is a group assignment, boolean flag indicating whether or not students will be graded individually."""
-        return self._grade_group_students_individually
+    def all_dates(self):
+        """(Optional) all dates associated with the assignment, if applicable."""
+        return self._all_dates
 
-    @grade_group_students_individually.setter
-    def grade_group_students_individually(self, value):
-        """Setter for grade_group_students_individually property."""
-        self.logger.warn("Setting values on grade_group_students_individually will NOT update the remote Canvas instance.")
-        self._grade_group_students_individually = value
+    @all_dates.setter
+    def all_dates(self, value):
+        """Setter for all_dates property."""
+        self.logger.warn("Setting values on all_dates will NOT update the remote Canvas instance.")
+        self._all_dates = value
 
     @property
     def integration_data(self):
@@ -1107,15 +1513,15 @@ class Assignment(BaseModel):
         self._peer_review_count = value
 
     @property
-    def all_dates(self):
-        """(Optional) all dates associated with the assignment, if applicable."""
-        return self._all_dates
+    def grade_group_students_individually(self):
+        """If this is a group assignment, boolean flag indicating whether or not students will be graded individually."""
+        return self._grade_group_students_individually
 
-    @all_dates.setter
-    def all_dates(self, value):
-        """Setter for all_dates property."""
-        self.logger.warn("Setting values on all_dates will NOT update the remote Canvas instance.")
-        self._all_dates = value
+    @grade_group_students_individually.setter
+    def grade_group_students_individually(self, value):
+        """Setter for grade_group_students_individually property."""
+        self.logger.warn("Setting values on grade_group_students_individually will NOT update the remote Canvas instance.")
+        self._grade_group_students_individually = value
 
     @property
     def grading_standard_id(self):
@@ -1130,7 +1536,7 @@ class Assignment(BaseModel):
 
     @property
     def external_tool_tag_attributes(self):
-        """(Optional) assignment's settings for external tools if submission_types include 'external_tool'. Only url and new_tab are included. Use the 'External Tools' API if you need more information about an external tool."""
+        """(Optional) assignment's settings for external tools if submission_types include 'external_tool'. Only url and new_tab are included (new_tab defaults to false).  Use the 'External Tools' API if you need more information about an external tool."""
         return self._external_tool_tag_attributes
 
     @external_tool_tag_attributes.setter
@@ -1195,6 +1601,17 @@ class Assignment(BaseModel):
         self._needs_grading_count = value
 
     @property
+    def vericite_enabled(self):
+        """Boolean flag indicating whether or not VeriCite has been enabled for the assignment. NOTE: This flag will not appear unless your account has the VeriCite plugin available."""
+        return self._vericite_enabled
+
+    @vericite_enabled.setter
+    def vericite_enabled(self, value):
+        """Setter for vericite_enabled property."""
+        self.logger.warn("Setting values on vericite_enabled will NOT update the remote Canvas instance.")
+        self._vericite_enabled = value
+
+    @property
     def peer_reviews_assign_at(self):
         """String representing a date the reviews are due by. Must be a date that occurs after the default due date. If blank, or date is not after the assignment's due date, the assignment's due date will be used. NOTE: This key is NOT present unless you have automatic_peer_reviews set to true."""
         return self._peer_reviews_assign_at
@@ -1240,7 +1657,7 @@ class Assignment(BaseModel):
 
     @property
     def only_visible_to_overrides(self):
-        """(Only visible if the Differentiated Assignments course feature is turned on) Whether the assignment is only visible to overrides."""
+        """Whether the assignment is only visible to overrides."""
         return self._only_visible_to_overrides
 
     @only_visible_to_overrides.setter
@@ -1350,7 +1767,7 @@ class Assignment(BaseModel):
 
     @property
     def published(self):
-        """(Only visible if 'enable draft' account setting is on) whether the assignment is published."""
+        """Whether the assignment is published."""
         return self._published
 
     @published.setter
@@ -1382,6 +1799,17 @@ class Assignment(BaseModel):
         self._submission_types = value
 
     @property
+    def submissions_download_url(self):
+        """the URL to download all submissions as a zip."""
+        return self._submissions_download_url
+
+    @submissions_download_url.setter
+    def submissions_download_url(self, value):
+        """Setter for submissions_download_url property."""
+        self.logger.warn("Setting values on submissions_download_url will NOT update the remote Canvas instance.")
+        self._submissions_download_url = value
+
+    @property
     def overrides(self):
         """(Optional) If 'overrides' is included in the 'include' parameter, includes an array of assignment override objects."""
         return self._overrides
@@ -1394,7 +1822,7 @@ class Assignment(BaseModel):
 
     @property
     def unpublishable(self):
-        """(Only visible if 'enable draft' account setting is on) Whether the assignment's 'published' state can be changed to false. Will be false if there are student submissions for the assignment."""
+        """Whether the assignment's 'published' state can be changed to false. Will be false if there are student submissions for the assignment."""
         return self._unpublishable
 
     @unpublishable.setter

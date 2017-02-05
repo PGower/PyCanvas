@@ -55,3 +55,8 @@ class TestAppointmentGroupsAPI(unittest.TestCase):
 
         r = self.client.list_student_group_participants(id, registration_status=None)
 
+    def test_get_next_appointment(self):
+        """Integration test for the AppointmentGroupsAPI.get_next_appointment method."""
+
+        r = self.client.get_next_appointment(appointment_group_ids=None)
+

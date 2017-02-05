@@ -41,13 +41,22 @@ class GradingStandardsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # REQUIRED - title - The title for the Grading Standard.
+        # REQUIRED - title
+        """The title for the Grading Standard."""
         data["title"] = title
-        # REQUIRED - grading_scheme_entry[name] - The name for an entry value within a GradingStandard that describes the range of the value e.g. A-
+        # REQUIRED - grading_scheme_entry[name]
+        """The name for an entry value within a GradingStandard that describes the range of the value
+        e.g. A-"""
         data["grading_scheme_entry[name]"] = grading_scheme_entry_name
-        # REQUIRED - grading_scheme_entry[value] - The value for the name of the entry within a GradingStandard. The entry represents the lower bound of the range for the entry. This range includes the value up to the next entry in the GradingStandard, or 100 if there is no upper bound. The lowest value will have a lower bound range of 0. e.g. 93
+        # REQUIRED - grading_scheme_entry[value]
+        """The value for the name of the entry within a GradingStandard.
+        The entry represents the lower bound of the range for the entry.
+        This range includes the value up to the next entry in the GradingStandard,
+        or 100 if there is no upper bound. The lowest value will have a lower bound range of 0.
+        e.g. 93"""
         data["grading_scheme_entry[value]"] = grading_scheme_entry_value
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -78,17 +87,60 @@ class GradingStandardsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - title - The title for the Grading Standard.
+        # REQUIRED - title
+        """The title for the Grading Standard."""
         data["title"] = title
-        # REQUIRED - grading_scheme_entry[name] - The name for an entry value within a GradingStandard that describes the range of the value e.g. A-
+        # REQUIRED - grading_scheme_entry[name]
+        """The name for an entry value within a GradingStandard that describes the range of the value
+        e.g. A-"""
         data["grading_scheme_entry[name]"] = grading_scheme_entry_name
-        # REQUIRED - grading_scheme_entry[value] - The value for the name of the entry within a GradingStandard. The entry represents the lower bound of the range for the entry. This range includes the value up to the next entry in the GradingStandard, or 100 if there is no upper bound. The lowest value will have a lower bound range of 0. e.g. 93
+        # REQUIRED - grading_scheme_entry[value]
+        """The value for the name of the entry within a GradingStandard.
+        The entry represents the lower bound of the range for the entry.
+        This range includes the value up to the next entry in the GradingStandard,
+        or 100 if there is no upper bound. The lowest value will have a lower bound range of 0.
+        e.g. 93"""
         data["grading_scheme_entry[value]"] = grading_scheme_entry_value
 
         self.logger.debug("POST /api/v1/courses/{course_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/courses/{course_id}/grading_standards".format(**path), data=data, params=params, single_item=True)
+
+    def list_grading_standards_available_in_context_courses(self, course_id):
+        """
+        List the grading standards available in a context.
+
+        Returns the list of grading standards in the given context that are visible to user.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+
+        self.logger.debug("GET /api/v1/courses/{course_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/courses/{course_id}/grading_standards".format(**path), data=data, params=params, all_pages=True)
+
+    def list_grading_standards_available_in_context_accounts(self, account_id):
+        """
+        List the grading standards available in a context.
+
+        Returns the list of grading standards in the given context that are visible to user.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - account_id
+        """ID"""
+        path["account_id"] = account_id
+
+        self.logger.debug("GET /api/v1/accounts/{account_id}/grading_standards with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/grading_standards".format(**path), data=data, params=params, all_pages=True)
 
 
 class Gradingstandard(BaseModel):

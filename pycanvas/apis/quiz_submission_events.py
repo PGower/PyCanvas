@@ -28,13 +28,17 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - quiz_submission_events - The submission events to be recorded
+        # REQUIRED - quiz_submission_events
+        """The submission events to be recorded"""
         data["quiz_submission_events"] = quiz_submission_events
 
         self.logger.debug("POST /api/v1/courses/{course_id}/quizzes/{quiz_id}/submissions/{id}/events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -50,13 +54,18 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - quiz_id - ID
+        # REQUIRED - PATH - quiz_id
+        """ID"""
         path["quiz_id"] = quiz_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - attempt - The specific submission attempt to look up the events for. If unspecified, the latest attempt will be used.
+        # OPTIONAL - attempt
+        """The specific submission attempt to look up the events for. If unspecified,
+        the latest attempt will be used."""
         if attempt is not None:
             params["attempt"] = attempt
 

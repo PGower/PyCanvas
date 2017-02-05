@@ -29,7 +29,7 @@
               "paramType": "query",
               "name": "start_time",
               "description": "The beginning of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -37,7 +37,7 @@
               "paramType": "query",
               "name": "end_time",
               "description": "The end of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             }
@@ -68,7 +68,7 @@
               "paramType": "query",
               "name": "start_time",
               "description": "The beginning of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -76,7 +76,7 @@
               "paramType": "query",
               "name": "end_time",
               "description": "The end of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             }
@@ -107,7 +107,7 @@
               "paramType": "query",
               "name": "start_time",
               "description": "The beginning of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -115,7 +115,7 @@
               "paramType": "query",
               "name": "end_time",
               "description": "The end of the time range from which you want events.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             }

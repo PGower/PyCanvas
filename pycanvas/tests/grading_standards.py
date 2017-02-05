@@ -26,3 +26,15 @@ class TestGradingStandardsAPI(unittest.TestCase):
         # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
         pass
 
+    def test_list_grading_standards_available_in_context_courses(self):
+        """Integration test for the GradingStandardsAPI.list_grading_standards_available_in_context_courses method."""
+        course_id = None  # Change me!!
+
+        r = self.client.list_grading_standards_available_in_context_courses(course_id)
+
+    def test_list_grading_standards_available_in_context_accounts(self):
+        """Integration test for the GradingStandardsAPI.list_grading_standards_available_in_context_accounts method."""
+        account_id = None  # Change me!!
+
+        r = self.client.list_grading_standards_available_in_context_accounts(account_id)
+

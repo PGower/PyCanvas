@@ -26,9 +26,11 @@ class TabsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - include - Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)
+        # OPTIONAL - include
+        """"external":: Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)"""
         if include is not None:
             self._validate_enum(include, ["external"])
             params["include"] = include
@@ -46,9 +48,11 @@ class TabsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
-        # OPTIONAL - include - Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)
+        # OPTIONAL - include
+        """"external":: Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)"""
         if include is not None:
             self._validate_enum(include, ["external"])
             params["include"] = include
@@ -68,14 +72,18 @@ class TabsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # REQUIRED - PATH - tab_id - ID
+        # REQUIRED - PATH - tab_id
+        """ID"""
         path["tab_id"] = tab_id
-        # OPTIONAL - position - The new position of the tab, 1-based
+        # OPTIONAL - position
+        """The new position of the tab, 1-based"""
         if position is not None:
             data["position"] = position
-        # OPTIONAL - hidden - no description
+        # OPTIONAL - hidden
+        """no description"""
         if hidden is not None:
             data["hidden"] = hidden
 

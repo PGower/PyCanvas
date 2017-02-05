@@ -29,7 +29,8 @@ class ConferencesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
 
         self.logger.debug("GET /api/v1/courses/{course_id}/conferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -48,7 +49,8 @@ class ConferencesAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - group_id - ID
+        # REQUIRED - PATH - group_id
+        """ID"""
         path["group_id"] = group_id
 
         self.logger.debug("GET /api/v1/groups/{group_id}/conferences with query params: {params} and form data: {data}".format(params=params, data=data, **path))

@@ -23,7 +23,7 @@ class UsersAPI(BaseCanvasAPI):
         Retrieve the list of users associated with this account.
         
          @example_request
-           curl https://<canvas>/api/v1/accounts/self/users?search_term=<sis_user_id> \
+           curl https://<canvas>/api/v1/accounts/self/users?search_term=<search value> \
               -X GET \
               -H 'Authorization: Bearer <token>'
         """
@@ -31,9 +31,18 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # OPTIONAL - search_term - The partial name or full ID of the users to match and return in the results list. Must be at least 3 characters.
+        # OPTIONAL - search_term
+        """The partial name or full ID of the users to match and return in the
+        results list. Must be at least 3 characters.
+        
+        Note that the API will prefer matching on canonical user ID if the ID has
+        a numeric form. It will only search against other fields if non-numeric
+        in form, or if the numeric value doesn't yield any matches. Queries by
+        administrative users will search on SIS ID, name, or email address; non-
+        administrative queries will only be compared against name."""
         if search_term is not None:
             params["search_term"] = search_term
 
@@ -275,7 +284,7 @@ class UsersAPI(BaseCanvasAPI):
         self.logger.debug("GET /api/v1/users/self/activity_stream/summary with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/self/activity_stream/summary".format(**path), data=data, params=params, no_data=True)
 
-    def list_todo_items(self):
+    def list_todo_items(self, include=None):
         """
         List the TODO items.
 
@@ -294,6 +303,13 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
+        # OPTIONAL - include
+        """"ungraded_quizzes":: Optionally include ungraded quizzes (such as practice quizzes and surveys) in the list.
+                             These will be returned under a +quiz+ key instead of an +assignment+ key in response elements."""
+        if include is not None:
+            self._validate_enum(include, ["ungraded_quizzes"])
+            params["include"] = include
+
         self.logger.debug("GET /api/v1/users/self/todo with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/self/todo".format(**path), data=data, params=params, no_data=True)
 
@@ -311,6 +327,24 @@ class UsersAPI(BaseCanvasAPI):
         self.logger.debug("GET /api/v1/users/self/upcoming_events with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/self/upcoming_events".format(**path), data=data, params=params, no_data=True)
 
+    def list_missing_submissions(self, user_id):
+        """
+        List Missing Submissions.
+
+        returns past-due assignments for which the student does not have a submission.
+        The user sending the request must either be an admin or a parent observer using the parent app
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - user_id
+        """the student's ID"""
+        path["user_id"] = user_id
+
+        self.logger.debug("GET /api/v1/users/{user_id}/missing_submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{user_id}/missing_submissions".format(**path), data=data, params=params, all_pages=True)
+
     def hide_stream_item(self, id):
         """
         Hide a stream item.
@@ -321,7 +355,8 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/users/self/activity_stream/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -358,7 +393,8 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("POST /api/v1/users/{user_id}/files with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -382,13 +418,14 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/users/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/{id}".format(**path), data=data, params=params, single_item=True)
 
-    def create_user(self, account_id, pseudonym_unique_id, communication_channel_address=None, communication_channel_confirmation_url=None, communication_channel_skip_confirmation=None, communication_channel_type=None, force_validations=None, pseudonym_password=None, pseudonym_send_confirmation=None, pseudonym_sis_user_id=None, user_birthdate=None, user_locale=None, user_name=None, user_short_name=None, user_sortable_name=None, user_terms_of_use=None, user_time_zone=None):
+    def create_user(self, account_id, pseudonym_unique_id, communication_channel_address=None, communication_channel_confirmation_url=None, communication_channel_skip_confirmation=None, communication_channel_type=None, enable_sis_reactivation=None, force_validations=None, pseudonym_authentication_provider_id=None, pseudonym_force_self_registration=None, pseudonym_integration_id=None, pseudonym_password=None, pseudonym_send_confirmation=None, pseudonym_sis_user_id=None, user_birthdate=None, user_locale=None, user_name=None, user_short_name=None, user_skip_registration=None, user_sortable_name=None, user_terms_of_use=None, user_time_zone=None):
         """
         Create a user.
 
@@ -403,60 +440,200 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - account_id - ID
+        # REQUIRED - PATH - account_id
+        """ID"""
         path["account_id"] = account_id
-        # OPTIONAL - user[name] - The full name of the user. This name will be used by teacher for grading. Required if this is a self-registration.
+        # OPTIONAL - user[name]
+        """The full name of the user. This name will be used by teacher for grading.
+        Required if this is a self-registration."""
         if user_name is not None:
             data["user[name]"] = user_name
-        # OPTIONAL - user[short_name] - User's name as it will be displayed in discussions, messages, and comments.
+        # OPTIONAL - user[short_name]
+        """User's name as it will be displayed in discussions, messages, and comments."""
         if user_short_name is not None:
             data["user[short_name]"] = user_short_name
-        # OPTIONAL - user[sortable_name] - User's name as used to sort alphabetically in lists.
+        # OPTIONAL - user[sortable_name]
+        """User's name as used to sort alphabetically in lists."""
         if user_sortable_name is not None:
             data["user[sortable_name]"] = user_sortable_name
-        # OPTIONAL - user[time_zone] - The time zone for the user. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+        # OPTIONAL - user[time_zone]
+        """The time zone for the user. Allowed time zones are
+        {http://www.iana.org/time-zones IANA time zones} or friendlier
+        {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if user_time_zone is not None:
             data["user[time_zone]"] = user_time_zone
-        # OPTIONAL - user[locale] - The user's preferred language as a two-letter ISO 639-1 code.
+        # OPTIONAL - user[locale]
+        """The user's preferred language, from the list of languages Canvas supports.
+        This is in RFC-5646 format."""
         if user_locale is not None:
             data["user[locale]"] = user_locale
-        # OPTIONAL - user[birthdate] - The user's birth date.
+        # OPTIONAL - user[birthdate]
+        """The user's birth date."""
         if user_birthdate is not None:
             data["user[birthdate]"] = user_birthdate
-        # OPTIONAL - user[terms_of_use] - Whether the user accepts the terms of use. Required if this is a self-registration and this canvas instance requires users to accept the terms (on by default).
+        # OPTIONAL - user[terms_of_use]
+        """Whether the user accepts the terms of use. Required if this is a
+        self-registration and this canvas instance requires users to accept
+        the terms (on by default).
+        
+        If this is true, it will mark the user as having accepted the terms of use."""
         if user_terms_of_use is not None:
             data["user[terms_of_use]"] = user_terms_of_use
-        # REQUIRED - pseudonym[unique_id] - User's login ID. If this is a self-registration, it must be a valid email address.
+        # OPTIONAL - user[skip_registration]
+        """Automatically mark the user as registered.
+        
+        If this is true, it is recommended to set <tt>"pseudonym[send_confirmation]"</tt> to true as well.
+        Otherwise, the user will not receive any messages about their account creation.
+        
+        The users communication channel confirmation can be skipped by setting
+        <tt>"communication_channel[skip_confirmation]"</tt> to true as well."""
+        if user_skip_registration is not None:
+            data["user[skip_registration]"] = user_skip_registration
+        # REQUIRED - pseudonym[unique_id]
+        """User's login ID. If this is a self-registration, it must be a valid
+        email address."""
         data["pseudonym[unique_id]"] = pseudonym_unique_id
-        # OPTIONAL - pseudonym[password] - User's password. Cannot be set during self-registration.
+        # OPTIONAL - pseudonym[password]
+        """User's password. Cannot be set during self-registration."""
         if pseudonym_password is not None:
             data["pseudonym[password]"] = pseudonym_password
-        # OPTIONAL - pseudonym[sis_user_id] - SIS ID for the user's account. To set this parameter, the caller must be able to manage SIS permissions.
+        # OPTIONAL - pseudonym[sis_user_id]
+        """SIS ID for the user's account. To set this parameter, the caller must be
+        able to manage SIS permissions."""
         if pseudonym_sis_user_id is not None:
             data["pseudonym[sis_user_id]"] = pseudonym_sis_user_id
-        # OPTIONAL - pseudonym[send_confirmation] - Send user notification of account creation if true. Automatically set to true during self-registration.
+        # OPTIONAL - pseudonym[integration_id]
+        """Integration ID for the login. To set this parameter, the caller must be able to
+        manage SIS permissions. The Integration ID is a secondary
+        identifier useful for more complex SIS integrations."""
+        if pseudonym_integration_id is not None:
+            data["pseudonym[integration_id]"] = pseudonym_integration_id
+        # OPTIONAL - pseudonym[send_confirmation]
+        """Send user notification of account creation if true.
+        Automatically set to true during self-registration."""
         if pseudonym_send_confirmation is not None:
             data["pseudonym[send_confirmation]"] = pseudonym_send_confirmation
-        # OPTIONAL - communication_channel[type] - The communication channel type, e.g. 'email' or 'sms'.
+        # OPTIONAL - pseudonym[force_self_registration]
+        """Send user a self-registration style email if true.
+        Setting it means the users will get a notification asking them
+        to "complete the registration process" by clicking it, setting
+        a password, and letting them in.  Will only be executed on
+        if the user does not need admin approval.
+        Defaults to false unless explicitly provided."""
+        if pseudonym_force_self_registration is not None:
+            data["pseudonym[force_self_registration]"] = pseudonym_force_self_registration
+        # OPTIONAL - pseudonym[authentication_provider_id]
+        """The authentication provider this login is associated with. Logins
+        associated with a specific provider can only be used with that provider.
+        Legacy providers (LDAP, CAS, SAML) will search for logins associated with
+        them, or unassociated logins. New providers will only search for logins
+        explicitly associated with them. This can be the integer ID of the
+        provider, or the type of the provider (in which case, it will find the
+        first matching provider)."""
+        if pseudonym_authentication_provider_id is not None:
+            data["pseudonym[authentication_provider_id]"] = pseudonym_authentication_provider_id
+        # OPTIONAL - communication_channel[type]
+        """The communication channel type, e.g. 'email' or 'sms'."""
         if communication_channel_type is not None:
             data["communication_channel[type]"] = communication_channel_type
-        # OPTIONAL - communication_channel[address] - The communication channel address, e.g. the user's email address.
+        # OPTIONAL - communication_channel[address]
+        """The communication channel address, e.g. the user's email address."""
         if communication_channel_address is not None:
             data["communication_channel[address]"] = communication_channel_address
-        # OPTIONAL - communication_channel[confirmation_url] - Only valid for account admins. If true, returns the new user account confirmation URL in the response.
+        # OPTIONAL - communication_channel[confirmation_url]
+        """Only valid for account admins. If true, returns the new user account
+        confirmation URL in the response."""
         if communication_channel_confirmation_url is not None:
             data["communication_channel[confirmation_url]"] = communication_channel_confirmation_url
-        # OPTIONAL - communication_channel[skip_confirmation] - Only valid for site admins and account admins making requests; If true, the channel is automatically validated and no confirmation email or SMS is sent. Otherwise, the user must respond to a confirmation message to confirm the channel.
+        # OPTIONAL - communication_channel[skip_confirmation]
+        """Only valid for site admins and account admins making requests; If true, the channel is
+        automatically validated and no confirmation email or SMS is sent.
+        Otherwise, the user must respond to a confirmation message to confirm the
+        channel.
+        
+        If this is true, it is recommended to set <tt>"pseudonym[send_confirmation]"</tt> to true as well.
+        Otherwise, the user will not receive any messages about their account creation."""
         if communication_channel_skip_confirmation is not None:
             data["communication_channel[skip_confirmation]"] = communication_channel_skip_confirmation
-        # OPTIONAL - force_validations - If true, validations are performed on the newly created user (and their associated pseudonym) even if the request is made by a privileged user like an admin. When set to false, or not included in the request parameters, any newly created users are subject to validations unless the request is made by a user with a 'manage_user_logins' right. In which case, certain validations such as 'require_acceptance_of_terms' and 'require_presence_of_name' are not enforced. Use this parameter to return helpful json errors while building users with an admin request.
+        # OPTIONAL - force_validations
+        """If true, validations are performed on the newly created user (and their associated pseudonym)
+        even if the request is made by a privileged user like an admin. When set to false,
+        or not included in the request parameters, any newly created users are subject to
+        validations unless the request is made by a user with a 'manage_user_logins' right.
+        In which case, certain validations such as 'require_acceptance_of_terms' and
+        'require_presence_of_name' are not enforced. Use this parameter to return helpful json
+        errors while building users with an admin request."""
         if force_validations is not None:
             data["force_validations"] = force_validations
+        # OPTIONAL - enable_sis_reactivation
+        """When true, will first try to re-activate a deleted user with matching sis_user_id if possible."""
+        if enable_sis_reactivation is not None:
+            data["enable_sis_reactivation"] = enable_sis_reactivation
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/users with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("POST", "/api/v1/accounts/{account_id}/users".format(**path), data=data, params=params, single_item=True)
 
-    def update_user_settings(self, id, manual_mark_as_read=None):
+    def self_register_user(self, user_name, account_id, user_terms_of_use, pseudonym_unique_id, communication_channel_address=None, communication_channel_type=None, user_birthdate=None, user_locale=None, user_short_name=None, user_sortable_name=None, user_time_zone=None):
+        """
+        Self register a user.
+
+        Self register and return a new user and pseudonym for an account.
+        
+        If self-registration is enabled on the account, you can use this
+        endpoint to self register new users.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - account_id
+        """ID"""
+        path["account_id"] = account_id
+        # REQUIRED - user[name]
+        """The full name of the user. This name will be used by teacher for grading."""
+        data["user[name]"] = user_name
+        # OPTIONAL - user[short_name]
+        """User's name as it will be displayed in discussions, messages, and comments."""
+        if user_short_name is not None:
+            data["user[short_name]"] = user_short_name
+        # OPTIONAL - user[sortable_name]
+        """User's name as used to sort alphabetically in lists."""
+        if user_sortable_name is not None:
+            data["user[sortable_name]"] = user_sortable_name
+        # OPTIONAL - user[time_zone]
+        """The time zone for the user. Allowed time zones are
+        {http://www.iana.org/time-zones IANA time zones} or friendlier
+        {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
+        if user_time_zone is not None:
+            data["user[time_zone]"] = user_time_zone
+        # OPTIONAL - user[locale]
+        """The user's preferred language, from the list of languages Canvas supports.
+        This is in RFC-5646 format."""
+        if user_locale is not None:
+            data["user[locale]"] = user_locale
+        # OPTIONAL - user[birthdate]
+        """The user's birth date."""
+        if user_birthdate is not None:
+            data["user[birthdate]"] = user_birthdate
+        # REQUIRED - user[terms_of_use]
+        """Whether the user accepts the terms of use."""
+        data["user[terms_of_use]"] = user_terms_of_use
+        # REQUIRED - pseudonym[unique_id]
+        """User's login ID. Must be a valid email address."""
+        data["pseudonym[unique_id]"] = pseudonym_unique_id
+        # OPTIONAL - communication_channel[type]
+        """The communication channel type, e.g. 'email' or 'sms'."""
+        if communication_channel_type is not None:
+            data["communication_channel[type]"] = communication_channel_type
+        # OPTIONAL - communication_channel[address]
+        """The communication channel address, e.g. the user's email address."""
+        if communication_channel_address is not None:
+            data["communication_channel[address]"] = communication_channel_address
+
+        self.logger.debug("POST /api/v1/accounts/{account_id}/self_registration with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/self_registration".format(**path), data=data, params=params, single_item=True)
+
+    def update_user_settings(self, id, collapse_global_nav=None, manual_mark_as_read=None):
         """
         Update user settings.
 
@@ -466,16 +643,132 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - manual_mark_as_read - If true, require user to manually mark discussion posts as read (don't auto-mark as read).
+        # OPTIONAL - manual_mark_as_read
+        """If true, require user to manually mark discussion posts as read (don't
+        auto-mark as read)."""
         if manual_mark_as_read is not None:
             params["manual_mark_as_read"] = manual_mark_as_read
+        # OPTIONAL - collapse_global_nav
+        """If true, the user's page loads with the global navigation collapsed"""
+        if collapse_global_nav is not None:
+            params["collapse_global_nav"] = collapse_global_nav
 
         self.logger.debug("GET /api/v1/users/{id}/settings with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/users/{id}/settings".format(**path), data=data, params=params, no_data=True)
 
-    def edit_user(self, id, user_avatar_token=None, user_avatar_url=None, user_locale=None, user_name=None, user_short_name=None, user_sortable_name=None, user_time_zone=None):
+    def get_custom_colors(self, id):
+        """
+        Get custom colors.
+
+        Returns all custom colors that have been saved for a user.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/users/{id}/colors with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{id}/colors".format(**path), data=data, params=params, no_data=True)
+
+    def get_custom_color(self, id, asset_string):
+        """
+        Get custom color.
+
+        Returns the custom colors that have been saved for a user for a given context.
+        
+        The asset_string parameter should be in the format 'context_id', for example
+        'course_42'.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+        # REQUIRED - PATH - asset_string
+        """ID"""
+        path["asset_string"] = asset_string
+
+        self.logger.debug("GET /api/v1/users/{id}/colors/{asset_string} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{id}/colors/{asset_string}".format(**path), data=data, params=params, no_data=True)
+
+    def update_custom_color(self, id, asset_string, hexcode=None):
+        """
+        Update custom color.
+
+        Updates a custom color for a user for a given context.  This allows
+        colors for the calendar and elsewhere to be customized on a user basis.
+        
+        The asset string parameter should be in the format 'context_id', for example
+        'course_42'
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+        # REQUIRED - PATH - asset_string
+        """ID"""
+        path["asset_string"] = asset_string
+        # OPTIONAL - hexcode
+        """The hexcode of the color to set for the context, if you choose to pass the
+        hexcode as a query parameter rather than in the request body you should
+        NOT include the '#' unless you escape it first."""
+        if hexcode is not None:
+            data["hexcode"] = hexcode
+
+        self.logger.debug("PUT /api/v1/users/{id}/colors/{asset_string} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{id}/colors/{asset_string}".format(**path), data=data, params=params, no_data=True)
+
+    def get_dashboard_postions(self, id):
+        """
+        Get dashboard postions.
+
+        Returns all dashboard positions that have been saved for a user.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/users/{id}/dashboard_positions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/{id}/dashboard_positions".format(**path), data=data, params=params, no_data=True)
+
+    def update_dashboard_positions(self, id):
+        """
+        Update dashboard positions.
+
+        Updates the dashboard positions for a user for a given context.  This allows
+        positions for the dashboard cards and elsewhere to be customized on a per
+        user basis.
+        
+        The asset string parameter should be in the format 'context_id', for example
+        'course_42'
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("PUT /api/v1/users/{id}/dashboard_positions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/{id}/dashboard_positions".format(**path), data=data, params=params, no_data=True)
+
+    def edit_user(self, id, user_avatar_token=None, user_avatar_url=None, user_email=None, user_locale=None, user_name=None, user_short_name=None, user_sortable_name=None, user_time_zone=None):
         """
         Edit a user.
 
@@ -485,27 +778,50 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - user[name] - The full name of the user. This name will be used by teacher for grading.
+        # OPTIONAL - user[name]
+        """The full name of the user. This name will be used by teacher for grading."""
         if user_name is not None:
             data["user[name]"] = user_name
-        # OPTIONAL - user[short_name] - User's name as it will be displayed in discussions, messages, and comments.
+        # OPTIONAL - user[short_name]
+        """User's name as it will be displayed in discussions, messages, and comments."""
         if user_short_name is not None:
             data["user[short_name]"] = user_short_name
-        # OPTIONAL - user[sortable_name] - User's name as used to sort alphabetically in lists.
+        # OPTIONAL - user[sortable_name]
+        """User's name as used to sort alphabetically in lists."""
         if user_sortable_name is not None:
             data["user[sortable_name]"] = user_sortable_name
-        # OPTIONAL - user[time_zone] - The time zone for the user. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+        # OPTIONAL - user[time_zone]
+        """The time zone for the user. Allowed time zones are
+        {http://www.iana.org/time-zones IANA time zones} or friendlier
+        {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if user_time_zone is not None:
             data["user[time_zone]"] = user_time_zone
-        # OPTIONAL - user[locale] - The user's preferred language as a two-letter ISO 639-1 code.
+        # OPTIONAL - user[email]
+        """The default email address of the user."""
+        if user_email is not None:
+            data["user[email]"] = user_email
+        # OPTIONAL - user[locale]
+        """The user's preferred language, from the list of languages Canvas supports.
+        This is in RFC-5646 format."""
         if user_locale is not None:
             data["user[locale]"] = user_locale
-        # OPTIONAL - user[avatar][token] - A unique representation of the avatar record to assign as the user's current avatar. This token can be obtained from the user avatars endpoint. This supersedes the user [avatar] [url] argument, and if both are included the url will be ignored. Note: this is an internal representation and is subject to change without notice. It should be consumed with this api endpoint and used in the user update endpoint, and should not be constructed by the client.
+        # OPTIONAL - user[avatar][token]
+        """A unique representation of the avatar record to assign as the user's
+        current avatar. This token can be obtained from the user avatars endpoint.
+        This supersedes the user [avatar] [url] argument, and if both are included
+        the url will be ignored. Note: this is an internal representation and is
+        subject to change without notice. It should be consumed with this api
+        endpoint and used in the user update endpoint, and should not be
+        constructed by the client."""
         if user_avatar_token is not None:
             data["user[avatar][token]"] = user_avatar_token
-        # OPTIONAL - user[avatar][url] - To set the user's avatar to point to an external url, do not include a token and instead pass the url here. Warning: For maximum compatibility, please use 128 px square images.
+        # OPTIONAL - user[avatar][url]
+        """To set the user's avatar to point to an external url, do not include a
+        token and instead pass the url here. Warning: For maximum compatibility,
+        please use 128 px square images."""
         if user_avatar_url is not None:
             data["user[avatar][url]"] = user_avatar_url
 
@@ -517,7 +833,9 @@ class UsersAPI(BaseCanvasAPI):
         Merge user into another user.
 
         Merge a user into another user.
-        To merge users, the caller must have permissions to manage both users.
+        To merge users, the caller must have permissions to manage both users. This
+        should be considered irreversible. This will delete the user and move all
+        the data into the destination user.
         
         When finding users by SIS ids in different accounts the
         destination_account_id is required.
@@ -528,9 +846,11 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - PATH - destination_user_id - ID
+        # REQUIRED - PATH - destination_user_id
+        """ID"""
         path["destination_user_id"] = destination_user_id
 
         self.logger.debug("PUT /api/v1/users/{id}/merge_into/{destination_user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -541,7 +861,9 @@ class UsersAPI(BaseCanvasAPI):
         Merge user into another user.
 
         Merge a user into another user.
-        To merge users, the caller must have permissions to manage both users.
+        To merge users, the caller must have permissions to manage both users. This
+        should be considered irreversible. This will delete the user and move all
+        the data into the destination user.
         
         When finding users by SIS ids in different accounts the
         destination_account_id is required.
@@ -552,15 +874,46 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - PATH - destination_account_id - ID
+        # REQUIRED - PATH - destination_account_id
+        """ID"""
         path["destination_account_id"] = destination_account_id
-        # REQUIRED - PATH - destination_user_id - ID
+        # REQUIRED - PATH - destination_user_id
+        """ID"""
         path["destination_user_id"] = destination_user_id
 
         self.logger.debug("PUT /api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("PUT", "/api/v1/users/{id}/merge_into/accounts/{destination_account_id}/users/{destination_user_id}".format(**path), data=data, params=params, single_item=True)
+
+    def split_merged_users_into_separate_users(self, id):
+        """
+        Split merged users into separate users.
+
+        Merged users cannot be fully restored to their previous state, but this will
+        attempt to split as much as possible to the previous state.
+        To split a merged user, the caller must have permissions to manage all of
+        the users logins. If there are multiple users that have been merged into one
+        user it will split each merge into a separate user.
+        A split can only happen within 90 days of a user merge. A user merge deletes
+        the previous user and may be permanently deleted. In this scenario we create
+        a new user object and proceed to move as much as possible to the new user.
+        The user object will not have preserved the name or settings from the
+        previous user. Some items may have been deleted during a user_merge that
+        cannot be restored, and/or the data has become stale because of other
+        changes to the objects since the time of the user_merge.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - id
+        """ID"""
+        path["id"] = id
+
+        self.logger.debug("POST /api/v1/users/{id}/split with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("POST", "/api/v1/users/{id}/split".format(**path), data=data, params=params, all_pages=True)
 
     def get_user_profile(self, user_id):
         """
@@ -575,7 +928,8 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/profile with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -599,7 +953,8 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/avatars with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -617,21 +972,16 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # OPTIONAL - start_time - The beginning of the time range from which you want page views.
+        # OPTIONAL - start_time
+        """The beginning of the time range from which you want page views."""
         if start_time is not None:
-            if issubclass(start_time.__class__, date) or issubclass(start_time.__class__, datetime):
-                start_time = start_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(start_time.__class__, basestring):
-                start_time = self._validate_iso8601_string(start_time)
             params["start_time"] = start_time
-        # OPTIONAL - end_time - The end of the time range from which you want page views.
+        # OPTIONAL - end_time
+        """The end of the time range from which you want page views."""
         if end_time is not None:
-            if issubclass(end_time.__class__, date) or issubclass(end_time.__class__, datetime):
-                end_time = end_time.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-            elif issubclass(end_time.__class__, basestring):
-                end_time = self._validate_iso8601_string(end_time)
             params["end_time"] = end_time
 
         self.logger.debug("GET /api/v1/users/{user_id}/page_views with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -648,6 +998,10 @@ class UsersAPI(BaseCanvasAPI):
         and wants to capture additional info about them.  The part of the URL that follows
         +/custom_data/+ defines the scope of the request, and it reflects the structure of
         the JSON data to be stored or retrieved.
+        
+        The value +self+ may be used for +user_id+ to store data associated with the calling user.
+        In order to access another user's custom data, you must be an account administrator with
+        permission to manage users.
         
         A namespace parameter, +ns+, is used to prevent custom_data collisions between
         different apps.  This parameter is required for all custom_data requests.
@@ -669,7 +1023,7 @@ class UsersAPI(BaseCanvasAPI):
           }
         
         Subscopes (or, generated scopes) can also be specified by passing values to
-        data[<subscope>].
+        +data+[+subscope+].
         
         Example PUT specifying subscopes:
           curl 'https://<canvas>/api/v1/users/<user_id>/custom_data/body/measurements' \
@@ -787,11 +1141,17 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - ns - The namespace under which to store the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
+        # REQUIRED - ns
+        """The namespace under which to store the data.  This should be something other
+        Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
         data["ns"] = ns
-        # REQUIRED - data - The data you want to store for the user, at the specified scope. If the data is composed of (possibly nested) JSON objects, scopes will be generated for the (nested) keys (see examples).
+        # REQUIRED - data
+        """The data you want to store for the user, at the specified scope.  If the data is
+        composed of (possibly nested) JSON objects, scopes will be generated for the (nested)
+        keys (see examples)."""
         data["data"] = data
 
         self.logger.debug("PUT /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -817,9 +1177,12 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - ns - The namespace from which to retrieve the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
+        # REQUIRED - ns
+        """The namespace from which to retrieve the data.  This should be something other
+        Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
         params["ns"] = ns
 
         self.logger.debug("GET /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -937,13 +1300,99 @@ class UsersAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - user_id - ID
+        # REQUIRED - PATH - user_id
+        """ID"""
         path["user_id"] = user_id
-        # REQUIRED - ns - The namespace from which to delete the data. This should be something other Canvas API apps aren't likely to use, such as a reverse DNS for your organization.
+        # REQUIRED - ns
+        """The namespace from which to delete the data.  This should be something other
+        Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
         params["ns"] = ns
 
         self.logger.debug("DELETE /api/v1/users/{user_id}/custom_data with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("DELETE", "/api/v1/users/{user_id}/custom_data".format(**path), data=data, params=params, no_data=True)
+
+    def list_course_nicknames(self):
+        """
+        List course nicknames.
+
+        Returns all course nicknames you have set.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        self.logger.debug("GET /api/v1/users/self/course_nicknames with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/course_nicknames".format(**path), data=data, params=params, all_pages=True)
+
+    def get_course_nickname(self, course_id):
+        """
+        Get course nickname.
+
+        Returns the nickname for a specific course.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+
+        self.logger.debug("GET /api/v1/users/self/course_nicknames/{course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("GET", "/api/v1/users/self/course_nicknames/{course_id}".format(**path), data=data, params=params, single_item=True)
+
+    def set_course_nickname(self, nickname, course_id):
+        """
+        Set course nickname.
+
+        Set a nickname for the given course. This will replace the course's name
+        in output of API calls you make subsequently, as well as in selected
+        places in the Canvas web user interface.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+        # REQUIRED - nickname
+        """The nickname to set.  It must be non-empty and shorter than 60 characters."""
+        data["nickname"] = nickname
+
+        self.logger.debug("PUT /api/v1/users/self/course_nicknames/{course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("PUT", "/api/v1/users/self/course_nicknames/{course_id}".format(**path), data=data, params=params, single_item=True)
+
+    def remove_course_nickname(self, course_id):
+        """
+        Remove course nickname.
+
+        Remove the nickname for the given course.
+        Subsequent course API calls will return the actual name for the course.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        # REQUIRED - PATH - course_id
+        """ID"""
+        path["course_id"] = course_id
+
+        self.logger.debug("DELETE /api/v1/users/self/course_nicknames/{course_id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/course_nicknames/{course_id}".format(**path), data=data, params=params, single_item=True)
+
+    def clear_course_nicknames(self):
+        """
+        Clear course nicknames.
+
+        Remove all stored course nicknames.
+        """
+        path = {}
+        data = {}
+        params = {}
+
+        self.logger.debug("DELETE /api/v1/users/self/course_nicknames with query params: {params} and form data: {data}".format(params=params, data=data, **path))
+        return self.generic_request("DELETE", "/api/v1/users/self/course_nicknames".format(**path), data=data, params=params, no_data=True)
 
 
 class Profile(BaseModel):
@@ -1124,88 +1573,64 @@ class Profile(BaseModel):
         self._id = value
 
 
-class Pageviewlinks(BaseModel):
-    """Pageviewlinks Model.
-    The links of a page view access in Canvas"""
+class Coursenickname(BaseModel):
+    """Coursenickname Model."""
 
-    def __init__(self, account=None, real_user=None, user=None, context=None, asset=None):
-        """Init method for Pageviewlinks class."""
-        self._account = account
-        self._real_user = real_user
-        self._user = user
-        self._context = context
-        self._asset = asset
+    def __init__(self, course_id=None, nickname=None, name=None):
+        """Init method for Coursenickname class."""
+        self._course_id = course_id
+        self._nickname = nickname
+        self._name = name
 
-        self.logger = logging.getLogger('pycanvas.Pageviewlinks')
+        self.logger = logging.getLogger('pycanvas.Coursenickname')
 
     @property
-    def account(self):
-        """The ID of the account context for this page view."""
-        return self._account
+    def course_id(self):
+        """the ID of the course."""
+        return self._course_id
 
-    @account.setter
-    def account(self, value):
-        """Setter for account property."""
-        self.logger.warn("Setting values on account will NOT update the remote Canvas instance.")
-        self._account = value
-
-    @property
-    def real_user(self):
-        """The ID of the actual user who made this request, if the request was made by a user who was masquerading."""
-        return self._real_user
-
-    @real_user.setter
-    def real_user(self, value):
-        """Setter for real_user property."""
-        self.logger.warn("Setting values on real_user will NOT update the remote Canvas instance.")
-        self._real_user = value
+    @course_id.setter
+    def course_id(self, value):
+        """Setter for course_id property."""
+        self.logger.warn("Setting values on course_id will NOT update the remote Canvas instance.")
+        self._course_id = value
 
     @property
-    def user(self):
-        """The ID of the user for this page view."""
-        return self._user
+    def nickname(self):
+        """the calling user's nickname for the course."""
+        return self._nickname
 
-    @user.setter
-    def user(self, value):
-        """Setter for user property."""
-        self.logger.warn("Setting values on user will NOT update the remote Canvas instance.")
-        self._user = value
-
-    @property
-    def context(self):
-        """The ID of the context for the request (course id if context_type is Course, etc)."""
-        return self._context
-
-    @context.setter
-    def context(self, value):
-        """Setter for context property."""
-        self.logger.warn("Setting values on context will NOT update the remote Canvas instance.")
-        self._context = value
+    @nickname.setter
+    def nickname(self, value):
+        """Setter for nickname property."""
+        self.logger.warn("Setting values on nickname will NOT update the remote Canvas instance.")
+        self._nickname = value
 
     @property
-    def asset(self):
-        """The ID of the asset for the request, if any."""
-        return self._asset
+    def name(self):
+        """the actual name of the course."""
+        return self._name
 
-    @asset.setter
-    def asset(self, value):
-        """Setter for asset property."""
-        self.logger.warn("Setting values on asset will NOT update the remote Canvas instance.")
-        self._asset = value
+    @name.setter
+    def name(self, value):
+        """Setter for name property."""
+        self.logger.warn("Setting values on name will NOT update the remote Canvas instance.")
+        self._name = value
 
 
 class Pageview(BaseModel):
     """Pageview Model.
     The record of a user page view access in Canvas"""
 
-    def __init__(self, id, links=None, url=None, created_at=None, contributed=None, interaction_seconds=None, asset_type=None, context_type=None, controller=None, user_request=None, http_method=None, user_agent=None, action=None, remote_ip=None, participated=None, render_time=None):
+    def __init__(self, id, app_name=None, links=None, url=None, created_at=None, contributed=None, interaction_seconds=None, context_type=None, controller=None, user_request=None, http_method=None, user_agent=None, action=None, remote_ip=None, participated=None, asset_type=None, render_time=None):
         """Init method for Pageview class."""
+        self._app_name = app_name
         self._links = links
         self._url = url
         self._created_at = created_at
         self._contributed = contributed
         self._interaction_seconds = interaction_seconds
-        self._asset_type = asset_type
+        self._id = id
         self._context_type = context_type
         self._controller = controller
         self._user_request = user_request
@@ -1214,10 +1639,21 @@ class Pageview(BaseModel):
         self._action = action
         self._remote_ip = remote_ip
         self._participated = participated
-        self._id = id
+        self._asset_type = asset_type
         self._render_time = render_time
 
         self.logger = logging.getLogger('pycanvas.Pageview')
+
+    @property
+    def app_name(self):
+        """If the request is from an API request, the app that generated the access token."""
+        return self._app_name
+
+    @app_name.setter
+    def app_name(self, value):
+        """Setter for app_name property."""
+        self.logger.warn("Setting values on app_name will NOT update the remote Canvas instance.")
+        self._app_name = value
 
     @property
     def links(self):
@@ -1275,15 +1711,15 @@ class Pageview(BaseModel):
         self._interaction_seconds = value
 
     @property
-    def asset_type(self):
-        """The type of asset in the context for the request, if any."""
-        return self._asset_type
+    def id(self):
+        """A UUID representing the page view.  This is also the unique request id."""
+        return self._id
 
-    @asset_type.setter
-    def asset_type(self, value):
-        """Setter for asset_type property."""
-        self.logger.warn("Setting values on asset_type will NOT update the remote Canvas instance.")
-        self._asset_type = value
+    @id.setter
+    def id(self, value):
+        """Setter for id property."""
+        self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
+        self._id = value
 
     @property
     def context_type(self):
@@ -1374,15 +1810,15 @@ class Pageview(BaseModel):
         self._participated = value
 
     @property
-    def id(self):
-        """A UUID representing the page view.  This is also the unique request id."""
-        return self._id
+    def asset_type(self):
+        """The type of asset in the context for the request, if any."""
+        return self._asset_type
 
-    @id.setter
-    def id(self, value):
-        """Setter for id property."""
-        self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
-        self._id = value
+    @asset_type.setter
+    def asset_type(self, value):
+        """Setter for asset_type property."""
+        self.logger.warn("Setting values on asset_type will NOT update the remote Canvas instance.")
+        self._asset_type = value
 
     @property
     def render_time(self):
@@ -1396,12 +1832,83 @@ class Pageview(BaseModel):
         self._render_time = value
 
 
+class Pageviewlinks(BaseModel):
+    """Pageviewlinks Model.
+    The links of a page view access in Canvas"""
+
+    def __init__(self, account=None, real_user=None, user=None, context=None, asset=None):
+        """Init method for Pageviewlinks class."""
+        self._account = account
+        self._real_user = real_user
+        self._user = user
+        self._context = context
+        self._asset = asset
+
+        self.logger = logging.getLogger('pycanvas.Pageviewlinks')
+
+    @property
+    def account(self):
+        """The ID of the account context for this page view."""
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        """Setter for account property."""
+        self.logger.warn("Setting values on account will NOT update the remote Canvas instance.")
+        self._account = value
+
+    @property
+    def real_user(self):
+        """The ID of the actual user who made this request, if the request was made by a user who was masquerading."""
+        return self._real_user
+
+    @real_user.setter
+    def real_user(self, value):
+        """Setter for real_user property."""
+        self.logger.warn("Setting values on real_user will NOT update the remote Canvas instance.")
+        self._real_user = value
+
+    @property
+    def user(self):
+        """The ID of the user for this page view."""
+        return self._user
+
+    @user.setter
+    def user(self, value):
+        """Setter for user property."""
+        self.logger.warn("Setting values on user will NOT update the remote Canvas instance.")
+        self._user = value
+
+    @property
+    def context(self):
+        """The ID of the context for the request (course id if context_type is Course, etc)."""
+        return self._context
+
+    @context.setter
+    def context(self, value):
+        """Setter for context property."""
+        self.logger.warn("Setting values on context will NOT update the remote Canvas instance.")
+        self._context = value
+
+    @property
+    def asset(self):
+        """The ID of the asset for the request, if any."""
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        """Setter for asset property."""
+        self.logger.warn("Setting values on asset will NOT update the remote Canvas instance.")
+        self._asset = value
+
+
 class User(BaseModel):
     """User Model.
     A Canvas user, e.g. a student, teacher, administrator, observer, etc."""
 
-    def __init__(self, id, login_id=None, sortable_name=None, name=None, short_name=None, bio=None, locale=None, sis_user_id=None, time_zone=None, email=None, sis_import_id=None, avatar_url=None, last_login=None, enrollments=None, sis_login_id=None):
+    def __init__(self, id, integration_id=None, login_id=None, sortable_name=None, name=None, short_name=None, bio=None, locale=None, sis_user_id=None, time_zone=None, email=None, sis_import_id=None, avatar_url=None, last_login=None, enrollments=None, sis_login_id=None):
         """Init method for User class."""
+        self._integration_id = integration_id
         self._login_id = login_id
         self._sortable_name = sortable_name
         self._name = name
@@ -1419,6 +1926,17 @@ class User(BaseModel):
         self._id = id
 
         self.logger = logging.getLogger('pycanvas.User')
+
+    @property
+    def integration_id(self):
+        """The integration_id associated with the user.  This field is only included if the user came from a SIS import and has permissions to view SIS information."""
+        return self._integration_id
+
+    @integration_id.setter
+    def integration_id(self, value):
+        """Setter for integration_id property."""
+        self.logger.warn("Setting values on integration_id will NOT update the remote Canvas instance.")
+        self._integration_id = value
 
     @property
     def login_id(self):
@@ -1477,7 +1995,7 @@ class User(BaseModel):
 
     @property
     def locale(self):
-        """Optional: This field can be requested with certain API calls, and will return the users locale."""
+        """Optional: This field can be requested with certain API calls, and will return the users locale in RFC 5646 format."""
         return self._locale
 
     @locale.setter
@@ -1584,6 +2102,64 @@ class User(BaseModel):
         """Setter for id property."""
         self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
         self._id = value
+
+
+class Userdisplay(BaseModel):
+    """Userdisplay Model.
+    This mini-object is used for secondary user responses, when we just want to provide enough information to display a user."""
+
+    def __init__(self, avatar_image_url=None, id=None, short_name=None, html_url=None):
+        """Init method for Userdisplay class."""
+        self._avatar_image_url = avatar_image_url
+        self._id = id
+        self._short_name = short_name
+        self._html_url = html_url
+
+        self.logger = logging.getLogger('pycanvas.Userdisplay')
+
+    @property
+    def avatar_image_url(self):
+        """If avatars are enabled, this field will be included and contain a url to retrieve the user's avatar."""
+        return self._avatar_image_url
+
+    @avatar_image_url.setter
+    def avatar_image_url(self, value):
+        """Setter for avatar_image_url property."""
+        self.logger.warn("Setting values on avatar_image_url will NOT update the remote Canvas instance.")
+        self._avatar_image_url = value
+
+    @property
+    def id(self):
+        """The ID of the user."""
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        """Setter for id property."""
+        self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
+        self._id = value
+
+    @property
+    def short_name(self):
+        """A short name the user has selected, for use in conversations or other less formal places through the site."""
+        return self._short_name
+
+    @short_name.setter
+    def short_name(self, value):
+        """Setter for short_name property."""
+        self.logger.warn("Setting values on short_name will NOT update the remote Canvas instance.")
+        self._short_name = value
+
+    @property
+    def html_url(self):
+        """URL to access user, either nested to a context or directly."""
+        return self._html_url
+
+    @html_url.setter
+    def html_url(self, value):
+        """Setter for html_url property."""
+        self.logger.warn("Setting values on html_url will NOT update the remote Canvas instance.")
+        self._html_url = value
 
 
 class Avatar(BaseModel):

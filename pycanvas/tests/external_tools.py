@@ -18,25 +18,31 @@ class TestExternalToolsAPI(unittest.TestCase):
         """Integration test for the ExternalToolsAPI.list_external_tools_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.list_external_tools_courses(course_id, search_term=None, selectable=None)
+        r = self.client.list_external_tools_courses(course_id, include_parents=None, search_term=None, selectable=None)
 
     def test_list_external_tools_accounts(self):
         """Integration test for the ExternalToolsAPI.list_external_tools_accounts method."""
         account_id = None  # Change me!!
 
-        r = self.client.list_external_tools_accounts(account_id, search_term=None, selectable=None)
+        r = self.client.list_external_tools_accounts(account_id, include_parents=None, search_term=None, selectable=None)
+
+    def test_list_external_tools_groups(self):
+        """Integration test for the ExternalToolsAPI.list_external_tools_groups method."""
+        group_id = None  # Change me!!
+
+        r = self.client.list_external_tools_groups(group_id, include_parents=None, search_term=None, selectable=None)
 
     def test_get_sessionless_launch_url_for_external_tool_courses(self):
         """Integration test for the ExternalToolsAPI.get_sessionless_launch_url_for_external_tool_courses method."""
         course_id = None  # Change me!!
 
-        r = self.client.get_sessionless_launch_url_for_external_tool_courses(course_id, assignment_id=None, id=None, launch_type=None, url=None)
+        r = self.client.get_sessionless_launch_url_for_external_tool_courses(course_id, assignment_id=None, id=None, launch_type=None, module_item_id=None, url=None)
 
     def test_get_sessionless_launch_url_for_external_tool_accounts(self):
         """Integration test for the ExternalToolsAPI.get_sessionless_launch_url_for_external_tool_accounts method."""
         account_id = None  # Change me!!
 
-        r = self.client.get_sessionless_launch_url_for_external_tool_accounts(account_id, assignment_id=None, id=None, launch_type=None, url=None)
+        r = self.client.get_sessionless_launch_url_for_external_tool_accounts(account_id, assignment_id=None, id=None, launch_type=None, module_item_id=None, url=None)
 
     def test_get_single_external_tool_courses(self):
         """Integration test for the ExternalToolsAPI.get_single_external_tool_courses method."""

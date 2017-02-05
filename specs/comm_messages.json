@@ -29,7 +29,7 @@
               "paramType": "query",
               "name": "start_time",
               "description": "The beginning of the time range you want to retrieve message from.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             },
@@ -37,7 +37,7 @@
               "paramType": "query",
               "name": "end_time",
               "description": "The end of the time range you want to retrieve messages for.",
-              "type": "datetime",
+              "type": "DateTime",
               "format": null,
               "required": false
             }

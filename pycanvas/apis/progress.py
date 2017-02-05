@@ -26,7 +26,8 @@ class ProgressAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/progress/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))

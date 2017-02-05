@@ -16,7 +16,7 @@ class ConversationsAPI(BaseCanvasAPI):
         super(ConversationsAPI, self).__init__(*args, **kwargs)
         self.logger = logging.getLogger("pycanvas.ConversationsAPI")
 
-    def list_conversations(self, filter=None, filter_mode=None, include_all_conversation_ids=None, interleave_submissions=None, scope=None):
+    def list_conversations(self, filter=None, filter_mode=None, include=None, include_all_conversation_ids=None, interleave_submissions=None, scope=None):
         """
         List conversations.
 
@@ -26,23 +26,46 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # OPTIONAL - scope - When set, only return conversations of the specified type. For example, set to "unread" to return only conversations that haven't been read. The default behavior is to return all non-archived conversations (i.e. read and unread).
+        # OPTIONAL - scope
+        """When set, only return conversations of the specified type. For example,
+        set to "unread" to return only conversations that haven't been read.
+        The default behavior is to return all non-archived conversations (i.e.
+        read and unread)."""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             params["scope"] = scope
-        # OPTIONAL - filter - When set, only return conversations for the specified courses, groups or users. The id should be prefixed with its type, e.g. "user_123" or "course_456". Can be an array (by setting "filter[]") or single value (by setting "filter")
+        # OPTIONAL - filter
+        """When set, only return conversations for the specified courses, groups
+        or users. The id should be prefixed with its type, e.g. "user_123" or
+        "course_456". Can be an array (by setting "filter[]") or single value
+        (by setting "filter")"""
         if filter is not None:
             params["filter"] = filter
-        # OPTIONAL - filter_mode - no description
+        # OPTIONAL - filter_mode
+        """When filter[] contains multiple filters, combine them with this mode,
+        filtering conversations that at have at least all of the contexts ("and")
+        or at least one of the contexts ("or")"""
         if filter_mode is not None:
-            self._validate_enum(filter_mode, ["and", "or", "default or] When filter[] contains multiple filters", "filtering conversations that at have at least all of the contexts (and) or at least one of the contexts (or)"])
+            self._validate_enum(filter_mode, ["and", "or", "default or"])
             params["filter_mode"] = filter_mode
-        # OPTIONAL - interleave_submissions - (Obsolete) Submissions are no longer linked to conversations. This parameter is ignored.
+        # OPTIONAL - interleave_submissions
+        """(Obsolete) Submissions are no
+        longer linked to conversations. This parameter is ignored."""
         if interleave_submissions is not None:
             params["interleave_submissions"] = interleave_submissions
-        # OPTIONAL - include_all_conversation_ids - Default is false. If true, the top-level element of the response will be an object rather than an array, and will have the keys "conversations" which will contain the paged conversation data, and "conversation_ids" which will contain the ids of all conversations under this scope/filter in the same order.
+        # OPTIONAL - include_all_conversation_ids
+        """Default is false. If true,
+        the top-level element of the response will be an object rather than
+        an array, and will have the keys "conversations" which will contain the
+        paged conversation data, and "conversation_ids" which will contain the
+        ids of all conversations under this scope/filter in the same order."""
         if include_all_conversation_ids is not None:
             params["include_all_conversation_ids"] = include_all_conversation_ids
+        # OPTIONAL - include
+        """"participant_avatars":: Optionally include an "avatar_url" key for each user participanting in the conversation"""
+        if include is not None:
+            self._validate_enum(include, ["participant_avatars"])
+            params["include"] = include
 
         self.logger.debug("GET /api/v1/conversations with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/conversations".format(**path), data=data, params=params, all_pages=True)
@@ -59,45 +82,76 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - recipients - An array of recipient ids. These may be user ids or course/group ids prefixed with "course_" or "group_" respectively, e.g. recipients[]=1&recipients[]=2&recipients[]=course_3
+        # REQUIRED - recipients
+        """An array of recipient ids. These may be user ids or course/group ids
+        prefixed with "course_" or "group_" respectively, e.g.
+        recipients[]=1&recipients[]=2&recipients[]=course_3"""
         data["recipients"] = recipients
-        # OPTIONAL - subject - The subject of the conversation. This is ignored when reusing a conversation. Maximum length is 255 characters.
+        # OPTIONAL - subject
+        """The subject of the conversation. This is ignored when reusing a
+        conversation. Maximum length is 255 characters."""
         if subject is not None:
             data["subject"] = subject
-        # REQUIRED - body - The message to be sent
+        # REQUIRED - body
+        """The message to be sent"""
         data["body"] = body
-        # OPTIONAL - group_conversation - Defaults to false. If true, this will be a group conversation (i.e. all recipients may see all messages and replies). If false, individual private conversations will be started with each recipient.
+        # OPTIONAL - group_conversation
+        """Defaults to false. If true, this will be a group conversation (i.e. all
+        recipients may see all messages and replies). If false, individual private
+        conversations will be started with each recipient. Must be set false if the
+        number of recipients is over the set maximum (default is 100)."""
         if group_conversation is not None:
             data["group_conversation"] = group_conversation
-        # OPTIONAL - attachment_ids - An array of attachments ids. These must be files that have been previously uploaded to the sender's "conversation attachments" folder.
+        # OPTIONAL - attachment_ids
+        """An array of attachments ids. These must be files that have been previously
+        uploaded to the sender's "conversation attachments" folder."""
         if attachment_ids is not None:
             data["attachment_ids"] = attachment_ids
-        # OPTIONAL - media_comment_id - Media comment id of an audio of video file to be associated with this message.
+        # OPTIONAL - media_comment_id
+        """Media comment id of an audio of video file to be associated with this
+        message."""
         if media_comment_id is not None:
             data["media_comment_id"] = media_comment_id
-        # OPTIONAL - media_comment_type - Type of the associated media file
+        # OPTIONAL - media_comment_type
+        """Type of the associated media file"""
         if media_comment_type is not None:
             self._validate_enum(media_comment_type, ["audio", "video"])
             data["media_comment_type"] = media_comment_type
-        # OPTIONAL - user_note - Will add a faculty journal entry for each recipient as long as the user making the api call has permission, the recipient is a student and faculty journals are enabled in the account.
+        # OPTIONAL - user_note
+        """Will add a faculty journal entry for each recipient as long as the user
+        making the api call has permission, the recipient is a student and
+        faculty journals are enabled in the account."""
         if user_note is not None:
             data["user_note"] = user_note
-        # OPTIONAL - mode - Determines whether the messages will be created/sent synchronously or asynchronously. Defaults to sync, and this option is ignored if this is a group conversation or there is just one recipient (i.e. it must be a bulk private message). When sent async, the response will be an empty array (batch status can be queried via the {api:ConversationsController#batches batches API})
+        # OPTIONAL - mode
+        """Determines whether the messages will be created/sent synchronously or
+        asynchronously. Defaults to sync, and this option is ignored if this is a
+        group conversation or there is just one recipient (i.e. it must be a bulk
+        private message). When sent async, the response will be an empty array
+        (batch status can be queried via the {api:ConversationsController#batches batches API})"""
         if mode is not None:
             self._validate_enum(mode, ["sync", "async"])
             data["mode"] = mode
-        # OPTIONAL - scope - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - scope
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             data["scope"] = scope
-        # OPTIONAL - filter - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - filter
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             data["filter"] = filter
-        # OPTIONAL - filter_mode - no description
+        # OPTIONAL - filter_mode
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter_mode is not None:
-            self._validate_enum(filter_mode, ["and", "or", "default or] Used when generating visible in the API response. See the explanation under the {api:ConversationsController#index index API action}"])
+            self._validate_enum(filter_mode, ["and", "or", "default or"])
             data["filter_mode"] = filter_mode
-        # OPTIONAL - context_code - The course or group that is the context for this conversation. Same format as courses or groups in the recipients argument.
+        # OPTIONAL - context_code
+        """The course or group that is the context for this conversation. Same format
+        as courses or groups in the recipients argument."""
         if context_code is not None:
             data["context_code"] = context_code
 
@@ -123,7 +177,7 @@ class ConversationsAPI(BaseCanvasAPI):
         """
         Get a single conversation.
 
-        Returns information for a single conversation. Response includes all
+        Returns information for a single conversation for the current user. Response includes all
         fields that are present in the list/index action as well as messages
         and extended participant information.
         """
@@ -131,30 +185,43 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - interleave_submissions - (Obsolete) Submissions are no longer linked to conversations. This parameter is ignored.
+        # OPTIONAL - interleave_submissions
+        """(Obsolete) Submissions are no
+        longer linked to conversations. This parameter is ignored."""
         if interleave_submissions is not None:
             params["interleave_submissions"] = interleave_submissions
-        # OPTIONAL - scope - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - scope
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             params["scope"] = scope
-        # OPTIONAL - filter - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - filter
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             params["filter"] = filter
-        # OPTIONAL - filter_mode - no description
+        # OPTIONAL - filter_mode
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter_mode is not None:
-            self._validate_enum(filter_mode, ["and", "or", "default or] Used when generating visible in the API response. See the explanation under the {api:ConversationsController#index index API action}"])
+            self._validate_enum(filter_mode, ["and", "or", "default or"])
             params["filter_mode"] = filter_mode
-        # OPTIONAL - auto_mark_as_read - Default true. If true, unread conversations will be automatically marked as read. This will default to false in a future API release, so clients should explicitly send true if that is the desired behavior.
+        # OPTIONAL - auto_mark_as_read
+        """Default true. If true, unread
+        conversations will be automatically marked as read. This will default
+        to false in a future API release, so clients should explicitly send
+        true if that is the desired behavior."""
         if auto_mark_as_read is not None:
             params["auto_mark_as_read"] = auto_mark_as_read
 
         self.logger.debug("GET /api/v1/conversations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/conversations/{id}".format(**path), data=data, params=params, no_data=True)
 
-    def edit_conversation(self, id, conversation_starred=None, conversation_subject=None, conversation_subscribed=None, conversation_workflow_state=None, filter=None, filter_mode=None, scope=None):
+    def edit_conversation(self, id, conversation_starred=None, conversation_subscribed=None, conversation_workflow_state=None, filter=None, filter_mode=None, scope=None):
         """
         Edit a conversation.
 
@@ -164,31 +231,41 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # OPTIONAL - conversation[subject] - Change the subject of this conversation
-        if conversation_subject is not None:
-            data["conversation[subject]"] = conversation_subject
-        # OPTIONAL - conversation[workflow_state] - Change the state of this conversation
+        # OPTIONAL - conversation[workflow_state]
+        """Change the state of this conversation"""
         if conversation_workflow_state is not None:
             self._validate_enum(conversation_workflow_state, ["read", "unread", "archived"])
             data["conversation[workflow_state]"] = conversation_workflow_state
-        # OPTIONAL - conversation[subscribed] - Toggle the current user's subscription to the conversation (only valid for group conversations). If unsubscribed, the user will still have access to the latest messages, but the conversation won't be automatically flagged as unread, nor will it jump to the top of the inbox.
+        # OPTIONAL - conversation[subscribed]
+        """Toggle the current user's subscription to the conversation (only valid for
+        group conversations). If unsubscribed, the user will still have access to
+        the latest messages, but the conversation won't be automatically flagged
+        as unread, nor will it jump to the top of the inbox."""
         if conversation_subscribed is not None:
             data["conversation[subscribed]"] = conversation_subscribed
-        # OPTIONAL - conversation[starred] - Toggle the starred state of the current user's view of the conversation.
+        # OPTIONAL - conversation[starred]
+        """Toggle the starred state of the current user's view of the conversation."""
         if conversation_starred is not None:
             data["conversation[starred]"] = conversation_starred
-        # OPTIONAL - scope - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - scope
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             data["scope"] = scope
-        # OPTIONAL - filter - Used when generating "visible" in the API response. See the explanation under the {api:ConversationsController#index index API action}
+        # OPTIONAL - filter
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             data["filter"] = filter
-        # OPTIONAL - filter_mode - no description
+        # OPTIONAL - filter_mode
+        """Used when generating "visible" in the API response. See the explanation
+        under the {api:ConversationsController#index index API action}"""
         if filter_mode is not None:
-            self._validate_enum(filter_mode, ["and", "or", "default or] Used when generating visible in the API response. See the explanation under the {api:ConversationsController#index index API action}"])
+            self._validate_enum(filter_mode, ["and", "or", "default or"])
             data["filter_mode"] = filter_mode
 
         self.logger.debug("PUT /api/v1/conversations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -220,7 +297,8 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("DELETE /api/v1/conversations/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -238,9 +316,13 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - recipients - An array of recipient ids. These may be user ids or course/group ids prefixed with "course_" or "group_" respectively, e.g. recipients[]=1&recipients[]=2&recipients[]=course_3
+        # REQUIRED - recipients
+        """An array of recipient ids. These may be user ids or course/group ids
+        prefixed with "course_" or "group_" respectively, e.g.
+        recipients[]=1&recipients[]=2&recipients[]=course_3"""
         data["recipients"] = recipients
 
         self.logger.debug("POST /api/v1/conversations/{id}/add_recipients with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -266,27 +348,39 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - body - The message to be sent.
+        # REQUIRED - body
+        """The message to be sent."""
         data["body"] = body
-        # OPTIONAL - attachment_ids - An array of attachments ids. These must be files that have been previously uploaded to the sender's "conversation attachments" folder.
+        # OPTIONAL - attachment_ids
+        """An array of attachments ids. These must be files that have been previously
+        uploaded to the sender's "conversation attachments" folder."""
         if attachment_ids is not None:
             data["attachment_ids"] = attachment_ids
-        # OPTIONAL - media_comment_id - Media comment id of an audio of video file to be associated with this message.
+        # OPTIONAL - media_comment_id
+        """Media comment id of an audio of video file to be associated with this
+        message."""
         if media_comment_id is not None:
             data["media_comment_id"] = media_comment_id
-        # OPTIONAL - media_comment_type - Type of the associated media file.
+        # OPTIONAL - media_comment_type
+        """Type of the associated media file."""
         if media_comment_type is not None:
             self._validate_enum(media_comment_type, ["audio", "video"])
             data["media_comment_type"] = media_comment_type
-        # OPTIONAL - recipients - no description
+        # OPTIONAL - recipients
+        """no description"""
         if recipients is not None:
             data["recipients"] = recipients
-        # OPTIONAL - included_messages - no description
+        # OPTIONAL - included_messages
+        """no description"""
         if included_messages is not None:
             data["included_messages"] = included_messages
-        # OPTIONAL - user_note - Will add a faculty journal entry for each recipient as long as the user making the api call has permission, the recipient is a student and faculty journals are enabled in the account.
+        # OPTIONAL - user_note
+        """Will add a faculty journal entry for each recipient as long as the user
+        making the api call has permission, the recipient is a student and
+        faculty journals are enabled in the account."""
         if user_note is not None:
             data["user_note"] = user_note
 
@@ -305,9 +399,11 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
-        # REQUIRED - remove - Array of message ids to be deleted
+        # REQUIRED - remove
+        """Array of message ids to be deleted"""
         data["remove"] = remove
 
         self.logger.debug("POST /api/v1/conversations/{id}/remove_messages with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -324,9 +420,11 @@ class ConversationsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - conversation_ids - List of conversations to update. Limited to 500 conversations.
+        # REQUIRED - conversation_ids
+        """List of conversations to update. Limited to 500 conversations."""
         data["conversation_ids"] = conversation_ids
-        # REQUIRED - event - The action to take on each conversation.
+        # REQUIRED - event
+        """The action to take on each conversation."""
         self._validate_enum(event, ["mark_as_read", "mark_as_unread", "star", "unstar", "archive", "destroy"])
         data["event"] = event
 

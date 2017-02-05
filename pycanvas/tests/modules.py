@@ -83,6 +83,11 @@ class TestModulesAPI(unittest.TestCase):
         # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
         pass
 
+    def test_select_mastery_path(self):
+        """Integration test for the ModulesAPI.select_mastery_path method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
     def test_delete_module_item(self):
         """Integration test for the ModulesAPI.delete_module_item method."""
         course_id = None  # Change me!!
@@ -90,6 +95,11 @@ class TestModulesAPI(unittest.TestCase):
         id = None  # Change me!!
 
         r = self.client.delete_module_item(id, course_id, module_id)
+
+    def test_mark_module_item_as_done_not_done(self):
+        """Integration test for the ModulesAPI.mark_module_item_as_done_not_done method."""
+        # This method utilises the PUT request method and will make changes to the Canvas instance. This needs consideration.
+        pass
 
     def test_get_module_item_sequence(self):
         """Integration test for the ModulesAPI.get_module_item_sequence method."""

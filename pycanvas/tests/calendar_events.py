@@ -19,7 +19,13 @@ class TestCalendarEventsAPI(unittest.TestCase):
     def test_list_calendar_events(self):
         """Integration test for the CalendarEventsAPI.list_calendar_events method."""
 
-        r = self.client.list_calendar_events(all_events=None, context_codes=None, end_date=None, start_date=None, type=None, undated=None)
+        r = self.client.list_calendar_events(all_events=None, context_codes=None, end_date=None, excludes=None, start_date=None, type=None, undated=None)
+
+    def test_list_calendar_events_for_user(self):
+        """Integration test for the CalendarEventsAPI.list_calendar_events_for_user method."""
+        user_id = None  # Change me!!
+
+        r = self.client.list_calendar_events_for_user(user_id, all_events=None, context_codes=None, end_date=None, excludes=None, start_date=None, type=None, undated=None)
 
     def test_create_calendar_event(self):
         """Integration test for the CalendarEventsAPI.create_calendar_event method."""
@@ -52,4 +58,20 @@ class TestCalendarEventsAPI(unittest.TestCase):
         id = None  # Change me!!
 
         r = self.client.delete_calendar_event(id, cancel_reason=None)
+
+    def test_set_course_timetable(self):
+        """Integration test for the CalendarEventsAPI.set_course_timetable method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+
+    def test_get_course_timetable(self):
+        """Integration test for the CalendarEventsAPI.get_course_timetable method."""
+        course_id = None  # Change me!!
+
+        r = self.client.get_course_timetable(course_id)
+
+    def test_create_or_update_events_directly_for_course_timetable(self):
+        """Integration test for the CalendarEventsAPI.create_or_update_events_directly_for_course_timetable method."""
+        # This method utilises the POST request method and will make changes to the Canvas instance. This needs consideration.
+        pass
 

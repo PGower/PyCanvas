@@ -55,7 +55,8 @@ class {{api_name}}API(BaseCanvasAPI):
 
         {% if op.parameters|length > 0 %}
         {% for param in op.parameters %}
-        # {% if param.required %}REQUIRED{% else %}OPTIONAL{% endif %}{% if param.paramType == 'path' %} - PATH{% endif %} - {{param.name}} - {{param.description}}
+        # {% if param.required %}REQUIRED{% else %}OPTIONAL{% endif %}{% if param.paramType == 'path' %} - PATH{% endif %} - {{param.name}}
+        """{{param.description|indent(8)}}"""
         {% if param.required %}
         {{ param_body(param)|indent(8) }}
         {% else %}

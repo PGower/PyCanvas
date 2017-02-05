@@ -26,17 +26,30 @@ class OutcomeResultsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - user_ids - If specified, only the users whose ids are given will be included in the results. it is an error to specify an id for a user who is not a student in the context
+        # OPTIONAL - user_ids
+        """If specified, only the users whose ids are given will be included in the
+        results. SIS ids can be used, prefixed by "sis_user_id:".
+        It is an error to specify an id for a user who is not a student in
+        the context."""
         if user_ids is not None:
             params["user_ids"] = user_ids
-        # OPTIONAL - outcome_ids - If specified, only the outcomes whose ids are given will be included in the results. it is an error to specify an id for an outcome which is not linked to the context.
+        # OPTIONAL - outcome_ids
+        """If specified, only the outcomes whose ids are given will be included in the
+        results. it is an error to specify an id for an outcome which is not linked
+        to the context."""
         if outcome_ids is not None:
             params["outcome_ids"] = outcome_ids
-        # OPTIONAL - include - Specify additional collections to be side loaded with the result. "alignments" includes only the alignments referenced by the returned results. "outcomes.alignments" includes all alignments referenced by outcomes in the context.
+        # OPTIONAL - include
+        """[String, "alignments"|"outcomes"|"outcomes.alignments"|"outcome_groups"|"outcome_links"|"outcome_paths"|"users"]
+        Specify additional collections to be side loaded with the result.
+        "alignments" includes only the alignments referenced by the returned
+        results.
+        "outcomes.alignments" includes all alignments referenced by outcomes in the
+        context."""
         if include is not None:
-            self._validate_enum(include, ["alignments", "outcomes", "outcomes.alignments", "outcome_groups", "outcome_links", "outcome_paths", "users"])
             params["include"] = include
 
         self.logger.debug("GET /api/v1/courses/{course_id}/outcome_results with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -53,21 +66,32 @@ class OutcomeResultsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - course_id - ID
+        # REQUIRED - PATH - course_id
+        """ID"""
         path["course_id"] = course_id
-        # OPTIONAL - aggregate - If specified, instead of returning one rollup for each user, all the user rollups will be combined into one rollup for the course that will contain the average rollup score for each outcome.
+        # OPTIONAL - aggregate
+        """If specified, instead of returning one rollup for each user, all the user
+        rollups will be combined into one rollup for the course that will contain
+        the average rollup score for each outcome."""
         if aggregate is not None:
             self._validate_enum(aggregate, ["course"])
             params["aggregate"] = aggregate
-        # OPTIONAL - user_ids - If specified, only the users whose ids are given will be included in the results or used in an aggregate result. it is an error to specify an id for a user who is not a student in the context
+        # OPTIONAL - user_ids
+        """If specified, only the users whose ids are given will be included in the
+        results or used in an aggregate result. it is an error to specify an id
+        for a user who is not a student in the context"""
         if user_ids is not None:
             params["user_ids"] = user_ids
-        # OPTIONAL - outcome_ids - If specified, only the outcomes whose ids are given will be included in the results. it is an error to specify an id for an outcome which is not linked to the context.
+        # OPTIONAL - outcome_ids
+        """If specified, only the outcomes whose ids are given will be included in the
+        results. it is an error to specify an id for an outcome which is not linked
+        to the context."""
         if outcome_ids is not None:
             params["outcome_ids"] = outcome_ids
-        # OPTIONAL - include - Specify additional collections to be side loaded with the result.
+        # OPTIONAL - include
+        """[String, "courses"|"outcomes"|"outcomes.alignments"|"outcome_groups"|"outcome_links"|"outcome_paths"|"users"]
+        Specify additional collections to be side loaded with the result."""
         if include is not None:
-            self._validate_enum(include, ["courses", "outcomes", "outcomes.alignments", "outcome_groups", "outcome_links", "outcome_paths", "users"])
             params["include"] = include
 
         self.logger.debug("GET /api/v1/courses/{course_id}/outcome_rollups with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -78,9 +102,10 @@ class Outcomeresult(BaseModel):
     """Outcomeresult Model.
     A student's result for an outcome"""
 
-    def __init__(self, score=None, id=None, links=None, submitted_or_assessed_at=None):
+    def __init__(self, score=None, percent=None, id=None, links=None, submitted_or_assessed_at=None):
         """Init method for Outcomeresult class."""
         self._score = score
+        self._percent = percent
         self._id = id
         self._links = links
         self._submitted_or_assessed_at = submitted_or_assessed_at
@@ -97,6 +122,17 @@ class Outcomeresult(BaseModel):
         """Setter for score property."""
         self.logger.warn("Setting values on score will NOT update the remote Canvas instance.")
         self._score = value
+
+    @property
+    def percent(self):
+        """score's percent of maximum points possible for outcome, scaled to reflect any custom mastery levels that differ from the learning outcome."""
+        return self._percent
+
+    @percent.setter
+    def percent(self, value):
+        """Setter for percent property."""
+        self.logger.warn("Setting values on percent will NOT update the remote Canvas instance.")
+        self._percent = value
 
     @property
     def id(self):
@@ -145,7 +181,7 @@ class Outcomerolluplinks(BaseModel):
 
     @property
     def course(self):
-        """If an aggregate result was requested, the course field will be present Otherwise, the user and section field will be present (Optional) The id of the course that this rollup applies to."""
+        """If an aggregate result was requested, the course field will be present. Otherwise, the user and section field will be present (Optional) The id of the course that this rollup applies to."""
         return self._course
 
     @course.setter

@@ -26,11 +26,14 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - poll_session_id - ID
+        # REQUIRED - PATH - poll_session_id
+        """ID"""
         path["poll_session_id"] = poll_session_id
-        # REQUIRED - PATH - id - ID
+        # REQUIRED - PATH - id
+        """ID"""
         path["id"] = id
 
         self.logger.debug("GET /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
@@ -46,11 +49,14 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         data = {}
         params = {}
 
-        # REQUIRED - PATH - poll_id - ID
+        # REQUIRED - PATH - poll_id
+        """ID"""
         path["poll_id"] = poll_id
-        # REQUIRED - PATH - poll_session_id - ID
+        # REQUIRED - PATH - poll_session_id
+        """ID"""
         path["poll_session_id"] = poll_session_id
-        # REQUIRED - poll_submissions[poll_choice_id] - The chosen poll choice for this submission.
+        # REQUIRED - poll_submissions[poll_choice_id]
+        """The chosen poll choice for this submission."""
         data["poll_submissions[poll_choice_id]"] = poll_submissions_poll_choice_id
 
         self.logger.debug("POST /api/v1/polls/{poll_id}/poll_sessions/{poll_session_id}/poll_submissions with query params: {params} and form data: {data}".format(params=params, data=data, **path))
