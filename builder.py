@@ -71,20 +71,18 @@ def service_param_string(params):
     """Takes a param section from a metadata class and returns a param string for the service method"""
     p = []
     k = []
-    for name, data in params.items():
-        name = fix_param_name(name)
-        if data['required'] is True:
+    for param in params:
+        name = fix_param_name(param['name'])
+        if 'required' in param and param['required'] is True:
             p.append(name)
         else:
-            if 'default' in data:
-                k.append('{name}={default}'.format(name=name, default=data['default']))
+            if 'default' in param:
+                k.append('{name}={default}'.format(name=name, default=param['default']))
             else:
                 k.append('{name}=None'.format(name=name))
-    p.sort(lambda a,b: len(a) - len(b))
+    p.sort(lambda a, b: len(a) - len(b))
     k.sort()
     a = p + k
-    a.append('*args')
-    a.append('**kwargs')
     return ', '.join(a)
 
 
@@ -97,12 +95,13 @@ def model_path(name):
 
 
 def api_path(name):
-    return 'pycanvas/apis/{}.py'.format(name)
+    return 'pycanvas/{}.py'.format(name)
 
 
 def get_jinja_env():
     loader = FileSystemLoader(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'templates'))
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
+    env.filters['fix_param_name'] = fix_param_name
     env.filters['extract_type'] = extract_type
     env.filters['startswith'] = startswith
     env.filters['required_attributes'] = required_attributes
@@ -152,14 +151,65 @@ def build_service_class(metadata):
         t.write(service_template.render(service_md=service))
 
 
+@click.command()
+@click.option('--specfile', required=True, type=click.File(mode='r'), help='The json specfile.')
+@click.option('--api-name', type=str, help='The name of the api class. Defaults to ')
+@click.option('--output-folder', required=True, type=click.Path(file_okay=False, writable=True), help='Path to output the API file to.')
+def build_api_from_specfile(specfile, api_name, output_folder):
+    base_name = os.path.basename(specfile.name)
+
+    output_file_name = base_name.replace('.json', '.py')
+
+    module_path = 'pycanvas.apis.{}'.format(base_name[:base_name.find('.')])
+
+    if api_name is None:
+        raw_api_name = list(base_name[:base_name.find('.')])
+        api_name = ''
+        capitalize = True
+        for i in raw_api_name:
+            if i == '_':
+                capitalize = True
+                continue
+            if capitalize is True:
+                api_name += i.capitalize()
+                capitalize = False
+            else:
+                api_name += i
+
+    spec = json.load(specfile)
+
+    env = get_jinja_env()
+    api_template = env.get_template('api.py.jinja2')
+    with open(os.path.join(output_folder, output_file_name), 'w') as api:
+        api.write(api_template.render(spec=spec, api_name=api_name, base_name=base_name, module_path=module_path))
+    api_tests_template = env.get_template('api_tests.py.jinja2')
+    with open(os.path.join(output_folder, '../tests/{}'.format(output_file_name)), 'w') as api_tests:
+        api_tests.write(api_tests_template.render(spec=spec, api_name=api_name, base_name=base_name, module_path=module_path))
+
+
+@click.command()
+@click.option('--specfile-path', required=True, type=click.Path(file_okay=False, readable=True), help='Path for specfiles')
+@click.option('--output-folder', required=True, type=click.Path(file_okay=False, writable=True), help='Path to output the API file to.')
+@click.pass_context
+def build_all_apis(ctx, specfile_path, output_folder):
+    specs = os.listdir(specfile_path)
+    for spec in specs:
+        specfile = os.path.join(specfile_path, spec)
+        with open(specfile, 'r') as f:
+            ctx.invoke(build_api_from_specfile, specfile=f, api_name=None, output_folder=output_folder)
+
+
+
 @click.group()
 def cli():
     pass
 
-
 cli.add_command(build_metadata_class)
 cli.add_command(build_model_classes)
 cli.add_command(build_service_class)
+cli.add_command(build_api_from_specfile)
+cli.add_command(build_all_apis)
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,750 @@
+"""CalendarEvents API Version 1.0.
+
+This API client was generated using a template. Make sure this code is valid before using it.
+"""
+import logging
+from base import BaseCanvasAPI
+from base import BaseModel
+
+
+class CalendarEventsAPI(BaseCanvasAPI):
+    """CalendarEvents API Version 1.0."""
+
+    def __init__(self, *args, **kwargs):
+        """Init method for CalendarEventsAPI."""
+        super(CalendarEventsAPI, self).__init__(*args, **kwargs)
+        self.logger = logging.getLogger("pycanvas.CalendarEventsAPI")
+
+    def list_calendar_events(self, all_events=None, context_codes=None, end_date=None, start_date=None, type=None, undated=None):
+        """
+        List calendar events.
+
+        Retrieve the list of calendar events or assignments for the current user
+        """
+        path = {}
+        payload = {}
+
+        # OPTIONAL - type - Defaults to "event"
+        if type is not None:
+            self._validate_enum(type, ["event", "assignment"])
+        if type is not None:
+            payload["type"] = type
+        # OPTIONAL - start_date - Only return events since the start_date (inclusive). Defaults to today. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.
+        if start_date is not None:
+            payload["start_date"] = start_date
+        # OPTIONAL - end_date - Only return events before the end_date (inclusive). Defaults to start_date. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ. If end_date is the same as start_date, then only events on that day are returned.
+        if end_date is not None:
+            payload["end_date"] = end_date
+        # OPTIONAL - undated - Defaults to false (dated events only). If true, only return undated events and ignore start_date and end_date.
+        if undated is not None:
+            payload["undated"] = undated
+        # OPTIONAL - all_events - Defaults to false (uses start_date, end_date, and undated criteria). If true, all events are returned, ignoring start_date, end_date, and undated criteria.
+        if all_events is not None:
+            payload["all_events"] = all_events
+        # OPTIONAL - context_codes - List of context codes of courses/groups/users whose events you want to see. If not specified, defaults to the current user (i.e personal calendar, no course/group events). Limited to 10 context codes, additional ones are ignored. The format of this field is the context type, followed by an underscore, followed by the context id. For example: course_42
+        if context_codes is not None:
+            payload["context_codes"] = context_codes
+
+        self.logger.debug("GET /api/v1/calendar_events with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("GET", "/api/v1/calendar_events".format(**path), params=payload, all_pages=True)
+
+    def create_calendar_event(self, calendar_event_context_code, calendar_event_child_event_data_X_context_code=None, calendar_event_child_event_data_X_end_at=None, calendar_event_child_event_data_X_start_at=None, calendar_event_description=None, calendar_event_end_at=None, calendar_event_location_address=None, calendar_event_location_name=None, calendar_event_start_at=None, calendar_event_time_zone_edited=None, calendar_event_title=None):
+        """
+        Create a calendar event.
+
+        Create and return a new calendar event
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - calendar_event[context_code] - Context code of the course/group/user whose calendar this event should be added to.
+        payload["calendar_event[context_code]"] = calendar_event_context_code
+        # OPTIONAL - calendar_event[title] - Short title for the calendar event.
+        if calendar_event_title is not None:
+            payload["calendar_event[title]"] = calendar_event_title
+        # OPTIONAL - calendar_event[description] - Longer HTML description of the event.
+        if calendar_event_description is not None:
+            payload["calendar_event[description]"] = calendar_event_description
+        # OPTIONAL - calendar_event[start_at] - Start date/time of the event.
+        if calendar_event_start_at is not None:
+            payload["calendar_event[start_at]"] = calendar_event_start_at
+        # OPTIONAL - calendar_event[end_at] - End date/time of the event.
+        if calendar_event_end_at is not None:
+            payload["calendar_event[end_at]"] = calendar_event_end_at
+        # OPTIONAL - calendar_event[location_name] - Location name of the event.
+        if calendar_event_location_name is not None:
+            payload["calendar_event[location_name]"] = calendar_event_location_name
+        # OPTIONAL - calendar_event[location_address] - Location address
+        if calendar_event_location_address is not None:
+            payload["calendar_event[location_address]"] = calendar_event_location_address
+        # OPTIONAL - calendar_event[time_zone_edited] - Time zone of the user editing the event. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+        if calendar_event_time_zone_edited is not None:
+            payload["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
+        # OPTIONAL - calendar_event[child_event_data][X][start_at] - Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code
+        if calendar_event_child_event_data_X_start_at is not None:
+            payload["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
+        # OPTIONAL - calendar_event[child_event_data][X][end_at] - Section-level end time(s) if this is a course event.
+        if calendar_event_child_event_data_X_end_at is not None:
+            payload["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
+        # OPTIONAL - calendar_event[child_event_data][X][context_code] - Context code(s) corresponding to the section-level start and end time(s).
+        if calendar_event_child_event_data_X_context_code is not None:
+            payload["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
+
+        self.logger.debug("POST /api/v1/calendar_events with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events".format(**path), data=payload, no_data=True)
+
+    def get_single_calendar_event_or_assignment(self, id):
+        """
+        Get a single calendar event or assignment.
+
+        
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - PATH - id - ID
+        path["id"] = id
+
+        self.logger.debug("GET /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("GET", "/api/v1/calendar_events/{id}".format(**path), params=payload, single_item=True)
+
+    def reserve_time_slot(self, id, cancel_existing=None, participant_id=None):
+        """
+        Reserve a time slot.
+
+        Reserves a particular time slot and return the new reservation
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - PATH - id - ID
+        path["id"] = id
+        # OPTIONAL - participant_id - User or group id for whom you are making the reservation (depends on the participant type). Defaults to the current user (or user's candidate group).
+        if participant_id is not None:
+            payload["participant_id"] = participant_id
+        # OPTIONAL - cancel_existing - Defaults to false. If true, cancel any previous reservation(s) for this participant and appointment group.
+        if cancel_existing is not None:
+            payload["cancel_existing"] = cancel_existing
+
+        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations".format(**path), data=payload, no_data=True)
+
+    def reserve_time_slot_participant_id(self, id, participant_id, cancel_existing=None):
+        """
+        Reserve a time slot.
+
+        Reserves a particular time slot and return the new reservation
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - PATH - id - ID
+        path["id"] = id
+        # REQUIRED - PATH - participant_id - User or group id for whom you are making the reservation (depends on the participant type). Defaults to the current user (or user's candidate group).
+        path["participant_id"] = participant_id
+        # OPTIONAL - cancel_existing - Defaults to false. If true, cancel any previous reservation(s) for this participant and appointment group.
+        if cancel_existing is not None:
+            payload["cancel_existing"] = cancel_existing
+
+        self.logger.debug("POST /api/v1/calendar_events/{id}/reservations/{participant_id} with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("POST", "/api/v1/calendar_events/{id}/reservations/{participant_id}".format(**path), data=payload, no_data=True)
+
+    def update_calendar_event(self, id, calendar_event_context_code, calendar_event_child_event_data_X_context_code=None, calendar_event_child_event_data_X_end_at=None, calendar_event_child_event_data_X_start_at=None, calendar_event_description=None, calendar_event_end_at=None, calendar_event_location_address=None, calendar_event_location_name=None, calendar_event_start_at=None, calendar_event_time_zone_edited=None, calendar_event_title=None):
+        """
+        Update a calendar event.
+
+        Update and return a calendar event
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - PATH - id - ID
+        path["id"] = id
+        # REQUIRED - calendar_event[context_code] - Context code of the course/group/user whose calendar this event should be added to.
+        payload["calendar_event[context_code]"] = calendar_event_context_code
+        # OPTIONAL - calendar_event[title] - Short title for the calendar event.
+        if calendar_event_title is not None:
+            payload["calendar_event[title]"] = calendar_event_title
+        # OPTIONAL - calendar_event[description] - Longer HTML description of the event.
+        if calendar_event_description is not None:
+            payload["calendar_event[description]"] = calendar_event_description
+        # OPTIONAL - calendar_event[start_at] - Start date/time of the event.
+        if calendar_event_start_at is not None:
+            payload["calendar_event[start_at]"] = calendar_event_start_at
+        # OPTIONAL - calendar_event[end_at] - End date/time of the event.
+        if calendar_event_end_at is not None:
+            payload["calendar_event[end_at]"] = calendar_event_end_at
+        # OPTIONAL - calendar_event[location_name] - Location name of the event.
+        if calendar_event_location_name is not None:
+            payload["calendar_event[location_name]"] = calendar_event_location_name
+        # OPTIONAL - calendar_event[location_address] - Location address
+        if calendar_event_location_address is not None:
+            payload["calendar_event[location_address]"] = calendar_event_location_address
+        # OPTIONAL - calendar_event[time_zone_edited] - Time zone of the user editing the event. Allowed time zones are {http://www.iana.org/time-zones IANA time zones} or friendlier {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+        if calendar_event_time_zone_edited is not None:
+            payload["calendar_event[time_zone_edited]"] = calendar_event_time_zone_edited
+        # OPTIONAL - calendar_event[child_event_data][X][start_at] - Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code
+        if calendar_event_child_event_data_X_start_at is not None:
+            payload["calendar_event[child_event_data][X][start_at]"] = calendar_event_child_event_data_X_start_at
+        # OPTIONAL - calendar_event[child_event_data][X][end_at] - Section-level end time(s) if this is a course event.
+        if calendar_event_child_event_data_X_end_at is not None:
+            payload["calendar_event[child_event_data][X][end_at]"] = calendar_event_child_event_data_X_end_at
+        # OPTIONAL - calendar_event[child_event_data][X][context_code] - Context code(s) corresponding to the section-level start and end time(s).
+        if calendar_event_child_event_data_X_context_code is not None:
+            payload["calendar_event[child_event_data][X][context_code]"] = calendar_event_child_event_data_X_context_code
+
+        self.logger.debug("PUT /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("PUT", "/api/v1/calendar_events/{id}".format(**path), data=payload, no_data=True)
+
+    def delete_calendar_event(self, id, cancel_reason=None):
+        """
+        Delete a calendar event.
+
+        Delete an event from the calendar and return the deleted event
+        """
+        path = {}
+        payload = {}
+
+        # REQUIRED - PATH - id - ID
+        path["id"] = id
+        # OPTIONAL - cancel_reason - Reason for deleting/canceling the event.
+        if cancel_reason is not None:
+            payload["cancel_reason"] = cancel_reason
+
+        self.logger.debug("DELETE /api/v1/calendar_events/{id} with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("DELETE", "/api/v1/calendar_events/{id}".format(**path), params=payload, no_data=True)
+
+
+class Calendarevent(BaseModel):
+    """Calendarevent Model."""
+
+    def __init__(self, reserved=None, updated_at=None, group=None, child_events_count=None, available_slots=None, id=None, reserve_url=None, location_name=None, title=None, end_at=None, appointment_group_id=None, context_code=None, hidden=None, start_at=None, description=None, child_events=None, workflow_state=None, effective_context_code=None, html_url=None, all_day_date=None, user=None, participants_per_appointment=None, parent_event_id=None, created_at=None, all_day=None, url=None, location_address=None, own_reservation=None, appointment_group_url=None):
+        """Init method for Calendarevent class."""
+        self._reserved = reserved
+        self._updated_at = updated_at
+        self._group = group
+        self._child_events_count = child_events_count
+        self._available_slots = available_slots
+        self._id = id
+        self._reserve_url = reserve_url
+        self._location_name = location_name
+        self._title = title
+        self._end_at = end_at
+        self._appointment_group_id = appointment_group_id
+        self._context_code = context_code
+        self._hidden = hidden
+        self._start_at = start_at
+        self._description = description
+        self._child_events = child_events
+        self._workflow_state = workflow_state
+        self._effective_context_code = effective_context_code
+        self._html_url = html_url
+        self._all_day_date = all_day_date
+        self._user = user
+        self._participants_per_appointment = participants_per_appointment
+        self._parent_event_id = parent_event_id
+        self._created_at = created_at
+        self._all_day = all_day
+        self._url = url
+        self._location_address = location_address
+        self._own_reservation = own_reservation
+        self._appointment_group_url = appointment_group_url
+
+        self.logger = logging.getLogger('pycanvas.Calendarevent')
+
+    @property
+    def reserved(self):
+        """If the event is a time slot, a boolean indicating whether the user has already made a reservation for it."""
+        return self._reserved
+
+    @reserved.setter
+    def reserved(self, value):
+        """Setter for reserved property."""
+        self.logger.warn("Setting values on reserved will NOT update the remote Canvas instance.")
+        self._reserved = value
+
+    @property
+    def updated_at(self):
+        """When the calendar event was last updated."""
+        return self._updated_at
+
+    @updated_at.setter
+    def updated_at(self, value):
+        """Setter for updated_at property."""
+        self.logger.warn("Setting values on updated_at will NOT update the remote Canvas instance.")
+        self._updated_at = value
+
+    @property
+    def group(self):
+        """If the event is a group-level reservation, this will contain the group participant JSON (refer to the Groups API)."""
+        return self._group
+
+    @group.setter
+    def group(self, value):
+        """Setter for group property."""
+        self.logger.warn("Setting values on group will NOT update the remote Canvas instance.")
+        self._group = value
+
+    @property
+    def child_events_count(self):
+        """The number of child_events. See child_events (and parent_event_id)."""
+        return self._child_events_count
+
+    @child_events_count.setter
+    def child_events_count(self, value):
+        """Setter for child_events_count property."""
+        self.logger.warn("Setting values on child_events_count will NOT update the remote Canvas instance.")
+        self._child_events_count = value
+
+    @property
+    def available_slots(self):
+        """If the event is a time slot and it has a participant limit, an integer indicating how many slots are available."""
+        return self._available_slots
+
+    @available_slots.setter
+    def available_slots(self, value):
+        """Setter for available_slots property."""
+        self.logger.warn("Setting values on available_slots will NOT update the remote Canvas instance.")
+        self._available_slots = value
+
+    @property
+    def id(self):
+        """The ID of the calendar event."""
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        """Setter for id property."""
+        self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
+        self._id = value
+
+    @property
+    def reserve_url(self):
+        """If the event is a time slot, the API URL for reserving it."""
+        return self._reserve_url
+
+    @reserve_url.setter
+    def reserve_url(self, value):
+        """Setter for reserve_url property."""
+        self.logger.warn("Setting values on reserve_url will NOT update the remote Canvas instance.")
+        self._reserve_url = value
+
+    @property
+    def location_name(self):
+        """The location name of the event."""
+        return self._location_name
+
+    @location_name.setter
+    def location_name(self, value):
+        """Setter for location_name property."""
+        self.logger.warn("Setting values on location_name will NOT update the remote Canvas instance.")
+        self._location_name = value
+
+    @property
+    def title(self):
+        """The title of the calendar event."""
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        """Setter for title property."""
+        self.logger.warn("Setting values on title will NOT update the remote Canvas instance.")
+        self._title = value
+
+    @property
+    def end_at(self):
+        """The end timestamp of the event."""
+        return self._end_at
+
+    @end_at.setter
+    def end_at(self, value):
+        """Setter for end_at property."""
+        self.logger.warn("Setting values on end_at will NOT update the remote Canvas instance.")
+        self._end_at = value
+
+    @property
+    def appointment_group_id(self):
+        """Various Appointment-Group-related fields.These fields are only pertinent to time slots (appointments) and reservations of those time slots. See the Appointment Groups API. The id of the appointment group."""
+        return self._appointment_group_id
+
+    @appointment_group_id.setter
+    def appointment_group_id(self, value):
+        """Setter for appointment_group_id property."""
+        self.logger.warn("Setting values on appointment_group_id will NOT update the remote Canvas instance.")
+        self._appointment_group_id = value
+
+    @property
+    def context_code(self):
+        """the context code of the calendar this event belongs to (course, user or group)."""
+        return self._context_code
+
+    @context_code.setter
+    def context_code(self, value):
+        """Setter for context_code property."""
+        self.logger.warn("Setting values on context_code will NOT update the remote Canvas instance.")
+        self._context_code = value
+
+    @property
+    def hidden(self):
+        """Whether this event should be displayed on the calendar. Only true for course-level events with section-level child events."""
+        return self._hidden
+
+    @hidden.setter
+    def hidden(self, value):
+        """Setter for hidden property."""
+        self.logger.warn("Setting values on hidden will NOT update the remote Canvas instance.")
+        self._hidden = value
+
+    @property
+    def start_at(self):
+        """The start timestamp of the event."""
+        return self._start_at
+
+    @start_at.setter
+    def start_at(self, value):
+        """Setter for start_at property."""
+        self.logger.warn("Setting values on start_at will NOT update the remote Canvas instance.")
+        self._start_at = value
+
+    @property
+    def description(self):
+        """The HTML description of the event."""
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        """Setter for description property."""
+        self.logger.warn("Setting values on description will NOT update the remote Canvas instance.")
+        self._description = value
+
+    @property
+    def child_events(self):
+        """Included by default, but may be excluded (see include[] option). If this is a time slot (see the Appointment Groups API) this will be a list of any reservations. If this is a course-level event, this will be a list of section-level events (if any)."""
+        return self._child_events
+
+    @child_events.setter
+    def child_events(self, value):
+        """Setter for child_events property."""
+        self.logger.warn("Setting values on child_events will NOT update the remote Canvas instance.")
+        self._child_events = value
+
+    @property
+    def workflow_state(self):
+        """Current state of the event ('active', 'locked' or 'deleted') 'locked' indicates that start_at/end_at cannot be changed (though the event could be deleted). Normally only reservations or time slots with reservations are locked (see the Appointment Groups API)."""
+        return self._workflow_state
+
+    @workflow_state.setter
+    def workflow_state(self, value):
+        """Setter for workflow_state property."""
+        self.logger.warn("Setting values on workflow_state will NOT update the remote Canvas instance.")
+        self._workflow_state = value
+
+    @property
+    def effective_context_code(self):
+        """if specified, it indicates which calendar this event should be displayed on. for example, a section-level event would have the course's context code here, while the section's context code would be returned above)."""
+        return self._effective_context_code
+
+    @effective_context_code.setter
+    def effective_context_code(self, value):
+        """Setter for effective_context_code property."""
+        self.logger.warn("Setting values on effective_context_code will NOT update the remote Canvas instance.")
+        self._effective_context_code = value
+
+    @property
+    def html_url(self):
+        """URL for a user to view this event."""
+        return self._html_url
+
+    @html_url.setter
+    def html_url(self, value):
+        """Setter for html_url property."""
+        self.logger.warn("Setting values on html_url will NOT update the remote Canvas instance.")
+        self._html_url = value
+
+    @property
+    def all_day_date(self):
+        """The date of this event."""
+        return self._all_day_date
+
+    @all_day_date.setter
+    def all_day_date(self, value):
+        """Setter for all_day_date property."""
+        self.logger.warn("Setting values on all_day_date will NOT update the remote Canvas instance.")
+        self._all_day_date = value
+
+    @property
+    def user(self):
+        """If the event is a user-level reservation, this will contain the user participant JSON (refer to the Users API)."""
+        return self._user
+
+    @user.setter
+    def user(self, value):
+        """Setter for user property."""
+        self.logger.warn("Setting values on user will NOT update the remote Canvas instance.")
+        self._user = value
+
+    @property
+    def participants_per_appointment(self):
+        """If the event is a time slot, this is the participant limit."""
+        return self._participants_per_appointment
+
+    @participants_per_appointment.setter
+    def participants_per_appointment(self, value):
+        """Setter for participants_per_appointment property."""
+        self.logger.warn("Setting values on participants_per_appointment will NOT update the remote Canvas instance.")
+        self._participants_per_appointment = value
+
+    @property
+    def parent_event_id(self):
+        """Normally null. If this is a reservation (see the Appointment Groups API), the id will indicate the time slot it is for. If this is a section-level event, this will be the course-level parent event."""
+        return self._parent_event_id
+
+    @parent_event_id.setter
+    def parent_event_id(self, value):
+        """Setter for parent_event_id property."""
+        self.logger.warn("Setting values on parent_event_id will NOT update the remote Canvas instance.")
+        self._parent_event_id = value
+
+    @property
+    def created_at(self):
+        """When the calendar event was created."""
+        return self._created_at
+
+    @created_at.setter
+    def created_at(self, value):
+        """Setter for created_at property."""
+        self.logger.warn("Setting values on created_at will NOT update the remote Canvas instance.")
+        self._created_at = value
+
+    @property
+    def all_day(self):
+        """Boolean indicating whether this is an all-day event (midnight to midnight)."""
+        return self._all_day
+
+    @all_day.setter
+    def all_day(self, value):
+        """Setter for all_day property."""
+        self.logger.warn("Setting values on all_day will NOT update the remote Canvas instance.")
+        self._all_day = value
+
+    @property
+    def url(self):
+        """URL for this calendar event (to update, delete, etc.)."""
+        return self._url
+
+    @url.setter
+    def url(self, value):
+        """Setter for url property."""
+        self.logger.warn("Setting values on url will NOT update the remote Canvas instance.")
+        self._url = value
+
+    @property
+    def location_address(self):
+        """The address where the event is taking place."""
+        return self._location_address
+
+    @location_address.setter
+    def location_address(self, value):
+        """Setter for location_address property."""
+        self.logger.warn("Setting values on location_address will NOT update the remote Canvas instance.")
+        self._location_address = value
+
+    @property
+    def own_reservation(self):
+        """If the event is a reservation, this a boolean indicating whether it is the current user's reservation, or someone else's."""
+        return self._own_reservation
+
+    @own_reservation.setter
+    def own_reservation(self, value):
+        """Setter for own_reservation property."""
+        self.logger.warn("Setting values on own_reservation will NOT update the remote Canvas instance.")
+        self._own_reservation = value
+
+    @property
+    def appointment_group_url(self):
+        """The API URL of the appointment group."""
+        return self._appointment_group_url
+
+    @appointment_group_url.setter
+    def appointment_group_url(self, value):
+        """Setter for appointment_group_url property."""
+        self.logger.warn("Setting values on appointment_group_url will NOT update the remote Canvas instance.")
+        self._appointment_group_url = value
+
+
+class Assignmentevent(BaseModel):
+    """Assignmentevent Model."""
+
+    def __init__(self, start_at=None, description=None, title=None, url=None, assignment=None, created_at=None, workflow_state=None, html_url=None, end_at=None, updated_at=None, all_day_date=None, context_code=None, id=None, all_day=None):
+        """Init method for Assignmentevent class."""
+        self._start_at = start_at
+        self._description = description
+        self._title = title
+        self._url = url
+        self._assignment = assignment
+        self._created_at = created_at
+        self._workflow_state = workflow_state
+        self._html_url = html_url
+        self._end_at = end_at
+        self._updated_at = updated_at
+        self._all_day_date = all_day_date
+        self._context_code = context_code
+        self._id = id
+        self._all_day = all_day
+
+        self.logger = logging.getLogger('pycanvas.Assignmentevent')
+
+    @property
+    def start_at(self):
+        """The due_at timestamp of the assignment."""
+        return self._start_at
+
+    @start_at.setter
+    def start_at(self, value):
+        """Setter for start_at property."""
+        self.logger.warn("Setting values on start_at will NOT update the remote Canvas instance.")
+        self._start_at = value
+
+    @property
+    def description(self):
+        """The HTML description of the assignment."""
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        """Setter for description property."""
+        self.logger.warn("Setting values on description will NOT update the remote Canvas instance.")
+        self._description = value
+
+    @property
+    def title(self):
+        """The title of the assignment."""
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        """Setter for title property."""
+        self.logger.warn("Setting values on title will NOT update the remote Canvas instance.")
+        self._title = value
+
+    @property
+    def url(self):
+        """URL for this assignment (note that updating/deleting should be done via the Assignments API)."""
+        return self._url
+
+    @url.setter
+    def url(self, value):
+        """Setter for url property."""
+        self.logger.warn("Setting values on url will NOT update the remote Canvas instance.")
+        self._url = value
+
+    @property
+    def assignment(self):
+        """The full assignment JSON data (See the Assignments API)."""
+        return self._assignment
+
+    @assignment.setter
+    def assignment(self, value):
+        """Setter for assignment property."""
+        self.logger.warn("Setting values on assignment will NOT update the remote Canvas instance.")
+        self._assignment = value
+
+    @property
+    def created_at(self):
+        """When the assignment was created."""
+        return self._created_at
+
+    @created_at.setter
+    def created_at(self, value):
+        """Setter for created_at property."""
+        self.logger.warn("Setting values on created_at will NOT update the remote Canvas instance.")
+        self._created_at = value
+
+    @property
+    def workflow_state(self):
+        """Current state of the assignment ('published' or 'deleted')."""
+        return self._workflow_state
+
+    @workflow_state.setter
+    def workflow_state(self, value):
+        """Setter for workflow_state property."""
+        self.logger.warn("Setting values on workflow_state will NOT update the remote Canvas instance.")
+        self._workflow_state = value
+
+    @property
+    def html_url(self):
+        """URL for a user to view this assignment."""
+        return self._html_url
+
+    @html_url.setter
+    def html_url(self, value):
+        """Setter for html_url property."""
+        self.logger.warn("Setting values on html_url will NOT update the remote Canvas instance.")
+        self._html_url = value
+
+    @property
+    def end_at(self):
+        """The due_at timestamp of the assignment."""
+        return self._end_at
+
+    @end_at.setter
+    def end_at(self, value):
+        """Setter for end_at property."""
+        self.logger.warn("Setting values on end_at will NOT update the remote Canvas instance.")
+        self._end_at = value
+
+    @property
+    def updated_at(self):
+        """When the assignment was last updated."""
+        return self._updated_at
+
+    @updated_at.setter
+    def updated_at(self, value):
+        """Setter for updated_at property."""
+        self.logger.warn("Setting values on updated_at will NOT update the remote Canvas instance.")
+        self._updated_at = value
+
+    @property
+    def all_day_date(self):
+        """The due date of this assignment."""
+        return self._all_day_date
+
+    @all_day_date.setter
+    def all_day_date(self, value):
+        """Setter for all_day_date property."""
+        self.logger.warn("Setting values on all_day_date will NOT update the remote Canvas instance.")
+        self._all_day_date = value
+
+    @property
+    def context_code(self):
+        """the context code of the (course) calendar this assignment belongs to."""
+        return self._context_code
+
+    @context_code.setter
+    def context_code(self, value):
+        """Setter for context_code property."""
+        self.logger.warn("Setting values on context_code will NOT update the remote Canvas instance.")
+        self._context_code = value
+
+    @property
+    def id(self):
+        """A synthetic ID for the assignment."""
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        """Setter for id property."""
+        self.logger.warn("Setting values on id will NOT update the remote Canvas instance.")
+        self._id = value
+
+    @property
+    def all_day(self):
+        """Boolean indicating whether this is an all-day event (e.g. assignment due at midnight)."""
+        return self._all_day
+
+    @all_day.setter
+    def all_day(self, value):
+        """Setter for all_day property."""
+        self.logger.warn("Setting values on all_day will NOT update the remote Canvas instance.")
+        self._all_day = value
+

@@ -1,0 +1,97 @@
+{% macro enum_values(enum) %}[{% for i in enum %}"{{i}}"{% if not loop.last %}, {% endif %}{% endfor %}]{% endmacro %}
+"""{{api_name}} API Version {{spec.apiVersion|default("1.0")}}.
+
+This API client was generated using a template. Make sure this code is valid before using it.
+"""
+import logging
+from base import BaseCanvasAPI
+{% if spec.models %}from base import BaseModel{% endif %}
+
+
+
+class {{api_name}}API(BaseCanvasAPI):
+    """{{api_name}} API Version {{spec.apiVersion|default("1.0")}}."""
+
+    def __init__(self, *args, **kwargs):
+        """Init method for {{api_name}}API."""
+        super({{api_name}}API, self).__init__(*args, **kwargs)
+        self.logger = logging.getLogger("pycanvas.{{api_name}}API")
+
+    {% for api in spec.apis %}
+    {% for op in api.operations %}
+    def {{op.nickname}}(self{% if op.parameters|length > 0 %}, {% endif %}{{op.parameters|service_param_string}}):
+        """
+        {{op.summary}}{% if not op.summary.endswith('.') %}.{% endif %}
+
+
+        {% for i in op.notes.split('\n') %}
+        {{i|indent(8)}}
+        {% endfor %}
+        """
+        path = {}
+        payload = {}
+
+        {% if op.parameters|length > 0 %}
+        {% for param in op.parameters %}
+        # {% if param.required %}REQUIRED{% else %}OPTIONAL{% endif %}{% if param.paramType == 'path' %} - PATH{% endif %} - {{param.name}} - {{param.description}}
+        {% if param.enum %}
+        if {{param.name|fix_param_name}} is not None:
+            self._validate_enum({{param.name|fix_param_name}}, {{enum_values(param.enum)}})
+        {% endif %}
+        {% if param.paramType == 'path' %}
+        path["{{param.name}}"] = {{param.name|fix_param_name}}
+        {% endif %}
+        {% if param.required %}
+        {% if param.paramType != 'path' %}
+        payload["{{param.name}}"] = {{param.name|fix_param_name}}
+        {% endif %}
+        {% else %}
+        if {{param.name|fix_param_name}} is not None:
+            {% if param.paramType != 'path' %}
+            payload["{{param.name}}"] = {{param.name|fix_param_name}}
+            {% endif %}
+        {% endif %}
+        {% endfor %}{# param in op.parameters #}
+
+        {% endif %}{# op.parameters|length > 0 #}
+        self.logger.debug("{{op.method}} /api{{api.path}} with payload: {payload}".format(payload=payload, **path))
+        return self.generic_request("{{op.method}}", "/api{{api.path}}".format(**path), {% if op.method in ["POST","PUT"] %}data=payload{% else %}params=payload{% endif %}{% if op.type == 'array' %}, all_pages=True{% endif %}{% if op.type == 'void' %}, no_data=True{% endif %}{% if op.type not in ['array', 'void'] and op.type[0] == op.type[0].upper() %}, single_item=True{% endif %})
+
+    {% endfor %}
+    {% endfor %}
+{% if spec.models %}
+{% for model_name, model_data in spec.models.items() %}
+
+class {{model_name|capitalize}}(BaseModel):
+    """{{model_name|capitalize}} Model.{% if not model_data.description or model_data.description == "" %}"""{% else %}
+
+    {{model_data.description}}"""{% endif %}
+
+
+    def __init__(self{% for i in model_data.required %}, {{i|replace('-','_')}}{% endfor %}{% if model_data.properties %}{% for n,p in model_data.properties.items() %}{% if n not in model_data.required %}, {{n|replace('-','_')}}={{p.default|default("None")}}{% endif %}{% endfor %}{% endif %}):
+        """Init method for {{model_name|capitalize}} class."""
+        {% if model_data.properties %}
+        {% for property_name, property_data in model_data.properties.items() %}
+        self._{{property_name|replace('-','_')}} = {{property_name|replace('-','_')}}
+        {% endfor %}
+        {% endif %}
+
+        self.logger = logging.getLogger('pycanvas.{{model_name|capitalize}}')
+
+    {% if model_data.properties %}
+    {% for property_name, property_data in model_data.properties.items() %}
+    @property
+    def {{property_name|replace('-','_')}}(self):
+        """{{property_data.description|default(property_name|replace('-','_') + ".")}}{% if property_data.description and not property_data.description.endswith('.') %}.{% endif %}"""
+        return self._{{property_name|replace('-','_')}}
+
+    @{{property_name|replace('-','_')}}.setter
+    def {{property_name|replace('-','_')}}(self, value):
+        """Setter for {{property_name|replace('-','_')}} property."""
+        self.logger.warn("Setting values on {{property_name|replace('-','_')}} will NOT update the remote Canvas instance.")
+        self._{{property_name|replace('-','_')}} = value
+
+    {% endfor %}
+    {% endif %}
+{% endfor %}
+{% endif %}{# if spec.models #}

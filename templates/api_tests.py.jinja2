@@ -1,0 +1,40 @@
+{% macro enum_values(enum) %}[{% for i in enum %}"{{i}}"{% if not loop.last %}, {% endif %}{% endfor %}]{% endmacro %}
+"""{{api_name}} API Tests for Version {{spec.apiVersion|default("1.0")}}.
+
+This is a testing template for the generated {{api_name}}API Class.
+"""
+import unittest
+import requests
+import secrets
+from {{module_path}} import {{api_name}}API
+{% for model_name in spec.models.keys() %}
+from {{module_path}} import {{model_name|capitalize}}
+{% endfor %}
+
+
+class Test{{api_name}}API(unittest.TestCase):
+    """Tests for the {{api_name}}API."""
+
+    def setUp(self):
+        self.client = {{api_name}}API(secrets.instance_address, secrets.access_token)
+
+    {% for api in spec.apis %}
+    {% for op in api.operations %}
+    def test_{{op.nickname}}(self):
+        """Integration test for the {{api_name}}API.{{op.nickname}} method."""
+        {% if op.method not in ["POST", "PUT"] %}
+        {% for param in op.parameters %}
+        {% if param.required %}
+        {{param.name}} = {% if param.paramType == "Testing String" %}""{% elif param.paramType == "integer" %}1{% else %}None  # Change me!!{% endif %}
+
+        {% endif %}
+        {% endfor %}
+
+        r = self.client.{{op.nickname}}({{op.parameters|service_param_string}})
+        {% else %}
+        # This method utilises the {{op.method}} request method and will make changes to the Canvas instance. This needs consideration.
+        pass
+        {% endif %}
+    {% endfor %}
+
+    {% endfor %}

@@ -1,94 +1,176 @@
-import threading
-from requests import Request, Session, AuthBase
+import requests
+import re
+import urllib
+import logging
 
-HTTP_VERBS = ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+logger = logging.getLogger('pycanvas.BaseCanvasAPI')
 
-
-class CanvasAuth(AuthBase):
-    def __init__(self, access_token):
+class BaseCanvasAPI(object):
+    def __init__(self, instance_address, access_token, **kwargs):
+        self.instance_address = instance_address
         self.access_token = access_token
-
-    def __call__(self, r):
-        # modify and return the request
-        r.headers['Authorization'] = 'Bearer {}'.format(self.access_token)
-        return r
-
-
-class BaseApi(object):
-    """A base API subclass."""
-
-    default_path_attributes = {}
-    default_query_attributes = {}
-    default_header_attributes = {}
-    default_form_attributes = {}
-    default_body_attributes = {}
-
-    def __init__(self, access_token, host='https://canvas.instructure.com/api', verify_ssl=True, cert=None):
-        """Return a BaseAPI instance."""
-        # Base host for the Canvas instance
-        self.host = host
+        logger.debug('Created new CanvasAPI client for instance: {}.'.format('self.instance_address'))
 
         self.session = requests.Session()
-        self.session.auth = CanvasAuth(access_token)
-        self.session.verify = verify_ssl
-        self.session.cert = cert
+        self.session.headers.update({'Authorization': 'Bearer {}'.format(self.access_token)})
+        logger.debug('Using Authorization Token authentication method. Added token to headers: {}'.format('Authorization: Bearer {}'.format(self.access_token)))
 
-    def api_precall(self,
-                    api_meta,
-                    params,
-                    returns='JSON',
-                    callback=None):
-        import pdb;pdb.set_trace()
+        self.rel_matcher = re.compile(r' ?rel="([a-z]+)"')
 
-        path_attributes = self.build_attrs('path', attributes, attribute_map)
-        query_attributes = self.build_attrs('query', attributes, attribute_map)
-        header_attributes = self.build_attrs('header', attributes, attribute_map)
-        form_attributes = self.build_attrs('form', attributes, attribute_map)
-        body_attributes = self.build_attrs('body', attributes, attribute_map)
+    def uri_for(self, a):
+        return self.instance_address + a
 
-        # resource_path = '/v1/accounts/{account_id}/sub_accounts'.replace('{format}', 'json')
-        url = host + url
-        url = url.format(**path_attributes)
-
-        method = method.upper()
-
-        if method not in HTTP_VERBS:
-            raise UnknownHTTPVerbError(method)
-
-        request_args = {}
-        if method in ['GET', 'HEAD']:
-            if query_attributes != {}:
-                request_args['params'] = query_attributes
-            if header_attributes != {}:
-                request_args['headers'] = header_attributes
-        elif method in ['POST', 'PUT', 'PATCH', :
-            if form_attributes != {}:
-                request_args['data'] = form_attributes
-            if header_attributes != {}:
-                request_args['headers'] = header_attributes
+    def extract_data_from_response(self, response, data_key=None):
+        """Given a response and an optional data_key should return a dictionary of data returned as part of the response."""
+        response_json_data = response.json()
+        # Seems to be two types of response, a dict with keys and then lists of data or a flat list data with no key.
+        if type(response_json_data) == list:
+            # Return the data
+            return response_json_data
+        elif type(response_json_data) == dict:
+            if data_key is None:
+                return response_json_data
+            else:
+                return response_json_data[data_key]
         else:
-            # Its OPTIONS
-            pass
+            raise CanvasAPIError(response)
 
-        if callback is None:
-            return self.api_call(url, method, request_args, callback)
+    def extract_pagination_links(self, response):
+        '''Given a wrapped_response from a Canvas API endpoint,
+        extract the pagination links from the response headers'''
+        try:
+            link_header = response.headers['Link']
+        except KeyError:
+            logger.warn('Unable to find the Link header. Unable to continue with pagination.')
+            return None
+
+        split_header = link_header.split(',')
+        exploded_split_header = [i.split(';') for i in split_header]
+
+        pagination_links = {}
+        for h in exploded_split_header:
+            link = h[0]
+            rel = h[1]
+            # Check that the link format is what we expect
+            if link.startswith('<') and link.endswith('>'):
+                link = link[1:-1]
+            else:
+                continue
+            # Extract the rel argument
+            m = self.rel_matcher.match(rel)
+            try:
+                rel = m.groups()[0]
+            except AttributeError:
+                # Match returned None, just skip.
+                continue
+            except IndexError:
+                # Matched but no groups returned
+                continue
+
+            pagination_links[rel] = link
+        return pagination_links
+
+    def has_pagination_links(self, response):
+        return 'Link' in response.headers
+
+
+    def depaginate(self, response, data_key=None):
+        logging.debug('Attempting to depaginate response from {}'.format(response.url))
+        all_data = []
+        this_data = self.extract_data_from_response(response, data_key=data_key)
+        if this_data is not None:
+            if type(this_data) == list:
+                all_data += this_data
+            else:
+                all_data.append(this_data)
+
+        if self.has_pagination_links(response):
+            pagination_links = self.extract_pagination_links(response)
+            while 'next' in pagination_links:
+                response = self.session.get(pagination_links['next'])
+                pagination_links = self.extract_pagination_links(response)
+                this_data = self.extract_data_from_response(response, data_key=data_key)
+                if this_data is not None:
+                    if type(this_data) == list:
+                        all_data += this_data
+                    else:
+                        all_data.append(this_data)
         else:
-            thread = threading.Thread(target='api_call',
-                                      args=(url,
-                                            method,
-                                            request_args,
-                                            callback))
-            thread.start()
-            return thread
+            logging.warn('Response from {} has no pagination links.'.format(response.url))
+        return all_data
 
-    def api_call(self, 
-                 url,
-                 method,
-                 request_args,
-                 callback):
-        r = self.session.Request(method, url, **request_args)
-        if callback is not None:
-            callback(r)
+    def generic_request(self, method, uri,
+                        all_pages=False,
+                        data_key=None,
+                        no_data=False,
+                        do_not_process=False,
+                        force_urlencode_data=False,
+                        data=None, params=None,
+                        single_item=False):
+        """Generic Canvas Request Method."""
+        if not uri.startswith('http'):
+            uri = self.uri_for(uri)
+
+        if force_urlencode_data is True:
+            uri += '?' + urllib.urlencode(data)
+
+        assert method in ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS']
+
+        if method == 'GET':
+            response = self.session.get(uri, params=params)
+        elif method == 'POST':
+            response = self.session.post(uri, data=data)
+        elif method == 'PUT':
+            response = self.session.put(uri, data=data)
+        elif method == 'DELETE':
+            response = self.session.delete(uri, params=params)
+        elif method == 'HEAD':
+            response = self.session.head(uri, params=params)
+        elif method == 'OPTIONS':
+            response = self.session.options(uri, params=params)
+
+        response.raise_for_status()
+
+        if do_not_process is True:
+            return response
+
+        if no_data:
+            return response.status_code
+
+        if all_pages:
+            return self.depaginate(response, data_key)
+
+        if single_item:
+            r = response.json()
+            if data_key:
+                return r[data_key]
+            else:
+                return r
+
+        return response.json()
+
+    def _validate_enum(self, value, acceptable_values):
+        if not hasattr(value, '__iter__'):
+            if value not in acceptable_values:
+                raise ValueError('{} not in {}'.format(value, str(acceptable_values)))
         else:
-            return r
+            for v in value:
+                if v not in acceptable_values:
+                    raise ValueError('{} not in {}'.format(value, str(acceptable_values)))
+        return value
 
+
+
+class CanvasAPIError(Exception):
+    def __init__(self, response):
+        self.response = response
+
+    def __unicode__(self):
+        return u'API Request Failed. Status: {} Content: {}'.format(self.response.status_code, self.response.content)
+
+    def __str__(self):
+        return 'API Request Failed. Status: {} Content: {}'.format(self.response.status_code, self.response.content)
+
+
+class BaseModel(object):
+    pass
