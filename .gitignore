@@ -64,4 +64,6 @@ target/
 env/
 logs/
 
+pip.ini
+
 

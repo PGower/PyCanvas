@@ -162,14 +162,12 @@ class BaseCanvasAPI(object):
                     raise ValueError('{} not in {}'.format(value, str(acceptable_values)))
         return value
 
-    def _validate_datetime(self, value):
+    def _validate_iso8601_string(self, value):
         """Return the value or raise a ValueError if it is not a string in ISO8601 format."""
         if re.match(ISO8601_REGEX, value):
             return value
         else:
             raise ValueError('{} must be in ISO8601 format.'.format(value))
-
-
 
 
 class CanvasAPIError(Exception):
