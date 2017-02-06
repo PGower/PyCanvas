@@ -31,6 +31,7 @@ class GroupsAPI(BaseCanvasAPI):
         if context_type is not None:
             self._validate_enum(context_type, ["Account", "Course"])
             params["context_type"] = context_type
+
         # OPTIONAL - include
         """- "tabs": Include the list of tabs configured for each group.  See the
           {api:TabsController#index List available tabs API} for more information."""
@@ -54,10 +55,12 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - only_own_groups
         """Will only include groups that the user belongs to if this is set"""
         if only_own_groups is not None:
             params["only_own_groups"] = only_own_groups
+
         # OPTIONAL - include
         """- "tabs": Include the list of tabs configured for each group.  See the
           {api:TabsController#index List available tabs API} for more information."""
@@ -81,10 +84,12 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - only_own_groups
         """Will only include groups that the user belongs to if this is set"""
         if only_own_groups is not None:
             params["only_own_groups"] = only_own_groups
+
         # OPTIONAL - include
         """- "tabs": Include the list of tabs configured for each group.  See the
           {api:TabsController#index List available tabs API} for more information."""
@@ -109,6 +114,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - include
         """- "permissions": Include permissions the current user has
           for the group.
@@ -136,19 +142,23 @@ class GroupsAPI(BaseCanvasAPI):
         """The name of the group"""
         if name is not None:
             data["name"] = name
+
         # OPTIONAL - description
         """A description of the group"""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - is_public
         """whether the group is public (applies only to community groups)"""
         if is_public is not None:
             data["is_public"] = is_public
+
         # OPTIONAL - join_level
         """no description"""
         if join_level is not None:
             self._validate_enum(join_level, ["parent_context_auto_join", "parent_context_request", "invitation_only"])
             data["join_level"] = join_level
+
         # OPTIONAL - storage_quota_mb
         """The allowed file storage for the group, in megabytes. This parameter is
         ignored if the caller does not have the manage_storage_quotas permission."""
@@ -172,23 +182,28 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_category_id
         """ID"""
         path["group_category_id"] = group_category_id
+
         # OPTIONAL - name
         """The name of the group"""
         if name is not None:
             data["name"] = name
+
         # OPTIONAL - description
         """A description of the group"""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - is_public
         """whether the group is public (applies only to community groups)"""
         if is_public is not None:
             data["is_public"] = is_public
+
         # OPTIONAL - join_level
         """no description"""
         if join_level is not None:
             self._validate_enum(join_level, ["parent_context_auto_join", "parent_context_request", "invitation_only"])
             data["join_level"] = join_level
+
         # OPTIONAL - storage_quota_mb
         """The allowed file storage for the group, in megabytes. This parameter is
         ignored if the caller does not have the manage_storage_quotas permission."""
@@ -215,34 +230,41 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - name
         """The name of the group"""
         if name is not None:
             data["name"] = name
+
         # OPTIONAL - description
         """A description of the group"""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - is_public
         """Whether the group is public (applies only to community groups). Currently
         you cannot set a group back to private once it has been made public."""
         if is_public is not None:
             data["is_public"] = is_public
+
         # OPTIONAL - join_level
         """no description"""
         if join_level is not None:
             self._validate_enum(join_level, ["parent_context_auto_join", "parent_context_request", "invitation_only"])
             data["join_level"] = join_level
+
         # OPTIONAL - avatar_id
         """The id of the attachment previously uploaded to the group that you would
         like to use as the avatar image for this group."""
         if avatar_id is not None:
             data["avatar_id"] = avatar_id
+
         # OPTIONAL - storage_quota_mb
         """The allowed file storage for the group, in megabytes. This parameter is
         ignored if the caller does not have the manage_storage_quotas permission."""
         if storage_quota_mb is not None:
             data["storage_quota_mb"] = storage_quota_mb
+
         # OPTIONAL - members
         """An array of user ids for users you would like in the group.
         Users not in the group will be sent invitations. Existing group
@@ -284,6 +306,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - invitees
         """An array of email addresses to be sent invitations."""
         data["invitees"] = invitees
@@ -304,11 +327,13 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - search_term
         """The partial name or full ID of the users to match and return in the
         results list. Must be at least 3 characters."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - include
         """- "avatar_url": Include users' avatar_urls."""
         if include is not None:
@@ -356,6 +381,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - html
         """The html content to process"""
         if html is not None:
@@ -417,6 +443,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - filter_states
         """Only list memberships with the given workflow_states. By default it will
         return all memberships."""
@@ -440,6 +467,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - membership_id
         """ID"""
         path["membership_id"] = membership_id
@@ -460,6 +488,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -482,6 +511,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - user_id
         """no description"""
         if user_id is not None:
@@ -503,14 +533,17 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - membership_id
         """ID"""
         path["membership_id"] = membership_id
+
         # OPTIONAL - workflow_state
         """Currently, the only allowed value is "accepted""""
         if workflow_state is not None:
             self._validate_enum(workflow_state, ["accepted"])
             data["workflow_state"] = workflow_state
+
         # OPTIONAL - moderator
         """no description"""
         if moderator is not None:
@@ -532,14 +565,17 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - workflow_state
         """Currently, the only allowed value is "accepted""""
         if workflow_state is not None:
             self._validate_enum(workflow_state, ["accepted"])
             data["workflow_state"] = workflow_state
+
         # OPTIONAL - moderator
         """no description"""
         if moderator is not None:
@@ -563,6 +599,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - membership_id
         """ID"""
         path["membership_id"] = membership_id
@@ -585,6 +622,7 @@ class GroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id

@@ -33,6 +33,7 @@ class CoursesAPI(BaseCanvasAPI):
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "ta", "observer", "designer"])
             params["enrollment_type"] = enrollment_type
+
         # OPTIONAL - enrollment_role
         """Deprecated
         When set, only return courses where the user is enrolled with the specified
@@ -42,6 +43,7 @@ class CoursesAPI(BaseCanvasAPI):
         or 'DesignerEnrollment'."""
         if enrollment_role is not None:
             params["enrollment_role"] = enrollment_role
+
         # OPTIONAL - enrollment_role_id
         """When set, only return courses where the user is enrolled with the specified
         course-level role.  This can be a role created with the
@@ -50,12 +52,14 @@ class CoursesAPI(BaseCanvasAPI):
         or 'DesignerEnrollment'."""
         if enrollment_role_id is not None:
             params["enrollment_role_id"] = enrollment_role_id
+
         # OPTIONAL - enrollment_state
         """When set, only return courses where the user has an enrollment with the given state.
         This will respect section/course/term date overrides."""
         if enrollment_state is not None:
             self._validate_enum(enrollment_state, ["active", "invited_or_pending", "completed"])
             params["enrollment_state"] = enrollment_state
+
         # OPTIONAL - include
         """- "needs_grading_count": Optional information to include with each Course.
           When needs_grading_count is given, and the current user has grading
@@ -123,6 +127,7 @@ class CoursesAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users"])
             params["include"] = include
+
         # OPTIONAL - state
         """If set, only return courses that are in the given state(s).
         By default, "available" is returned for students and observers, and
@@ -147,6 +152,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - include
         """- "needs_grading_count": Optional information to include with each Course.
           When needs_grading_count is given, and the current user has grading
@@ -214,6 +220,7 @@ class CoursesAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users"])
             params["include"] = include
+
         # OPTIONAL - state
         """If set, only return courses that are in the given state(s).
         By default, "available" is returned for students and observers, and
@@ -221,6 +228,7 @@ class CoursesAPI(BaseCanvasAPI):
         if state is not None:
             self._validate_enum(state, ["unpublished", "available", "completed", "deleted"])
             params["state"] = state
+
         # OPTIONAL - enrollment_state
         """When set, only return courses where the user has an enrollment with the given state.
         This will respect section/course/term date overrides."""
@@ -244,23 +252,28 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - course[name]
         """The name of the course. If omitted, the course will be named "Unnamed
         Course.""""
         if course_name is not None:
             data["course[name]"] = course_name
+
         # OPTIONAL - course[course_code]
         """The course code for the course."""
         if course_course_code is not None:
             data["course[course_code]"] = course_course_code
+
         # OPTIONAL - course[start_at]
         """Course start date in ISO8601 format, e.g. 2011-01-01T01:00Z"""
         if course_start_at is not None:
             data["course[start_at]"] = course_start_at
+
         # OPTIONAL - course[end_at]
         """Course end date in ISO8601 format. e.g. 2011-01-01T01:00Z"""
         if course_end_at is not None:
             data["course[end_at]"] = course_end_at
+
         # OPTIONAL - course[license]
         """The name of the licensing. Should be one of the following abbreviations
         (a descriptive name is included in parenthesis for reference):
@@ -274,99 +287,122 @@ class CoursesAPI(BaseCanvasAPI):
         - 'public_domain' (Public Domain)."""
         if course_license is not None:
             data["course[license]"] = course_license
+
         # OPTIONAL - course[is_public]
         """Set to true if course is public to both authenticated and unauthenticated users."""
         if course_is_public is not None:
             data["course[is_public]"] = course_is_public
+
         # OPTIONAL - course[is_public_to_auth_users]
         """Set to true if course is public only to authenticated users."""
         if course_is_public_to_auth_users is not None:
             data["course[is_public_to_auth_users]"] = course_is_public_to_auth_users
+
         # OPTIONAL - course[public_syllabus]
         """Set to true to make the course syllabus public."""
         if course_public_syllabus is not None:
             data["course[public_syllabus]"] = course_public_syllabus
+
         # OPTIONAL - course[public_syllabus_to_auth]
         """Set to true to make the course syllabus public for authenticated users."""
         if course_public_syllabus_to_auth is not None:
             data["course[public_syllabus_to_auth]"] = course_public_syllabus_to_auth
+
         # OPTIONAL - course[public_description]
         """A publicly visible description of the course."""
         if course_public_description is not None:
             data["course[public_description]"] = course_public_description
+
         # OPTIONAL - course[allow_student_wiki_edits]
         """If true, students will be able to modify the course wiki."""
         if course_allow_student_wiki_edits is not None:
             data["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
+
         # OPTIONAL - course[allow_wiki_comments]
         """If true, course members will be able to comment on wiki pages."""
         if course_allow_wiki_comments is not None:
             data["course[allow_wiki_comments]"] = course_allow_wiki_comments
+
         # OPTIONAL - course[allow_student_forum_attachments]
         """If true, students can attach files to forum posts."""
         if course_allow_student_forum_attachments is not None:
             data["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
+
         # OPTIONAL - course[open_enrollment]
         """Set to true if the course is open enrollment."""
         if course_open_enrollment is not None:
             data["course[open_enrollment]"] = course_open_enrollment
+
         # OPTIONAL - course[self_enrollment]
         """Set to true if the course is self enrollment."""
         if course_self_enrollment is not None:
             data["course[self_enrollment]"] = course_self_enrollment
+
         # OPTIONAL - course[restrict_enrollments_to_course_dates]
         """Set to true to restrict user enrollments to the start and end dates of the
         course."""
         if course_restrict_enrollments_to_course_dates is not None:
             data["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
+
         # OPTIONAL - course[term_id]
         """The unique ID of the term to create to course in."""
         if course_term_id is not None:
             data["course[term_id]"] = course_term_id
+
         # OPTIONAL - course[sis_course_id]
         """The unique SIS identifier."""
         if course_sis_course_id is not None:
             data["course[sis_course_id]"] = course_sis_course_id
+
         # OPTIONAL - course[integration_id]
         """The unique Integration identifier."""
         if course_integration_id is not None:
             data["course[integration_id]"] = course_integration_id
+
         # OPTIONAL - course[hide_final_grades]
         """If this option is set to true, the totals in student grades summary will
         be hidden."""
         if course_hide_final_grades is not None:
             data["course[hide_final_grades]"] = course_hide_final_grades
+
         # OPTIONAL - course[apply_assignment_group_weights]
         """Set to true to weight final grade based on assignment groups percentages."""
         if course_apply_assignment_group_weights is not None:
             data["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
+
         # OPTIONAL - course[time_zone]
         """The time zone for the course. Allowed time zones are
         {http://www.iana.org/time-zones IANA time zones} or friendlier
         {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if course_time_zone is not None:
             data["course[time_zone]"] = course_time_zone
+
         # OPTIONAL - offer
         """If this option is set to true, the course will be available to students
         immediately."""
         if offer is not None:
             data["offer"] = offer
+
         # OPTIONAL - enroll_me
         """Set to true to enroll the current user as the teacher."""
         if enroll_me is not None:
             data["enroll_me"] = enroll_me
+
         # OPTIONAL - course[syllabus_body]
         """The syllabus body for the course"""
         if course_syllabus_body is not None:
             data["course[syllabus_body]"] = course_syllabus_body
+
         # OPTIONAL - course[grading_standard_id]
         """The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course."""
         if course_grading_standard_id is not None:
             data["course[grading_standard_id]"] = course_grading_standard_id
+
         # OPTIONAL - course[course_format]
         """Optional. Specifies the format of the course. (Should be 'on_campus', 'online', or 'blended')"""
         if course_course_format is not None:
             data["course[course_format]"] = course_course_format
+
         # OPTIONAL - enable_sis_reactivation
         """When true, will first try to re-activate a deleted course with matching sis_course_id if possible."""
         if enable_sis_reactivation is not None:
@@ -432,10 +468,12 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - search_term
         """The partial name or full ID of the users to match and return in the results list."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - enrollment_type
         """When set, only return users where the user is enrolled as this type.
         "student_view" implies include[]=test_student.
@@ -443,6 +481,7 @@ class CoursesAPI(BaseCanvasAPI):
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "student_view", "ta", "observer", "designer"])
             params["enrollment_type"] = enrollment_type
+
         # OPTIONAL - enrollment_role
         """Deprecated
         When set, only return users enrolled with the specified course-level role.  This can be
@@ -451,6 +490,7 @@ class CoursesAPI(BaseCanvasAPI):
         'ObserverEnrollment', or 'DesignerEnrollment'."""
         if enrollment_role is not None:
             params["enrollment_role"] = enrollment_role
+
         # OPTIONAL - enrollment_role_id
         """When set, only return courses where the user is enrolled with the specified
         course-level role.  This can be a role created with the
@@ -459,6 +499,7 @@ class CoursesAPI(BaseCanvasAPI):
         or 'DesignerEnrollment'."""
         if enrollment_role_id is not None:
             params["enrollment_role_id"] = enrollment_role_id
+
         # OPTIONAL - include
         """- "email": Optional user email.
         - "enrollments":
@@ -477,18 +518,21 @@ class CoursesAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio", "custom_links"])
             params["include"] = include
+
         # OPTIONAL - user_id
         """If this parameter is given and it corresponds to a user in the course,
         the +page+ parameter will be ignored and the page containing the specified user
         will be returned instead."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - user_ids
         """If included, the course users set will only include users with IDs
         specified by the param. Note: this will not work in conjunction
         with the "user_id" argument but multiple user_ids can be included."""
         if user_ids is not None:
             params["user_ids"] = user_ids
+
         # OPTIONAL - enrollment_state
         """When set, only return users where the enrollment workflow state is of one of the given types.
         "active" and "invited" enrollments are returned by default."""
@@ -512,10 +556,12 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - search_term
         """The partial name or full ID of the users to match and return in the results list."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - enrollment_type
         """When set, only return users where the user is enrolled as this type.
         "student_view" implies include[]=test_student.
@@ -523,6 +569,7 @@ class CoursesAPI(BaseCanvasAPI):
         if enrollment_type is not None:
             self._validate_enum(enrollment_type, ["teacher", "student", "student_view", "ta", "observer", "designer"])
             params["enrollment_type"] = enrollment_type
+
         # OPTIONAL - enrollment_role
         """Deprecated
         When set, only return users enrolled with the specified course-level role.  This can be
@@ -531,6 +578,7 @@ class CoursesAPI(BaseCanvasAPI):
         'ObserverEnrollment', or 'DesignerEnrollment'."""
         if enrollment_role is not None:
             params["enrollment_role"] = enrollment_role
+
         # OPTIONAL - enrollment_role_id
         """When set, only return courses where the user is enrolled with the specified
         course-level role.  This can be a role created with the
@@ -539,6 +587,7 @@ class CoursesAPI(BaseCanvasAPI):
         or 'DesignerEnrollment'."""
         if enrollment_role_id is not None:
             params["enrollment_role_id"] = enrollment_role_id
+
         # OPTIONAL - include
         """- "email": Optional user email.
         - "enrollments":
@@ -557,18 +606,21 @@ class CoursesAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio", "custom_links"])
             params["include"] = include
+
         # OPTIONAL - user_id
         """If this parameter is given and it corresponds to a user in the course,
         the +page+ parameter will be ignored and the page containing the specified user
         will be returned instead."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - user_ids
         """If included, the course users set will only include users with IDs
         specified by the param. Note: this will not work in conjunction
         with the "user_id" argument but multiple user_ids can be included."""
         if user_ids is not None:
             params["user_ids"] = user_ids
+
         # OPTIONAL - enrollment_state
         """When set, only return users where the enrollment workflow state is of one of the given types.
         "active" and "invited" enrollments are returned by default."""
@@ -615,6 +667,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -635,6 +688,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - html
         """The html content to process"""
         if html is not None:
@@ -715,6 +769,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - event
         """The action to take on the course."""
         self._validate_enum(event, ["delete", "conclude"])
@@ -753,46 +808,57 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - allow_student_discussion_topics
         """Let students create discussion topics"""
         if allow_student_discussion_topics is not None:
             data["allow_student_discussion_topics"] = allow_student_discussion_topics
+
         # OPTIONAL - allow_student_forum_attachments
         """Let students attach files to discussions"""
         if allow_student_forum_attachments is not None:
             data["allow_student_forum_attachments"] = allow_student_forum_attachments
+
         # OPTIONAL - allow_student_discussion_editing
         """Let students edit or delete their own discussion posts"""
         if allow_student_discussion_editing is not None:
             data["allow_student_discussion_editing"] = allow_student_discussion_editing
+
         # OPTIONAL - allow_student_organized_groups
         """Let students organize their own groups"""
         if allow_student_organized_groups is not None:
             data["allow_student_organized_groups"] = allow_student_organized_groups
+
         # OPTIONAL - hide_final_grades
         """Hide totals in student grades summary"""
         if hide_final_grades is not None:
             data["hide_final_grades"] = hide_final_grades
+
         # OPTIONAL - hide_distribution_graphs
         """Hide grade distribution graphs from students"""
         if hide_distribution_graphs is not None:
             data["hide_distribution_graphs"] = hide_distribution_graphs
+
         # OPTIONAL - lock_all_announcements
         """Disable comments on announcements"""
         if lock_all_announcements is not None:
             data["lock_all_announcements"] = lock_all_announcements
+
         # OPTIONAL - restrict_student_past_view
         """Restrict students from viewing courses after end date"""
         if restrict_student_past_view is not None:
             data["restrict_student_past_view"] = restrict_student_past_view
+
         # OPTIONAL - restrict_student_future_view
         """Restrict students from viewing courses before start date"""
         if restrict_student_future_view is not None:
             data["restrict_student_future_view"] = restrict_student_future_view
+
         # OPTIONAL - show_announcements_on_home_page
         """Show the most recent announcements on the Course home page (if a Wiki, defaults to five announcements, configurable via home_page_announcement_limit)"""
         if show_announcements_on_home_page is not None:
             data["show_announcements_on_home_page"] = show_announcements_on_home_page
+
         # OPTIONAL - home_page_announcement_limit
         """Limit the number of announcements on the home page if enabled via show_announcements_on_home_page"""
         if home_page_announcement_limit is not None:
@@ -816,6 +882,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - include
         """- "all_courses": Also search recently deleted courses.
         - "permissions": Include permissions the current user has
@@ -843,9 +910,11 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - include
         """- "all_courses": Also search recently deleted courses.
         - "permissions": Include permissions the current user has
@@ -876,27 +945,33 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - course[account_id]
         """The unique ID of the account to move the course to."""
         if course_account_id is not None:
             data["course[account_id]"] = course_account_id
+
         # OPTIONAL - course[name]
         """The name of the course. If omitted, the course will be named "Unnamed
         Course.""""
         if course_name is not None:
             data["course[name]"] = course_name
+
         # OPTIONAL - course[course_code]
         """The course code for the course."""
         if course_course_code is not None:
             data["course[course_code]"] = course_course_code
+
         # OPTIONAL - course[start_at]
         """Course start date in ISO8601 format, e.g. 2011-01-01T01:00Z"""
         if course_start_at is not None:
             data["course[start_at]"] = course_start_at
+
         # OPTIONAL - course[end_at]
         """Course end date in ISO8601 format. e.g. 2011-01-01T01:00Z"""
         if course_end_at is not None:
             data["course[end_at]"] = course_end_at
+
         # OPTIONAL - course[license]
         """The name of the licensing. Should be one of the following abbreviations
         (a descriptive name is included in parenthesis for reference):
@@ -910,88 +985,108 @@ class CoursesAPI(BaseCanvasAPI):
         - 'public_domain' (Public Domain)."""
         if course_license is not None:
             data["course[license]"] = course_license
+
         # OPTIONAL - course[is_public]
         """Set to true if course is public to both authenticated and unauthenticated users."""
         if course_is_public is not None:
             data["course[is_public]"] = course_is_public
+
         # OPTIONAL - course[is_public_to_auth_users]
         """Set to true if course is public only to authenticated users."""
         if course_is_public_to_auth_users is not None:
             data["course[is_public_to_auth_users]"] = course_is_public_to_auth_users
+
         # OPTIONAL - course[public_syllabus]
         """Set to true to make the course syllabus public."""
         if course_public_syllabus is not None:
             data["course[public_syllabus]"] = course_public_syllabus
+
         # OPTIONAL - course[public_syllabus_to_auth]
         """Set to true to make the course syllabus to public for authenticated users."""
         if course_public_syllabus_to_auth is not None:
             data["course[public_syllabus_to_auth]"] = course_public_syllabus_to_auth
+
         # OPTIONAL - course[public_description]
         """A publicly visible description of the course."""
         if course_public_description is not None:
             data["course[public_description]"] = course_public_description
+
         # OPTIONAL - course[allow_student_wiki_edits]
         """If true, students will be able to modify the course wiki."""
         if course_allow_student_wiki_edits is not None:
             data["course[allow_student_wiki_edits]"] = course_allow_student_wiki_edits
+
         # OPTIONAL - course[allow_wiki_comments]
         """If true, course members will be able to comment on wiki pages."""
         if course_allow_wiki_comments is not None:
             data["course[allow_wiki_comments]"] = course_allow_wiki_comments
+
         # OPTIONAL - course[allow_student_forum_attachments]
         """If true, students can attach files to forum posts."""
         if course_allow_student_forum_attachments is not None:
             data["course[allow_student_forum_attachments]"] = course_allow_student_forum_attachments
+
         # OPTIONAL - course[open_enrollment]
         """Set to true if the course is open enrollment."""
         if course_open_enrollment is not None:
             data["course[open_enrollment]"] = course_open_enrollment
+
         # OPTIONAL - course[self_enrollment]
         """Set to true if the course is self enrollment."""
         if course_self_enrollment is not None:
             data["course[self_enrollment]"] = course_self_enrollment
+
         # OPTIONAL - course[restrict_enrollments_to_course_dates]
         """Set to true to restrict user enrollments to the start and end dates of the
         course."""
         if course_restrict_enrollments_to_course_dates is not None:
             data["course[restrict_enrollments_to_course_dates]"] = course_restrict_enrollments_to_course_dates
+
         # OPTIONAL - course[term_id]
         """The unique ID of the term to create to course in."""
         if course_term_id is not None:
             data["course[term_id]"] = course_term_id
+
         # OPTIONAL - course[sis_course_id]
         """The unique SIS identifier."""
         if course_sis_course_id is not None:
             data["course[sis_course_id]"] = course_sis_course_id
+
         # OPTIONAL - course[integration_id]
         """The unique Integration identifier."""
         if course_integration_id is not None:
             data["course[integration_id]"] = course_integration_id
+
         # OPTIONAL - course[hide_final_grades]
         """If this option is set to true, the totals in student grades summary will
         be hidden."""
         if course_hide_final_grades is not None:
             data["course[hide_final_grades]"] = course_hide_final_grades
+
         # OPTIONAL - course[time_zone]
         """The time zone for the course. Allowed time zones are
         {http://www.iana.org/time-zones IANA time zones} or friendlier
         {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if course_time_zone is not None:
             data["course[time_zone]"] = course_time_zone
+
         # OPTIONAL - course[apply_assignment_group_weights]
         """Set to true to weight final grade based on assignment groups percentages."""
         if course_apply_assignment_group_weights is not None:
             data["course[apply_assignment_group_weights]"] = course_apply_assignment_group_weights
+
         # OPTIONAL - course[storage_quota_mb]
         """Set the storage quota for the course, in megabytes. The caller must have
         the "Manage storage quotas" account permission."""
         if course_storage_quota_mb is not None:
             data["course[storage_quota_mb]"] = course_storage_quota_mb
+
         # OPTIONAL - offer
         """If this option is set to true, the course will be available to students
         immediately."""
         if offer is not None:
             data["offer"] = offer
+
         # OPTIONAL - course[event]
         """The action to take on each course.
         * 'claim' makes a course no longer visible to students. This action is also called "unpublish" on the web site.
@@ -1007,18 +1102,22 @@ class CoursesAPI(BaseCanvasAPI):
         if course_event is not None:
             self._validate_enum(course_event, ["claim", "offer", "conclude", "delete", "undelete"])
             data["course[event]"] = course_event
+
         # OPTIONAL - course[syllabus_body]
         """The syllabus body for the course"""
         if course_syllabus_body is not None:
             data["course[syllabus_body]"] = course_syllabus_body
+
         # OPTIONAL - course[grading_standard_id]
         """The grading standard id to set for the course.  If no value is provided for this argument the current grading_standard will be un-set from this course."""
         if course_grading_standard_id is not None:
             data["course[grading_standard_id]"] = course_grading_standard_id
+
         # OPTIONAL - course[course_format]
         """Optional. Specifies the format of the course. (Should be either 'on_campus' or 'online')"""
         if course_course_format is not None:
             data["course[course_format]"] = course_course_format
+
         # OPTIONAL - course[image_id]
         """This is a file ID corresponding to an image file in the course that will
         be used as the course image.
@@ -1026,12 +1125,14 @@ class CoursesAPI(BaseCanvasAPI):
         to provide image_url and image_id in a request it will fail."""
         if course_image_id is not None:
             data["course[image_id]"] = course_image_id
+
         # OPTIONAL - course[image_url]
         """This is a URL to an image to be used as the course image.
         This will clear the course's image_id setting if set.  If you attempt
         to provide image_url and image_id in a request it will fail."""
         if course_image_url is not None:
             data["course[image_url]"] = course_image_url
+
         # OPTIONAL - course[remove_image]
         """If this option is set to true, the course image url and course image
         ID are both set to nil"""
@@ -1065,9 +1166,11 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - course_ids
         """List of ids of courses to update. At most 500 courses may be updated in one call."""
         data["course_ids"] = course_ids
+
         # REQUIRED - event
         """no description"""
         self._validate_enum(event, ["offer", "conclude", "delete", "undelete"])
@@ -1115,6 +1218,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - assignment_ids
         """no description"""
         if assignment_ids is not None:
@@ -1136,6 +1240,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - permissions
         """List of permissions to check against authenticated user"""
         if permissions is not None:
@@ -1159,6 +1264,7 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -1185,16 +1291,19 @@ class CoursesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - source_course
         """ID or SIS-ID of the course to copy the content from"""
         if source_course is not None:
             data["source_course"] = source_course
+
         # OPTIONAL - except
         """A list of the course content types to exclude, all areas not listed will
         be copied."""
         if except is not None:
             self._validate_enum(except, ["course_settings", "assignments", "external_tools", "files", "topics", "calendar_events", "quizzes", "wiki_pages", "modules", "outcomes"])
             data["except"] = except
+
         # OPTIONAL - only
         """A list of the course content types to copy, all areas not listed will not
         be copied."""

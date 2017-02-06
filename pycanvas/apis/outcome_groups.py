@@ -113,11 +113,13 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - outcome_style
         """The detail level of the outcomes. Defaults to "abbrev".
         Specify "full" for more information."""
         if outcome_style is not None:
             params["outcome_style"] = outcome_style
+
         # OPTIONAL - outcome_group_style
         """The detail level of the outcome groups. Defaults to "abbrev".
         Specify "full" for more information."""
@@ -140,11 +142,13 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - outcome_style
         """The detail level of the outcomes. Defaults to "abbrev".
         Specify "full" for more information."""
         if outcome_style is not None:
             params["outcome_style"] = outcome_style
+
         # OPTIONAL - outcome_group_style
         """The detail level of the outcome groups. Defaults to "abbrev".
         Specify "full" for more information."""
@@ -184,6 +188,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -204,6 +209,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -229,18 +235,22 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - title
         """The new outcome group title."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - description
         """The new outcome group description."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - parent_outcome_group_id
         """The id of the new parent outcome group."""
         if parent_outcome_group_id is not None:
@@ -267,21 +277,26 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - title
         """The new outcome group title."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - description
         """The new outcome group description."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - parent_outcome_group_id
         """The id of the new parent outcome group."""
         if parent_outcome_group_id is not None:
@@ -308,21 +323,26 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - title
         """The new outcome group title."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - description
         """The new outcome group description."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - parent_outcome_group_id
         """The id of the new parent outcome group."""
         if parent_outcome_group_id is not None:
@@ -373,6 +393,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -399,6 +420,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -419,6 +441,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_style
         """The detail level of the outcomes. Defaults to "abbrev".
         Specify "full" for more information."""
@@ -441,9 +464,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_style
         """The detail level of the outcomes. Defaults to "abbrev".
         Specify "full" for more information."""
@@ -466,9 +491,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_style
         """The detail level of the outcomes. Defaults to "abbrev".
         Specify "full" for more information."""
@@ -512,44 +539,54 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_id
         """The ID of the existing outcome to link."""
         if outcome_id is not None:
             data["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -592,43 +629,53 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """The ID of the existing outcome to link."""
         path["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -671,47 +718,58 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_id
         """The ID of the existing outcome to link."""
         if outcome_id is not None:
             data["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -754,46 +812,57 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """The ID of the existing outcome to link."""
         path["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -836,47 +905,58 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - outcome_id
         """The ID of the existing outcome to link."""
         if outcome_id is not None:
             data["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -919,46 +999,57 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """The ID of the existing outcome to link."""
         path["outcome_id"] = outcome_id
+
         # OPTIONAL - title
         """The title of the new outcome. Required if outcome_id is absent."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The description of the new outcome."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a rating level for the embedded rubric criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method.  Defaults to "highest""""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:
@@ -983,6 +1074,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """ID"""
         path["outcome_id"] = outcome_id
@@ -1006,9 +1098,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """ID"""
         path["outcome_id"] = outcome_id
@@ -1032,9 +1126,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - outcome_id
         """ID"""
         path["outcome_id"] = outcome_id
@@ -1072,6 +1168,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -1092,6 +1189,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -1113,13 +1211,16 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - title
         """The title of the new outcome group."""
         data["title"] = title
+
         # OPTIONAL - description
         """The description of the new outcome group."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard"""
         if vendor_guid is not None:
@@ -1142,16 +1243,20 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - title
         """The title of the new outcome group."""
         data["title"] = title
+
         # OPTIONAL - description
         """The description of the new outcome group."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard"""
         if vendor_guid is not None:
@@ -1174,16 +1279,20 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - title
         """The title of the new outcome group."""
         data["title"] = title
+
         # OPTIONAL - description
         """The description of the new outcome group."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard"""
         if vendor_guid is not None:
@@ -1216,6 +1325,7 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - source_outcome_group_id
         """The ID of the source outcome group."""
         data["source_outcome_group_id"] = source_outcome_group_id
@@ -1247,9 +1357,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - source_outcome_group_id
         """The ID of the source outcome group."""
         data["source_outcome_group_id"] = source_outcome_group_id
@@ -1281,9 +1393,11 @@ class OutcomeGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - source_outcome_group_id
         """The ID of the source outcome group."""
         data["source_outcome_group_id"] = source_outcome_group_id

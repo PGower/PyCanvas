@@ -47,9 +47,11 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - communication_channel[address]
         """An email address or SMS number. Not required for "push" type channels."""
         data["communication_channel[address]"] = communication_channel_address
+
         # REQUIRED - communication_channel[type]
         """The type of communication channel.
         
@@ -60,11 +62,13 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         it."""
         self._validate_enum(communication_channel_type, ["email", "sms", "push"])
         data["communication_channel[type]"] = communication_channel_type
+
         # OPTIONAL - communication_channel[token]
         """A registration id, device token, or equivalent token given to an app when
         registering with a push notification provider. Only valid for "push" type channels."""
         if communication_channel_token is not None:
             data["communication_channel[token]"] = communication_channel_token
+
         # OPTIONAL - skip_confirmation
         """Only valid for site admins and account admins making requests; If true, the channel is
         automatically validated and no confirmation email or SMS is sent.
@@ -89,6 +93,7 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -109,9 +114,11 @@ class CommunicationChannelsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - type
         """ID"""
         path["type"] = type
+
         # REQUIRED - PATH - address
         """ID"""
         path["address"] = address

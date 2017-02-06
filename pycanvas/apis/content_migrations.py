@@ -29,6 +29,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
@@ -49,6 +50,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
@@ -69,6 +71,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
@@ -89,6 +92,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
@@ -109,9 +113,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -132,9 +138,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -155,9 +163,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -178,9 +188,11 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -201,12 +213,15 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - workflow_state
         """Set the workflow_state of the issue."""
         self._validate_enum(workflow_state, ["active", "resolved"])
@@ -228,12 +243,15 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - workflow_state
         """Set the workflow_state of the issue."""
         self._validate_enum(workflow_state, ["active", "resolved"])
@@ -255,12 +273,15 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - workflow_state
         """Set the workflow_state of the issue."""
         self._validate_enum(workflow_state, ["active", "resolved"])
@@ -282,12 +303,15 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - content_migration_id
         """ID"""
         path["content_migration_id"] = content_migration_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - workflow_state
         """Set the workflow_state of the issue."""
         self._validate_enum(workflow_state, ["active", "resolved"])
@@ -377,6 +401,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -397,6 +422,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -417,6 +443,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -437,6 +464,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -483,6 +511,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - migration_type
         """The type of the migration. Use the
         {api:ContentMigrationsController#available_migrators Migrator} endpoint to
@@ -490,70 +519,85 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         canvas_cartridge_importer, common_cartridge_importer,
         course_copy_importer, zip_file_importer, qti_converter, moodle_converter"""
         data["migration_type"] = migration_type
+
         # OPTIONAL - pre_attachment[name]
         """Required if uploading a file. This is the first step in uploading a file
         to the content migration. See the {file:file_uploads.html File Upload
         Documentation} for details on the file upload workflow."""
         if pre_attachment_name is not None:
             data["pre_attachment[name]"] = pre_attachment_name
+
         # OPTIONAL - pre_attachment[*]
         """Other file upload properties, See {file:file_uploads.html File Upload
         Documentation}"""
         if pre_attachment_* is not None:
             data["pre_attachment[*]"] = pre_attachment_*
+
         # OPTIONAL - settings[file_url]
         """A URL to download the file from. Must not require authentication."""
         if settings_file_url is not None:
             data["settings[file_url]"] = settings_file_url
+
         # OPTIONAL - settings[source_course_id]
         """The course to copy from for a course copy migration. (required if doing
         course copy)"""
         if settings_source_course_id is not None:
             data["settings[source_course_id]"] = settings_source_course_id
+
         # OPTIONAL - settings[folder_id]
         """The folder to unzip the .zip file into for a zip_file_import."""
         if settings_folder_id is not None:
             data["settings[folder_id]"] = settings_folder_id
+
         # OPTIONAL - settings[overwrite_quizzes]
         """Whether to overwrite quizzes with the same identifiers between content
         packages."""
         if settings_overwrite_quizzes is not None:
             data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+
         # OPTIONAL - settings[question_bank_id]
         """The existing question bank ID to import questions into if not specified in
         the content package."""
         if settings_question_bank_id is not None:
             data["settings[question_bank_id]"] = settings_question_bank_id
+
         # OPTIONAL - settings[question_bank_name]
         """The question bank to import questions into if not specified in the content
         package, if both bank id and name are set, id will take precedence."""
         if settings_question_bank_name is not None:
             data["settings[question_bank_name]"] = settings_question_bank_name
+
         # OPTIONAL - date_shift_options[shift_dates]
         """Whether to shift dates in the copied course"""
         if date_shift_options_shift_dates is not None:
             data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+
         # OPTIONAL - date_shift_options[old_start_date]
         """The original start date of the source content/course"""
         if date_shift_options_old_start_date is not None:
             data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+
         # OPTIONAL - date_shift_options[old_end_date]
         """The original end date of the source content/course"""
         if date_shift_options_old_end_date is not None:
             data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+
         # OPTIONAL - date_shift_options[new_start_date]
         """The new start date for the content/course"""
         if date_shift_options_new_start_date is not None:
             data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+
         # OPTIONAL - date_shift_options[new_end_date]
         """The new end date for the source content/course"""
         if date_shift_options_new_end_date is not None:
             data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+
         # OPTIONAL - date_shift_options[day_substitutions][X]
         """Move anything scheduled for day 'X' to the specified day. (0-Sunday,
         1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)"""
         if date_shift_options_day_substitutions_X is not None:
             data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+
         # OPTIONAL - date_shift_options[remove_dates]
         """Whether to remove dates in the copied course. Cannot be used
         in conjunction with *shift_dates*."""
@@ -602,6 +646,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - migration_type
         """The type of the migration. Use the
         {api:ContentMigrationsController#available_migrators Migrator} endpoint to
@@ -609,70 +654,85 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         canvas_cartridge_importer, common_cartridge_importer,
         course_copy_importer, zip_file_importer, qti_converter, moodle_converter"""
         data["migration_type"] = migration_type
+
         # OPTIONAL - pre_attachment[name]
         """Required if uploading a file. This is the first step in uploading a file
         to the content migration. See the {file:file_uploads.html File Upload
         Documentation} for details on the file upload workflow."""
         if pre_attachment_name is not None:
             data["pre_attachment[name]"] = pre_attachment_name
+
         # OPTIONAL - pre_attachment[*]
         """Other file upload properties, See {file:file_uploads.html File Upload
         Documentation}"""
         if pre_attachment_* is not None:
             data["pre_attachment[*]"] = pre_attachment_*
+
         # OPTIONAL - settings[file_url]
         """A URL to download the file from. Must not require authentication."""
         if settings_file_url is not None:
             data["settings[file_url]"] = settings_file_url
+
         # OPTIONAL - settings[source_course_id]
         """The course to copy from for a course copy migration. (required if doing
         course copy)"""
         if settings_source_course_id is not None:
             data["settings[source_course_id]"] = settings_source_course_id
+
         # OPTIONAL - settings[folder_id]
         """The folder to unzip the .zip file into for a zip_file_import."""
         if settings_folder_id is not None:
             data["settings[folder_id]"] = settings_folder_id
+
         # OPTIONAL - settings[overwrite_quizzes]
         """Whether to overwrite quizzes with the same identifiers between content
         packages."""
         if settings_overwrite_quizzes is not None:
             data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+
         # OPTIONAL - settings[question_bank_id]
         """The existing question bank ID to import questions into if not specified in
         the content package."""
         if settings_question_bank_id is not None:
             data["settings[question_bank_id]"] = settings_question_bank_id
+
         # OPTIONAL - settings[question_bank_name]
         """The question bank to import questions into if not specified in the content
         package, if both bank id and name are set, id will take precedence."""
         if settings_question_bank_name is not None:
             data["settings[question_bank_name]"] = settings_question_bank_name
+
         # OPTIONAL - date_shift_options[shift_dates]
         """Whether to shift dates in the copied course"""
         if date_shift_options_shift_dates is not None:
             data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+
         # OPTIONAL - date_shift_options[old_start_date]
         """The original start date of the source content/course"""
         if date_shift_options_old_start_date is not None:
             data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+
         # OPTIONAL - date_shift_options[old_end_date]
         """The original end date of the source content/course"""
         if date_shift_options_old_end_date is not None:
             data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+
         # OPTIONAL - date_shift_options[new_start_date]
         """The new start date for the content/course"""
         if date_shift_options_new_start_date is not None:
             data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+
         # OPTIONAL - date_shift_options[new_end_date]
         """The new end date for the source content/course"""
         if date_shift_options_new_end_date is not None:
             data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+
         # OPTIONAL - date_shift_options[day_substitutions][X]
         """Move anything scheduled for day 'X' to the specified day. (0-Sunday,
         1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)"""
         if date_shift_options_day_substitutions_X is not None:
             data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+
         # OPTIONAL - date_shift_options[remove_dates]
         """Whether to remove dates in the copied course. Cannot be used
         in conjunction with *shift_dates*."""
@@ -721,6 +781,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - migration_type
         """The type of the migration. Use the
         {api:ContentMigrationsController#available_migrators Migrator} endpoint to
@@ -728,70 +789,85 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         canvas_cartridge_importer, common_cartridge_importer,
         course_copy_importer, zip_file_importer, qti_converter, moodle_converter"""
         data["migration_type"] = migration_type
+
         # OPTIONAL - pre_attachment[name]
         """Required if uploading a file. This is the first step in uploading a file
         to the content migration. See the {file:file_uploads.html File Upload
         Documentation} for details on the file upload workflow."""
         if pre_attachment_name is not None:
             data["pre_attachment[name]"] = pre_attachment_name
+
         # OPTIONAL - pre_attachment[*]
         """Other file upload properties, See {file:file_uploads.html File Upload
         Documentation}"""
         if pre_attachment_* is not None:
             data["pre_attachment[*]"] = pre_attachment_*
+
         # OPTIONAL - settings[file_url]
         """A URL to download the file from. Must not require authentication."""
         if settings_file_url is not None:
             data["settings[file_url]"] = settings_file_url
+
         # OPTIONAL - settings[source_course_id]
         """The course to copy from for a course copy migration. (required if doing
         course copy)"""
         if settings_source_course_id is not None:
             data["settings[source_course_id]"] = settings_source_course_id
+
         # OPTIONAL - settings[folder_id]
         """The folder to unzip the .zip file into for a zip_file_import."""
         if settings_folder_id is not None:
             data["settings[folder_id]"] = settings_folder_id
+
         # OPTIONAL - settings[overwrite_quizzes]
         """Whether to overwrite quizzes with the same identifiers between content
         packages."""
         if settings_overwrite_quizzes is not None:
             data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+
         # OPTIONAL - settings[question_bank_id]
         """The existing question bank ID to import questions into if not specified in
         the content package."""
         if settings_question_bank_id is not None:
             data["settings[question_bank_id]"] = settings_question_bank_id
+
         # OPTIONAL - settings[question_bank_name]
         """The question bank to import questions into if not specified in the content
         package, if both bank id and name are set, id will take precedence."""
         if settings_question_bank_name is not None:
             data["settings[question_bank_name]"] = settings_question_bank_name
+
         # OPTIONAL - date_shift_options[shift_dates]
         """Whether to shift dates in the copied course"""
         if date_shift_options_shift_dates is not None:
             data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+
         # OPTIONAL - date_shift_options[old_start_date]
         """The original start date of the source content/course"""
         if date_shift_options_old_start_date is not None:
             data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+
         # OPTIONAL - date_shift_options[old_end_date]
         """The original end date of the source content/course"""
         if date_shift_options_old_end_date is not None:
             data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+
         # OPTIONAL - date_shift_options[new_start_date]
         """The new start date for the content/course"""
         if date_shift_options_new_start_date is not None:
             data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+
         # OPTIONAL - date_shift_options[new_end_date]
         """The new end date for the source content/course"""
         if date_shift_options_new_end_date is not None:
             data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+
         # OPTIONAL - date_shift_options[day_substitutions][X]
         """Move anything scheduled for day 'X' to the specified day. (0-Sunday,
         1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)"""
         if date_shift_options_day_substitutions_X is not None:
             data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+
         # OPTIONAL - date_shift_options[remove_dates]
         """Whether to remove dates in the copied course. Cannot be used
         in conjunction with *shift_dates*."""
@@ -840,6 +916,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - migration_type
         """The type of the migration. Use the
         {api:ContentMigrationsController#available_migrators Migrator} endpoint to
@@ -847,70 +924,85 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         canvas_cartridge_importer, common_cartridge_importer,
         course_copy_importer, zip_file_importer, qti_converter, moodle_converter"""
         data["migration_type"] = migration_type
+
         # OPTIONAL - pre_attachment[name]
         """Required if uploading a file. This is the first step in uploading a file
         to the content migration. See the {file:file_uploads.html File Upload
         Documentation} for details on the file upload workflow."""
         if pre_attachment_name is not None:
             data["pre_attachment[name]"] = pre_attachment_name
+
         # OPTIONAL - pre_attachment[*]
         """Other file upload properties, See {file:file_uploads.html File Upload
         Documentation}"""
         if pre_attachment_* is not None:
             data["pre_attachment[*]"] = pre_attachment_*
+
         # OPTIONAL - settings[file_url]
         """A URL to download the file from. Must not require authentication."""
         if settings_file_url is not None:
             data["settings[file_url]"] = settings_file_url
+
         # OPTIONAL - settings[source_course_id]
         """The course to copy from for a course copy migration. (required if doing
         course copy)"""
         if settings_source_course_id is not None:
             data["settings[source_course_id]"] = settings_source_course_id
+
         # OPTIONAL - settings[folder_id]
         """The folder to unzip the .zip file into for a zip_file_import."""
         if settings_folder_id is not None:
             data["settings[folder_id]"] = settings_folder_id
+
         # OPTIONAL - settings[overwrite_quizzes]
         """Whether to overwrite quizzes with the same identifiers between content
         packages."""
         if settings_overwrite_quizzes is not None:
             data["settings[overwrite_quizzes]"] = settings_overwrite_quizzes
+
         # OPTIONAL - settings[question_bank_id]
         """The existing question bank ID to import questions into if not specified in
         the content package."""
         if settings_question_bank_id is not None:
             data["settings[question_bank_id]"] = settings_question_bank_id
+
         # OPTIONAL - settings[question_bank_name]
         """The question bank to import questions into if not specified in the content
         package, if both bank id and name are set, id will take precedence."""
         if settings_question_bank_name is not None:
             data["settings[question_bank_name]"] = settings_question_bank_name
+
         # OPTIONAL - date_shift_options[shift_dates]
         """Whether to shift dates in the copied course"""
         if date_shift_options_shift_dates is not None:
             data["date_shift_options[shift_dates]"] = date_shift_options_shift_dates
+
         # OPTIONAL - date_shift_options[old_start_date]
         """The original start date of the source content/course"""
         if date_shift_options_old_start_date is not None:
             data["date_shift_options[old_start_date]"] = date_shift_options_old_start_date
+
         # OPTIONAL - date_shift_options[old_end_date]
         """The original end date of the source content/course"""
         if date_shift_options_old_end_date is not None:
             data["date_shift_options[old_end_date]"] = date_shift_options_old_end_date
+
         # OPTIONAL - date_shift_options[new_start_date]
         """The new start date for the content/course"""
         if date_shift_options_new_start_date is not None:
             data["date_shift_options[new_start_date]"] = date_shift_options_new_start_date
+
         # OPTIONAL - date_shift_options[new_end_date]
         """The new end date for the source content/course"""
         if date_shift_options_new_end_date is not None:
             data["date_shift_options[new_end_date]"] = date_shift_options_new_end_date
+
         # OPTIONAL - date_shift_options[day_substitutions][X]
         """Move anything scheduled for day 'X' to the specified day. (0-Sunday,
         1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)"""
         if date_shift_options_day_substitutions_X is not None:
             data["date_shift_options[day_substitutions][X]"] = date_shift_options_day_substitutions_X
+
         # OPTIONAL - date_shift_options[remove_dates]
         """Whether to remove dates in the copied course. Cannot be used
         in conjunction with *shift_dates*."""
@@ -938,6 +1030,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -963,6 +1056,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -988,6 +1082,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -1013,6 +1108,7 @@ class ContentMigrationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id

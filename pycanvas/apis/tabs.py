@@ -29,6 +29,7 @@ class TabsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - include
         """"external":: Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)"""
         if include is not None:
@@ -51,6 +52,7 @@ class TabsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - include
         """"external":: Optionally include external tool tabs in the returned list of tabs (Only has effect for courses, not groups)"""
         if include is not None:
@@ -75,13 +77,16 @@ class TabsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - tab_id
         """ID"""
         path["tab_id"] = tab_id
+
         # OPTIONAL - position
         """The new position of the tab, 1-based"""
         if position is not None:
             data["position"] = position
+
         # OPTIONAL - hidden
         """no description"""
         if hidden is not None:

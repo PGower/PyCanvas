@@ -44,13 +44,16 @@ class GradingStandardsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - title
         """The title for the Grading Standard."""
         data["title"] = title
+
         # REQUIRED - grading_scheme_entry[name]
         """The name for an entry value within a GradingStandard that describes the range of the value
         e.g. A-"""
         data["grading_scheme_entry[name]"] = grading_scheme_entry_name
+
         # REQUIRED - grading_scheme_entry[value]
         """The value for the name of the entry within a GradingStandard.
         The entry represents the lower bound of the range for the entry.
@@ -90,13 +93,16 @@ class GradingStandardsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - title
         """The title for the Grading Standard."""
         data["title"] = title
+
         # REQUIRED - grading_scheme_entry[name]
         """The name for an entry value within a GradingStandard that describes the range of the value
         e.g. A-"""
         data["grading_scheme_entry[name]"] = grading_scheme_entry_name
+
         # REQUIRED - grading_scheme_entry[value]
         """The value for the name of the entry within a GradingStandard.
         The entry represents the lower bound of the range for the entry.

@@ -48,6 +48,7 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """The id of the contextual course for this API call"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - date
         """The date for which you would like to see detailed information"""
         path["date"] = date
@@ -68,12 +69,15 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """The id of the contextual course for this API call"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - date
         """The date for which you would like to see submissions"""
         path["date"] = date
+
         # REQUIRED - PATH - grader_id
         """The ID of the grader for which you want to see submissions"""
         path["grader_id"] = grader_id
+
         # REQUIRED - PATH - assignment_id
         """The ID of the assignment for which you want to see submissions"""
         path["assignment_id"] = assignment_id
@@ -97,17 +101,20 @@ class GradebookHistoryAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """The id of the contextual course for this API call"""
         path["course_id"] = course_id
+
         # OPTIONAL - assignment_id
         """The ID of the assignment for which you want to see submissions. If
         absent, versions of submissions from any assignment in the course are
         included."""
         if assignment_id is not None:
             params["assignment_id"] = assignment_id
+
         # OPTIONAL - user_id
         """The ID of the user for which you want to see submissions. If absent,
         versions of submissions from any user in the course are included."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - ascending
         """Returns submission versions in ascending date order (oldest first). If
         absent, returns submission versions in descending date order (newest

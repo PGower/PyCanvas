@@ -29,6 +29,7 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - include_hidden
         """Include hidden parameters (defaults to false)"""
         if include_hidden is not None:
@@ -50,17 +51,21 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - column[title]
         """no description"""
         data["column[title]"] = column_title
+
         # OPTIONAL - column[position]
         """The position of the column relative to other custom columns"""
         if column_position is not None:
             data["column[position]"] = column_position
+
         # OPTIONAL - column[hidden]
         """Hidden columns are not displayed in the gradebook"""
         if column_hidden is not None:
             data["column[hidden]"] = column_hidden
+
         # OPTIONAL - column[teacher_notes]
         """Set this if the column is created by a teacher.  The gradebook only
         supports one teacher_notes column."""
@@ -83,6 +88,7 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -103,6 +109,7 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -125,6 +132,7 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - order
         """no description"""
         data["order"] = order
@@ -145,9 +153,11 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - include_hidden
         """If true, hidden columns will be included in the
         result. If false or absent, only visible columns
@@ -171,12 +181,15 @@ class CustomGradebookColumnsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - column_data[content]
         """Column content.  Setting this to blank will delete the datum object."""
         data["column_data[content]"] = column_data_content

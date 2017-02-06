@@ -63,8 +63,8 @@ class {{api_name}}API(BaseCanvasAPI):
         if {{param.name|fix_param_name}} is not None:
             {{ param_body(param)|indent(12) }}
         {% endif %}
-        {% endfor %}{# param in op.parameters #}
 
+        {% endfor %}{# param in op.parameters #}
         {% endif %}{# op.parameters|length > 0 #}
         self.logger.debug("{{op.method}} /api{{api.path}} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("{{op.method}}", "/api{{api.path}}".format(**path), data=data, params=params{% if op.type == 'array' %}, all_pages=True{% endif %}{% if op.type == 'void' %}, no_data=True{% endif %}{% if op.type not in ['array', 'void'] and op.type[0] == op.type[0].upper() %}, single_item=True{% endif %})

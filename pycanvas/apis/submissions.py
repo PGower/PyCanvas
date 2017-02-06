@@ -37,13 +37,16 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - comment[text_comment]
         """Include a textual comment with the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
+
         # REQUIRED - submission[submission_type]
         """The type of submission being made. The assignment submission_types must
         include this submission type as an allowed option, or the submission will be rejected with a 400 error.
@@ -54,6 +57,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         ignored."""
         self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording", "basic_lti_launch"])
         data["submission[submission_type]"] = submission_submission_type
+
         # OPTIONAL - submission[body]
         """Submit the assignment as an HTML document snippet. Note this HTML snippet
         will be sanitized using the same ruleset as a submission made from the
@@ -61,6 +65,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         submission body. Requires a submission_type of "online_text_entry"."""
         if submission_body is not None:
             data["submission[body]"] = submission_body
+
         # OPTIONAL - submission[url]
         """Submit the assignment as a URL. The URL scheme must be "http" or "https",
         no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
@@ -68,6 +73,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         of "online_url" or "basic_lti_launch"."""
         if submission_url is not None:
             data["submission[url]"] = submission_url
+
         # OPTIONAL - submission[file_ids]
         """Submit the assignment as a set of one or more previously uploaded files
         residing in the submitting user's files section (or the group's files
@@ -78,6 +84,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         Requires a submission_type of "online_upload"."""
         if submission_file_ids is not None:
             data["submission[file_ids]"] = submission_file_ids
+
         # OPTIONAL - submission[media_comment_id]
         """The media comment id to submit. Media comment ids can be submitted via
         this API, however, note that there is not yet an API to generate or list
@@ -86,6 +93,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         Requires a submission_type of "media_recording"."""
         if submission_media_comment_id is not None:
             data["submission[media_comment_id]"] = submission_media_comment_id
+
         # OPTIONAL - submission[media_comment_type]
         """The type of media comment being submitted."""
         if submission_media_comment_type is not None:
@@ -116,13 +124,16 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - comment[text_comment]
         """Include a textual comment with the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
+
         # REQUIRED - submission[submission_type]
         """The type of submission being made. The assignment submission_types must
         include this submission type as an allowed option, or the submission will be rejected with a 400 error.
@@ -133,6 +144,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         ignored."""
         self._validate_enum(submission_submission_type, ["online_text_entry", "online_url", "online_upload", "media_recording", "basic_lti_launch"])
         data["submission[submission_type]"] = submission_submission_type
+
         # OPTIONAL - submission[body]
         """Submit the assignment as an HTML document snippet. Note this HTML snippet
         will be sanitized using the same ruleset as a submission made from the
@@ -140,6 +152,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         submission body. Requires a submission_type of "online_text_entry"."""
         if submission_body is not None:
             data["submission[body]"] = submission_body
+
         # OPTIONAL - submission[url]
         """Submit the assignment as a URL. The URL scheme must be "http" or "https",
         no "ftp" or other URL schemes are allowed. If no scheme is given (e.g.
@@ -147,6 +160,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         of "online_url" or "basic_lti_launch"."""
         if submission_url is not None:
             data["submission[url]"] = submission_url
+
         # OPTIONAL - submission[file_ids]
         """Submit the assignment as a set of one or more previously uploaded files
         residing in the submitting user's files section (or the group's files
@@ -157,6 +171,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         Requires a submission_type of "online_upload"."""
         if submission_file_ids is not None:
             data["submission[file_ids]"] = submission_file_ids
+
         # OPTIONAL - submission[media_comment_id]
         """The media comment id to submit. Media comment ids can be submitted via
         this API, however, note that there is not yet an API to generate or list
@@ -165,6 +180,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         Requires a submission_type of "media_recording"."""
         if submission_media_comment_id is not None:
             data["submission[media_comment_id]"] = submission_media_comment_id
+
         # OPTIONAL - submission[media_comment_type]
         """The type of media comment being submitted."""
         if submission_media_comment_type is not None:
@@ -187,14 +203,17 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - include
         """Associations to include with the group.  "group" will add group_id and group_name."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
             params["include"] = include
+
         # OPTIONAL - grouped
         """If this argument is true, the response will be grouped by student groups."""
         if grouped is not None:
@@ -216,14 +235,17 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - include
         """Associations to include with the group.  "group" will add group_id and group_name."""
         if include is not None:
             self._validate_enum(include, ["submission_history", "submission_comments", "rubric_assessment", "assignment", "visibility", "course", "user", "group"])
             params["include"] = include
+
         # OPTIONAL - grouped
         """If this argument is true, the response will be grouped by student groups."""
         if grouped is not None:
@@ -245,6 +267,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - student_ids
         """List of student ids to return submissions for. If this argument is
         omitted, return submissions for the calling user. Students may only list
@@ -253,33 +276,39 @@ class SubmissionsAPI(BaseCanvasAPI):
         in the course/section as appropriate."""
         if student_ids is not None:
             params["student_ids"] = student_ids
+
         # OPTIONAL - assignment_ids
         """List of assignments to return submissions for. If none are given,
         submissions for all assignments are returned."""
         if assignment_ids is not None:
             params["assignment_ids"] = assignment_ids
+
         # OPTIONAL - grouped
         """If this argument is present, the response will be grouped by student,
         rather than a flat array of submissions."""
         if grouped is not None:
             params["grouped"] = grouped
+
         # OPTIONAL - grading_period_id
         """The id of the grading period in which submissions are being requested
         (Requires the Multiple Grading Periods account feature turned on)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - order
         """The order submissions will be returned in.  Defaults to "id".  Doesn't
         affect results for "grouped" mode."""
         if order is not None:
             self._validate_enum(order, ["id", "graded_at"])
             params["order"] = order
+
         # OPTIONAL - order_direction
         """Determines whether ordered results are retured in ascending or descending
         order.  Defaults to "ascending".  Doesn't affect results for "grouped" mode."""
         if order_direction is not None:
             self._validate_enum(order_direction, ["ascending", "descending"])
             params["order_direction"] = order_direction
+
         # OPTIONAL - include
         """Associations to include with the group. `total_scores` requires the
         `grouped` argument."""
@@ -303,6 +332,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # OPTIONAL - student_ids
         """List of student ids to return submissions for. If this argument is
         omitted, return submissions for the calling user. Students may only list
@@ -311,33 +341,39 @@ class SubmissionsAPI(BaseCanvasAPI):
         in the course/section as appropriate."""
         if student_ids is not None:
             params["student_ids"] = student_ids
+
         # OPTIONAL - assignment_ids
         """List of assignments to return submissions for. If none are given,
         submissions for all assignments are returned."""
         if assignment_ids is not None:
             params["assignment_ids"] = assignment_ids
+
         # OPTIONAL - grouped
         """If this argument is present, the response will be grouped by student,
         rather than a flat array of submissions."""
         if grouped is not None:
             params["grouped"] = grouped
+
         # OPTIONAL - grading_period_id
         """The id of the grading period in which submissions are being requested
         (Requires the Multiple Grading Periods account feature turned on)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - order
         """The order submissions will be returned in.  Defaults to "id".  Doesn't
         affect results for "grouped" mode."""
         if order is not None:
             self._validate_enum(order, ["id", "graded_at"])
             params["order"] = order
+
         # OPTIONAL - order_direction
         """Determines whether ordered results are retured in ascending or descending
         order.  Defaults to "ascending".  Doesn't affect results for "grouped" mode."""
         if order_direction is not None:
             self._validate_enum(order_direction, ["ascending", "descending"])
             params["order_direction"] = order_direction
+
         # OPTIONAL - include
         """Associations to include with the group. `total_scores` requires the
         `grouped` argument."""
@@ -361,12 +397,15 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - include
         """Associations to include with the group."""
         if include is not None:
@@ -389,12 +428,15 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - include
         """Associations to include with the group."""
         if include is not None:
@@ -424,9 +466,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -454,9 +498,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -480,22 +526,27 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - comment[text_comment]
         """Add a textual comment to the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
+
         # OPTIONAL - comment[group_comment]
         """Whether or not this comment should be sent to the entire group (defaults
         to false). Ignored if this is not a group assignment or if no text_comment
         is provided."""
         if comment_group_comment is not None:
             data["comment[group_comment]"] = comment_group_comment
+
         # OPTIONAL - comment[media_comment_id]
         """Add an audio/video comment to the submission. Media comments can be added
         via this API, however, note that there is not yet an API to generate or
@@ -503,20 +554,24 @@ class SubmissionsAPI(BaseCanvasAPI):
         limited use."""
         if comment_media_comment_id is not None:
             data["comment[media_comment_id]"] = comment_media_comment_id
+
         # OPTIONAL - comment[media_comment_type]
         """The type of media comment being added."""
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
             data["comment[media_comment_type]"] = comment_media_comment_type
+
         # OPTIONAL - comment[file_ids]
         """Attach files to this comment that were previously uploaded using the
         Submission Comment API's files action"""
         if comment_file_ids is not None:
             data["comment[file_ids]"] = comment_file_ids
+
         # OPTIONAL - include[visibility]
         """Whether this assignment is visible to the owner of the submission"""
         if include_visibility is not None:
             data["include[visibility]"] = include_visibility
+
         # OPTIONAL - submission[posted_grade]
         """Assign a score to the submission, updating both the "score" and "grade"
         fields on the submission record. This parameter can be passed in a few
@@ -547,10 +602,12 @@ class SubmissionsAPI(BaseCanvasAPI):
         will only be accepted if the grade equals one of those two values."""
         if submission_posted_grade is not None:
             data["submission[posted_grade]"] = submission_posted_grade
+
         # OPTIONAL - submission[excuse]
         """Sets the "excused" status of an assignment."""
         if submission_excuse is not None:
             data["submission[excuse]"] = submission_excuse
+
         # OPTIONAL - rubric_assessment
         """Assign a rubric assessment to this assignment submission. The
         sub-parameters here depend on the rubric for the assignment. The general
@@ -611,22 +668,27 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - comment[text_comment]
         """Add a textual comment to the submission."""
         if comment_text_comment is not None:
             data["comment[text_comment]"] = comment_text_comment
+
         # OPTIONAL - comment[group_comment]
         """Whether or not this comment should be sent to the entire group (defaults
         to false). Ignored if this is not a group assignment or if no text_comment
         is provided."""
         if comment_group_comment is not None:
             data["comment[group_comment]"] = comment_group_comment
+
         # OPTIONAL - comment[media_comment_id]
         """Add an audio/video comment to the submission. Media comments can be added
         via this API, however, note that there is not yet an API to generate or
@@ -634,20 +696,24 @@ class SubmissionsAPI(BaseCanvasAPI):
         limited use."""
         if comment_media_comment_id is not None:
             data["comment[media_comment_id]"] = comment_media_comment_id
+
         # OPTIONAL - comment[media_comment_type]
         """The type of media comment being added."""
         if comment_media_comment_type is not None:
             self._validate_enum(comment_media_comment_type, ["audio", "video"])
             data["comment[media_comment_type]"] = comment_media_comment_type
+
         # OPTIONAL - comment[file_ids]
         """Attach files to this comment that were previously uploaded using the
         Submission Comment API's files action"""
         if comment_file_ids is not None:
             data["comment[file_ids]"] = comment_file_ids
+
         # OPTIONAL - include[visibility]
         """Whether this assignment is visible to the owner of the submission"""
         if include_visibility is not None:
             data["include[visibility]"] = include_visibility
+
         # OPTIONAL - submission[posted_grade]
         """Assign a score to the submission, updating both the "score" and "grade"
         fields on the submission record. This parameter can be passed in a few
@@ -678,10 +744,12 @@ class SubmissionsAPI(BaseCanvasAPI):
         will only be accepted if the grade equals one of those two values."""
         if submission_posted_grade is not None:
             data["submission[posted_grade]"] = submission_posted_grade
+
         # OPTIONAL - submission[excuse]
         """Sets the "excused" status of an assignment."""
         if submission_excuse is not None:
             data["submission[excuse]"] = submission_excuse
+
         # OPTIONAL - rubric_assessment
         """Assign a rubric assessment to this assignment submission. The
         sub-parameters here depend on the rubric for the assignment. The general
@@ -743,6 +811,7 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
@@ -767,38 +836,46 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - grade_data[<student_id>][posted_grade]
         """See documentation for the posted_grade argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+
         # OPTIONAL - grade_data[<student_id>][excuse]
         """See documentation for the excuse argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_excuse is not None:
             data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+
         # OPTIONAL - grade_data[<student_id>][rubric_assessment]
         """See documentation for the rubric_assessment argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+
         # OPTIONAL - grade_data[<student_id>][text_comment]
         """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+
         # OPTIONAL - grade_data[<student_id>][group_comment]
         """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+
         # OPTIONAL - grade_data[<student_id>][media_comment_id]
         """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+
         # OPTIONAL - grade_data[<student_id>][media_comment_type]
         """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+
         # OPTIONAL - grade_data[<student_id>][file_ids]
         """See documentation for the comment[] arguments in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
@@ -825,41 +902,50 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - grade_data[<student_id>][posted_grade]
         """See documentation for the posted_grade argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+
         # OPTIONAL - grade_data[<student_id>][excuse]
         """See documentation for the excuse argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_excuse is not None:
             data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+
         # OPTIONAL - grade_data[<student_id>][rubric_assessment]
         """See documentation for the rubric_assessment argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+
         # OPTIONAL - grade_data[<student_id>][text_comment]
         """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+
         # OPTIONAL - grade_data[<student_id>][group_comment]
         """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+
         # OPTIONAL - grade_data[<student_id>][media_comment_id]
         """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+
         # OPTIONAL - grade_data[<student_id>][media_comment_type]
         """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+
         # OPTIONAL - grade_data[<student_id>][file_ids]
         """See documentation for the comment[] arguments in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
@@ -886,38 +972,46 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # OPTIONAL - grade_data[<student_id>][posted_grade]
         """See documentation for the posted_grade argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+
         # OPTIONAL - grade_data[<student_id>][excuse]
         """See documentation for the excuse argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_excuse is not None:
             data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+
         # OPTIONAL - grade_data[<student_id>][rubric_assessment]
         """See documentation for the rubric_assessment argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+
         # OPTIONAL - grade_data[<student_id>][text_comment]
         """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+
         # OPTIONAL - grade_data[<student_id>][group_comment]
         """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+
         # OPTIONAL - grade_data[<student_id>][media_comment_id]
         """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+
         # OPTIONAL - grade_data[<student_id>][media_comment_type]
         """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+
         # OPTIONAL - grade_data[<student_id>][file_ids]
         """See documentation for the comment[] arguments in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
@@ -944,41 +1038,50 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # OPTIONAL - grade_data[<student_id>][posted_grade]
         """See documentation for the posted_grade argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_posted_grade is not None:
             data["grade_data[<student_id>][posted_grade]"] = grade_data_<student_id>_posted_grade
+
         # OPTIONAL - grade_data[<student_id>][excuse]
         """See documentation for the excuse argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_excuse is not None:
             data["grade_data[<student_id>][excuse]"] = grade_data_<student_id>_excuse
+
         # OPTIONAL - grade_data[<student_id>][rubric_assessment]
         """See documentation for the rubric_assessment argument in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
         if grade_data_<student_id>_rubric_assessment is not None:
             data["grade_data[<student_id>][rubric_assessment]"] = grade_data_<student_id>_rubric_assessment
+
         # OPTIONAL - grade_data[<student_id>][text_comment]
         """no description"""
         if grade_data_<student_id>_text_comment is not None:
             data["grade_data[<student_id>][text_comment]"] = grade_data_<student_id>_text_comment
+
         # OPTIONAL - grade_data[<student_id>][group_comment]
         """no description"""
         if grade_data_<student_id>_group_comment is not None:
             data["grade_data[<student_id>][group_comment]"] = grade_data_<student_id>_group_comment
+
         # OPTIONAL - grade_data[<student_id>][media_comment_id]
         """no description"""
         if grade_data_<student_id>_media_comment_id is not None:
             data["grade_data[<student_id>][media_comment_id]"] = grade_data_<student_id>_media_comment_id
+
         # OPTIONAL - grade_data[<student_id>][media_comment_type]
         """no description"""
         if grade_data_<student_id>_media_comment_type is not None:
             self._validate_enum(grade_data_<student_id>_media_comment_type, ["audio", "video"])
             data["grade_data[<student_id>][media_comment_type]"] = grade_data_<student_id>_media_comment_type
+
         # OPTIONAL - grade_data[<student_id>][file_ids]
         """See documentation for the comment[] arguments in the
         {api:SubmissionsApiController#update Submissions Update} documentation"""
@@ -1003,9 +1106,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -1028,9 +1133,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -1053,9 +1160,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
@@ -1078,9 +1187,11 @@ class SubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id

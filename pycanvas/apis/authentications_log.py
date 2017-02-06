@@ -29,10 +29,12 @@ class AuthenticationsLogAPI(BaseCanvasAPI):
         # REQUIRED - PATH - login_id
         """ID"""
         path["login_id"] = login_id
+
         # OPTIONAL - start_time
         """The beginning of the time range from which you want events."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range from which you want events."""
         if end_time is not None:
@@ -54,10 +56,12 @@ class AuthenticationsLogAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - start_time
         """The beginning of the time range from which you want events."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range from which you want events."""
         if end_time is not None:
@@ -79,10 +83,12 @@ class AuthenticationsLogAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - start_time
         """The beginning of the time range from which you want events."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range from which you want events."""
         if end_time is not None:

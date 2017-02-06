@@ -29,6 +29,7 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assessment_id
         """ID"""
         path["assessment_id"] = assessment_id
@@ -49,9 +50,11 @@ class LiveAssessmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assessment_id
         """ID"""
         path["assessment_id"] = assessment_id
+
         # OPTIONAL - user_id
         """If set, restrict results to those for this user"""
         if user_id is not None:

@@ -36,26 +36,31 @@ class SearchAPI(BaseCanvasAPI):
         all terms will be returned."""
         if search is not None:
             params["search"] = search
+
         # OPTIONAL - context
         """Limit the search to a particular course/group (e.g. "course_3" or "group_4")."""
         if context is not None:
             params["context"] = context
+
         # OPTIONAL - exclude
         """Array of ids to exclude from the search. These may be user ids or
         course/group ids prefixed with "course_" or "group_" respectively,
         e.g. exclude[]=1&exclude[]=2&exclude[]=course_3"""
         if exclude is not None:
             params["exclude"] = exclude
+
         # OPTIONAL - type
         """Limit the search just to users or contexts (groups/courses)."""
         if type is not None:
             self._validate_enum(type, ["user", "context"])
             params["type"] = type
+
         # OPTIONAL - user_id
         """Search for a specific user id. This ignores the other above parameters,
         and will never return more than one result."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - from_conversation_id
         """When searching by user_id, only users that could be normally messaged by
         this user will be returned. This parameter allows you to specify a
@@ -64,6 +69,7 @@ class SearchAPI(BaseCanvasAPI):
         be returned. This is used to start new side conversations."""
         if from_conversation_id is not None:
             params["from_conversation_id"] = from_conversation_id
+
         # OPTIONAL - permissions
         """Array of permission strings to be checked for each matched context (e.g.
         "send_messages"). This argument determines which permissions may be
@@ -95,26 +101,31 @@ class SearchAPI(BaseCanvasAPI):
         all terms will be returned."""
         if search is not None:
             params["search"] = search
+
         # OPTIONAL - context
         """Limit the search to a particular course/group (e.g. "course_3" or "group_4")."""
         if context is not None:
             params["context"] = context
+
         # OPTIONAL - exclude
         """Array of ids to exclude from the search. These may be user ids or
         course/group ids prefixed with "course_" or "group_" respectively,
         e.g. exclude[]=1&exclude[]=2&exclude[]=course_3"""
         if exclude is not None:
             params["exclude"] = exclude
+
         # OPTIONAL - type
         """Limit the search just to users or contexts (groups/courses)."""
         if type is not None:
             self._validate_enum(type, ["user", "context"])
             params["type"] = type
+
         # OPTIONAL - user_id
         """Search for a specific user id. This ignores the other above parameters,
         and will never return more than one result."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - from_conversation_id
         """When searching by user_id, only users that could be normally messaged by
         this user will be returned. This parameter allows you to specify a
@@ -123,6 +134,7 @@ class SearchAPI(BaseCanvasAPI):
         be returned. This is used to start new side conversations."""
         if from_conversation_id is not None:
             params["from_conversation_id"] = from_conversation_id
+
         # OPTIONAL - permissions
         """Array of permission strings to be checked for each matched context (e.g.
         "send_messages"). This argument determines which permissions may be
@@ -150,10 +162,12 @@ class SearchAPI(BaseCanvasAPI):
         all terms will be returned."""
         if search is not None:
             params["search"] = search
+
         # OPTIONAL - public_only
         """Only return courses with public content. Defaults to false."""
         if public_only is not None:
             params["public_only"] = public_only
+
         # OPTIONAL - open_enrollment_only
         """Only return courses that allow self enrollment. Defaults to false."""
         if open_enrollment_only is not None:

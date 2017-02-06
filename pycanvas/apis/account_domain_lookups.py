@@ -32,14 +32,17 @@ class AccountDomainLookupsAPI(BaseCanvasAPI):
         """campus name"""
         if name is not None:
             params["name"] = name
+
         # OPTIONAL - domain
         """no description"""
         if domain is not None:
             params["domain"] = domain
+
         # OPTIONAL - latitude
         """no description"""
         if latitude is not None:
             params["latitude"] = latitude
+
         # OPTIONAL - longitude
         """no description"""
         if longitude is not None:

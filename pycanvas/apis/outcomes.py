@@ -57,41 +57,50 @@ class OutcomesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - title
         """The new outcome title."""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - display_name
         """A friendly name shown in reports for outcomes with cryptic titles,
         such as common core standards names."""
         if display_name is not None:
             data["display_name"] = display_name
+
         # OPTIONAL - description
         """The new outcome description."""
         if description is not None:
             data["description"] = description
+
         # OPTIONAL - vendor_guid
         """A custom GUID for the learning standard."""
         if vendor_guid is not None:
             data["vendor_guid"] = vendor_guid
+
         # OPTIONAL - mastery_points
         """The new mastery threshold for the embedded rubric criterion."""
         if mastery_points is not None:
             data["mastery_points"] = mastery_points
+
         # OPTIONAL - ratings[description]
         """The description of a new rating level for the embedded rubric criterion."""
         if ratings_description is not None:
             data["ratings[description]"] = ratings_description
+
         # OPTIONAL - ratings[points]
         """The points corresponding to a new rating level for the embedded rubric
         criterion."""
         if ratings_points is not None:
             data["ratings[points]"] = ratings_points
+
         # OPTIONAL - calculation_method
         """The new calculation method."""
         if calculation_method is not None:
             self._validate_enum(calculation_method, ["decaying_average", "n_mastery", "latest", "highest"])
             data["calculation_method"] = calculation_method
+
         # OPTIONAL - calculation_int
         """The new calculation int.  Only applies if the calculation_method is "decaying_average" or "n_mastery""""
         if calculation_int is not None:

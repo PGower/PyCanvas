@@ -29,10 +29,12 @@ class CourseAuditLogAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - start_time
         """The beginning of the time range from which you want events."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range from which you want events."""
         if end_time is not None:

@@ -29,17 +29,20 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - include
         """If "all_dates" is passed, all dates associated with graded discussions'
         assignments will be included."""
         if include is not None:
             self._validate_enum(include, ["all_dates"])
             params["include"] = include
+
         # OPTIONAL - order_by
         """Determines the order of the discussion topic list. Defaults to "position"."""
         if order_by is not None:
             self._validate_enum(order_by, ["position", "recent_activity"])
             params["order_by"] = order_by
+
         # OPTIONAL - scope
         """Only return discussion topics in the given state(s). Defaults to including
         all topics. Filtering is done after pagination, so pages
@@ -48,14 +51,17 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         if scope is not None:
             self._validate_enum(scope, ["locked", "unlocked", "pinned", "unpinned"])
             params["scope"] = scope
+
         # OPTIONAL - only_announcements
         """Return announcements instead of discussion topics. Defaults to false"""
         if only_announcements is not None:
             params["only_announcements"] = only_announcements
+
         # OPTIONAL - search_term
         """The partial title of the discussion topics to match and return."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - exclude_context_module_locked_topics
         """For students, exclude topics that are locked by module progression.
         Defaults to false."""
@@ -78,17 +84,20 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - include
         """If "all_dates" is passed, all dates associated with graded discussions'
         assignments will be included."""
         if include is not None:
             self._validate_enum(include, ["all_dates"])
             params["include"] = include
+
         # OPTIONAL - order_by
         """Determines the order of the discussion topic list. Defaults to "position"."""
         if order_by is not None:
             self._validate_enum(order_by, ["position", "recent_activity"])
             params["order_by"] = order_by
+
         # OPTIONAL - scope
         """Only return discussion topics in the given state(s). Defaults to including
         all topics. Filtering is done after pagination, so pages
@@ -97,14 +106,17 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         if scope is not None:
             self._validate_enum(scope, ["locked", "unlocked", "pinned", "unpinned"])
             params["scope"] = scope
+
         # OPTIONAL - only_announcements
         """Return announcements instead of discussion topics. Defaults to false"""
         if only_announcements is not None:
             params["only_announcements"] = only_announcements
+
         # OPTIONAL - search_term
         """The partial title of the discussion topics to match and return."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - exclude_context_module_locked_topics
         """For students, exclude topics that are locked by module progression.
         Defaults to false."""
@@ -127,48 +139,58 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - title
         """no description"""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - message
         """no description"""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - discussion_type
         """The type of discussion. Defaults to side_comment if not value is given. Accepted values are 'side_comment', for discussions that only allow one level of nested comments, and 'threaded' for fully threaded discussions."""
         if discussion_type is not None:
             self._validate_enum(discussion_type, ["side_comment", "threaded"])
             data["discussion_type"] = discussion_type
+
         # OPTIONAL - published
         """Whether this topic is published (true) or draft state (false). Only
         teachers and TAs have the ability to create draft state topics."""
         if published is not None:
             data["published"] = published
+
         # OPTIONAL - delayed_post_at
         """If a timestamp is given, the topic will not be published until that time."""
         if delayed_post_at is not None:
             data["delayed_post_at"] = delayed_post_at
+
         # OPTIONAL - lock_at
         """If a timestamp is given, the topic will be scheduled to lock at the
         provided timestamp. If the timestamp is in the past, the topic will be
         locked."""
         if lock_at is not None:
             data["lock_at"] = lock_at
+
         # OPTIONAL - podcast_enabled
         """If true, the topic will have an associated podcast feed."""
         if podcast_enabled is not None:
             data["podcast_enabled"] = podcast_enabled
+
         # OPTIONAL - podcast_has_student_posts
         """If true, the podcast will include posts from students as well. Implies
         podcast_enabled."""
         if podcast_has_student_posts is not None:
             data["podcast_has_student_posts"] = podcast_has_student_posts
+
         # OPTIONAL - require_initial_post
         """If true then a user may not respond to other replies until that user has
         made an initial reply. Defaults to false."""
         if require_initial_post is not None:
             data["require_initial_post"] = require_initial_post
+
         # OPTIONAL - assignment
         """To create an assignment discussion, pass the assignment parameters as a
         sub-object. See the {api:AssignmentsApiController#create Create an Assignment API}
@@ -178,39 +200,47 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         the assignment object"""
         if assignment is not None:
             data["assignment"] = assignment
+
         # OPTIONAL - is_announcement
         """If true, this topic is an announcement. It will appear in the
         announcement's section rather than the discussions section. This requires
         announcment-posting permissions."""
         if is_announcement is not None:
             data["is_announcement"] = is_announcement
+
         # OPTIONAL - pinned
         """If true, this topic will be listed in the "Pinned Discussion" section"""
         if pinned is not None:
             data["pinned"] = pinned
+
         # OPTIONAL - position_after
         """By default, discussions are sorted chronologically by creation date, you
         can pass the id of another topic to have this one show up after the other
         when they are listed."""
         if position_after is not None:
             data["position_after"] = position_after
+
         # OPTIONAL - group_category_id
         """If present, the topic will become a group discussion assigned
         to the group."""
         if group_category_id is not None:
             data["group_category_id"] = group_category_id
+
         # OPTIONAL - allow_rating
         """If true, users will be allowed to rate entries."""
         if allow_rating is not None:
             data["allow_rating"] = allow_rating
+
         # OPTIONAL - only_graders_can_rate
         """If true, only graders will be allowed to rate entries."""
         if only_graders_can_rate is not None:
             data["only_graders_can_rate"] = only_graders_can_rate
+
         # OPTIONAL - sort_by_rating
         """If true, entries will be sorted by rating."""
         if sort_by_rating is not None:
             data["sort_by_rating"] = sort_by_rating
+
         # OPTIONAL - attachment
         """A multipart/form-data form-field-style attachment.
         Attachments larger than 1 kilobyte are subject to quota restrictions."""
@@ -233,48 +263,58 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - title
         """no description"""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - message
         """no description"""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - discussion_type
         """The type of discussion. Defaults to side_comment if not value is given. Accepted values are 'side_comment', for discussions that only allow one level of nested comments, and 'threaded' for fully threaded discussions."""
         if discussion_type is not None:
             self._validate_enum(discussion_type, ["side_comment", "threaded"])
             data["discussion_type"] = discussion_type
+
         # OPTIONAL - published
         """Whether this topic is published (true) or draft state (false). Only
         teachers and TAs have the ability to create draft state topics."""
         if published is not None:
             data["published"] = published
+
         # OPTIONAL - delayed_post_at
         """If a timestamp is given, the topic will not be published until that time."""
         if delayed_post_at is not None:
             data["delayed_post_at"] = delayed_post_at
+
         # OPTIONAL - lock_at
         """If a timestamp is given, the topic will be scheduled to lock at the
         provided timestamp. If the timestamp is in the past, the topic will be
         locked."""
         if lock_at is not None:
             data["lock_at"] = lock_at
+
         # OPTIONAL - podcast_enabled
         """If true, the topic will have an associated podcast feed."""
         if podcast_enabled is not None:
             data["podcast_enabled"] = podcast_enabled
+
         # OPTIONAL - podcast_has_student_posts
         """If true, the podcast will include posts from students as well. Implies
         podcast_enabled."""
         if podcast_has_student_posts is not None:
             data["podcast_has_student_posts"] = podcast_has_student_posts
+
         # OPTIONAL - require_initial_post
         """If true then a user may not respond to other replies until that user has
         made an initial reply. Defaults to false."""
         if require_initial_post is not None:
             data["require_initial_post"] = require_initial_post
+
         # OPTIONAL - assignment
         """To create an assignment discussion, pass the assignment parameters as a
         sub-object. See the {api:AssignmentsApiController#create Create an Assignment API}
@@ -284,39 +324,47 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         the assignment object"""
         if assignment is not None:
             data["assignment"] = assignment
+
         # OPTIONAL - is_announcement
         """If true, this topic is an announcement. It will appear in the
         announcement's section rather than the discussions section. This requires
         announcment-posting permissions."""
         if is_announcement is not None:
             data["is_announcement"] = is_announcement
+
         # OPTIONAL - pinned
         """If true, this topic will be listed in the "Pinned Discussion" section"""
         if pinned is not None:
             data["pinned"] = pinned
+
         # OPTIONAL - position_after
         """By default, discussions are sorted chronologically by creation date, you
         can pass the id of another topic to have this one show up after the other
         when they are listed."""
         if position_after is not None:
             data["position_after"] = position_after
+
         # OPTIONAL - group_category_id
         """If present, the topic will become a group discussion assigned
         to the group."""
         if group_category_id is not None:
             data["group_category_id"] = group_category_id
+
         # OPTIONAL - allow_rating
         """If true, users will be allowed to rate entries."""
         if allow_rating is not None:
             data["allow_rating"] = allow_rating
+
         # OPTIONAL - only_graders_can_rate
         """If true, only graders will be allowed to rate entries."""
         if only_graders_can_rate is not None:
             data["only_graders_can_rate"] = only_graders_can_rate
+
         # OPTIONAL - sort_by_rating
         """If true, entries will be sorted by rating."""
         if sort_by_rating is not None:
             data["sort_by_rating"] = sort_by_rating
+
         # OPTIONAL - attachment
         """A multipart/form-data form-field-style attachment.
         Attachments larger than 1 kilobyte are subject to quota restrictions."""
@@ -339,51 +387,62 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - title
         """no description"""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - message
         """no description"""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - discussion_type
         """The type of discussion. Defaults to side_comment if not value is given. Accepted values are 'side_comment', for discussions that only allow one level of nested comments, and 'threaded' for fully threaded discussions."""
         if discussion_type is not None:
             self._validate_enum(discussion_type, ["side_comment", "threaded"])
             data["discussion_type"] = discussion_type
+
         # OPTIONAL - published
         """Whether this topic is published (true) or draft state (false). Only
         teachers and TAs have the ability to create draft state topics."""
         if published is not None:
             data["published"] = published
+
         # OPTIONAL - delayed_post_at
         """If a timestamp is given, the topic will not be published until that time."""
         if delayed_post_at is not None:
             data["delayed_post_at"] = delayed_post_at
+
         # OPTIONAL - lock_at
         """If a timestamp is given, the topic will be scheduled to lock at the
         provided timestamp. If the timestamp is in the past, the topic will be
         locked."""
         if lock_at is not None:
             data["lock_at"] = lock_at
+
         # OPTIONAL - podcast_enabled
         """If true, the topic will have an associated podcast feed."""
         if podcast_enabled is not None:
             data["podcast_enabled"] = podcast_enabled
+
         # OPTIONAL - podcast_has_student_posts
         """If true, the podcast will include posts from students as well. Implies
         podcast_enabled."""
         if podcast_has_student_posts is not None:
             data["podcast_has_student_posts"] = podcast_has_student_posts
+
         # OPTIONAL - require_initial_post
         """If true then a user may not respond to other replies until that user has
         made an initial reply. Defaults to false."""
         if require_initial_post is not None:
             data["require_initial_post"] = require_initial_post
+
         # OPTIONAL - assignment
         """To create an assignment discussion, pass the assignment parameters as a
         sub-object. See the {api:AssignmentsApiController#create Create an Assignment API}
@@ -393,35 +452,42 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         the assignment object"""
         if assignment is not None:
             data["assignment"] = assignment
+
         # OPTIONAL - is_announcement
         """If true, this topic is an announcement. It will appear in the
         announcement's section rather than the discussions section. This requires
         announcment-posting permissions."""
         if is_announcement is not None:
             data["is_announcement"] = is_announcement
+
         # OPTIONAL - pinned
         """If true, this topic will be listed in the "Pinned Discussion" section"""
         if pinned is not None:
             data["pinned"] = pinned
+
         # OPTIONAL - position_after
         """By default, discussions are sorted chronologically by creation date, you
         can pass the id of another topic to have this one show up after the other
         when they are listed."""
         if position_after is not None:
             data["position_after"] = position_after
+
         # OPTIONAL - group_category_id
         """If present, the topic will become a group discussion assigned
         to the group."""
         if group_category_id is not None:
             data["group_category_id"] = group_category_id
+
         # OPTIONAL - allow_rating
         """If true, users will be allowed to rate entries."""
         if allow_rating is not None:
             data["allow_rating"] = allow_rating
+
         # OPTIONAL - only_graders_can_rate
         """If true, only graders will be allowed to rate entries."""
         if only_graders_can_rate is not None:
             data["only_graders_can_rate"] = only_graders_can_rate
+
         # OPTIONAL - sort_by_rating
         """If true, entries will be sorted by rating."""
         if sort_by_rating is not None:
@@ -443,51 +509,62 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - title
         """no description"""
         if title is not None:
             data["title"] = title
+
         # OPTIONAL - message
         """no description"""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - discussion_type
         """The type of discussion. Defaults to side_comment if not value is given. Accepted values are 'side_comment', for discussions that only allow one level of nested comments, and 'threaded' for fully threaded discussions."""
         if discussion_type is not None:
             self._validate_enum(discussion_type, ["side_comment", "threaded"])
             data["discussion_type"] = discussion_type
+
         # OPTIONAL - published
         """Whether this topic is published (true) or draft state (false). Only
         teachers and TAs have the ability to create draft state topics."""
         if published is not None:
             data["published"] = published
+
         # OPTIONAL - delayed_post_at
         """If a timestamp is given, the topic will not be published until that time."""
         if delayed_post_at is not None:
             data["delayed_post_at"] = delayed_post_at
+
         # OPTIONAL - lock_at
         """If a timestamp is given, the topic will be scheduled to lock at the
         provided timestamp. If the timestamp is in the past, the topic will be
         locked."""
         if lock_at is not None:
             data["lock_at"] = lock_at
+
         # OPTIONAL - podcast_enabled
         """If true, the topic will have an associated podcast feed."""
         if podcast_enabled is not None:
             data["podcast_enabled"] = podcast_enabled
+
         # OPTIONAL - podcast_has_student_posts
         """If true, the podcast will include posts from students as well. Implies
         podcast_enabled."""
         if podcast_has_student_posts is not None:
             data["podcast_has_student_posts"] = podcast_has_student_posts
+
         # OPTIONAL - require_initial_post
         """If true then a user may not respond to other replies until that user has
         made an initial reply. Defaults to false."""
         if require_initial_post is not None:
             data["require_initial_post"] = require_initial_post
+
         # OPTIONAL - assignment
         """To create an assignment discussion, pass the assignment parameters as a
         sub-object. See the {api:AssignmentsApiController#create Create an Assignment API}
@@ -497,35 +574,42 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         the assignment object"""
         if assignment is not None:
             data["assignment"] = assignment
+
         # OPTIONAL - is_announcement
         """If true, this topic is an announcement. It will appear in the
         announcement's section rather than the discussions section. This requires
         announcment-posting permissions."""
         if is_announcement is not None:
             data["is_announcement"] = is_announcement
+
         # OPTIONAL - pinned
         """If true, this topic will be listed in the "Pinned Discussion" section"""
         if pinned is not None:
             data["pinned"] = pinned
+
         # OPTIONAL - position_after
         """By default, discussions are sorted chronologically by creation date, you
         can pass the id of another topic to have this one show up after the other
         when they are listed."""
         if position_after is not None:
             data["position_after"] = position_after
+
         # OPTIONAL - group_category_id
         """If present, the topic will become a group discussion assigned
         to the group."""
         if group_category_id is not None:
             data["group_category_id"] = group_category_id
+
         # OPTIONAL - allow_rating
         """If true, users will be allowed to rate entries."""
         if allow_rating is not None:
             data["allow_rating"] = allow_rating
+
         # OPTIONAL - only_graders_can_rate
         """If true, only graders will be allowed to rate entries."""
         if only_graders_can_rate is not None:
             data["only_graders_can_rate"] = only_graders_can_rate
+
         # OPTIONAL - sort_by_rating
         """If true, entries will be sorted by rating."""
         if sort_by_rating is not None:
@@ -548,6 +632,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -569,6 +654,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -590,6 +676,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - order
         """The ids of the pinned discussion topics in the desired order.
         (For example, "order=104,102,103".)"""
@@ -612,6 +699,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - order
         """The ids of the pinned discussion topics in the desired order.
         (For example, "order=104,102,103".)"""
@@ -636,12 +724,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - message
         """The updated body of the entry."""
         if message is not None:
@@ -666,12 +757,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - message
         """The updated body of the entry."""
         if message is not None:
@@ -698,9 +792,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -726,9 +822,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -749,6 +847,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -769,6 +868,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -819,6 +919,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -869,6 +970,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -890,13 +992,16 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - message
         """The body of the entry."""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - attachment
         """a multipart/form-data form-field-style
         attachment. Attachments larger than 1 kilobyte are subject to quota
@@ -921,13 +1026,16 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - message
         """The body of the entry."""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - attachment
         """a multipart/form-data form-field-style
         attachment. Attachments larger than 1 kilobyte are subject to quota
@@ -964,6 +1072,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -997,6 +1106,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1023,16 +1133,20 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - message
         """The body of the entry."""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - attachment
         """a multipart/form-data form-field-style
         attachment. Attachments larger than 1 kilobyte are subject to quota
@@ -1062,16 +1176,20 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - message
         """The body of the entry."""
         if message is not None:
             data["message"] = message
+
         # OPTIONAL - attachment
         """a multipart/form-data form-field-style
         attachment. Attachments larger than 1 kilobyte are subject to quota
@@ -1102,9 +1220,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
@@ -1132,9 +1252,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
@@ -1159,9 +1281,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - ids
         """A list of entry ids to retrieve. Entries will be returned in id order,
         smallest id first."""
@@ -1188,9 +1312,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - ids
         """A list of entry ids to retrieve. Entries will be returned in id order,
         smallest id first."""
@@ -1217,6 +1343,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1241,6 +1368,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1265,6 +1393,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1289,6 +1418,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1313,9 +1443,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set all of the entries' forced_read_state. No change
         is made if this argument is not specified."""
@@ -1342,9 +1474,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set all of the entries' forced_read_state. No change
         is made if this argument is not specified."""
@@ -1371,9 +1505,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set all of the entries' forced_read_state. No change is
         made if this argument is not specified."""
@@ -1400,9 +1536,11 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set all of the entries' forced_read_state. No change is
         made if this argument is not specified."""
@@ -1429,12 +1567,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set the entry's forced_read_state. No change is made if
         this argument is not specified."""
@@ -1461,12 +1602,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set the entry's forced_read_state. No change is made if
         this argument is not specified."""
@@ -1493,12 +1637,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set the entry's forced_read_state. No change is made if
         this argument is not specified."""
@@ -1525,12 +1672,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - forced_read_state
         """A boolean value to set the entry's forced_read_state. No change is made if
         this argument is not specified."""
@@ -1555,12 +1705,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - rating
         """A rating to set on this entry. Only 0 and 1 are accepted."""
         if rating is not None:
@@ -1584,12 +1737,15 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
+
         # REQUIRED - PATH - entry_id
         """ID"""
         path["entry_id"] = entry_id
+
         # OPTIONAL - rating
         """A rating to set on this entry. Only 0 and 1 are accepted."""
         if rating is not None:
@@ -1613,6 +1769,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1635,6 +1792,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1657,6 +1815,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id
@@ -1679,6 +1838,7 @@ class DiscussionTopicsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - topic_id
         """ID"""
         path["topic_id"] = topic_id

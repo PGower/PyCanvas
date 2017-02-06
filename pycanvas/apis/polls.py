@@ -59,6 +59,7 @@ class PollsAPI(BaseCanvasAPI):
         # REQUIRED - polls[question]
         """The title of the poll."""
         data["polls[question]"] = polls_question
+
         # OPTIONAL - polls[description]
         """A brief description or instructions for the poll."""
         if polls_description is not None:
@@ -80,9 +81,11 @@ class PollsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - polls[question]
         """The title of the poll."""
         data["polls[question]"] = polls_question
+
         # OPTIONAL - polls[description]
         """A brief description or instructions for the poll."""
         if polls_description is not None:

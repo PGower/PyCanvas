@@ -71,6 +71,7 @@ class CollaborationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - include
         """- "collaborator_lti_id": Optional information to include with each member.
           Represents an identifier to be used for the member in an LTI context.

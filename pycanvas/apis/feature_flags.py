@@ -138,6 +138,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
@@ -162,6 +163,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
@@ -186,6 +188,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
@@ -207,9 +210,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
+
         # OPTIONAL - state
         """"off":: The feature is not available for the course, user, or account and sub-accounts.
         "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
@@ -236,9 +241,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
+
         # OPTIONAL - state
         """"off":: The feature is not available for the course, user, or account and sub-accounts.
         "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
@@ -265,9 +272,11 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
+
         # OPTIONAL - state
         """"off":: The feature is not available for the course, user, or account and sub-accounts.
         "allowed":: (valid only on accounts) The feature is off in the account, but may be enabled in
@@ -296,6 +305,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
@@ -319,6 +329,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature
@@ -342,6 +353,7 @@ class FeatureFlagsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - feature
         """ID"""
         path["feature"] = feature

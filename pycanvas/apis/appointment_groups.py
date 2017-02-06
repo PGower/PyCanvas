@@ -32,14 +32,17 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         if scope is not None:
             self._validate_enum(scope, ["reservable", "manageable"])
             params["scope"] = scope
+
         # OPTIONAL - context_codes
         """Array of context codes used to limit returned results."""
         if context_codes is not None:
             params["context_codes"] = context_codes
+
         # OPTIONAL - include_past_appointments
         """Defaults to false. If true, includes past appointment groups"""
         if include_past_appointments is not None:
             params["include_past_appointments"] = include_past_appointments
+
         # OPTIONAL - include
         """Array of additional information to include.
         
@@ -73,6 +76,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         linked to (1 or more). Users in the course(s) with appropriate permissions
         will be able to sign up for this appointment group."""
         data["appointment_group[context_codes]"] = appointment_group_context_codes
+
         # OPTIONAL - appointment_group[sub_context_codes]
         """Array of sub context codes (course sections or a single group category)
         this group should be linked to. Used to limit the appointment group to
@@ -80,46 +84,56 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         up in groups and the participant_type will be "Group" instead of "User"."""
         if appointment_group_sub_context_codes is not None:
             data["appointment_group[sub_context_codes]"] = appointment_group_sub_context_codes
+
         # REQUIRED - appointment_group[title]
         """Short title for the appointment group."""
         data["appointment_group[title]"] = appointment_group_title
+
         # OPTIONAL - appointment_group[description]
         """Longer text description of the appointment group."""
         if appointment_group_description is not None:
             data["appointment_group[description]"] = appointment_group_description
+
         # OPTIONAL - appointment_group[location_name]
         """Location name of the appointment group."""
         if appointment_group_location_name is not None:
             data["appointment_group[location_name]"] = appointment_group_location_name
+
         # OPTIONAL - appointment_group[location_address]
         """Location address."""
         if appointment_group_location_address is not None:
             data["appointment_group[location_address]"] = appointment_group_location_address
+
         # OPTIONAL - appointment_group[publish]
         """Indicates whether this appointment group should be published (i.e. made
         available for signup). Once published, an appointment group cannot be
         unpublished. Defaults to false."""
         if appointment_group_publish is not None:
             data["appointment_group[publish]"] = appointment_group_publish
+
         # OPTIONAL - appointment_group[participants_per_appointment]
         """Maximum number of participants that may register for each time slot.
         Defaults to null (no limit)."""
         if appointment_group_participants_per_appointment is not None:
             data["appointment_group[participants_per_appointment]"] = appointment_group_participants_per_appointment
+
         # OPTIONAL - appointment_group[min_appointments_per_participant]
         """Minimum number of time slots a user must register for. If not set, users
         do not need to sign up for any time slots."""
         if appointment_group_min_appointments_per_participant is not None:
             data["appointment_group[min_appointments_per_participant]"] = appointment_group_min_appointments_per_participant
+
         # OPTIONAL - appointment_group[max_appointments_per_participant]
         """Maximum number of time slots a user may register for."""
         if appointment_group_max_appointments_per_participant is not None:
             data["appointment_group[max_appointments_per_participant]"] = appointment_group_max_appointments_per_participant
+
         # OPTIONAL - appointment_group[new_appointments][X]
         """Nested array of start time/end time pairs indicating time slots for this
         appointment group. Refer to the example request."""
         if appointment_group_new_appointments_X is not None:
             data["appointment_group[new_appointments][X]"] = appointment_group_new_appointments_X
+
         # OPTIONAL - appointment_group[participant_visibility]
         """"private":: participants cannot see who has signed up for a particular
                     time slot
@@ -145,6 +159,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - include
         """Array of additional information to include. See include[] argument of
         "List appointment groups" action.
@@ -174,11 +189,13 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - appointment_group[context_codes]
         """Array of context codes (courses, e.g. course_1) this group should be
         linked to (1 or more). Users in the course(s) with appropriate permissions
         will be able to sign up for this appointment group."""
         data["appointment_group[context_codes]"] = appointment_group_context_codes
+
         # OPTIONAL - appointment_group[sub_context_codes]
         """Array of sub context codes (course sections or a single group category)
         this group should be linked to. Used to limit the appointment group to
@@ -186,47 +203,57 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         up in groups and the participant_type will be "Group" instead of "User"."""
         if appointment_group_sub_context_codes is not None:
             data["appointment_group[sub_context_codes]"] = appointment_group_sub_context_codes
+
         # OPTIONAL - appointment_group[title]
         """Short title for the appointment group."""
         if appointment_group_title is not None:
             data["appointment_group[title]"] = appointment_group_title
+
         # OPTIONAL - appointment_group[description]
         """Longer text description of the appointment group."""
         if appointment_group_description is not None:
             data["appointment_group[description]"] = appointment_group_description
+
         # OPTIONAL - appointment_group[location_name]
         """Location name of the appointment group."""
         if appointment_group_location_name is not None:
             data["appointment_group[location_name]"] = appointment_group_location_name
+
         # OPTIONAL - appointment_group[location_address]
         """Location address."""
         if appointment_group_location_address is not None:
             data["appointment_group[location_address]"] = appointment_group_location_address
+
         # OPTIONAL - appointment_group[publish]
         """Indicates whether this appointment group should be published (i.e. made
         available for signup). Once published, an appointment group cannot be
         unpublished. Defaults to false."""
         if appointment_group_publish is not None:
             data["appointment_group[publish]"] = appointment_group_publish
+
         # OPTIONAL - appointment_group[participants_per_appointment]
         """Maximum number of participants that may register for each time slot.
         Defaults to null (no limit)."""
         if appointment_group_participants_per_appointment is not None:
             data["appointment_group[participants_per_appointment]"] = appointment_group_participants_per_appointment
+
         # OPTIONAL - appointment_group[min_appointments_per_participant]
         """Minimum number of time slots a user must register for. If not set, users
         do not need to sign up for any time slots."""
         if appointment_group_min_appointments_per_participant is not None:
             data["appointment_group[min_appointments_per_participant]"] = appointment_group_min_appointments_per_participant
+
         # OPTIONAL - appointment_group[max_appointments_per_participant]
         """Maximum number of time slots a user may register for."""
         if appointment_group_max_appointments_per_participant is not None:
             data["appointment_group[max_appointments_per_participant]"] = appointment_group_max_appointments_per_participant
+
         # OPTIONAL - appointment_group[new_appointments][X]
         """Nested array of start time/end time pairs indicating time slots for this
         appointment group. Refer to the example request."""
         if appointment_group_new_appointments_X is not None:
             data["appointment_group[new_appointments][X]"] = appointment_group_new_appointments_X
+
         # OPTIONAL - appointment_group[participant_visibility]
         """"private":: participants cannot see who has signed up for a particular
                     time slot
@@ -252,6 +279,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - cancel_reason
         """Reason for deleting/canceling the appointment group."""
         if cancel_reason is not None:
@@ -275,6 +303,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - registration_status
         """Limits results to the a given participation status, defaults to "all""""
         if registration_status is not None:
@@ -299,6 +328,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - registration_status
         """Limits results to the a given participation status, defaults to "all""""
         if registration_status is not None:

@@ -29,12 +29,14 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """The id of the account to retrieve roles for."""
         path["account_id"] = account_id
+
         # OPTIONAL - state
         """Filter by role state. If this argument is omitted, only 'active' roles are
         returned."""
         if state is not None:
             self._validate_enum(state, ["active", "inactive"])
             params["state"] = state
+
         # OPTIONAL - show_inherited
         """If this argument is true, all roles inherited from parent accounts will
         be included."""
@@ -57,12 +59,15 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - account_id
         """The id of the account containing the role"""
         path["account_id"] = account_id
+
         # REQUIRED - role_id
         """The unique identifier for the role"""
         params["role_id"] = role_id
+
         # OPTIONAL - role
         """The name for the role"""
         if role is not None:
@@ -84,13 +89,16 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - label
         """Label for the role."""
         data["label"] = label
+
         # OPTIONAL - role
         """Deprecated alias for label."""
         if role is not None:
             data["role"] = role
+
         # OPTIONAL - base_role_type
         """Specifies the role type that will be used as a base
         for the permissions granted to this role.
@@ -99,10 +107,12 @@ class RolesAPI(BaseCanvasAPI):
         if base_role_type is not None:
             self._validate_enum(base_role_type, ["AccountMembership", "StudentEnrollment", "TeacherEnrollment", "TaEnrollment", "ObserverEnrollment", "DesignerEnrollment"])
             data["base_role_type"] = base_role_type
+
         # OPTIONAL - permissions[<X>][explicit]
         """no description"""
         if permissions_<X>_explicit is not None:
             data["permissions[<X>][explicit]"] = permissions_<X>_explicit
+
         # OPTIONAL - permissions[<X>][enabled]
         """If explicit is 1 and enabled is 1, permission <X> will be explicitly
         granted to this role. If explicit is 1 and enabled has any other value
@@ -182,6 +192,7 @@ class RolesAPI(BaseCanvasAPI):
         Additional permissions may exist based on installed plugins."""
         if permissions_<X>_enabled is not None:
             data["permissions[<X>][enabled]"] = permissions_<X>_enabled
+
         # OPTIONAL - permissions[<X>][locked]
         """If the value is 1, permission <X> will be locked downstream (new roles in
         subaccounts cannot override the setting). For any other value, permission
@@ -189,12 +200,14 @@ class RolesAPI(BaseCanvasAPI):
         upstream. May occur multiple times with unique values for <X>."""
         if permissions_<X>_locked is not None:
             data["permissions[<X>][locked]"] = permissions_<X>_locked
+
         # OPTIONAL - permissions[<X>][applies_to_self]
         """If the value is 1, permission <X> applies to the account this role is in.
         The default value is 1. Must be true if applies_to_descendants is false.
         This value is only returned if enabled is true."""
         if permissions_<X>_applies_to_self is not None:
             data["permissions[<X>][applies_to_self]"] = permissions_<X>_applies_to_self
+
         # OPTIONAL - permissions[<X>][applies_to_descendants]
         """If the value is 1, permission <X> cascades down to sub accounts of the
         account this role is in. The default value is 1.  Must be true if
@@ -221,12 +234,15 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - role_id
         """The unique identifier for the role"""
         params["role_id"] = role_id
+
         # OPTIONAL - role
         """The name for the role"""
         if role is not None:
@@ -248,12 +264,15 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - role_id
         """The unique identifier for the role"""
         data["role_id"] = role_id
+
         # OPTIONAL - role
         """The name for the role"""
         if role is not None:
@@ -284,28 +303,34 @@ class RolesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - label
         """The label for the role. Can only change the label of a custom role that belongs directly to the account."""
         if label is not None:
             data["label"] = label
+
         # OPTIONAL - permissions[<X>][explicit]
         """no description"""
         if permissions_<X>_explicit is not None:
             data["permissions[<X>][explicit]"] = permissions_<X>_explicit
+
         # OPTIONAL - permissions[<X>][enabled]
         """These arguments are described in the documentation for the
         {api:RoleOverridesController#add_role add_role method}."""
         if permissions_<X>_enabled is not None:
             data["permissions[<X>][enabled]"] = permissions_<X>_enabled
+
         # OPTIONAL - permissions[<X>][applies_to_self]
         """If the value is 1, permission <X> applies to the account this role is in.
         The default value is 1. Must be true if applies_to_descendants is false.
         This value is only returned if enabled is true."""
         if permissions_<X>_applies_to_self is not None:
             data["permissions[<X>][applies_to_self]"] = permissions_<X>_applies_to_self
+
         # OPTIONAL - permissions[<X>][applies_to_descendants]
         """If the value is 1, permission <X> cascades down to sub accounts of the
         account this role is in. The default value is 1.  Must be true if

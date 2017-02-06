@@ -32,6 +32,7 @@ class UserObserveesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - include
         """- "avatar_url": Optionally include avatar_url."""
         if include is not None:
@@ -58,14 +59,17 @@ class UserObserveesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - observee[unique_id]
         """The login id for the user to observe.  Required if access_token is omitted."""
         if observee_unique_id is not None:
             data["observee[unique_id]"] = observee_unique_id
+
         # OPTIONAL - observee[password]
         """The password for the user to observe. Required if access_token is omitted."""
         if observee_password is not None:
             data["observee[password]"] = observee_password
+
         # OPTIONAL - access_token
         """The access token for the user to observe.  Required if <tt>observee[unique_id]</tt> or <tt>observee[password]</tt> are omitted."""
         if access_token is not None:
@@ -89,6 +93,7 @@ class UserObserveesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - observee_id
         """ID"""
         path["observee_id"] = observee_id
@@ -109,6 +114,7 @@ class UserObserveesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - observee_id
         """ID"""
         path["observee_id"] = observee_id
@@ -129,6 +135,7 @@ class UserObserveesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - observee_id
         """ID"""
         path["observee_id"] = observee_id

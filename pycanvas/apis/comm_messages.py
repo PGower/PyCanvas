@@ -29,10 +29,12 @@ class CommMessagesAPI(BaseCanvasAPI):
         # REQUIRED - user_id
         """The user id for whom you want to retrieve CommMessages"""
         params["user_id"] = user_id
+
         # OPTIONAL - start_time
         """The beginning of the time range you want to retrieve message from."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range you want to retrieve messages for."""
         if end_time is not None:

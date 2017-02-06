@@ -29,9 +29,11 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - poll_id
         """ID"""
         path["poll_id"] = poll_id
+
         # REQUIRED - PATH - poll_session_id
         """ID"""
         path["poll_session_id"] = poll_session_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -52,9 +54,11 @@ class PollSubmissionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - poll_id
         """ID"""
         path["poll_id"] = poll_id
+
         # REQUIRED - PATH - poll_session_id
         """ID"""
         path["poll_session_id"] = poll_session_id
+
         # REQUIRED - poll_submissions[poll_choice_id]
         """The chosen poll choice for this submission."""
         data["poll_submissions[poll_choice_id]"] = poll_submissions_poll_choice_id

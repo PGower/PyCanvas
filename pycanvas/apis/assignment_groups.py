@@ -30,6 +30,7 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - include
         """Associations to include with the group. "discussion_topic", "all_dates"
         "assignment_visibility" & "submission" are only valid are only valid if "assignments" is also included.
@@ -37,21 +38,25 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["assignments", "discussion_topic", "all_dates", "assignment_visibility", "overrides", "submission"])
             params["include"] = include
+
         # OPTIONAL - exclude_assignment_submission_types
         """If "assignments" are included, those with the specified submission types
         will be excluded from the assignment groups."""
         if exclude_assignment_submission_types is not None:
             self._validate_enum(exclude_assignment_submission_types, ["online_quiz", "discussion_topic", "wiki_page", "external_tool"])
             params["exclude_assignment_submission_types"] = exclude_assignment_submission_types
+
         # OPTIONAL - override_assignment_dates
         """Apply assignment overrides for each assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
+
         # OPTIONAL - grading_period_id
         """The id of the grading period in which assignment groups are being requested
         (Requires the Multiple Grading Periods feature turned on.)"""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - scope_assignments_to_student
         """If true, all assignments returned will apply to the current user in the
         specified grading period. If assignments apply to other students in the
@@ -77,9 +82,11 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_group_id
         """ID"""
         path["assignment_group_id"] = assignment_group_id
+
         # OPTIONAL - include
         """Associations to include with the group. "discussion_topic" and "assignment_visibility" and "submission"
         are only valid if "assignments" is also included. The "assignment_visibility" option additionally
@@ -87,10 +94,12 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         if include is not None:
             self._validate_enum(include, ["assignments", "discussion_topic", "assignment_visibility", "submission"])
             params["include"] = include
+
         # OPTIONAL - override_assignment_dates
         """Apply assignment overrides for each assignment, defaults to true."""
         if override_assignment_dates is not None:
             params["override_assignment_dates"] = override_assignment_dates
+
         # OPTIONAL - grading_period_id
         """The id of the grading period in which assignment groups are being requested
         (Requires the Multiple Grading Periods account feature turned on)"""
@@ -113,26 +122,32 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - name
         """The assignment group's name"""
         if name is not None:
             data["name"] = name
+
         # OPTIONAL - position
         """The position of this assignment group in relation to the other assignment groups"""
         if position is not None:
             data["position"] = position
+
         # OPTIONAL - group_weight
         """The percent of the total grade that this assignment group represents"""
         if group_weight is not None:
             data["group_weight"] = group_weight
+
         # OPTIONAL - sis_source_id
         """The sis source id of the Assignment Group"""
         if sis_source_id is not None:
             data["sis_source_id"] = sis_source_id
+
         # OPTIONAL - integration_data
         """The integration data of the Assignment Group"""
         if integration_data is not None:
             data["integration_data"] = integration_data
+
         # OPTIONAL - rules
         """The grading rules that are applied within this assignment group
         See the Assignment Group object definition for format"""
@@ -156,6 +171,7 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_group_id
         """ID"""
         path["assignment_group_id"] = assignment_group_id
@@ -176,9 +192,11 @@ class AssignmentGroupsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_group_id
         """ID"""
         path["assignment_group_id"] = assignment_group_id
+
         # OPTIONAL - move_assignments_to
         """The ID of an active Assignment Group to which the assignments that are
         currently assigned to the destroyed Assignment Group will be assigned.

@@ -38,6 +38,7 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - type
         """A list of enrollment types to return. Accepted values are
         'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment',
@@ -45,12 +46,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         types are returned. This argument is ignored if `role` is given."""
         if type is not None:
             params["type"] = type
+
         # OPTIONAL - role
         """A list of enrollment roles to return. Accepted values include course-level
         roles created by the {api:RoleOverridesController#add_role Add Role API}
         as well as the base enrollment types accepted by the `type` argument above."""
         if role is not None:
             params["role"] = role
+
         # OPTIONAL - state
         """Filter by enrollment state. If omitted, 'active' and 'invited' enrollments
         are returned. When querying a user's enrollments (either via user_id
@@ -59,12 +62,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         if state is not None:
             self._validate_enum(state, ["active", "invited", "creation_pending", "deleted", "rejected", "completed", "inactive"])
             params["state"] = state
+
         # OPTIONAL - include
         """Array of additional information to include on the enrollment or user records.
         "avatar_url" and "group_ids" will be returned on the user record."""
         if include is not None:
             self._validate_enum(include, ["avatar_url", "group_ids", "locked", "observed_users", "can_be_removed"])
             params["include"] = include
+
         # OPTIONAL - user_id
         """Filter by user_id (only valid for course or section enrollment
         queries). If set to the current user's id, this is a way to
@@ -73,26 +78,31 @@ class EnrollmentsAPI(BaseCanvasAPI):
         on the roster."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - grading_period_id
         """Return grades for the given grading_period.  If this parameter is not
         specified, the returned grades will be for the whole course."""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - sis_account_id
         """Returns only enrollments for the specified SIS account ID(s). Does not
         look into subaccounts. May pass in array or string."""
         if sis_account_id is not None:
             params["sis_account_id"] = sis_account_id
+
         # OPTIONAL - sis_course_id
         """Returns only enrollments matching the specified SIS course ID(s).
         May pass in array or string."""
         if sis_course_id is not None:
             params["sis_course_id"] = sis_course_id
+
         # OPTIONAL - sis_section_id
         """Returns only section enrollments matching the specified SIS section ID(s).
         May pass in array or string."""
         if sis_section_id is not None:
             params["sis_section_id"] = sis_section_id
+
         # OPTIONAL - sis_user_id
         """Returns only enrollments for the specified SIS user ID(s). May pass in
         array or string."""
@@ -124,6 +134,7 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # OPTIONAL - type
         """A list of enrollment types to return. Accepted values are
         'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment',
@@ -131,12 +142,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         types are returned. This argument is ignored if `role` is given."""
         if type is not None:
             params["type"] = type
+
         # OPTIONAL - role
         """A list of enrollment roles to return. Accepted values include course-level
         roles created by the {api:RoleOverridesController#add_role Add Role API}
         as well as the base enrollment types accepted by the `type` argument above."""
         if role is not None:
             params["role"] = role
+
         # OPTIONAL - state
         """Filter by enrollment state. If omitted, 'active' and 'invited' enrollments
         are returned. When querying a user's enrollments (either via user_id
@@ -145,12 +158,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         if state is not None:
             self._validate_enum(state, ["active", "invited", "creation_pending", "deleted", "rejected", "completed", "inactive"])
             params["state"] = state
+
         # OPTIONAL - include
         """Array of additional information to include on the enrollment or user records.
         "avatar_url" and "group_ids" will be returned on the user record."""
         if include is not None:
             self._validate_enum(include, ["avatar_url", "group_ids", "locked", "observed_users", "can_be_removed"])
             params["include"] = include
+
         # OPTIONAL - user_id
         """Filter by user_id (only valid for course or section enrollment
         queries). If set to the current user's id, this is a way to
@@ -159,26 +174,31 @@ class EnrollmentsAPI(BaseCanvasAPI):
         on the roster."""
         if user_id is not None:
             params["user_id"] = user_id
+
         # OPTIONAL - grading_period_id
         """Return grades for the given grading_period.  If this parameter is not
         specified, the returned grades will be for the whole course."""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - sis_account_id
         """Returns only enrollments for the specified SIS account ID(s). Does not
         look into subaccounts. May pass in array or string."""
         if sis_account_id is not None:
             params["sis_account_id"] = sis_account_id
+
         # OPTIONAL - sis_course_id
         """Returns only enrollments matching the specified SIS course ID(s).
         May pass in array or string."""
         if sis_course_id is not None:
             params["sis_course_id"] = sis_course_id
+
         # OPTIONAL - sis_section_id
         """Returns only section enrollments matching the specified SIS section ID(s).
         May pass in array or string."""
         if sis_section_id is not None:
             params["sis_section_id"] = sis_section_id
+
         # OPTIONAL - sis_user_id
         """Returns only enrollments for the specified SIS user ID(s). May pass in
         array or string."""
@@ -214,12 +234,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         types are returned. This argument is ignored if `role` is given."""
         if type is not None:
             params["type"] = type
+
         # OPTIONAL - role
         """A list of enrollment roles to return. Accepted values include course-level
         roles created by the {api:RoleOverridesController#add_role Add Role API}
         as well as the base enrollment types accepted by the `type` argument above."""
         if role is not None:
             params["role"] = role
+
         # OPTIONAL - state
         """Filter by enrollment state. If omitted, 'active' and 'invited' enrollments
         are returned. When querying a user's enrollments (either via user_id
@@ -228,12 +250,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         if state is not None:
             self._validate_enum(state, ["active", "invited", "creation_pending", "deleted", "rejected", "completed", "inactive"])
             params["state"] = state
+
         # OPTIONAL - include
         """Array of additional information to include on the enrollment or user records.
         "avatar_url" and "group_ids" will be returned on the user record."""
         if include is not None:
             self._validate_enum(include, ["avatar_url", "group_ids", "locked", "observed_users", "can_be_removed"])
             params["include"] = include
+
         # REQUIRED - PATH - user_id
         """Filter by user_id (only valid for course or section enrollment
         queries). If set to the current user's id, this is a way to
@@ -241,26 +265,31 @@ class EnrollmentsAPI(BaseCanvasAPI):
         independent of whether the user has permission to view other people
         on the roster."""
         path["user_id"] = user_id
+
         # OPTIONAL - grading_period_id
         """Return grades for the given grading_period.  If this parameter is not
         specified, the returned grades will be for the whole course."""
         if grading_period_id is not None:
             params["grading_period_id"] = grading_period_id
+
         # OPTIONAL - sis_account_id
         """Returns only enrollments for the specified SIS account ID(s). Does not
         look into subaccounts. May pass in array or string."""
         if sis_account_id is not None:
             params["sis_account_id"] = sis_account_id
+
         # OPTIONAL - sis_course_id
         """Returns only enrollments matching the specified SIS course ID(s).
         May pass in array or string."""
         if sis_course_id is not None:
             params["sis_course_id"] = sis_course_id
+
         # OPTIONAL - sis_section_id
         """Returns only section enrollments matching the specified SIS section ID(s).
         May pass in array or string."""
         if sis_section_id is not None:
             params["sis_section_id"] = sis_section_id
+
         # OPTIONAL - sis_user_id
         """Returns only enrollments for the specified SIS user ID(s). May pass in
         array or string."""
@@ -283,6 +312,7 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """The ID of the enrollment object"""
         path["id"] = id
@@ -303,23 +333,28 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - enrollment[user_id]
         """The ID of the user to be enrolled in the course."""
         data["enrollment[user_id]"] = enrollment_user_id
+
         # REQUIRED - enrollment[type]
         """Enroll the user as a student, teacher, TA, observer, or designer. If no
         value is given, the type will be inferred by enrollment[role] if supplied,
         otherwise 'StudentEnrollment' will be used."""
         self._validate_enum(enrollment_type, ["StudentEnrollment", "TeacherEnrollment", "TaEnrollment", "ObserverEnrollment", "DesignerEnrollment"])
         data["enrollment[type]"] = enrollment_type
+
         # OPTIONAL - enrollment[role]
         """Assigns a custom course-level role to the user."""
         if enrollment_role is not None:
             data["enrollment[role]"] = enrollment_role
+
         # OPTIONAL - enrollment[role_id]
         """Assigns a custom course-level role to the user."""
         if enrollment_role_id is not None:
             data["enrollment[role_id]"] = enrollment_role_id
+
         # OPTIONAL - enrollment[enrollment_state]
         """If set to 'active,' student will be immediately enrolled in the course.
         Otherwise they will be required to accept a course invitation. Default is
@@ -331,12 +366,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         if enrollment_enrollment_state is not None:
             self._validate_enum(enrollment_enrollment_state, ["active", "invited", "inactive"])
             data["enrollment[enrollment_state]"] = enrollment_enrollment_state
+
         # OPTIONAL - enrollment[course_section_id]
         """The ID of the course section to enroll the student in. If the
         section-specific URL is used, this argument is redundant and will be
         ignored."""
         if enrollment_course_section_id is not None:
             data["enrollment[course_section_id]"] = enrollment_course_section_id
+
         # OPTIONAL - enrollment[limit_privileges_to_course_section]
         """If set, the enrollment will only allow the user to see and interact with
         users enrolled in the section given by course_section_id.
@@ -347,11 +384,13 @@ class EnrollmentsAPI(BaseCanvasAPI):
           multiple sections in the same course."""
         if enrollment_limit_privileges_to_course_section is not None:
             data["enrollment[limit_privileges_to_course_section]"] = enrollment_limit_privileges_to_course_section
+
         # OPTIONAL - enrollment[notify]
         """If true, a notification will be sent to the enrolled user.
         Notifications are not sent by default."""
         if enrollment_notify is not None:
             data["enrollment[notify]"] = enrollment_notify
+
         # OPTIONAL - enrollment[self_enrollment_code]
         """If the current user is not allowed to manage enrollments in this
         course, but the course allows self-enrollment, the user can self-
@@ -361,11 +400,13 @@ class EnrollmentsAPI(BaseCanvasAPI):
         will be ignored."""
         if enrollment_self_enrollment_code is not None:
             data["enrollment[self_enrollment_code]"] = enrollment_self_enrollment_code
+
         # OPTIONAL - enrollment[self_enrolled]
         """If true, marks the enrollment as a self-enrollment, which gives
         students the ability to drop the course if desired. Defaults to false."""
         if enrollment_self_enrolled is not None:
             data["enrollment[self_enrolled]"] = enrollment_self_enrolled
+
         # OPTIONAL - enrollment[associated_user_id]
         """For an observer enrollment, the ID of a student to observe. The
         caller must have +manage_students+ permission in the course.
@@ -391,23 +432,28 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - section_id
         """ID"""
         path["section_id"] = section_id
+
         # REQUIRED - enrollment[user_id]
         """The ID of the user to be enrolled in the course."""
         data["enrollment[user_id]"] = enrollment_user_id
+
         # REQUIRED - enrollment[type]
         """Enroll the user as a student, teacher, TA, observer, or designer. If no
         value is given, the type will be inferred by enrollment[role] if supplied,
         otherwise 'StudentEnrollment' will be used."""
         self._validate_enum(enrollment_type, ["StudentEnrollment", "TeacherEnrollment", "TaEnrollment", "ObserverEnrollment", "DesignerEnrollment"])
         data["enrollment[type]"] = enrollment_type
+
         # OPTIONAL - enrollment[role]
         """Assigns a custom course-level role to the user."""
         if enrollment_role is not None:
             data["enrollment[role]"] = enrollment_role
+
         # OPTIONAL - enrollment[role_id]
         """Assigns a custom course-level role to the user."""
         if enrollment_role_id is not None:
             data["enrollment[role_id]"] = enrollment_role_id
+
         # OPTIONAL - enrollment[enrollment_state]
         """If set to 'active,' student will be immediately enrolled in the course.
         Otherwise they will be required to accept a course invitation. Default is
@@ -419,12 +465,14 @@ class EnrollmentsAPI(BaseCanvasAPI):
         if enrollment_enrollment_state is not None:
             self._validate_enum(enrollment_enrollment_state, ["active", "invited", "inactive"])
             data["enrollment[enrollment_state]"] = enrollment_enrollment_state
+
         # OPTIONAL - enrollment[course_section_id]
         """The ID of the course section to enroll the student in. If the
         section-specific URL is used, this argument is redundant and will be
         ignored."""
         if enrollment_course_section_id is not None:
             data["enrollment[course_section_id]"] = enrollment_course_section_id
+
         # OPTIONAL - enrollment[limit_privileges_to_course_section]
         """If set, the enrollment will only allow the user to see and interact with
         users enrolled in the section given by course_section_id.
@@ -435,11 +483,13 @@ class EnrollmentsAPI(BaseCanvasAPI):
           multiple sections in the same course."""
         if enrollment_limit_privileges_to_course_section is not None:
             data["enrollment[limit_privileges_to_course_section]"] = enrollment_limit_privileges_to_course_section
+
         # OPTIONAL - enrollment[notify]
         """If true, a notification will be sent to the enrolled user.
         Notifications are not sent by default."""
         if enrollment_notify is not None:
             data["enrollment[notify]"] = enrollment_notify
+
         # OPTIONAL - enrollment[self_enrollment_code]
         """If the current user is not allowed to manage enrollments in this
         course, but the course allows self-enrollment, the user can self-
@@ -449,11 +499,13 @@ class EnrollmentsAPI(BaseCanvasAPI):
         will be ignored."""
         if enrollment_self_enrollment_code is not None:
             data["enrollment[self_enrollment_code]"] = enrollment_self_enrollment_code
+
         # OPTIONAL - enrollment[self_enrolled]
         """If true, marks the enrollment as a self-enrollment, which gives
         students the ability to drop the course if desired. Defaults to false."""
         if enrollment_self_enrolled is not None:
             data["enrollment[self_enrolled]"] = enrollment_self_enrolled
+
         # OPTIONAL - enrollment[associated_user_id]
         """For an observer enrollment, the ID of a student to observe. The
         caller must have +manage_students+ permission in the course.
@@ -480,9 +532,11 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - task
         """The action to take on the enrollment.
         When inactive, a user will still appear in the course roster to admins, but be unable to participate.
@@ -507,6 +561,7 @@ class EnrollmentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id

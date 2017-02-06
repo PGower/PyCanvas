@@ -31,6 +31,7 @@ class QuizIpFiltersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - quiz_id
         """ID"""
         path["quiz_id"] = quiz_id

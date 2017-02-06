@@ -45,9 +45,11 @@ class QuizSubmissionUserListAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - conversations
         """- Body and recipients to send the message to."""
         if conversations is not None:

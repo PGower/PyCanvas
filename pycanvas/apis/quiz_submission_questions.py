@@ -31,6 +31,7 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - quiz_submission_id
         """ID"""
         path["quiz_submission_id"] = quiz_submission_id
+
         # OPTIONAL - include
         """Associations to include with the quiz submission question."""
         if include is not None:
@@ -53,19 +54,23 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - quiz_submission_id
         """ID"""
         path["quiz_submission_id"] = quiz_submission_id
+
         # REQUIRED - attempt
         """The attempt number of the quiz submission being taken. Note that this
         must be the latest attempt index, as questions for earlier attempts can
         not be modified."""
         data["attempt"] = attempt
+
         # REQUIRED - validation_token
         """The unique validation token you received when the Quiz Submission was
         created."""
         data["validation_token"] = validation_token
+
         # OPTIONAL - access_code
         """Access code for the Quiz, if any."""
         if access_code is not None:
             data["access_code"] = access_code
+
         # OPTIONAL - quiz_questions
         """Set of question IDs and the answer value.
         
@@ -91,18 +96,22 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - quiz_submission_id
         """ID"""
         path["quiz_submission_id"] = quiz_submission_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - attempt
         """The attempt number of the quiz submission being taken. Note that this
         must be the latest attempt index, as questions for earlier attempts can
         not be modified."""
         data["attempt"] = attempt
+
         # REQUIRED - validation_token
         """The unique validation token you received when the Quiz Submission was
         created."""
         data["validation_token"] = validation_token
+
         # OPTIONAL - access_code
         """Access code for the Quiz, if any."""
         if access_code is not None:
@@ -125,18 +134,22 @@ class QuizSubmissionQuestionsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - quiz_submission_id
         """ID"""
         path["quiz_submission_id"] = quiz_submission_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - attempt
         """The attempt number of the quiz submission being taken. Note that this
         must be the latest attempt index, as questions for earlier attempts can
         not be modified."""
         data["attempt"] = attempt
+
         # REQUIRED - validation_token
         """The unique validation token you received when the Quiz Submission was
         created."""
         data["validation_token"] = validation_token
+
         # OPTIONAL - access_code
         """Access code for the Quiz, if any."""
         if access_code is not None:

@@ -63,13 +63,16 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - url
         """The url to the external rss or atom feed"""
         data["url"] = url
+
         # OPTIONAL - header_match
         """If given, only feed entries that contain this string in their title will be imported"""
         if header_match is not None:
             data["header_match"] = header_match
+
         # OPTIONAL - verbosity
         """Defaults to "full""""
         if verbosity is not None:
@@ -92,13 +95,16 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - url
         """The url to the external rss or atom feed"""
         data["url"] = url
+
         # OPTIONAL - header_match
         """If given, only feed entries that contain this string in their title will be imported"""
         if header_match is not None:
             data["header_match"] = header_match
+
         # OPTIONAL - verbosity
         """Defaults to "full""""
         if verbosity is not None:
@@ -121,6 +127,7 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - external_feed_id
         """ID"""
         path["external_feed_id"] = external_feed_id
@@ -141,6 +148,7 @@ class AnnouncementExternalFeedsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - external_feed_id
         """ID"""
         path["external_feed_id"] = external_feed_id

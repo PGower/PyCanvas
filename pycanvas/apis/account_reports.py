@@ -46,9 +46,11 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - report
         """ID"""
         path["report"] = report
+
         # OPTIONAL - [parameters]
         """The parameters will vary for each report"""
         if _parameters is not None:
@@ -70,6 +72,7 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - report
         """ID"""
         path["report"] = report
@@ -90,9 +93,11 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - report
         """ID"""
         path["report"] = report
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -113,9 +118,11 @@ class AccountReportsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - report
         """ID"""
         path["report"] = report
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id

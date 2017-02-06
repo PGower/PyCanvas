@@ -63,15 +63,18 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - wiki_page[title]
         """The title for the new page. NOTE: changing a page's title will change its
         url. The updated url will be returned in the result."""
         if wiki_page_title is not None:
             data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -83,10 +86,12 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
@@ -108,15 +113,18 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - wiki_page[title]
         """The title for the new page. NOTE: changing a page's title will change its
         url. The updated url will be returned in the result."""
         if wiki_page_title is not None:
             data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -128,10 +136,12 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
@@ -153,20 +163,24 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - sort
         """Sort results by this field."""
         if sort is not None:
             self._validate_enum(sort, ["title", "created_at", "updated_at"])
             params["sort"] = sort
+
         # OPTIONAL - order
         """The sorting order. Defaults to 'asc'."""
         if order is not None:
             self._validate_enum(order, ["asc", "desc"])
             params["order"] = order
+
         # OPTIONAL - search_term
         """The partial title of the pages to match and return."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - published
         """If true, include only published paqes. If false, exclude published
         pages. If not present, do not filter on published status."""
@@ -189,20 +203,24 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # OPTIONAL - sort
         """Sort results by this field."""
         if sort is not None:
             self._validate_enum(sort, ["title", "created_at", "updated_at"])
             params["sort"] = sort
+
         # OPTIONAL - order
         """The sorting order. Defaults to 'asc'."""
         if order is not None:
             self._validate_enum(order, ["asc", "desc"])
             params["order"] = order
+
         # OPTIONAL - search_term
         """The partial title of the pages to match and return."""
         if search_term is not None:
             params["search_term"] = search_term
+
         # OPTIONAL - published
         """If true, include only published paqes. If false, exclude published
         pages. If not present, do not filter on published status."""
@@ -225,13 +243,16 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - wiki_page[title]
         """The title for the new page."""
         data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -243,14 +264,17 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
             data["wiki_page[published]"] = wiki_page_published
+
         # OPTIONAL - wiki_page[front_page]
         """Set an unhidden page as the front page (if true)"""
         if wiki_page_front_page is not None:
@@ -272,13 +296,16 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - wiki_page[title]
         """The title for the new page."""
         data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -290,14 +317,17 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
             data["wiki_page[published]"] = wiki_page_published
+
         # OPTIONAL - wiki_page[front_page]
         """Set an unhidden page as the front page (if true)"""
         if wiki_page_front_page is not None:
@@ -319,6 +349,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -339,6 +370,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -359,18 +391,22 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # OPTIONAL - wiki_page[title]
         """The title for the new page. NOTE: changing a page's title will change its
         url. The updated url will be returned in the result."""
         if wiki_page_title is not None:
             data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -382,14 +418,17 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
             data["wiki_page[published]"] = wiki_page_published
+
         # OPTIONAL - wiki_page[front_page]
         """Set an unhidden page as the front page (if true)"""
         if wiki_page_front_page is not None:
@@ -411,18 +450,22 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # OPTIONAL - wiki_page[title]
         """The title for the new page. NOTE: changing a page's title will change its
         url. The updated url will be returned in the result."""
         if wiki_page_title is not None:
             data["wiki_page[title]"] = wiki_page_title
+
         # OPTIONAL - wiki_page[body]
         """The content for the new page."""
         if wiki_page_body is not None:
             data["wiki_page[body]"] = wiki_page_body
+
         # OPTIONAL - wiki_page[editing_roles]
         """Which user roles are allowed to edit this page. Any combination
         of these roles is allowed (separated by commas).
@@ -434,14 +477,17 @@ class PagesAPI(BaseCanvasAPI):
         if wiki_page_editing_roles is not None:
             self._validate_enum(wiki_page_editing_roles, ["teachers", "students", "members", "public"])
             data["wiki_page[editing_roles]"] = wiki_page_editing_roles
+
         # OPTIONAL - wiki_page[notify_of_update]
         """Whether participants should be notified when this page changes."""
         if wiki_page_notify_of_update is not None:
             data["wiki_page[notify_of_update]"] = wiki_page_notify_of_update
+
         # OPTIONAL - wiki_page[published]
         """Whether the page is published (true) or draft state (false)."""
         if wiki_page_published is not None:
             data["wiki_page[published]"] = wiki_page_published
+
         # OPTIONAL - wiki_page[front_page]
         """Set an unhidden page as the front page (if true)"""
         if wiki_page_front_page is not None:
@@ -463,6 +509,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -483,6 +530,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -503,6 +551,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -523,6 +572,7 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
@@ -544,9 +594,11 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # OPTIONAL - summary
         """If set, exclude page content from results"""
         if summary is not None:
@@ -569,9 +621,11 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # OPTIONAL - summary
         """If set, exclude page content from results"""
         if summary is not None:
@@ -594,12 +648,15 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # REQUIRED - PATH - revision_id
         """ID"""
         path["revision_id"] = revision_id
+
         # OPTIONAL - summary
         """If set, exclude page content from results"""
         if summary is not None:
@@ -622,12 +679,15 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # REQUIRED - PATH - revision_id
         """ID"""
         path["revision_id"] = revision_id
+
         # OPTIONAL - summary
         """If set, exclude page content from results"""
         if summary is not None:
@@ -649,9 +709,11 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # REQUIRED - PATH - revision_id
         """The revision to revert to (use the
         {api:WikiPagesApiController#revisions List Revisions API} to see
@@ -674,9 +736,11 @@ class PagesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - group_id
         """ID"""
         path["group_id"] = group_id
+
         # REQUIRED - PATH - url
         """ID"""
         path["url"] = url
+
         # REQUIRED - PATH - revision_id
         """The revision to revert to (use the
         {api:WikiPagesApiController#revisions List Revisions API} to see

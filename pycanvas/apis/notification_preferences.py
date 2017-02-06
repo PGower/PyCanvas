@@ -29,6 +29,7 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
@@ -49,9 +50,11 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - type
         """ID"""
         path["type"] = type
+
         # REQUIRED - PATH - address
         """ID"""
         path["address"] = address
@@ -72,6 +75,7 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
@@ -92,9 +96,11 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
+
         # REQUIRED - PATH - notification
         """ID"""
         path["notification"] = notification
@@ -115,12 +121,15 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - PATH - type
         """ID"""
         path["type"] = type
+
         # REQUIRED - PATH - address
         """ID"""
         path["address"] = address
+
         # REQUIRED - PATH - notification
         """ID"""
         path["notification"] = notification
@@ -141,9 +150,11 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
+
         # REQUIRED - PATH - notification
         """ID"""
         path["notification"] = notification
+
         # REQUIRED - notification_preferences[frequency]
         """The desired frequency for this notification"""
         data["notification_preferences[frequency]"] = notification_preferences_frequency
@@ -164,12 +175,15 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - type
         """ID"""
         path["type"] = type
+
         # REQUIRED - PATH - address
         """ID"""
         path["address"] = address
+
         # REQUIRED - PATH - notification
         """ID"""
         path["notification"] = notification
+
         # REQUIRED - notification_preferences[frequency]
         """The desired frequency for this notification"""
         data["notification_preferences[frequency]"] = notification_preferences_frequency
@@ -190,9 +204,11 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
+
         # REQUIRED - PATH - category
         """The name of the category. Must be parameterized (e.g. The category "Course Content" should be "course_content")"""
         path["category"] = category
+
         # REQUIRED - notification_preferences[frequency]
         """The desired frequency for each notification in the category"""
         data["notification_preferences[frequency]"] = notification_preferences_frequency
@@ -213,6 +229,7 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - communication_channel_id
         """ID"""
         path["communication_channel_id"] = communication_channel_id
+
         # REQUIRED - notification_preferences[<X>][frequency]
         """The desired frequency for <X> notification"""
         data["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency
@@ -233,9 +250,11 @@ class NotificationPreferencesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - type
         """ID"""
         path["type"] = type
+
         # REQUIRED - PATH - address
         """ID"""
         path["address"] = address
+
         # REQUIRED - notification_preferences[<X>][frequency]
         """The desired frequency for <X> notification"""
         data["notification_preferences[<X>][frequency]"] = notification_preferences_<X>_frequency

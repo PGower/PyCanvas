@@ -35,9 +35,11 @@ class SubmissionCommentsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - assignment_id
         """ID"""
         path["assignment_id"] = assignment_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id

@@ -34,6 +34,7 @@ class ConversationsAPI(BaseCanvasAPI):
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             params["scope"] = scope
+
         # OPTIONAL - filter
         """When set, only return conversations for the specified courses, groups
         or users. The id should be prefixed with its type, e.g. "user_123" or
@@ -41,6 +42,7 @@ class ConversationsAPI(BaseCanvasAPI):
         (by setting "filter")"""
         if filter is not None:
             params["filter"] = filter
+
         # OPTIONAL - filter_mode
         """When filter[] contains multiple filters, combine them with this mode,
         filtering conversations that at have at least all of the contexts ("and")
@@ -48,11 +50,13 @@ class ConversationsAPI(BaseCanvasAPI):
         if filter_mode is not None:
             self._validate_enum(filter_mode, ["and", "or", "default or"])
             params["filter_mode"] = filter_mode
+
         # OPTIONAL - interleave_submissions
         """(Obsolete) Submissions are no
         longer linked to conversations. This parameter is ignored."""
         if interleave_submissions is not None:
             params["interleave_submissions"] = interleave_submissions
+
         # OPTIONAL - include_all_conversation_ids
         """Default is false. If true,
         the top-level element of the response will be an object rather than
@@ -61,6 +65,7 @@ class ConversationsAPI(BaseCanvasAPI):
         ids of all conversations under this scope/filter in the same order."""
         if include_all_conversation_ids is not None:
             params["include_all_conversation_ids"] = include_all_conversation_ids
+
         # OPTIONAL - include
         """"participant_avatars":: Optionally include an "avatar_url" key for each user participanting in the conversation"""
         if include is not None:
@@ -87,14 +92,17 @@ class ConversationsAPI(BaseCanvasAPI):
         prefixed with "course_" or "group_" respectively, e.g.
         recipients[]=1&recipients[]=2&recipients[]=course_3"""
         data["recipients"] = recipients
+
         # OPTIONAL - subject
         """The subject of the conversation. This is ignored when reusing a
         conversation. Maximum length is 255 characters."""
         if subject is not None:
             data["subject"] = subject
+
         # REQUIRED - body
         """The message to be sent"""
         data["body"] = body
+
         # OPTIONAL - group_conversation
         """Defaults to false. If true, this will be a group conversation (i.e. all
         recipients may see all messages and replies). If false, individual private
@@ -102,27 +110,32 @@ class ConversationsAPI(BaseCanvasAPI):
         number of recipients is over the set maximum (default is 100)."""
         if group_conversation is not None:
             data["group_conversation"] = group_conversation
+
         # OPTIONAL - attachment_ids
         """An array of attachments ids. These must be files that have been previously
         uploaded to the sender's "conversation attachments" folder."""
         if attachment_ids is not None:
             data["attachment_ids"] = attachment_ids
+
         # OPTIONAL - media_comment_id
         """Media comment id of an audio of video file to be associated with this
         message."""
         if media_comment_id is not None:
             data["media_comment_id"] = media_comment_id
+
         # OPTIONAL - media_comment_type
         """Type of the associated media file"""
         if media_comment_type is not None:
             self._validate_enum(media_comment_type, ["audio", "video"])
             data["media_comment_type"] = media_comment_type
+
         # OPTIONAL - user_note
         """Will add a faculty journal entry for each recipient as long as the user
         making the api call has permission, the recipient is a student and
         faculty journals are enabled in the account."""
         if user_note is not None:
             data["user_note"] = user_note
+
         # OPTIONAL - mode
         """Determines whether the messages will be created/sent synchronously or
         asynchronously. Defaults to sync, and this option is ignored if this is a
@@ -132,23 +145,27 @@ class ConversationsAPI(BaseCanvasAPI):
         if mode is not None:
             self._validate_enum(mode, ["sync", "async"])
             data["mode"] = mode
+
         # OPTIONAL - scope
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             data["scope"] = scope
+
         # OPTIONAL - filter
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             data["filter"] = filter
+
         # OPTIONAL - filter_mode
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if filter_mode is not None:
             self._validate_enum(filter_mode, ["and", "or", "default or"])
             data["filter_mode"] = filter_mode
+
         # OPTIONAL - context_code
         """The course or group that is the context for this conversation. Same format
         as courses or groups in the recipients argument."""
@@ -188,28 +205,33 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - interleave_submissions
         """(Obsolete) Submissions are no
         longer linked to conversations. This parameter is ignored."""
         if interleave_submissions is not None:
             params["interleave_submissions"] = interleave_submissions
+
         # OPTIONAL - scope
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             params["scope"] = scope
+
         # OPTIONAL - filter
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             params["filter"] = filter
+
         # OPTIONAL - filter_mode
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if filter_mode is not None:
             self._validate_enum(filter_mode, ["and", "or", "default or"])
             params["filter_mode"] = filter_mode
+
         # OPTIONAL - auto_mark_as_read
         """Default true. If true, unread
         conversations will be automatically marked as read. This will default
@@ -234,11 +256,13 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - conversation[workflow_state]
         """Change the state of this conversation"""
         if conversation_workflow_state is not None:
             self._validate_enum(conversation_workflow_state, ["read", "unread", "archived"])
             data["conversation[workflow_state]"] = conversation_workflow_state
+
         # OPTIONAL - conversation[subscribed]
         """Toggle the current user's subscription to the conversation (only valid for
         group conversations). If unsubscribed, the user will still have access to
@@ -246,21 +270,25 @@ class ConversationsAPI(BaseCanvasAPI):
         as unread, nor will it jump to the top of the inbox."""
         if conversation_subscribed is not None:
             data["conversation[subscribed]"] = conversation_subscribed
+
         # OPTIONAL - conversation[starred]
         """Toggle the starred state of the current user's view of the conversation."""
         if conversation_starred is not None:
             data["conversation[starred]"] = conversation_starred
+
         # OPTIONAL - scope
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if scope is not None:
             self._validate_enum(scope, ["unread", "starred", "archived"])
             data["scope"] = scope
+
         # OPTIONAL - filter
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
         if filter is not None:
             data["filter"] = filter
+
         # OPTIONAL - filter_mode
         """Used when generating "visible" in the API response. See the explanation
         under the {api:ConversationsController#index index API action}"""
@@ -319,6 +347,7 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - recipients
         """An array of recipient ids. These may be user ids or course/group ids
         prefixed with "course_" or "group_" respectively, e.g.
@@ -351,32 +380,39 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - body
         """The message to be sent."""
         data["body"] = body
+
         # OPTIONAL - attachment_ids
         """An array of attachments ids. These must be files that have been previously
         uploaded to the sender's "conversation attachments" folder."""
         if attachment_ids is not None:
             data["attachment_ids"] = attachment_ids
+
         # OPTIONAL - media_comment_id
         """Media comment id of an audio of video file to be associated with this
         message."""
         if media_comment_id is not None:
             data["media_comment_id"] = media_comment_id
+
         # OPTIONAL - media_comment_type
         """Type of the associated media file."""
         if media_comment_type is not None:
             self._validate_enum(media_comment_type, ["audio", "video"])
             data["media_comment_type"] = media_comment_type
+
         # OPTIONAL - recipients
         """no description"""
         if recipients is not None:
             data["recipients"] = recipients
+
         # OPTIONAL - included_messages
         """no description"""
         if included_messages is not None:
             data["included_messages"] = included_messages
+
         # OPTIONAL - user_note
         """Will add a faculty journal entry for each recipient as long as the user
         making the api call has permission, the recipient is a student and
@@ -402,6 +438,7 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - remove
         """Array of message ids to be deleted"""
         data["remove"] = remove
@@ -423,6 +460,7 @@ class ConversationsAPI(BaseCanvasAPI):
         # REQUIRED - conversation_ids
         """List of conversations to update. Limited to 500 conversations."""
         data["conversation_ids"] = conversation_ids
+
         # REQUIRED - event
         """The action to take on each conversation."""
         self._validate_enum(event, ["mark_as_read", "mark_as_unread", "star", "unstar", "archive", "destroy"])

@@ -31,12 +31,15 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - quiz_id
         """ID"""
         path["quiz_id"] = quiz_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - quiz_submission_events
         """The submission events to be recorded"""
         data["quiz_submission_events"] = quiz_submission_events
@@ -57,12 +60,15 @@ class QuizSubmissionEventsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - quiz_id
         """ID"""
         path["quiz_id"] = quiz_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - attempt
         """The specific submission attempt to look up the events for. If unspecified,
         the latest attempt will be used."""

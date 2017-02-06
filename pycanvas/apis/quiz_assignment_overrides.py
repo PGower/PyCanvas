@@ -30,6 +30,7 @@ class QuizAssignmentOverridesAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # OPTIONAL - quiz_assignment_overrides[0][quiz_ids]
         """An array of quiz IDs. If omitted, overrides for all quizzes available to
         the operating user will be returned."""

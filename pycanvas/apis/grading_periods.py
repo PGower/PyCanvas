@@ -63,6 +63,7 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -83,15 +84,19 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - grading_periods[start_date]
         """The date the grading period starts."""
         data["grading_periods[start_date]"] = grading_periods_start_date
+
         # REQUIRED - grading_periods[end_date]
         """no description"""
         data["grading_periods[end_date]"] = grading_periods_end_date
+
         # OPTIONAL - grading_periods[weight]
         """A weight value that contributes to the overall weight of a grading period set which is used to calculate how much assignments in this period contribute to the total grade"""
         if grading_periods_weight is not None:
@@ -114,6 +119,7 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
@@ -135,6 +141,7 @@ class GradingPeriodsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id

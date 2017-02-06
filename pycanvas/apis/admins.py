@@ -29,20 +29,24 @@ class AdminsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - user_id
         """The id of the user to promote."""
         data["user_id"] = user_id
+
         # OPTIONAL - role
         """(deprecated)
         The user's admin relationship with the account will be created with the
         given role. Defaults to 'AccountAdmin'."""
         if role is not None:
             data["role"] = role
+
         # OPTIONAL - role_id
         """The user's admin relationship with the account will be created with the
         given role. Defaults to the built-in role for 'AccountAdmin'."""
         if role_id is not None:
             data["role_id"] = role_id
+
         # OPTIONAL - send_confirmation
         """Send a notification email to
         the new admin if true. Default is true."""
@@ -65,15 +69,18 @@ class AdminsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - role
         """(Deprecated)
         Account role to remove from the user. Defaults to 'AccountAdmin'. Any
         other account role must be specified explicitly."""
         if role is not None:
             params["role"] = role
+
         # OPTIONAL - role_id
         """The user's admin relationship with the account will be created with the
         given role. Defaults to the built-in role for 'AccountAdmin'."""
@@ -96,6 +103,7 @@ class AdminsAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - user_id
         """Scope the results to those with user IDs equal to any of the IDs specified here."""
         if user_id is not None:

@@ -183,3 +183,5 @@ class CanvasAPIError(Exception):
 
 class BaseModel(object):
     pass
+
+HTTPError = requests.HTTPError

@@ -34,6 +34,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - search_term
         """The partial name or full ID of the users to match and return in the
         results list. Must be at least 3 characters.
@@ -443,34 +444,41 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # OPTIONAL - user[name]
         """The full name of the user. This name will be used by teacher for grading.
         Required if this is a self-registration."""
         if user_name is not None:
             data["user[name]"] = user_name
+
         # OPTIONAL - user[short_name]
         """User's name as it will be displayed in discussions, messages, and comments."""
         if user_short_name is not None:
             data["user[short_name]"] = user_short_name
+
         # OPTIONAL - user[sortable_name]
         """User's name as used to sort alphabetically in lists."""
         if user_sortable_name is not None:
             data["user[sortable_name]"] = user_sortable_name
+
         # OPTIONAL - user[time_zone]
         """The time zone for the user. Allowed time zones are
         {http://www.iana.org/time-zones IANA time zones} or friendlier
         {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if user_time_zone is not None:
             data["user[time_zone]"] = user_time_zone
+
         # OPTIONAL - user[locale]
         """The user's preferred language, from the list of languages Canvas supports.
         This is in RFC-5646 format."""
         if user_locale is not None:
             data["user[locale]"] = user_locale
+
         # OPTIONAL - user[birthdate]
         """The user's birth date."""
         if user_birthdate is not None:
             data["user[birthdate]"] = user_birthdate
+
         # OPTIONAL - user[terms_of_use]
         """Whether the user accepts the terms of use. Required if this is a
         self-registration and this canvas instance requires users to accept
@@ -479,6 +487,7 @@ class UsersAPI(BaseCanvasAPI):
         If this is true, it will mark the user as having accepted the terms of use."""
         if user_terms_of_use is not None:
             data["user[terms_of_use]"] = user_terms_of_use
+
         # OPTIONAL - user[skip_registration]
         """Automatically mark the user as registered.
         
@@ -489,30 +498,36 @@ class UsersAPI(BaseCanvasAPI):
         <tt>"communication_channel[skip_confirmation]"</tt> to true as well."""
         if user_skip_registration is not None:
             data["user[skip_registration]"] = user_skip_registration
+
         # REQUIRED - pseudonym[unique_id]
         """User's login ID. If this is a self-registration, it must be a valid
         email address."""
         data["pseudonym[unique_id]"] = pseudonym_unique_id
+
         # OPTIONAL - pseudonym[password]
         """User's password. Cannot be set during self-registration."""
         if pseudonym_password is not None:
             data["pseudonym[password]"] = pseudonym_password
+
         # OPTIONAL - pseudonym[sis_user_id]
         """SIS ID for the user's account. To set this parameter, the caller must be
         able to manage SIS permissions."""
         if pseudonym_sis_user_id is not None:
             data["pseudonym[sis_user_id]"] = pseudonym_sis_user_id
+
         # OPTIONAL - pseudonym[integration_id]
         """Integration ID for the login. To set this parameter, the caller must be able to
         manage SIS permissions. The Integration ID is a secondary
         identifier useful for more complex SIS integrations."""
         if pseudonym_integration_id is not None:
             data["pseudonym[integration_id]"] = pseudonym_integration_id
+
         # OPTIONAL - pseudonym[send_confirmation]
         """Send user notification of account creation if true.
         Automatically set to true during self-registration."""
         if pseudonym_send_confirmation is not None:
             data["pseudonym[send_confirmation]"] = pseudonym_send_confirmation
+
         # OPTIONAL - pseudonym[force_self_registration]
         """Send user a self-registration style email if true.
         Setting it means the users will get a notification asking them
@@ -522,6 +537,7 @@ class UsersAPI(BaseCanvasAPI):
         Defaults to false unless explicitly provided."""
         if pseudonym_force_self_registration is not None:
             data["pseudonym[force_self_registration]"] = pseudonym_force_self_registration
+
         # OPTIONAL - pseudonym[authentication_provider_id]
         """The authentication provider this login is associated with. Logins
         associated with a specific provider can only be used with that provider.
@@ -532,19 +548,23 @@ class UsersAPI(BaseCanvasAPI):
         first matching provider)."""
         if pseudonym_authentication_provider_id is not None:
             data["pseudonym[authentication_provider_id]"] = pseudonym_authentication_provider_id
+
         # OPTIONAL - communication_channel[type]
         """The communication channel type, e.g. 'email' or 'sms'."""
         if communication_channel_type is not None:
             data["communication_channel[type]"] = communication_channel_type
+
         # OPTIONAL - communication_channel[address]
         """The communication channel address, e.g. the user's email address."""
         if communication_channel_address is not None:
             data["communication_channel[address]"] = communication_channel_address
+
         # OPTIONAL - communication_channel[confirmation_url]
         """Only valid for account admins. If true, returns the new user account
         confirmation URL in the response."""
         if communication_channel_confirmation_url is not None:
             data["communication_channel[confirmation_url]"] = communication_channel_confirmation_url
+
         # OPTIONAL - communication_channel[skip_confirmation]
         """Only valid for site admins and account admins making requests; If true, the channel is
         automatically validated and no confirmation email or SMS is sent.
@@ -555,6 +575,7 @@ class UsersAPI(BaseCanvasAPI):
         Otherwise, the user will not receive any messages about their account creation."""
         if communication_channel_skip_confirmation is not None:
             data["communication_channel[skip_confirmation]"] = communication_channel_skip_confirmation
+
         # OPTIONAL - force_validations
         """If true, validations are performed on the newly created user (and their associated pseudonym)
         even if the request is made by a privileged user like an admin. When set to false,
@@ -565,6 +586,7 @@ class UsersAPI(BaseCanvasAPI):
         errors while building users with an admin request."""
         if force_validations is not None:
             data["force_validations"] = force_validations
+
         # OPTIONAL - enable_sis_reactivation
         """When true, will first try to re-activate a deleted user with matching sis_user_id if possible."""
         if enable_sis_reactivation is not None:
@@ -589,42 +611,52 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - account_id
         """ID"""
         path["account_id"] = account_id
+
         # REQUIRED - user[name]
         """The full name of the user. This name will be used by teacher for grading."""
         data["user[name]"] = user_name
+
         # OPTIONAL - user[short_name]
         """User's name as it will be displayed in discussions, messages, and comments."""
         if user_short_name is not None:
             data["user[short_name]"] = user_short_name
+
         # OPTIONAL - user[sortable_name]
         """User's name as used to sort alphabetically in lists."""
         if user_sortable_name is not None:
             data["user[sortable_name]"] = user_sortable_name
+
         # OPTIONAL - user[time_zone]
         """The time zone for the user. Allowed time zones are
         {http://www.iana.org/time-zones IANA time zones} or friendlier
         {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if user_time_zone is not None:
             data["user[time_zone]"] = user_time_zone
+
         # OPTIONAL - user[locale]
         """The user's preferred language, from the list of languages Canvas supports.
         This is in RFC-5646 format."""
         if user_locale is not None:
             data["user[locale]"] = user_locale
+
         # OPTIONAL - user[birthdate]
         """The user's birth date."""
         if user_birthdate is not None:
             data["user[birthdate]"] = user_birthdate
+
         # REQUIRED - user[terms_of_use]
         """Whether the user accepts the terms of use."""
         data["user[terms_of_use]"] = user_terms_of_use
+
         # REQUIRED - pseudonym[unique_id]
         """User's login ID. Must be a valid email address."""
         data["pseudonym[unique_id]"] = pseudonym_unique_id
+
         # OPTIONAL - communication_channel[type]
         """The communication channel type, e.g. 'email' or 'sms'."""
         if communication_channel_type is not None:
             data["communication_channel[type]"] = communication_channel_type
+
         # OPTIONAL - communication_channel[address]
         """The communication channel address, e.g. the user's email address."""
         if communication_channel_address is not None:
@@ -646,11 +678,13 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - manual_mark_as_read
         """If true, require user to manually mark discussion posts as read (don't
         auto-mark as read)."""
         if manual_mark_as_read is not None:
             params["manual_mark_as_read"] = manual_mark_as_read
+
         # OPTIONAL - collapse_global_nav
         """If true, the user's page loads with the global navigation collapsed"""
         if collapse_global_nav is not None:
@@ -692,6 +726,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - asset_string
         """ID"""
         path["asset_string"] = asset_string
@@ -716,9 +751,11 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - asset_string
         """ID"""
         path["asset_string"] = asset_string
+
         # OPTIONAL - hexcode
         """The hexcode of the color to set for the context, if you choose to pass the
         hexcode as a query parameter rather than in the request body you should
@@ -781,33 +818,40 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # OPTIONAL - user[name]
         """The full name of the user. This name will be used by teacher for grading."""
         if user_name is not None:
             data["user[name]"] = user_name
+
         # OPTIONAL - user[short_name]
         """User's name as it will be displayed in discussions, messages, and comments."""
         if user_short_name is not None:
             data["user[short_name]"] = user_short_name
+
         # OPTIONAL - user[sortable_name]
         """User's name as used to sort alphabetically in lists."""
         if user_sortable_name is not None:
             data["user[sortable_name]"] = user_sortable_name
+
         # OPTIONAL - user[time_zone]
         """The time zone for the user. Allowed time zones are
         {http://www.iana.org/time-zones IANA time zones} or friendlier
         {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}."""
         if user_time_zone is not None:
             data["user[time_zone]"] = user_time_zone
+
         # OPTIONAL - user[email]
         """The default email address of the user."""
         if user_email is not None:
             data["user[email]"] = user_email
+
         # OPTIONAL - user[locale]
         """The user's preferred language, from the list of languages Canvas supports.
         This is in RFC-5646 format."""
         if user_locale is not None:
             data["user[locale]"] = user_locale
+
         # OPTIONAL - user[avatar][token]
         """A unique representation of the avatar record to assign as the user's
         current avatar. This token can be obtained from the user avatars endpoint.
@@ -818,6 +862,7 @@ class UsersAPI(BaseCanvasAPI):
         constructed by the client."""
         if user_avatar_token is not None:
             data["user[avatar][token]"] = user_avatar_token
+
         # OPTIONAL - user[avatar][url]
         """To set the user's avatar to point to an external url, do not include a
         token and instead pass the url here. Warning: For maximum compatibility,
@@ -849,6 +894,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - destination_user_id
         """ID"""
         path["destination_user_id"] = destination_user_id
@@ -877,9 +923,11 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - id
         """ID"""
         path["id"] = id
+
         # REQUIRED - PATH - destination_account_id
         """ID"""
         path["destination_account_id"] = destination_account_id
+
         # REQUIRED - PATH - destination_user_id
         """ID"""
         path["destination_user_id"] = destination_user_id
@@ -975,10 +1023,12 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # OPTIONAL - start_time
         """The beginning of the time range from which you want page views."""
         if start_time is not None:
             params["start_time"] = start_time
+
         # OPTIONAL - end_time
         """The end of the time range from which you want page views."""
         if end_time is not None:
@@ -1144,10 +1194,12 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - ns
         """The namespace under which to store the data.  This should be something other
         Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
         data["ns"] = ns
+
         # REQUIRED - data
         """The data you want to store for the user, at the specified scope.  If the data is
         composed of (possibly nested) JSON objects, scopes will be generated for the (nested)
@@ -1180,6 +1232,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - ns
         """The namespace from which to retrieve the data.  This should be something other
         Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
@@ -1303,6 +1356,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - user_id
         """ID"""
         path["user_id"] = user_id
+
         # REQUIRED - ns
         """The namespace from which to delete the data.  This should be something other
         Canvas API apps aren't likely to use, such as a reverse DNS for your organization."""
@@ -1356,6 +1410,7 @@ class UsersAPI(BaseCanvasAPI):
         # REQUIRED - PATH - course_id
         """ID"""
         path["course_id"] = course_id
+
         # REQUIRED - nickname
         """The nickname to set.  It must be non-empty and shorter than 60 characters."""
         data["nickname"] = nickname
