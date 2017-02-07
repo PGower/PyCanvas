@@ -7,7 +7,6 @@ from datetime import date, datetime
 from base import BaseCanvasAPI
 
 
-
 class LoginsAPI(BaseCanvasAPI):
     """Logins API Version 1.0."""
 
@@ -31,7 +30,7 @@ class LoginsAPI(BaseCanvasAPI):
         path["account_id"] = account_id
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/logins with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/logins".format(**path), data=data, params=params, no_data=True)
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/logins".format(**path), data=data, params=params, all_pages=True)
 
     def list_user_logins_users(self, user_id):
         """
@@ -48,7 +47,7 @@ class LoginsAPI(BaseCanvasAPI):
         path["user_id"] = user_id
 
         self.logger.debug("GET /api/v1/users/{user_id}/logins with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("GET", "/api/v1/users/{user_id}/logins".format(**path), data=data, params=params, no_data=True)
+        return self.generic_request("GET", "/api/v1/users/{user_id}/logins".format(**path), data=data, params=params, all_pages=True)
 
     def create_user_login(self, user_id, account_id, login_unique_id, login_authentication_provider_id=None, login_integration_id=None, login_password=None, login_sis_user_id=None):
         """

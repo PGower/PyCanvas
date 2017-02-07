@@ -6,6 +6,7 @@ import logging
 from datetime import date, datetime
 from base import BaseCanvasAPI
 from base import BaseModel
+import os
 
 
 class SisImportsAPI(BaseCanvasAPI):
@@ -21,7 +22,7 @@ class SisImportsAPI(BaseCanvasAPI):
         Get SIS import list.
 
         Returns the list of SIS imports for an account
-        
+
         Example:
           curl 'https://<canvas>/api/v1/accounts/<account_id>/sis_imports' \
             -H "Authorization: Bearer <token>"
@@ -52,13 +53,14 @@ class SisImportsAPI(BaseCanvasAPI):
 
         Import SIS data into Canvas. Must be on a root account with SIS imports
         enabled.
-        
+
         For more information on the format that's expected here, please see the
         "SIS CSV" section in the API docs.
         """
         path = {}
         data = {}
         params = {}
+        files = {}
 
         # REQUIRED - PATH - account_id
         """ID"""
@@ -75,36 +77,41 @@ class SisImportsAPI(BaseCanvasAPI):
         """There are two ways to post SIS import data - either via a
         multipart/form-data form-field-style attachment, or via a non-multipart
         raw post request.
-        
+
         'attachment' is required for multipart/form-data style posts. Assumed to
         be SIS data from a file upload form field named 'attachment'.
-        
+
         Examples:
           curl -F attachment=@<filename> -H "Authorization: Bearer <token>" \
               'https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv'
-        
+
         If you decide to do a raw post, you can skip the 'attachment' argument,
         but you will then be required to provide a suitable Content-Type header.
         You are encouraged to also provide the 'extension' argument.
-        
+
         Examples:
           curl -H 'Content-Type: application/octet-stream' --data-binary @<filename>.zip \
               -H "Authorization: Bearer <token>" \
               'https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv&extension=zip'
-        
+
           curl -H 'Content-Type: application/zip' --data-binary @<filename>.zip \
               -H "Authorization: Bearer <token>" \
               'https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv'
-        
+
           curl -H 'Content-Type: text/csv' --data-binary @<filename>.csv \
               -H "Authorization: Bearer <token>" \
               'https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv'
-        
+
           curl -H 'Content-Type: text/csv' --data-binary @<filename>.csv \
               -H "Authorization: Bearer <token>" \
               'https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv&batch_mode=1&batch_mode_term_id=15'"""
         if attachment is not None:
-            data["attachment"] = attachment
+            if type(attachment) is file:
+                files['attachment'] = (os.path.basename(attachment.name), attachment)
+            elif os.path.exists(attachment):
+                files['attachment'] = (os.path.basename(attachment), open(attachment, 'r'))
+            else:
+                raise ValueError('The attachment must be an open file or a path to a readable file.')
 
         # OPTIONAL - extension
         """Recommended for raw post request style imports. This field will be used to
@@ -167,7 +174,7 @@ class SisImportsAPI(BaseCanvasAPI):
             data["diffing_remaster_data_set"] = diffing_remaster_data_set
 
         self.logger.debug("POST /api/v1/accounts/{account_id}/sis_imports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("POST", "/api/v1/accounts/{account_id}/sis_imports".format(**path), data=data, params=params, single_item=True)
+        return self.generic_request("POST", "/api/v1/accounts/{account_id}/sis_imports".format(**path), data=data, params=params, files=files, single_item=True)
 
     def get_sis_import_status(self, id, account_id):
         """
