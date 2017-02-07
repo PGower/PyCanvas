@@ -141,7 +141,7 @@ class EnrollmentTermsAPI(BaseCanvasAPI):
             params["workflow_state"] = workflow_state
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/terms with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/terms".format(**path), data=data, params=params, all_pages=True)
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/terms".format(**path), data=data, params=params, data_key='enrollment_terms', all_pages=True)
 
 
 class Enrollmentterm(BaseModel):

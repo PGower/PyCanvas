@@ -37,10 +37,14 @@ class SisImportsAPI(BaseCanvasAPI):
         # OPTIONAL - created_since
         """If set, only shows imports created after the specified date (use ISO8601 format)"""
         if created_since is not None:
+            if issubclass(created_since.__class__, basestring):
+                created_since = self._validate_iso8601_string(created_since)
+            elif issubclass(created_since.__class__, date) or issubclass(created_since.__class__, datetime):
+                created_since = created_since.strftime('%Y-%m-%dT%H:%M:%S+00:00')
             params["created_since"] = created_since
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/sis_imports with query params: {params} and form data: {data}".format(params=params, data=data, **path))
-        return self.generic_request("GET", "/api/v1/accounts/{account_id}/sis_imports".format(**path), data=data, params=params, all_pages=True)
+        return self.generic_request("GET", "/api/v1/accounts/{account_id}/sis_imports".format(**path), data=data, params=params, data_key='sis_imports', all_pages=True)
 
     def import_sis_data(self, account_id, add_sis_stickiness=None, attachment=None, batch_mode=None, batch_mode_term_id=None, clear_sis_stickiness=None, diffing_data_set_identifier=None, diffing_remaster_data_set=None, extension=None, import_type=None, override_sis_stickiness=None):
         """

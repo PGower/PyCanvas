@@ -3,11 +3,11 @@
 {% if param.enum %}
 self._validate_enum({{param.name|fix_param_name}}, {{enum_values(param.enum)}})
 {% endif %}
-{% if param.type == "datetime" %}
-if issubclass({{param.name|fix_param_name}}.__class__, date) or issubclass({{param.name|fix_param_name}}.__class__, datetime):
-    {{param.name|fix_param_name}} = {{param.name|fix_param_name}}.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-elif issubclass({{param.name|fix_param_name}}.__class__, basestring):
+{% if param.type|lower == "datetime" %}
+if issubclass({{param.name|fix_param_name}}.__class__, basestring):
     {{param.name|fix_param_name}} = self._validate_iso8601_string({{param.name|fix_param_name}})
+elif issubclass({{param.name|fix_param_name}}.__class__, date) or issubclass({{param.name|fix_param_name}}.__class__, datetime):
+    {{param.name|fix_param_name}} = {{param.name|fix_param_name}}.strftime('%Y-%m-%dT%H:%M:%S+00:00')
 {% endif %}
 {% if param.paramType == "path" %}
 path["{{param.name}}"] = {{param.name|fix_param_name}}
