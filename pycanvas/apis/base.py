@@ -5,6 +5,7 @@ import logging
 
 logger = logging.getLogger('pycanvas.BaseCanvasAPI')
 
+
 class BaseCanvasAPI(object):
     def __init__(self, instance_address, access_token, **kwargs):
         self.instance_address = instance_address
@@ -73,7 +74,6 @@ class BaseCanvasAPI(object):
     def has_pagination_links(self, response):
         return 'Link' in response.headers
 
-
     def depaginate(self, response, data_key=None):
         logging.debug('Attempting to depaginate response from {}'.format(response.url))
         all_data = []
@@ -105,8 +105,9 @@ class BaseCanvasAPI(object):
                         no_data=False,
                         do_not_process=False,
                         force_urlencode_data=False,
-                        data=None, 
+                        data=None,
                         params=None,
+                        files=None,
                         single_item=False):
         """Generic Canvas Request Method."""
         if not uri.startswith('http'):
@@ -120,7 +121,7 @@ class BaseCanvasAPI(object):
         if method == 'GET':
             response = self.session.get(uri, params=params)
         elif method == 'POST':
-            response = self.session.post(uri, data=data)
+            response = self.session.post(uri, data=data, files=files)
         elif method == 'PUT':
             response = self.session.put(uri, data=data)
         elif method == 'DELETE':

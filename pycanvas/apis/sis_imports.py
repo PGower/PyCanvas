@@ -109,7 +109,7 @@ class SisImportsAPI(BaseCanvasAPI):
             if type(attachment) is file:
                 files['attachment'] = (os.path.basename(attachment.name), attachment)
             elif os.path.exists(attachment):
-                files['attachment'] = (os.path.basename(attachment), open(attachment, 'r'))
+                files['attachment'] = (os.path.basename(attachment), open(attachment, 'rb'))
             else:
                 raise ValueError('The attachment must be an open file or a path to a readable file.')
 
