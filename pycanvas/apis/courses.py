@@ -255,7 +255,7 @@ class CoursesAPI(BaseCanvasAPI):
 
         # OPTIONAL - course[name]
         """The name of the course. If omitted, the course will be named "Unnamed
-        Course.""""
+        Course." """
         if course_name is not None:
             data["course[name]"] = course_name
 
@@ -953,7 +953,7 @@ class CoursesAPI(BaseCanvasAPI):
 
         # OPTIONAL - course[name]
         """The name of the course. If omitted, the course will be named "Unnamed
-        Course.""""
+        Course." """
         if course_name is not None:
             data["course[name]"] = course_name
 
@@ -1272,7 +1272,7 @@ class CoursesAPI(BaseCanvasAPI):
         self.logger.debug("GET /api/v1/courses/{course_id}/course_copy/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{course_id}/course_copy/{id}".format(**path), data=data, params=params, no_data=True)
 
-    def copy_course_content(self, course_id, except=None, only=None, source_course=None):
+    def copy_course_content(self, course_id, exclude=None, only=None, source_course=None):
         """
         Copy course content.
 
@@ -1300,9 +1300,9 @@ class CoursesAPI(BaseCanvasAPI):
         # OPTIONAL - except
         """A list of the course content types to exclude, all areas not listed will
         be copied."""
-        if except is not None:
-            self._validate_enum(except, ["course_settings", "assignments", "external_tools", "files", "topics", "calendar_events", "quizzes", "wiki_pages", "modules", "outcomes"])
-            data["except"] = except
+        if exclude is not None:
+            self._validate_enum(exclude, ["course_settings", "assignments", "external_tools", "files", "topics", "calendar_events", "quizzes", "wiki_pages", "modules", "outcomes"])
+            data["except"] = exclude
 
         # OPTIONAL - only
         """A list of the course content types to copy, all areas not listed will not
