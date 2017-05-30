@@ -67,3 +67,5 @@ logs/
 pip.ini
 
 
+# PyCharm
+.idea/
