@@ -126,7 +126,7 @@ class CoursesAPI(BaseCanvasAPI):
           {api:TabsController#index List available tabs API} for more information."""
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users"])
-            params["include"] = include
+            params["include[]"] = include
 
         # OPTIONAL - state
         """If set, only return courses that are in the given state(s).
@@ -219,7 +219,7 @@ class CoursesAPI(BaseCanvasAPI):
           {api:TabsController#index List available tabs API} for more information."""
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users"])
-            params["include"] = include
+            params["include[]"] = include
 
         # OPTIONAL - state
         """If set, only return courses that are in the given state(s).
@@ -517,7 +517,7 @@ class CoursesAPI(BaseCanvasAPI):
         such as analytics information"""
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio", "custom_links"])
-            params["include"] = include
+            params["include[]"] = include
 
         # OPTIONAL - user_id
         """If this parameter is given and it corresponds to a user in the course,
@@ -605,7 +605,7 @@ class CoursesAPI(BaseCanvasAPI):
         such as analytics information"""
         if include is not None:
             self._validate_enum(include, ["email", "enrollments", "locked", "avatar_url", "test_student", "bio", "custom_links"])
-            params["include"] = include
+            params["include[]"] = include
 
         # OPTIONAL - user_id
         """If this parameter is given and it corresponds to a user in the course,
@@ -890,7 +890,7 @@ class CoursesAPI(BaseCanvasAPI):
         - "observed_users": include observed users in the enrollments"""
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users", "all_courses", "permissions", "observed_users"])
-            params["include"] = include
+            params["include[]"] = include
 
         self.logger.debug("GET /api/v1/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/courses/{id}".format(**path), data=data, params=params, single_item=True)
@@ -922,7 +922,7 @@ class CoursesAPI(BaseCanvasAPI):
         - "observed_users": include observed users in the enrollments"""
         if include is not None:
             self._validate_enum(include, ["needs_grading_count", "syllabus_body", "public_description", "total_scores", "current_grading_period_scores", "term", "course_progress", "sections", "storage_quota_used_mb", "total_students", "passback_status", "favorites", "teachers", "observed_users", "all_courses", "permissions", "observed_users"])
-            params["include"] = include
+            params["include[]"] = include
 
         self.logger.debug("GET /api/v1/accounts/{account_id}/courses/{id} with query params: {params} and form data: {data}".format(params=params, data=data, **path))
         return self.generic_request("GET", "/api/v1/accounts/{account_id}/courses/{id}".format(**path), data=data, params=params, single_item=True)
