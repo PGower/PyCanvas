@@ -27,7 +27,7 @@ class CalendarEventsAPI(BaseCanvasAPI):
         params = {}
 
         # OPTIONAL - type
-        """Defaults to "event""""
+        """Defaults to "event" """
         if type is not None:
             self._validate_enum(type, ["event", "assignment"])
             params["type"] = type
@@ -68,7 +68,7 @@ class CalendarEventsAPI(BaseCanvasAPI):
             params["context_codes"] = context_codes
 
         # OPTIONAL - excludes
-        """Array of attributes to exclude. Possible values are "description", "child_events" and "assignment""""
+        """Array of attributes to exclude. Possible values are "description", "child_events" and "assignment" """
         if excludes is not None:
             params["excludes"] = excludes
 
@@ -92,7 +92,7 @@ class CalendarEventsAPI(BaseCanvasAPI):
         path["user_id"] = user_id
 
         # OPTIONAL - type
-        """Defaults to "event""""
+        """Defaults to "event" """
         if type is not None:
             self._validate_enum(type, ["event", "assignment"])
             params["type"] = type
@@ -133,7 +133,7 @@ class CalendarEventsAPI(BaseCanvasAPI):
             params["context_codes"] = context_codes
 
         # OPTIONAL - excludes
-        """Array of attributes to exclude. Possible values are "description", "child_events" and "assignment""""
+        """Array of attributes to exclude. Possible values are "description", "child_events" and "assignment" """
         if excludes is not None:
             params["excludes"] = excludes
 

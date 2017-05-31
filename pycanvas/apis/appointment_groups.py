@@ -28,7 +28,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         params = {}
 
         # OPTIONAL - scope
-        """Defaults to "reservable""""
+        """Defaults to "reservable" """
         if scope is not None:
             self._validate_enum(scope, ["reservable", "manageable"])
             params["scope"] = scope
@@ -135,7 +135,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
             data["appointment_group[new_appointments][X]"] = appointment_group_new_appointments_X
 
         # OPTIONAL - appointment_group[participant_visibility]
-        """"private":: participants cannot see who has signed up for a particular
+        """ "private":: participants cannot see who has signed up for a particular
                     time slot
         "protected":: participants can see who has signed up.  Defaults to
                       "private"."""
@@ -255,7 +255,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
             data["appointment_group[new_appointments][X]"] = appointment_group_new_appointments_X
 
         # OPTIONAL - appointment_group[participant_visibility]
-        """"private":: participants cannot see who has signed up for a particular
+        """ "private":: participants cannot see who has signed up for a particular
                     time slot
         "protected":: participants can see who has signed up. Defaults to "private"."""
         if appointment_group_participant_visibility is not None:
@@ -305,7 +305,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         path["id"] = id
 
         # OPTIONAL - registration_status
-        """Limits results to the a given participation status, defaults to "all""""
+        """Limits results to the a given participation status, defaults to "all" """
         if registration_status is not None:
             self._validate_enum(registration_status, ["all", "registered", "registered"])
             params["registration_status"] = registration_status
@@ -330,7 +330,7 @@ class AppointmentGroupsAPI(BaseCanvasAPI):
         path["id"] = id
 
         # OPTIONAL - registration_status
-        """Limits results to the a given participation status, defaults to "all""""
+        """Limits results to the a given participation status, defaults to "all" """
         if registration_status is not None:
             self._validate_enum(registration_status, ["all", "registered", "registered"])
             params["registration_status"] = registration_status
